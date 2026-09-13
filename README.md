@@ -1,5 +1,10 @@
 # Proyecto Integrador. Minería de Datos Masivos y Flujos de Datos
 
+Grupo 1:
+- Ricardo Amiel Acuña Villogas
+- Camilo Ernesto Soto Cristóbal
+- Juan Leibniz Aquino Espinoza
+
 Aplicación articulada de las técnicas del curso sobre un conjunto de datos abiertos del Estado peruano. Este repositorio contiene, por ahora, la **Parte I completa**: KDD, análisis exploratorio y procesamiento distribuido con Apache Spark.
 
 ## Fuente de datos
