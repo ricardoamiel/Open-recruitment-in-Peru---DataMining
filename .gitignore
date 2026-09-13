@@ -1,0 +1,12 @@
+*.txt
+*.gz
+
+data/
+*.svg
+*.docx
+*.docx#
+
+scripts/
+
+*.json
+*.yaml

@@ -1,0 +1,16 @@
+codigo,tratamiento,filas_que_lo_contienen
+U+00A5,reparado a N con tilde,0
+U+00A4,reparado a n con tilde,0
+U+00A2,reparado a o con tilde,0
+U+00E0,reparado a O con tilde,0
+U+00D6,reparado a I con tilde,0
+U+00B5,reparado a A con tilde,0
+U+0090,reparado a E con tilde,0
+U+00A0,reparado a a con tilde,0
+U+00D2,reparado a O con tilde,0
+U+00CC,reparado a I con tilde,0
+U+00C8,reparado a E con tilde,0
+U+00BF,"conservado, interrogacion invertida",41378
+U+00B4,"conservado, acento suelto",229
+U+00A8,"conservado, dieresis suelta",112
+U+00BD,"conservado, un medio",179

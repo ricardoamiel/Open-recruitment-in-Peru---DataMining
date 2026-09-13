@@ -1,0 +1,3 @@
+agregacion,DataFrame / SQL,RDD,veces_mas_lento_rdd
+A. por departamento,0.203,0.445,2.2
+B. por metodo,0.164,0.509,3.1
