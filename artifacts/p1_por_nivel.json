@@ -1,0 +1,56 @@
+[
+ {
+  "nivel_gobierno":"Gobierno nacional",
+  "procesos":29984,
+  "monto_mmm":81.5573114574,
+  "entidades":277
+ },
+ {
+  "nivel_gobierno":"Gobierno regional",
+  "procesos":39776,
+  "monto_mmm":63.7259862794,
+  "entidades":529
+ },
+ {
+  "nivel_gobierno":"Gobierno local",
+  "procesos":73456,
+  "monto_mmm":62.0198745873,
+  "entidades":1855
+ },
+ {
+  "nivel_gobierno":"Empresa del Estado",
+  "procesos":8048,
+  "monto_mmm":15.4519099607,
+  "entidades":75
+ },
+ {
+  "nivel_gobierno":"Otro",
+  "procesos":10742,
+  "monto_mmm":13.7191460143,
+  "entidades":126
+ },
+ {
+  "nivel_gobierno":"Universidad publica",
+  "procesos":7094,
+  "monto_mmm":5.8214990504,
+  "entidades":53
+ },
+ {
+  "nivel_gobierno":"Fuerzas armadas y policiales",
+  "procesos":5812,
+  "monto_mmm":4.6579247288,
+  "entidades":20
+ },
+ {
+  "nivel_gobierno":"Establecimiento de salud",
+  "procesos":2278,
+  "monto_mmm":1.555566915,
+  "entidades":24
+ },
+ {
+  "nivel_gobierno":"Unidad educativa",
+  "procesos":208,
+  "monto_mmm":0.0969005029,
+  "entidades":9
+ }
+]

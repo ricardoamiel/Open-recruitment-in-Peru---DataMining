@@ -1,0 +1,8 @@
+indice,recall_at_10,ms_lote,ms_unitaria,nprobe,celdas_visitadas_pct
+IVF nprobe=1,0.751,0.0074,0.0207,1,0.35
+IVF nprobe=2,0.8759,0.0101,0.0304,2,0.71
+IVF nprobe=4,0.946,0.0197,0.0475,4,1.42
+IVF nprobe=8,0.9767,0.034,0.0776,8,2.84
+IVF nprobe=16,0.9895,0.055,0.1221,16,5.67
+IVF nprobe=32,0.9942,0.1118,0.2167,32,11.35
+IVF nprobe=64,0.9965,0.2429,0.4446,64,22.7

@@ -1,0 +1,14 @@
+[
+ {
+  "estructura":"Bloom Filter",
+  "responde":"pertenencia",
+  "memoria_kib":79.0,
+  "fpr_observada":0.00172
+ },
+ {
+  "estructura":"Count-Min Sketch",
+  "responde":"frecuencia",
+  "memoria_kib":5059.6,
+  "fpr_observada":0.00167
+ }
+]

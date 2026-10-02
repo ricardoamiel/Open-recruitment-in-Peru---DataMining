@@ -1,0 +1,44 @@
+[
+ {
+  "paso":"entrada",
+  "detalle":"tabla analitica cruda",
+  "filas_afectadas":0,
+  "filas_restantes":281462
+ },
+ {
+  "paso":"duplicados",
+  "detalle":"una fila por ocid, la mas reciente",
+  "filas_afectadas":0,
+  "filas_restantes":281462
+ },
+ {
+  "paso":"descarte",
+  "detalle":"monto_pen nulo o no positivo",
+  "filas_afectadas":22830,
+  "filas_restantes":258632
+ },
+ {
+  "paso":"descarte",
+  "detalle":"fecha fuera de 2023 a 2025",
+  "filas_afectadas":81234,
+  "filas_restantes":177398
+ },
+ {
+  "paso":"imputacion",
+  "detalle":"n_postores con la mediana de su metodo",
+  "filas_afectadas":6655,
+  "filas_restantes":177398
+ },
+ {
+  "paso":"marca",
+  "detalle":"monto fuera de [6.37, 17.99] en escala log, se conserva",
+  "filas_afectadas":565,
+  "filas_restantes":177398
+ },
+ {
+  "paso":"recorte",
+  "detalle":"n_postores winsorizado al percentil 99,9, tope 107",
+  "filas_afectadas":263,
+  "filas_restantes":177398
+ }
+]

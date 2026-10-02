@@ -1,0 +1,6 @@
+estructura,pregunta,memoria,error,por_que_se_usa
+Muestreo por clave,métricas por entidad sobre una muestra,proporcional a la fracción de claves,ninguno dentro de las claves elegidas,es la unica que conserva entidades completas
+Reservoir sampling,proporciones sobre todo el flujo,"k elementos, fija y conocida de antemano",desviacion maxima 0.06 puntos en la composicion,no necesita conocer el largo del flujo
+Bloom Filter,apareció antes este proveedor,"79.0 KiB para 67,510 claves","0.172% de falsos positivos, cero falsos negativos","un bit por posicion, imbatible en pertenencia"
+Count-Min Sketch,cuántas veces apareció cada ítem,149 KiB,"nunca subestima, maximo 19 apariciones",unica que da frecuencias sin diccionario
+DGIM,cuántos en los últimos N elementos,"19 cubos para N=100,000","25.0% observado, cota teorica 50%",unica con noción de recencia

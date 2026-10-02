@@ -1,0 +1,8 @@
+[
+ {
+  "procesos":166439,
+  "pares_posibles":13850887141,
+  "candidatos_lsh":28161739,
+  "reduccion":"492 a 1"
+ }
+]

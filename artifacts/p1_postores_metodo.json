@@ -1,0 +1,192 @@
+[
+ {
+  "metodo":"Adjudicación Simplificada - Ley N° 31579",
+  "postores_medio":29.0,
+  "procesos":1
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Ley N° 31589",
+  "postores_medio":28.38,
+  "procesos":8
+ },
+ {
+  "metodo":"Adjudicación Simplificada-Decreto Legislativo N° 1577",
+  "postores_medio":27.23,
+  "procesos":69
+ },
+ {
+  "metodo":"Concurso Público",
+  "postores_medio":26.5,
+  "procesos":6254
+ },
+ {
+  "metodo":"Concurso Público de Servicios",
+  "postores_medio":25.08,
+  "procesos":970
+ },
+ {
+  "metodo":"Procedimiento Especial de Contratación",
+  "postores_medio":24.08,
+  "procesos":520
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Ley N° 31728",
+  "postores_medio":23.37,
+  "procesos":668
+ },
+ {
+  "metodo":"Licitación Pública",
+  "postores_medio":21.83,
+  "procesos":7953
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Decreto Urgencia 012-2023",
+  "postores_medio":21.5,
+  "procesos":6
+ },
+ {
+  "metodo":"Concurso Público Abreviado - Ley N°26859",
+  "postores_medio":21.0,
+  "procesos":5
+ },
+ {
+  "metodo":"Concurso Público para Consultoría",
+  "postores_medio":20.83,
+  "procesos":368
+ },
+ {
+  "metodo":"Licitación Pública Abreviada Homologación",
+  "postores_medio":19.7,
+  "procesos":27
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Decreto Urgencia 032-2023",
+  "postores_medio":18.72,
+  "procesos":477
+ },
+ {
+  "metodo":"Concurso Público Abreviado - Ley N°31589",
+  "postores_medio":18.5,
+  "procesos":2
+ },
+ {
+  "metodo":"Adjudicación Simplificada",
+  "postores_medio":16.33,
+  "procesos":78806
+ },
+ {
+  "metodo":"Procedimiento Especial de Contratación-Nueva Convocatoria por Desierto",
+  "postores_medio":14.74,
+  "procesos":132
+ },
+ {
+  "metodo":"Concurso Público Abreviado",
+  "postores_medio":14.6,
+  "procesos":8839
+ },
+ {
+  "metodo":"Licitación Pública Abreviada",
+  "postores_medio":13.66,
+  "procesos":9443
+ },
+ {
+  "metodo":"Adjudicación Simplificada-Homologación",
+  "postores_medio":13.05,
+  "procesos":673
+ },
+ {
+  "metodo":"Concurso Público Abreviado Homologación",
+  "postores_medio":12.92,
+  "procesos":38
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Séptima Disposición Complementaria Final Reg. Ley 30225",
+  "postores_medio":12.7,
+  "procesos":30
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Ley N° 31125",
+  "postores_medio":12.12,
+  "procesos":8
+ },
+ {
+  "metodo":"Licitación Pública Abreviada - Ley N°31589",
+  "postores_medio":10.5,
+  "procesos":2
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Decreto Urgencia 034-2023",
+  "postores_medio":10.21,
+  "procesos":19
+ },
+ {
+  "metodo":"Subasta Inversa Electrónica",
+  "postores_medio":8.24,
+  "procesos":20958
+ },
+ {
+  "metodo":"Procedimiento de Contratación para Proceso Abierto",
+  "postores_medio":7.0,
+  "procesos":1
+ },
+ {
+  "metodo":"Licitación Pública Abreviada - Ley N°26859",
+  "postores_medio":5.17,
+  "procesos":6
+ },
+ {
+  "metodo":"Concurso Público Abreviado Séptima DCF Ley N°32069",
+  "postores_medio":4.67,
+  "procesos":3
+ },
+ {
+  "metodo":"Adjudicación Selectiva",
+  "postores_medio":3.58,
+  "procesos":19
+ },
+ {
+  "metodo":"Comparación de Precios",
+  "postores_medio":3.14,
+  "procesos":12483
+ },
+ {
+  "metodo":"Contratos Estandarizados",
+  "postores_medio":2.56,
+  "procesos":9
+ },
+ {
+  "metodo":"Licitación Pública Abreviada Séptima DCF Ley N°32069",
+  "postores_medio":2.5,
+  "procesos":2
+ },
+ {
+  "metodo":"Selección de Consultores Individuales",
+  "postores_medio":2.17,
+  "procesos":54
+ },
+ {
+  "metodo":"Convenio",
+  "postores_medio":2.08,
+  "procesos":3622
+ },
+ {
+  "metodo":"Regímen Especial",
+  "postores_medio":1.65,
+  "procesos":4268
+ },
+ {
+  "metodo":"Contratación Directa",
+  "postores_medio":1.23,
+  "procesos":10997
+ },
+ {
+  "metodo":"Contratación Internacional",
+  "postores_medio":1.08,
+  "procesos":2930
+ },
+ {
+  "metodo":"Adjudicación Abreviada",
+  "postores_medio":1.04,
+  "procesos":73
+ }
+]

@@ -1,0 +1,15 @@
+indice,recall_at_10,ms_lote,ms_unitaria,nprobe,celdas_visitadas_pct,familia,efSearch
+IVF nprobe=1,0.751,0.0074,0.0207,1.0,0.35,IVF,
+IVF nprobe=2,0.8759,0.0101,0.0304,2.0,0.71,IVF,
+IVF nprobe=4,0.946,0.0197,0.0475,4.0,1.42,IVF,
+IVF nprobe=8,0.9767,0.034,0.0776,8.0,2.84,IVF,
+IVF nprobe=16,0.9895,0.055,0.1221,16.0,5.67,IVF,
+IVF nprobe=32,0.9942,0.1118,0.2167,32.0,11.35,IVF,
+IVF nprobe=64,0.9965,0.2429,0.4446,64.0,22.7,IVF,
+HNSW efSearch=10,0.9891,0.0088,0.0279,,,HNSW,10.0
+HNSW efSearch=16,0.9932,0.0122,0.0358,,,HNSW,16.0
+HNSW efSearch=32,0.9952,0.0239,0.0569,,,HNSW,32.0
+HNSW efSearch=64,0.9962,0.0393,0.0947,,,HNSW,64.0
+HNSW efSearch=128,0.9964,0.07,0.1722,,,HNSW,128.0
+HNSW efSearch=256,0.9965,0.1206,0.3164,,,HNSW,256.0
+fuerza bruta (exacta),1.0,0.0777,1.9238,,,fuerza bruta,

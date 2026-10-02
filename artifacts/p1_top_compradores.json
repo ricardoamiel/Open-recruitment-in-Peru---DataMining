@@ -1,0 +1,77 @@
+[
+ {
+  "comprador_nombre":"MTC-PROYECTO ESPECIAL DE INFRAESTRUCTURA DE TRANSPORTE NACIONAL (PROVIAS NACIONAL)",
+  "procesos":828,
+  "monto_mm":18742.37693888
+ },
+ {
+  "comprador_nombre":"PROGRAMA AGUA SEGURA PARA LIMA Y CALLAO",
+  "procesos":70,
+  "monto_mm":8612.10500416
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE JUNIN SEDE CENTRAL",
+  "procesos":1059,
+  "monto_mm":7438.84856295
+ },
+ {
+  "comprador_nombre":"SEGURO SOCIAL DE SALUD",
+  "procesos":3682,
+  "monto_mm":7208.80141421
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE PASCO SEDE CENTRAL",
+  "procesos":516,
+  "monto_mm":7180.48461533
+ },
+ {
+  "comprador_nombre":"UNIDAD EJECUTORA 125 PROGRAMA NACIONAL DE INVERSIONES EN SALUD",
+  "procesos":129,
+  "monto_mm":6667.05028103
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE LORETO - ORGANISMO PUBLICO INFRAESTRUCTURA PARA LA PRODUCTIVIDAD",
+  "procesos":68,
+  "monto_mm":6434.82863769
+ },
+ {
+  "comprador_nombre":"PROGRAMA NACIONAL DE SANEAMIENTO URBANO",
+  "procesos":406,
+  "monto_mm":5416.69143879
+ },
+ {
+  "comprador_nombre":"CENTRO NACIONAL DE ABASTECIMIENTO DE RECURSOS ESTRATEGICOS EN SALUD",
+  "procesos":659,
+  "monto_mm":4293.79718248
+ },
+ {
+  "comprador_nombre":"MTC-PROYECTO ESPECIAL DE INFRAESTRUCTURA DE TRANSPORTE DESCENTRALIZADO - PROVIAS DESCENTRALIZADO",
+  "procesos":455,
+  "monto_mm":4232.38527275
+ },
+ {
+  "comprador_nombre":"AUTORIDAD NACIONAL DE INFRAESTRUCTURA",
+  "procesos":79,
+  "monto_mm":3295.34564038
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE AREQUIPA SEDE CENTRAL",
+  "procesos":1066,
+  "monto_mm":2617.27850207
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE LA LIBERTAD SEDE CENTRAL",
+  "procesos":479,
+  "monto_mm":2609.66997948
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE PUNO SEDE CENTRAL",
+  "procesos":2162,
+  "monto_mm":2578.24767201
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE AYACUCHO SEDE CENTRAL",
+  "procesos":1907,
+  "monto_mm":2534.02997778
+ }
+]

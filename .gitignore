@@ -1,12 +1,13 @@
-*.txt
-*.gz
+# Datos. El crudo son 3,2 GB descargables y el procesado se regenera con el notebook 1.
+data/raw/
+data/processed/
+*.tar.gz
 
-data/
-*.svg
-*.docx
-*.docx#
+# Artefactos de Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
 
-scripts/
-
-*.json
-*.yaml
+# Version anterior del proyecto, conservada solo en local
+_anterior/
+_build/

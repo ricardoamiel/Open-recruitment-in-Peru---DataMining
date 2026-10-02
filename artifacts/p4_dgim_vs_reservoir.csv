@@ -1,0 +1,4 @@
+metodo,estimacion,memoria_bytes,responde_ventana,error_pct
+conteo exacto,2498,2500,True,0.0
+DGIM,2841,256,True,13.73
+reservoir filtrado,2820,32000,False,12.89

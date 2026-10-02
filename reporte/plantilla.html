@@ -1,0 +1,1114 @@
+<title>Patrones del Gasto Público Peruano</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+
+<style>
+/* Informe de una sola columna, todo alineado al margen izquierdo. Tipografia
+   Arial en el documento entero. Un solo tema, claro: esto es un informe que se
+   lee sobre fondo blanco, no una aplicacion. */
+:root{
+  color-scheme:light;
+  --fondo:#FFFFFF; --panel:#F6F8FA; --linea:#D5DCE3; --linea-suave:#E8ECF0;
+  --tinta:#1A1A1A; --tinta2:#454C54; --tinta3:#737B84;
+  --azul:#2E6DB4; --rojo:#B3441F; --verde:#4F8C28; --morado:#8B5BB5; --teal:#00807E;
+  --azul-claro:#DCE9F6; --azul-muy-claro:#F0F6FC;
+  --texto:Arial,Helvetica,sans-serif;
+  --dato:Consolas,"Courier New",monospace;
+}
+
+*{box-sizing:border-box;}
+body{
+  background:var(--fondo); color:var(--tinta);
+  font-family:var(--texto); font-size:15.5px; line-height:1.6;
+  padding-inline:24px; padding-block:0;
+}
+.doc{max-width:1060px;margin-inline:auto;}
+/* El texto arranca en el margen izquierdo del documento, nunca centrado. */
+.txt{max-width:82ch;}
+
+h1{font-size:30px;font-weight:bold;line-height:1.2;margin:0 0 10px;}
+h2{font-size:21px;font-weight:bold;margin:38px 0 4px;line-height:1.3;}
+h3{font-size:16.5px;font-weight:bold;margin:26px 0 6px;}
+p{margin:0 0 12px;max-width:82ch;}
+p:last-child{margin-bottom:0;}
+a{color:var(--azul);}
+
+header{padding-block:40px 20px;border-bottom:3px solid var(--tinta);}
+.sobre{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--tinta3);margin:0 0 12px;}
+.resumen{font-size:16.5px;color:var(--tinta2);margin:14px 0 0;max-width:80ch;}
+.ficha{margin:22px 0 0;font-size:13.5px;color:var(--tinta2);}
+.ficha div{margin-bottom:4px;}
+.ficha b{display:inline-block;min-width:104px;color:var(--tinta);}
+
+.cifras{display:flex;flex-wrap:wrap;margin-block:24px 0;border:1px solid var(--linea);}
+.cifra{flex:1 1 190px;min-width:0;padding:14px 16px;border-right:1px solid var(--linea);}
+.cifra:last-child{border-right:none;}
+.cifra .n{font-size:24px;font-weight:bold;line-height:1.15;}
+.cifra .t{font-size:12.5px;color:var(--tinta3);margin-top:3px;line-height:1.35;}
+
+nav{border-bottom:1px solid var(--linea);margin-top:24px;position:sticky;
+  top:env(safe-area-inset-top,0px);background:var(--fondo);z-index:10;}
+nav div{display:flex;gap:2px;overflow-x:auto;padding-block:8px;}
+nav a{font-size:12.5px;color:var(--tinta2);text-decoration:none;padding:5px 10px;white-space:nowrap;}
+nav a:hover{color:var(--azul);background:var(--azul-muy-claro);}
+
+section{padding-block:6px 20px;}
+.rotulo{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--azul);
+  margin:34px 0 0;font-weight:bold;}
+.pregunta{margin:18px 0 10px;padding-left:12px;border-left:3px solid var(--azul);
+  font-weight:bold;font-size:16px;max-width:82ch;}
+.ruta{font-family:var(--dato);font-size:12px;color:var(--tinta2);background:var(--panel);
+  border:1px solid var(--linea-suave);padding:7px 10px;margin:0 0 14px;max-width:82ch;}
+
+figure{margin:18px 0 26px;}
+.grafico{width:100%;overflow-x:auto;border:1px solid var(--linea);padding:14px 12px 8px;}
+figcaption{font-size:14px;color:var(--tinta2);margin-top:9px;max-width:88ch;line-height:1.55;}
+figcaption .num{font-weight:bold;color:var(--tinta);}
+svg{display:block;max-width:100%;height:auto;}
+.eje text{font-family:var(--dato);font-size:10px;fill:var(--tinta3);}
+.eje line,.eje path{stroke:var(--linea);}
+.rejilla line{stroke:var(--linea-suave);}
+.rejilla .domain{display:none;}
+.rotulo-eje{font-family:var(--dato);font-size:10.5px;fill:var(--tinta3);}
+
+.controles{background:var(--panel);border:1px solid var(--linea);padding:13px 15px;
+  margin:0 0 14px;display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;}
+.control{flex:1 1 180px;min-width:0;}
+.control label{display:block;font-size:12.5px;color:var(--tinta2);margin-bottom:5px;}
+.control label b{color:var(--azul);}
+input[type=range]{width:100%;accent-color:var(--azul);margin:0;display:block;}
+.salida{flex:1 1 100%;font-size:13px;color:var(--tinta2);line-height:1.6;
+  border-top:1px solid var(--linea);padding-top:10px;}
+.salida b{color:var(--tinta);}
+
+#tip{position:fixed;pointer-events:none;opacity:0;transition:opacity .08s;z-index:50;
+  background:#1A1A1A;color:#FFFFFF;padding:7px 10px;font-family:var(--dato);
+  font-size:11.5px;line-height:1.5;max-width:280px;box-shadow:0 3px 12px rgba(0,0,0,.25);}
+
+.tabla{overflow-x:auto;margin:14px 0 22px;}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:480px;}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--tinta3);
+  text-align:left;padding:0 12px 7px 0;border-bottom:2px solid var(--tinta);font-weight:bold;}
+td{padding:8px 12px 8px 0;border-bottom:1px solid var(--linea-suave);vertical-align:top;}
+th:last-child,td:last-child{padding-right:0;}
+td.n{font-family:var(--dato);white-space:nowrap;}
+
+ol{margin:0 0 12px;padding-left:22px;max-width:82ch;}
+ol li{margin-bottom:7px;}
+
+footer{padding-block:24px 50px;border-top:2px solid var(--tinta);margin-top:36px;
+  font-size:13px;color:var(--tinta3);line-height:1.7;}
+:focus-visible{outline:2px solid var(--azul);outline-offset:2px;}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+
+<div id="tip"></div>
+
+<div class="doc">
+
+<header>
+  <p class="sobre">Proyecto Integrador · Minería de Datos Masivos y Flujos de Datos</p>
+  <h1>Patrones del Gasto Público Peruano</h1>
+  <p class="resumen">Seis técnicas de minería aplicadas a las contrataciones del Estado peruano
+  entre 2023 y 2025. Las figuras son interactivas: al pasar el cursor muestran el dato exacto, y
+  donde hay controles se puede mover el parámetro del algoritmo y ver cómo cambia la curva.</p>
+  <div class="ficha">
+    <div><b>Integrantes</b> Ricardo Amiel Acuña Villogas, Juan Leibniz Aquino Espinoza y Camilo Ernesto Soto Cristóbal</div>
+    <div><b>Fuente</b> <a href="https://data.open-contracting.org/es/publication/135">Contrataciones Abiertas del Perú, estándar OCDS, publicación 135 del registro de Open Contracting Partnership</a></div>
+  </div>
+</header>
+
+<div class="cifras" id="cifras"></div>
+
+<nav><div>
+  <a href="#p1">I. KDD y EDA</a>
+  <a href="#p2">II. Similitud</a>
+  <a href="#p3">III. Vecinos</a>
+  <a href="#p4">IV. Flujos</a>
+  <a href="#p5">V. Reglas</a>
+  <a href="#p6">VI. Discusión</a>
+</div></nav>
+
+<section id="p1">
+  <p class="rotulo">Parte I</p>
+  <h2>KDD, análisis exploratorio y procesamiento distribuido</h2>
+  <div class="txt">
+  <p>De 281.462 procesos crudos quedan 177.398 utilizables. La limpieza descartó el 37 por ciento
+  de las filas en dos decisiones. Los procesos con valor referencial cero no admiten imputación,
+  porque el cero marca un campo no publicado y no un monto. Y el paquete anual del registro arrastra
+  convocatorias de años anteriores que recién entonces se publicaron, de modo que mezclarlas produce
+  picos que describen al publicador y no al Estado comprador.</p>
+  <p>Con los montos extremos se tomó la decisión contraria: se marcan y se conservan. Son el 0,3 por
+  ciento de las filas y concentran cerca del 38 por ciento del gasto, así que eliminarlos habría
+  dejado una tabla más ordenada y habría borrado un tercio del dinero público que se quiere estudiar.</p>
+  </div>
+
+  <p class="pregunta">¿Hay apresuramiento del gasto en el cierre del ejercicio presupuestal?</p>
+  <p class="ruta">Parquet particionado por año → Spark SQL, agrupar por mes → 36 puntos</p>
+  <figure>
+    <div class="grafico" id="g-mensual"></div>
+    <figcaption id="c-mensual"></figcaption>
+  </figure>
+  <figure>
+    <div class="grafico" id="g-estacional"></div>
+    <figcaption id="c-estacional"></figcaption>
+  </figure>
+
+  <p class="pregunta">¿Qué tan concentrado está el gasto en pocos proveedores, y cambia entre territorios?</p>
+  <p class="ruta">filtrar adjudicados → sumar monto por proveedor → ordenar y acumular → Gini</p>
+  <figure>
+    <div class="grafico" id="g-lorenz"></div>
+    <figcaption id="c-lorenz"></figcaption>
+  </figure>
+  <figure>
+    <div class="grafico" id="g-gini"></div>
+    <figcaption id="c-gini"></figcaption>
+  </figure>
+
+  <p class="pregunta">¿Qué relación hay entre el número de postores y el monto adjudicado?</p>
+  <figure>
+    <div class="grafico" id="g-competencia"></div>
+    <figcaption id="c-competencia"></figcaption>
+  </figure>
+  <figure>
+    <div class="grafico" id="g-histograma"></div>
+    <figcaption id="c-histograma"></figcaption>
+  </figure>
+</section>
+
+<section id="p2">
+  <p class="rotulo">Parte II</p>
+  <h2>Similitud con MinHash y LSH</h2>
+  <div class="txt">
+  <p>Con 177.398 procesos hay más de quince mil millones de pares posibles. LSH evita casi todos:
+  divide la firma MinHash en bandas y solo compara los documentos que coinciden en alguna banda.
+  Importa una aclaración, porque decide cómo se mide todo lo que sigue. LSH es un generador de
+  candidatos y no un clasificador: su salida pasa por una verificación exacta que elimina los falsos
+  positivos, así que la precisión antes de verificar no mide calidad sino trabajo pendiente. Lo que
+  importa es el recall, porque un par perdido aquí se pierde para siempre.</p>
+  </div>
+  <figure>
+    <div class="grafico" id="g-minhash"></div>
+    <figcaption id="c-minhash"></figcaption>
+  </figure>
+
+  <p class="pregunta">Mueva las bandas y las filas para ver qué se considera parecido</p>
+  <div class="controles">
+    <div class="control">
+      <label for="lsh-b">Bandas: <b id="v-lsh-b">16</b></label>
+      <input type="range" id="lsh-b" min="2" max="128" step="1" value="16">
+    </div>
+    <div class="control">
+      <label for="lsh-r">Filas por banda: <b id="v-lsh-r">8</b></label>
+      <input type="range" id="lsh-r" min="1" max="32" step="1" value="8">
+    </div>
+    <div class="salida" id="s-lsh"></div>
+  </div>
+  <figure>
+    <div class="grafico" id="g-lsh"></div>
+    <figcaption id="c-lsh"></figcaption>
+  </figure>
+
+  <h3>Pares encontrados por el método</h3>
+  <div class="tabla"><table id="t-casos"></table></div>
+  <p class="txt">Un par con similitud alta dice que dos procesos describen casi lo mismo. Puede
+  reflejar una plantilla compartida entre entidades, una necesidad genuinamente idéntica o un
+  proceso fraccionado. Es una hipótesis que señala dónde mirar y nada más.</p>
+</section>
+
+<section id="p3">
+  <p class="rotulo">Parte III</p>
+  <h2>Búsqueda aproximada de vecinos</h2>
+  <div class="txt">
+  <p>Antes de comparar índices hay que fijar el régimen de medición, porque la biblioteca cambia de
+  implementación según el tamaño del lote de consultas. Con un lote grande el índice plano resuelve
+  la búsqueda como un producto de matrices y aprovecha los ocho núcleos; con una consulta aislada no
+  tiene nada que amortizar. Mezclar ambos regímenes produce diferencias de un orden de magnitud que
+  no son del índice sino del método de medición.</p>
+  </div>
+  <figure>
+    <div class="grafico" id="g-ann"></div>
+    <figcaption id="c-ann"></figcaption>
+  </figure>
+  <figure>
+    <div class="grafico" id="g-escalado"></div>
+    <figcaption id="c-escalado"></figcaption>
+  </figure>
+</section>
+
+<section id="p4">
+  <p class="rotulo">Parte IV</p>
+  <h2>Minería de flujos</h2>
+  <div class="txt">
+  <p>Las estructuras de esta parte no son alternativas entre sí. Un filtro de Bloom responde si algo
+  apareció, un Count-Min Sketch responde cuántas veces y DGIM responde cuántos hubo en los últimos
+  elementos. Forzar una sobre la tarea de otra se paga, y abajo está medido cuánto.</p>
+  </div>
+
+  <p class="pregunta">Mueva el tamaño del filtro de Bloom y vea qué precisión compra</p>
+  <div class="controles">
+    <div class="control">
+      <label for="bl-bits">Bits por elemento: <b id="v-bl-bits">10</b></label>
+      <input type="range" id="bl-bits" min="2" max="40" step="1" value="10">
+    </div>
+    <div class="control">
+      <label for="bl-k">Funciones hash: <b id="v-bl-k">7</b></label>
+      <input type="range" id="bl-k" min="1" max="20" step="1" value="7">
+    </div>
+    <div class="salida" id="s-bloom"></div>
+  </div>
+  <figure>
+    <div class="grafico" id="g-bloom"></div>
+    <figcaption id="c-bloom"></figcaption>
+  </figure>
+
+  <p class="pregunta">Reparta el presupuesto de memoria del Count-Min entre ancho y profundidad</p>
+  <div class="controles">
+    <div class="control">
+      <label for="cm-w">Ancho de la tabla: <b id="v-cm-w">2700</b></label>
+      <input type="range" id="cm-w" min="200" max="20000" step="100" value="2700">
+    </div>
+    <div class="control">
+      <label for="cm-d">Profundidad: <b id="v-cm-d">7</b></label>
+      <input type="range" id="cm-d" min="1" max="15" step="1" value="7">
+    </div>
+    <div class="salida" id="s-cms"></div>
+  </div>
+  <figure>
+    <div class="grafico" id="g-cms"></div>
+    <figcaption id="c-cms"></figcaption>
+  </figure>
+
+  <figure>
+    <div class="grafico" id="g-dgim"></div>
+    <figcaption id="c-dgim"></figcaption>
+  </figure>
+  <div class="tabla"><table id="t-flujos"></table></div>
+</section>
+
+<section id="p5">
+  <p class="rotulo">Parte V</p>
+  <h2>Conjuntos frecuentes y reglas de asociación</h2>
+  <div class="txt">
+  <p>La definición de transacción era el problema real y no el algoritmo. La canasta natural, el
+  conjunto de códigos de catálogo de un proceso, no sirve: apenas el 2,1 por ciento de los procesos
+  tiene dos o más ítems, y un conjunto de un solo elemento no contiene coocurrencia. El catálogo
+  identifica el objeto del proceso, y la mayoría de los procesos peruanos tienen un objeto único, así
+  que la analogía del supermercado no se sostiene a nivel de acto administrativo. La transacción se
+  redefinió como lo que una entidad compra dentro de un mismo mes, lo que sube la coocurrencia al
+  53,6 por ciento.</p>
+  </div>
+  <figure>
+    <div class="grafico" id="g-algoritmos"></div>
+    <figcaption id="c-algoritmos"></figcaption>
+  </figure>
+
+  <p class="pregunta">Filtre las reglas por soporte, confianza y lift</p>
+  <div class="controles">
+    <div class="control">
+      <label for="rg-sop">Soporte mínimo: <b id="v-rg-sop">0,004</b></label>
+      <input type="range" id="rg-sop" min="2" max="40" step="1" value="4">
+    </div>
+    <div class="control">
+      <label for="rg-conf">Confianza mínima: <b id="v-rg-conf">0,30</b></label>
+      <input type="range" id="rg-conf" min="30" max="100" step="5" value="30">
+    </div>
+    <div class="control">
+      <label for="rg-lift">Lift mínimo: <b id="v-rg-lift">3</b></label>
+      <input type="range" id="rg-lift" min="1" max="60" step="1" value="3">
+    </div>
+    <div class="salida" id="s-reglas"></div>
+  </div>
+  <figure>
+    <div class="grafico" id="g-reglas"></div>
+    <figcaption id="c-reglas"></figcaption>
+  </figure>
+  <div class="tabla"><table id="t-reglas"></table></div>
+</section>
+
+<section id="p6">
+  <p class="rotulo">Parte VI</p>
+  <h2>Análisis y discusión</h2>
+  <div class="txt">
+  <h3>Qué técnicas aportaron valor</h3>
+  <p>Las que respondieron una pregunta planteada de antemano. El análisis exploratorio y la curva de
+  Lorenz contestan la concentración con un número comparable entre territorios. Las reglas sobre la
+  canasta enriquecida contestan dónde se concentra la falta de competencia. LSH aporta candidatos de
+  objetos duplicados, que es el paso que faltaba para interpretar la concentración. La búsqueda
+  aproximada de vecinos aportó poco a las preguntas y mucho al aprendizaje sobre el compromiso entre
+  exactitud y latencia, y conviene decirlo así en lugar de inflar su utilidad.</p>
+
+  <h3>Cuánto se pierde con los métodos aproximados</h3>
+  <p>Está medido y no estimado. MinHash con 128 funciones hash tiene un error muy inferior al ancho
+  de la zona de decisión de LSH. LSH pierde recall de forma controlada según las bandas y las filas,
+  y a cambio evita más del noventa por ciento de las comparaciones. Los índices aproximados pierden
+  unos pocos puntos de recall. El filtro de Bloom respeta su tasa teórica, el Count-Min nunca
+  subestima y respeta su cota, y DGIM queda muy por debajo de su cota del cincuenta por ciento.</p>
+
+  <h3>Qué se benefició realmente de Spark</h3>
+  <p>La ingesta y el análisis exploratorio, sin duda: 2,98 GB de CSV en 21 tablas por año se
+  desnormalizan a una tabla analítica en menos de medio minuto. El agrupamiento por bandas de LSH
+  también, porque son millones de pares. No se benefició la búsqueda de vecinos, donde una biblioteca
+  de un solo nodo es mejor herramienta, ni la minería de flujos, cuyo recorrido es secuencial y con
+  estado. Afirmar que todo mejoró con Spark sería falso, y reconocer dónde no aporta es parte del
+  análisis.</p>
+
+  <h3>Qué cambiaría con diez o cien veces más volumen</h3>
+  <p>La búsqueda exacta dejaría de ser viable y el índice aproximado pasaría de ejercicio a
+  obligación. El Count-Min empezaría a ganarle al diccionario exacto, cosa que a este volumen todavía
+  no ocurre. A-Priori quedaría definitivamente fuera. El particionado por año dejaría de bastar y
+  habría que subparticionar por mes. Y una mala elección del número de particiones de barajado, que
+  hoy la ejecución adaptativa amortigua casi por completo, pasaría a costar tiempo real.</p>
+
+  <h3>Implicancias sobre datos públicos peruanos</h3>
+  <p>Estas técnicas sirven a la transparencia y al control del gasto, y ese es el motivo de que los
+  datos sean abiertos. Al mismo tiempo, un par de proveedores marcado como similar es una hipótesis
+  estadística y no una acusación, y una regla de asociación es una coocurrencia sobre datos de
+  publicación y no una afirmación sobre la conducta de una entidad. El riesgo concreto de este tipo
+  de trabajo es que un hallazgo estadístico se presente con el lenguaje de una conclusión. Los datos
+  además tienen sesgos de publicación que este proyecto documentó, como la subcobertura de los meses
+  más recientes, que un lector apresurado leería como una caída de la contratación.</p>
+
+  <h3>Lo que este trabajo no autoriza a concluir</h3>
+  <ol>
+    <li>Que un par de procesos con objeto casi idéntico implique fraccionamiento o colusión. Implica
+    que dos textos se parecen.</li>
+    <li>Que una concentración alta implique conducta anticompetitiva. Puede reflejar especialización,
+    contratos de gran escala o el propio mecanismo de compra.</li>
+    <li>Que una regla de asociación con lift alto implique causalidad.</li>
+    <li>Que las cifras agregadas aquí sean cifras oficiales. Describen el paquete descargado, con sus
+    sesgos de publicación, y no el gasto público ejecutado.</li>
+  </ol>
+  </div>
+</section>
+
+<footer>
+  Proyecto Integrador de Minería de Datos Masivos y Flujos de Datos.<br>
+  Ricardo Amiel Acuña Villogas, Juan Leibniz Aquino Espinoza y Camilo Ernesto Soto Cristóbal.<br>
+  Datos de <a href="https://data.open-contracting.org/es/publication/135">Open Contracting Partnership, Data Registry, publicación 135, Perú, OECE</a>, paquetes anuales 2023 a 2025.<br>
+  Los agregados se generan con los notebooks del proyecto y van incrustados en este archivo.
+</footer>
+
+</div>
+
+<script>
+// Los agregados los producen los notebooks del proyecto y se incrustan aqui al
+// generar la pagina. No hay ninguna peticion de red.
+const D = __DATOS__;
+
+const C = {azul:"#2E6DB4", rojo:"#B3441F", verde:"#4F8C28", morado:"#8B5BB5", teal:"#00807E",
+           tinta:"#1A1A1A", tinta2:"#454C54", tinta3:"#737B84",
+           linea:"#D5DCE3", suave:"#E8ECF0", claro:"#DCE9F6", fondo:"#FFFFFF"};
+
+const tip = document.getElementById("tip");
+const nf = (x, d = 0) => x.toLocaleString("es-ES", {minimumFractionDigits:d, maximumFractionDigits:d});
+
+function mostrarTip(ev, html) {
+  tip.innerHTML = html; tip.style.opacity = 1;
+  const r = tip.getBoundingClientRect();
+  let x = ev.clientX + 14, y = ev.clientY - r.height - 10;
+  if (x + r.width > innerWidth - 10) x = ev.clientX - r.width - 14;
+  if (y < 6) y = ev.clientY + 18;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+const ocultarTip = () => tip.style.opacity = 0;
+
+// Las fechas llegan en UTC. Hay que leerlas y formatearlas en UTC: con hora
+// local de Lima el primero de enero retrocede al 31 de diciembre anterior.
+const esES = d3.timeFormatLocale({
+  dateTime:"%A %e de %B de %Y, %X", date:"%d/%m/%Y", time:"%H:%M:%S",
+  periods:["a. m.","p. m."],
+  days:["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],
+  shortDays:["dom","lun","mar","mié","jue","vie","sáb"],
+  months:["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],
+  shortMonths:["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]});
+const mesCorto = esES.utcFormat("%b %y"), mesLargo = esES.utcFormat("%B de %Y");
+
+let N_FIG = 0;
+/* Lienzo responsivo. Devuelve el grupo ya desplazado por el margen. */
+function lienzo(sel, alto, m) {
+  const cont = d3.select(sel); cont.selectAll("*").remove();
+  const ancho = Math.max(320, cont.node().clientWidth);
+  const svg = cont.append("svg").attr("viewBox", `0 0 ${ancho} ${alto}`)
+    .attr("width", "100%").attr("height", alto);
+  return {svg, ancho, alto, m, w: ancho - m.l - m.r, h: alto - m.t - m.b,
+          g: svg.append("g").attr("transform", `translate(${m.l},${m.t})`)};
+}
+const ejeY = (o, y, f) => o.g.append("g").attr("class", "eje rejilla")
+  .call(d3.axisLeft(y).ticks(5).tickSize(-o.w).tickFormat(f));
+function ejeX(o, x, op = {}) {
+  const e = o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(op.ticks || 6).tickFormat(op.fmt || null));
+  if (op.rotar) e.selectAll("text").attr("transform", "rotate(-28)")
+    .style("text-anchor", "end").attr("dx", "-.5em").attr("dy", ".3em");
+  return e;
+}
+const rotY = (o, t) => o.svg.append("text").attr("class", "rotulo-eje")
+  .attr("transform", "rotate(-90)").attr("x", -(o.m.t + o.h / 2)).attr("y", 12)
+  .attr("text-anchor", "middle").text(t);
+const rotX = (o, t) => o.svg.append("text").attr("class", "rotulo-eje")
+  .attr("x", o.m.l + o.w / 2).attr("y", o.alto - 3).attr("text-anchor", "middle").text(t);
+function leyenda(o, items, nota) {
+  // Arriba del area de trazado. Abajo chocaba con los rotulos del eje.
+  const g = o.svg.append("g").attr("transform", `translate(${o.m.l},11)`);
+  let x = 0;
+  items.forEach(([t, c]) => {
+    const e = g.append("g").attr("transform", `translate(${x},0)`);
+    e.append("rect").attr("width", 10).attr("height", 10).attr("y", -9).attr("fill", c);
+    e.append("text").attr("x", 14).attr("class", "rotulo-eje").text(t);
+    x += t.length * 6.1 + 32;
+  });
+  if (nota) g.append("text").attr("y", 15).attr("class", "rotulo-eje").text(nota);
+}
+/* Escribe el pie de figura numerado, que es donde va la interpretacion. */
+function pie(sel, titulo, texto) {
+  N_FIG += 1;
+  document.querySelector(sel).innerHTML =
+    `<span class="num">Figura ${N_FIG}. ${titulo}.</span> ${texto.replace(/\s+/g, " ").trim()}`;
+}
+
+/* ====================================================== Parte I ======= */
+function gMensual() {
+  const d = D.serie_mensual.map(r => ({...r, f: new Date(r.anio_mes)}));
+  const o = lienzo("#g-mensual", 320, {t:30, r:14, b:40, l:52});
+  const x = d3.scaleUtc().domain(d3.extent(d, r => r.f)).range([0, o.w]);
+  const y = d3.scaleLinear().domain([0, d3.max(d, r => r.procesos) * 1.1]).range([o.h, 0]);
+  const y2 = d3.scaleLinear().domain([0, d3.max(d, r => r.monto_millones) * 1.1]).range([o.h, 0]);
+  ejeY(o, y, v => nf(v / 1000) + " k"); ejeX(o, x, {fmt: mesCorto, ticks: 7});
+  rotY(o, "procesos convocados");
+
+  o.g.append("path").datum(d).attr("fill", C.claro)
+    .attr("d", d3.area().x(r => x(r.f)).y0(o.h).y1(r => y2(r.monto_millones)).curve(d3.curveMonotoneX));
+  o.g.append("path").datum(d).attr("fill", "none").attr("stroke", C.azul).attr("stroke-width", 2.2)
+    .attr("d", d3.line().x(r => x(r.f)).y(r => y(r.procesos)).curve(d3.curveMonotoneX));
+  // Diciembre marcado, que es el mes que responde la pregunta.
+  o.g.selectAll("circle.dic").data(d.filter(r => r.f.getUTCMonth() === 11)).join("circle")
+    .attr("class", "dic").attr("cx", r => x(r.f)).attr("cy", r => y(r.procesos)).attr("r", 5)
+    .attr("fill", C.rojo).attr("stroke", C.fondo).attr("stroke-width", 2);
+
+  const foco = o.g.append("circle").attr("r", 4.5).attr("fill", C.azul).style("opacity", 0);
+  const guia = o.g.append("line").attr("y1", 0).attr("y2", o.h).attr("stroke", C.tinta3)
+    .attr("stroke-dasharray", "3,3").style("opacity", 0);
+  o.g.append("rect").attr("width", o.w).attr("height", o.h).attr("fill", "transparent")
+    .on("mousemove", ev => {
+      const fx = x.invert(d3.pointer(ev, o.g.node())[0]);
+      const r = d.reduce((a, b) => Math.abs(b.f - fx) < Math.abs(a.f - fx) ? b : a);
+      foco.attr("cx", x(r.f)).attr("cy", y(r.procesos)).style("opacity", 1);
+      guia.attr("x1", x(r.f)).attr("x2", x(r.f)).style("opacity", .7);
+      mostrarTip(ev, `<b>${mesLargo(r.f)}</b><br>${nf(r.procesos)} procesos<br>
+        S/ ${nf(r.monto_millones)} millones<br>mediana S/ ${nf(r.monto_mediano)}`);
+    }).on("mouseleave", () => {foco.style("opacity", 0); guia.style("opacity", 0); ocultarTip();});
+  leyenda(o, [["procesos convocados", C.azul], ["monto, escala propia", C.claro],
+              ["diciembre", C.rojo]]);
+
+  const dic = d.filter(r => r.f.getUTCMonth() === 11);
+  pie("#c-mensual", "Procesos convocados y monto por mes, 2023 a 2025",
+    `Los puntos rojos marcan diciembre. Es el máximo de su año en 2023 y en 2024, los dos años con
+     cobertura completa, con ${nf(dic[0].procesos)} y ${nf(dic[1].procesos)} procesos. El área de
+     fondo es el monto, en su propia escala: su pico de diciembre es mucho más marcado que el del
+     conteo, de modo que a fin de año no solo se convoca más, se convoca más caro. La caída del
+     tramo final de 2025 no es menos contratación sino subcobertura, porque los procesos tardan en
+     entrar al registro.`);
+}
+
+function gEstacional() {
+  const filas = D.estacionalidad, anios = Object.keys(filas[0]).filter(k => k !== "mes");
+  const o = lienzo("#g-estacional", 260, {t:24, r:14, b:34, l:48});
+  const x = d3.scaleBand().domain(anios).range([0, Math.min(o.w, 380)]).padding(.06);
+  const y = d3.scaleBand().domain(filas.map(r => r.mes)).range([0, o.h]).padding(.06);
+  const todos = filas.flatMap(r => anios.map(a => +r[a]));
+  const color = d3.scaleSequential(d3.interpolateBlues).domain([0, d3.max(todos)]);
+
+  o.g.append("g").attr("class", "eje").call(d3.axisLeft(y).tickSize(0));
+  o.g.append("g").attr("class", "eje").attr("transform", "translate(0,-4)")
+    .call(d3.axisTop(x).tickSize(0));
+  filas.forEach(r => anios.forEach(a => {
+    o.g.append("rect").attr("x", x(a)).attr("y", y(r.mes))
+      .attr("width", x.bandwidth()).attr("height", y.bandwidth())
+      .attr("fill", color(+r[a]))
+      .on("mousemove", ev => mostrarTip(ev,
+        `<b>${r.mes} de ${a}</b><br>${nf(+r[a])} procesos convocados`))
+      .on("mouseleave", ocultarTip);
+    o.g.append("text").attr("x", x(a) + x.bandwidth() / 2).attr("y", y(r.mes) + y.bandwidth() / 2 + 3)
+      .attr("text-anchor", "middle").style("font-size", "9.5px").style("font-family", "var(--dato)")
+      .attr("fill", +r[a] > d3.max(todos) * .6 ? "#FFFFFF" : C.tinta).attr("pointer-events", "none")
+      .text(nf(+r[a]));
+  }));
+  pie("#c-estacional", "Procesos por mes y año",
+    `Aísla el calendario del ruido de cada año. Las columnas de 2023 y 2024 se oscurecen hacia el
+     último trimestre y alcanzan su máximo en diciembre; la de 2025 se apaga al final por la
+     subcobertura ya señalada. Que el patrón se repita en los dos años completos es lo que permite
+     atribuirlo al cierre del ejercicio presupuestal y no a un año particular.`);
+}
+
+function gLorenz() {
+  const d = D.lorenz, c = D.concentracion;
+  const o = lienzo("#g-lorenz", 330, {t:14, r:16, b:42, l:50});
+  const lado = Math.min(o.w, o.h);
+  const x = d3.scaleLinear().domain([0, 1]).range([0, lado]);
+  const y = d3.scaleLinear().domain([0, 1]).range([o.h, o.h - lado]);
+  o.g.append("g").attr("class", "eje rejilla")
+    .call(d3.axisLeft(y).ticks(5).tickSize(-lado).tickFormat(d3.format(".0%")));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format(".0%")));
+  rotY(o, "porcentaje acumulado del monto");
+  // El rotulo se centra sobre el area cuadrada, no sobre el ancho del lienzo.
+  o.svg.append("text").attr("class", "rotulo-eje").attr("x", o.m.l + lado / 2)
+    .attr("y", o.alto - 3).attr("text-anchor", "middle")
+    .text("porcentaje acumulado de proveedores");
+
+  o.g.append("line").attr("x1", x(0)).attr("y1", y(0)).attr("x2", x(1)).attr("y2", y(1))
+    .attr("stroke", C.tinta3).attr("stroke-dasharray", "5,4");
+  const pts = [{pct_proveedores:0, pct_monto:0}, ...d];
+  o.g.append("path").datum(pts).attr("fill", C.claro)
+    .attr("d", d3.area().x(r => x(r.pct_proveedores)).y0(r => y(r.pct_proveedores)).y1(r => y(r.pct_monto)));
+  o.g.append("path").datum(pts).attr("fill", "none").attr("stroke", C.azul).attr("stroke-width", 2.4)
+    .attr("d", d3.line().x(r => x(r.pct_proveedores)).y(r => y(r.pct_monto)));
+
+  // Los tramos del ranking, marcados sobre la curva.
+  const tramos = c.filter(r => r.tramo.startsWith("top")).map(r => {
+    const p = 1 - parseFloat(r.tramo.replace(/[^0-9.]/g, "")) / 100;
+    return {p, pct: r.pct_del_monto, etiqueta: r.tramo};
+  });
+  o.g.selectAll("circle.t").data(tramos).join("circle").attr("class", "t")
+    .attr("cx", r => x(r.p)).attr("cy", r => y(1 - r.pct / 100)).attr("r", 5)
+    .attr("fill", C.rojo).attr("stroke", C.fondo).attr("stroke-width", 2)
+    .on("mousemove", (ev, r) => mostrarTip(ev,
+      `<b>El ${r.etiqueta.replace("top ", "")} con mayor monto</b><br>
+       concentra el ${nf(r.pct, 1)} por ciento del gasto`))
+    .on("mouseleave", ocultarTip);
+
+  o.g.append("rect").attr("width", lado).attr("height", o.h).attr("fill", "transparent")
+    .on("mousemove", ev => {
+      const px = Math.max(0, Math.min(1, x.invert(d3.pointer(ev, o.g.node())[0])));
+      const r = d.reduce((a, b) => Math.abs(b.pct_proveedores - px) < Math.abs(a.pct_proveedores - px) ? b : a);
+      mostrarTip(ev, `<b>El ${nf(r.pct_proveedores * 100, 1)} por ciento de proveedores
+        con menor monto</b><br>acumula el ${nf(r.pct_monto * 100, 1)} por ciento del gasto`);
+    }).on("mouseleave", ocultarTip);
+  o.g.append("text").attr("x", x(.06)).attr("y", y(.88)).style("font-size", "17px")
+    .style("font-weight", "bold").attr("fill", C.tinta).text(`Gini = ${nf(c[0].gini, 3)}`);
+
+  pie("#c-lorenz", "Curva de Lorenz del monto adjudicado entre proveedores",
+    `La diagonal sería el reparto perfectamente igualitario y el área sombreada mide cuánto se
+     aparta de él. Los puntos rojos marcan los tramos del ranking: el uno por ciento de los
+     proveedores concentra el ${nf(c[0].pct_del_monto, 1)} por ciento del monto y el diez por
+     ciento se lleva el ${nf(c[2].pct_del_monto, 1)} por ciento. El coeficiente de Gini resume esa
+     desigualdad en ${nf(c[0].gini, 3)}, sobre un máximo de 1.`);
+}
+
+function gGini() {
+  const dep = D.gini_departamento.slice().sort((a, b) => b.gini - a.gini).slice(0, 15);
+  const nac = D.concentracion[0].gini;
+  const o = lienzo("#g-gini", 340, {t:12, r:16, b:40, l:140});
+  const x = d3.scaleLinear().domain([.7, d3.max(dep, r => r.gini) * 1.02]).range([0, o.w]);
+  const y = d3.scaleBand().domain(dep.map(r => r.departamento)).range([0, o.h]).padding(.25);
+  o.g.append("g").attr("class", "eje rejilla").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(5).tickSize(-o.h).tickFormat(v => nf(v, 2)));
+  o.g.append("g").attr("class", "eje").call(d3.axisLeft(y).tickSize(0));
+  o.g.selectAll("rect.b").data(dep).join("rect").attr("class", "b")
+    .attr("y", r => y(r.departamento)).attr("height", y.bandwidth()).attr("width", r => x(r.gini))
+    .attr("fill", r => r.gini > nac ? C.rojo : C.morado)
+    .on("mousemove", (ev, r) => mostrarTip(ev,
+      `<b>${r.departamento}</b><br>Gini ${nf(r.gini, 3)}<br>${nf(r.proveedores)} proveedores<br>
+       S/ ${nf(r.monto_mm)} millones<br>${r.gini > nac ? "por encima" : "por debajo"} del nacional`))
+    .on("mouseleave", ocultarTip);
+  o.g.append("line").attr("x1", x(nac)).attr("x2", x(nac)).attr("y1", -4).attr("y2", o.h)
+    .attr("stroke", C.tinta).attr("stroke-width", 1.6).attr("stroke-dasharray", "4,3");
+  o.g.append("text").attr("x", x(nac) + 5).attr("y", 8).attr("class", "rotulo-eje")
+    .attr("fill", C.tinta).text(`nacional ${nf(nac, 3)}`);
+  rotX(o, "coeficiente de Gini del monto adjudicado");
+
+  const encima = dep.filter(r => r.gini > nac);
+  pie("#c-gini", "Concentración del gasto por departamento",
+    `El monto absoluto solo diría que Lima gasta más; el Gini hace comparables mercados de tamaños
+     muy distintos. El resultado va en contra de lo esperado: solo ${encima.length} de los
+     ${D.gini_departamento.length} departamentos superan el Gini nacional, y son
+     ${encima.map(r => r.departamento).join(" y ")}. Los demás quedan por debajo, así que el Gini
+     del país no describe a un mercado regional típico, está empujado hacia arriba por Lima.`);
+}
+
+function gCompetencia() {
+  const d = D.competencia;
+  const o = lienzo("#g-competencia", 330, {t:30, r:14, b:72, l:50});
+  const x0 = d3.scaleBand().domain(d.map(r => r.tramo)).range([0, o.w]).padding(.2);
+  const x1 = d3.scaleBand().domain(["a", "b"]).range([0, x0.bandwidth()]).padding(.1);
+  const y = d3.scaleLinear().domain([0, Math.max(d3.max(d, r => r.pct_postor_unico),
+    d3.max(d, r => r.postores_mediano)) * 1.12]).range([o.h, 0]);
+  ejeY(o, y, v => nf(v)); ejeX(o, x0, {rotar: true, ticks: d.length});
+  [["a", "postores_mediano", C.azul], ["b", "pct_postor_unico", C.rojo]].forEach(([k, campo, c]) => {
+    o.g.selectAll(`rect.${k}`).data(d).join("rect").attr("class", k)
+      .attr("x", r => x0(r.tramo) + x1(k)).attr("y", r => y(r[campo]))
+      .attr("width", x1.bandwidth()).attr("height", r => o.h - y(r[campo])).attr("fill", c)
+      .on("mousemove", (ev, r) => mostrarTip(ev,
+        `<b>${r.tramo}</b><br>${nf(r.procesos)} procesos<br>
+         ${nf(r.postores_mediano)} postores medianos<br>
+         ${nf(r.pct_postor_unico, 1)} por ciento con un solo postor`))
+      .on("mouseleave", ocultarTip);
+  });
+  leyenda(o, [["postores medianos", C.azul], ["por ciento con un solo postor", C.rojo]]);
+
+  const bajo = d[0], resto = d.slice(1);
+  const media = resto.reduce((a, r) => a + r.pct_postor_unico, 0) / resto.length;
+  pie("#c-competencia", "Competencia por tramo de monto",
+    `El número mediano de postores crece con el monto, de ${nf(bajo.postores_mediano)} a
+     ${nf(d[d.length - 1].postores_mediano)}. Lo que importa es dónde se rompe: en el tramo más
+     bajo el ${nf(bajo.pct_postor_unico, 0)} por ciento de los procesos tuvo un único postor,
+     mientras que en los demás esa proporción se estabiliza cerca del ${nf(media, 0)} por ciento y
+     ya no baja, ni siquiera por encima de veinte millones. Son dos fenómenos distintos: una franja
+     pequeña competitiva solo en el papel, y un suelo persistente de uno de cada diez procesos sin
+     competencia que atraviesa todo el rango.`);
+}
+
+function gHistograma() {
+  const d = D.histograma.filter(r => r.procesos > 0);
+  const o = lienzo("#g-histograma", 270, {t:12, r:14, b:44, l:50});
+  const x = d3.scaleLog().domain([d[0].desde, d[d.length - 1].hasta]).range([0, o.w]);
+  const y = d3.scaleLinear().domain([0, d3.max(d, r => r.procesos) * 1.08]).range([o.h, 0]);
+  ejeY(o, y, v => nf(v / 1000) + " k");
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(6, "~s"));
+  rotY(o, "procesos"); rotX(o, "valor referencial en soles, escala logarítmica");
+  o.g.selectAll("rect.h").data(d).join("rect").attr("class", "h")
+    .attr("x", r => x(r.desde)).attr("width", r => Math.max(1, x(r.hasta) - x(r.desde) - 1))
+    .attr("y", r => y(r.procesos)).attr("height", r => o.h - y(r.procesos)).attr("fill", C.azul)
+    .on("mousemove", (ev, r) => mostrarTip(ev,
+      `<b>S/ ${nf(r.desde)} a ${nf(r.hasta)}</b><br>${nf(r.procesos)} procesos`))
+    .on("mouseleave", ocultarTip);
+  const tot = d.reduce((a, r) => a + r.procesos, 0);
+  pie("#c-histograma", "Distribución del valor referencial",
+    `En escala lineal esta figura sería una sola barra pegada al eje: el monto abarca seis órdenes
+     de magnitud. El logaritmo es lo que la hace legible y lo que justifica haber aplicado el
+     criterio de valores extremos sobre esa misma escala y no sobre el valor directo. La forma es
+     la de una distribución de cola muy larga, con la masa entre decenas y cientos de miles de
+     soles y una cola que llega a los cientos de millones.`);
+}
+
+/* ====================================================== Parte II ====== */
+function gMinHash() {
+  const d = D.error_minhash;
+  const o = lienzo("#g-minhash", 270, {t:30, r:14, b:44, l:54});
+  const x = d3.scaleLog().base(2).domain([d[0].n_hashes * .8, d[d.length-1].n_hashes * 1.25]).range([0, o.w]);
+  const y = d3.scaleLog().domain([d3.min(d, r => r.error_medio) * .7,
+                                  d3.max(d, r => r.cota_1_sobre_raiz_n) * 1.4]).range([o.h, 0]);
+  ejeY(o, y, d3.format(".3f"));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(4, "~s"));
+  rotY(o, "error absoluto medio"); rotX(o, "número de funciones hash, ambas escalas logarítmicas");
+  [["cota_1_sobre_raiz_n", C.rojo, "cota teórica"], ["error_medio", C.azul, "error observado"]]
+    .forEach(([campo, c, et], i) => {
+      o.g.append("path").datum(d).attr("fill", "none").attr("stroke", c).attr("stroke-width", 2.2)
+        .attr("stroke-dasharray", i === 0 ? "5,3" : null)
+        .attr("d", d3.line().x(r => x(r.n_hashes)).y(r => y(r[campo])));
+      o.g.selectAll(`circle.m${i}`).data(d).join("circle").attr("class", `m${i}`)
+        .attr("cx", r => x(r.n_hashes)).attr("cy", r => y(r[campo])).attr("r", 4).attr("fill", c)
+        .on("mousemove", (ev, r) => mostrarTip(ev,
+          `<b>${r.n_hashes} funciones hash</b><br>error observado ${nf(r.error_medio, 4)}<br>
+           cota teórica ${nf(r.cota_1_sobre_raiz_n, 4)}<br>${nf(r.bytes_por_doc)} bytes por documento`))
+        .on("mouseleave", ocultarTip);
+    });
+  leyenda(o, [["cota 1 sobre raíz de n", C.rojo], ["error observado", C.azul]]);
+  const p = d[0], u = d[d.length - 1];
+  pie("#c-minhash", "Precisión de MinHash frente a su costo",
+    `El error observado sigue la cota teórica y baja como uno sobre la raíz de n, así que
+     cuadruplicar las funciones hash solo divide el error entre dos. Pasar de ${p.n_hashes} a
+     ${u.n_hashes} baja el error de ${nf(p.error_medio, 4)} a ${nf(u.error_medio, 4)} a cambio de
+     multiplicar por ocho la memoria de la firma. Se eligieron 128: el error que da es muy inferior
+     al ancho de la zona de decisión de LSH, así que gastar más no compra nada útil.`);
+}
+
+const probCand = (s, b, r) => 1 - Math.pow(1 - Math.pow(s, r), b);
+const umbralLSH = (b, r) => Math.pow(1 / b, 1 / r);
+
+function gLSH() {
+  const b = +document.getElementById("lsh-b").value, r = +document.getElementById("lsh-r").value;
+  document.getElementById("v-lsh-b").textContent = b;
+  document.getElementById("v-lsh-r").textContent = r;
+  const u = umbralLSH(b, r), pu = probCand(u, b, r);
+  document.getElementById("s-lsh").innerHTML =
+    `Firma de <b>${b * r}</b> valores. Umbral teórico <b>${nf(u, 3)}</b>, el punto donde la curva
+     cambia de concavidad. Ahí la probabilidad de ser candidato vale <b>${nf(pu, 3)}</b>, que es
+     1 menos 1 sobre e y no un medio, confusión frecuente. Un par con Jaccard 0,30 es candidato con
+     probabilidad <b>${nf(probCand(.3, b, r), 3)}</b>; uno con 0,80, con <b>${nf(probCand(.8, b, r), 3)}</b>.`;
+
+  const o = lienzo("#g-lsh", 310, {t:12, r:16, b:46, l:48});
+  const x = d3.scaleLinear().domain([0, 1]).range([0, o.w]);
+  const y = d3.scaleLinear().domain([0, 1]).range([o.h, 0]);
+  ejeY(o, y, d3.format(".1f")); ejeX(o, x, {fmt: d3.format(".1f")});
+  rotY(o, "probabilidad de ser candidato"); rotX(o, "similitud de Jaccard real del par");
+
+  D.barrido_lsh.forEach(cfg => {
+    o.g.append("path").datum(d3.range(0, 1.004, .006).map(s => [s, probCand(s, cfg.b, cfg.r)]))
+      .attr("fill", "none").attr("stroke", C.linea).attr("stroke-width", 1.3)
+      .attr("d", d3.line().x(p => x(p[0])).y(p => y(p[1])));
+  });
+  o.g.append("path").datum(d3.range(0, 1.002, .002).map(s => [s, probCand(s, b, r)]))
+    .attr("fill", "none").attr("stroke", C.azul).attr("stroke-width", 2.8)
+    .attr("d", d3.line().x(p => x(p[0])).y(p => y(p[1])));
+  o.g.append("line").attr("x1", x(u)).attr("x2", x(u)).attr("y1", 0).attr("y2", o.h)
+    .attr("stroke", C.rojo).attr("stroke-dasharray", "4,3").attr("stroke-width", 1.6);
+  o.g.append("circle").attr("cx", x(u)).attr("cy", y(pu)).attr("r", 5.5).attr("fill", C.rojo)
+    .attr("stroke", C.fondo).attr("stroke-width", 2);
+  o.g.append("text").attr("x", x(u) + 7).attr("y", 12).attr("class", "rotulo-eje")
+    .attr("fill", C.rojo).text(`umbral ${nf(u, 3)}`);
+  o.g.selectAll("circle.med").data(D.barrido_lsh).join("circle").attr("class", "med")
+    .attr("cx", x(.3)).attr("cy", p => y(p.recall)).attr("r", 4).attr("fill", C.verde)
+    .attr("stroke", C.fondo).attr("stroke-width", 1.5)
+    .on("mousemove", (ev, p) => mostrarTip(ev,
+      `<b>b=${p.b}, r=${p.r}</b> medido sobre la muestra<br>recall ${nf(p.recall, 3)}<br>
+       ${nf(p.candidatos)} candidatos a verificar<br>
+       ${nf(p.pct_pares_a_verificar, 2)} por ciento de los pares`))
+    .on("mouseleave", ocultarTip);
+
+  const mejor = D.barrido_lsh.filter(p => p.recall >= .95)
+    .sort((a, c) => a.candidatos - c.candidatos)[0] || D.barrido_lsh[0];
+  pie("#c-lsh", "Curva S de LSH según las bandas y las filas",
+    `La curva azul es la configuración elegida con los controles y las grises son las demás del
+     barrido; los puntos verdes marcan el recall que cada una obtuvo de verdad sobre la muestra,
+     medido contra la similitud exacta. Subir las bandas levanta la curva temprano: atrapa todo lo
+     parecido y también mucha basura. Subir las filas la desplaza a la derecha: casi no quedan
+     falsos positivos, pero se escapan pares legítimos. La configuración de menor costo con recall
+     sobre 0,95 es b igual a ${mejor.b} y r igual a ${mejor.r}, que verifica el
+     ${nf(mejor.pct_pares_a_verificar, 2)} por ciento de los pares.`);
+}
+
+/* ====================================================== Parte III ===== */
+function gANN() {
+  const d = D.ann;
+  const o = lienzo("#g-ann", 330, {t:46, r:16, b:46, l:50});
+  const x = d3.scaleLog().domain([d3.min(d, r => Math.min(r.ms_lote, r.ms_unitaria)) * .7,
+    d3.max(d, r => Math.max(r.ms_lote, r.ms_unitaria)) * 1.4]).range([0, o.w]);
+  const y = d3.scaleLinear().domain([.7, 1.02]).range([o.h, 0]);
+  ejeY(o, y, d3.format(".2f"));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(6, "~g"));
+  rotY(o, "recall@10"); rotX(o, "milisegundos por consulta, escala logarítmica");
+  const fams = [["IVF", C.azul], ["HNSW", C.verde], ["fuerza bruta", C.rojo]];
+  [["ms_lote", null], ["ms_unitaria", "5,3"]].forEach(([campo, guion]) => {
+    fams.forEach(([fam, c]) => {
+      const sub = d.filter(r => r.familia === fam).sort((a, b) => a[campo] - b[campo]);
+      if (sub.length > 1) o.g.append("path").datum(sub).attr("fill", "none").attr("stroke", c)
+        .attr("stroke-width", 2).attr("stroke-dasharray", guion)
+        .attr("d", d3.line().x(r => x(r[campo])).y(r => y(r.recall_at_10)));
+      o.g.selectAll(`circle.${fam.replace(/ /g,"")}${campo}`).data(sub).join("circle")
+        .attr("class", `${fam.replace(/ /g,"")}${campo}`)
+        .attr("cx", r => x(r[campo])).attr("cy", r => y(r.recall_at_10))
+        .attr("r", fam === "fuerza bruta" ? 7 : 4.5).attr("fill", c)
+        .attr("stroke", C.fondo).attr("stroke-width", 1.5)
+        .on("mousemove", (ev, r) => mostrarTip(ev,
+          `<b>${r.indice}</b><br>recall@10 ${nf(r.recall_at_10, 4)}<br>
+           en lote ${nf(r.ms_lote, 4)} ms<br>consulta aislada ${nf(r.ms_unitaria, 3)} ms`))
+        .on("mouseleave", ocultarTip);
+    });
+  });
+  leyenda(o, [["IVF", C.azul], ["HNSW", C.verde], ["fuerza bruta, exacta", C.rojo]],
+          "línea continua: lote de mil consultas     línea punteada: consulta aislada");
+
+  const fb = d.find(r => r.familia === "fuerza bruta");
+  const h95 = d.filter(r => r.familia === "HNSW" && r.recall_at_10 >= .95)
+    .sort((a, b) => a.ms_unitaria - b.ms_unitaria)[0];
+  pie("#c-ann", "Recall frente a latencia, en los dos regímenes de consulta",
+    `Los dos regímenes cuentan historias opuestas. En lote la búsqueda exacta tarda
+     ${nf(fb.ms_lote, 4)} ms por consulta y el índice aproximado no aporta nada, porque el índice
+     plano resuelve el lote como un producto de matrices sobre los ocho núcleos. Consulta a consulta
+     la situación se invierte: la exacta tarda ${nf(fb.ms_unitaria, 3)} ms y HNSW
+     ${nf(h95.ms_unitaria, 3)} ms con recall ${nf(h95.recall_at_10, 3)}, es decir
+     ${nf(fb.ms_unitaria / h95.ms_unitaria, 1)} veces más rápido. La pregunta de si un índice
+     aproximado vale la pena no tiene respuesta sin decir antes si el uso es por lotes o en línea.`);
+}
+
+function gEscalado() {
+  const d = D.escalado;
+  const o = lienzo("#g-escalado", 270, {t:12, r:16, b:46, l:52});
+  const x = d3.scaleLog().domain([d[0].vectores * .8, d[d.length-1].vectores * 1.3]).range([0, o.w]);
+  const y = d3.scaleLog().domain([d3.min(d, r => r.hnsw_ms) * .7,
+    d3.max(d, r => r.fuerza_bruta_ms) * 1.5]).range([o.h, 0]);
+  ejeY(o, y, v => nf(v, v < 1 ? 2 : 1));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(5, "~s"));
+  rotY(o, "ms por consulta"); rotX(o, "vectores en el índice, ambas escalas logarítmicas");
+  [["fuerza_bruta_ms", C.rojo, "fuerza bruta"], ["hnsw_ms", C.verde, "HNSW"]]
+    .forEach(([campo, c, et], i) => {
+      o.g.append("path").datum(d).attr("fill", "none").attr("stroke", c).attr("stroke-width", 2.4)
+        .attr("d", d3.line().x(r => x(r.vectores)).y(r => y(r[campo])));
+      o.g.selectAll(`circle.e${i}`).data(d).join("circle").attr("class", `e${i}`)
+        .attr("cx", r => x(r.vectores)).attr("cy", r => y(r[campo])).attr("r", 4.5).attr("fill", c)
+        .attr("stroke", C.fondo).attr("stroke-width", 1.5)
+        .on("mousemove", (ev, r) => mostrarTip(ev,
+          `<b>${nf(r.vectores)} vectores</b><br>fuerza bruta ${nf(r.fuerza_bruta_ms, 3)} ms<br>
+           HNSW ${nf(r.hnsw_ms, 3)} ms<br>ventaja ${nf(r.factor, 1)} veces`))
+        .on("mouseleave", ocultarTip);
+      const u = d[d.length - 1];
+      o.g.append("text").attr("x", x(u.vectores) - 6).attr("y", y(u[campo]) - 9)
+        .attr("text-anchor", "end").attr("class", "rotulo-eje").attr("fill", c).text(et);
+    });
+  const p = d[0], u = d[d.length - 1];
+  pie("#c-escalado", "Cómo escala cada índice al crecer la base",
+    `Las dos rectas tienen pendientes distintas y esa diferencia es todo el argumento. Multiplicar
+     la base por ${nf(u.vectores / p.vectores)} multiplica el tiempo de la búsqueda exacta por
+     ${nf(u.fuerza_bruta_ms / p.fuerza_bruta_ms, 1)}, que es crecimiento lineal, y el de HNSW por
+     solo ${nf(u.hnsw_ms / p.hnsw_ms, 1)}. La ventaja pasa de ${nf(p.factor, 1)} a
+     ${nf(u.factor, 1)} veces. Lo que justifica implementar un índice aproximado no es el volumen
+     actual sino el escenario de diez o cien veces más datos.`);
+}
+
+/* ====================================================== Parte IV ====== */
+const fprBloom = (bits, k) => Math.pow(1 - Math.exp(-k / bits), k);
+const kOpt = bits => Math.max(1, Math.round(bits * Math.LN2));
+
+function gBloom() {
+  const bits = +document.getElementById("bl-bits").value, k = +document.getElementById("bl-k").value;
+  document.getElementById("v-bl-bits").textContent = bits;
+  document.getElementById("v-bl-k").textContent = k;
+  const n = D.resumen_flujos.claves_bloom, fpr = fprBloom(bits, k);
+  const kib = n * bits / 8 / 1024, exacto = n * 24 / 1024;
+  document.getElementById("s-bloom").innerHTML =
+    `Con ${nf(n)} proveedores distintos: <b>${nf(kib, 1)} KiB</b> de filtro frente a
+     <b>${nf(exacto, 0)} KiB</b> del conjunto exacto, unas ${nf(exacto / kib, 0)} veces menos.
+     Falsos positivos <b>${nf(fpr * 100, 3)} por ciento</b>, falsos negativos <b>cero</b>, imposibles
+     por construcción. El número óptimo de hashes para ${bits} bits por elemento es
+     <b>${kOpt(bits)}</b>${k === kOpt(bits) ? ", que es el que está puesto" : `, y hay ${k} puestos`}.`;
+
+  const o = lienzo("#g-bloom", 300, {t:30, r:16, b:44, l:56});
+  const x = d3.scaleLinear().domain([2, 40]).range([0, o.w]);
+  const y = d3.scaleLog().domain([1e-6, 1]).range([o.h, 0]);
+  ejeY(o, y, d3.format(".0e")); ejeX(o, x);
+  rotY(o, "tasa de falsos positivos"); rotX(o, "bits por elemento");
+  o.g.append("path").datum(d3.range(2, 40.2, .2).map(b => [b, fprBloom(b, kOpt(b))]))
+    .attr("fill", "none").attr("stroke", C.linea).attr("stroke-width", 2).attr("stroke-dasharray", "4,3")
+    .attr("d", d3.line().x(p => x(p[0])).y(p => y(Math.max(p[1], 1e-6))));
+  o.g.append("path").datum(d3.range(2, 40.2, .2).map(b => [b, fprBloom(b, k)]))
+    .attr("fill", "none").attr("stroke", C.azul).attr("stroke-width", 2.8)
+    .attr("d", d3.line().x(p => x(p[0])).y(p => y(Math.max(p[1], 1e-6))));
+  o.g.append("circle").attr("cx", x(bits)).attr("cy", y(Math.max(fpr, 1e-6))).attr("r", 6)
+    .attr("fill", C.rojo).attr("stroke", C.fondo).attr("stroke-width", 2);
+  o.g.selectAll("circle.med").data(D.bloom).join("circle").attr("class", "med")
+    .attr("cx", p => x(p.m_bits / n)).attr("cy", p => y(Math.max(p.fpr_observada, 1e-6))).attr("r", 4)
+    .attr("fill", C.verde).attr("stroke", C.fondo).attr("stroke-width", 1.4)
+    .on("mousemove", (ev, p) => mostrarTip(ev,
+      `<b>objetivo ${nf(p.fpr_objetivo * 100, 1)} por ciento</b><br>
+       ${nf(p.m_bits / n, 1)} bits por elemento, k igual a ${p.k_hashes}<br>
+       teórica ${nf(p.fpr_teorica * 100, 3)} por ciento<br>
+       observada ${nf(p.fpr_observada * 100, 3)} por ciento<br>${nf(p.memoria_kib, 1)} KiB`))
+    .on("mouseleave", ocultarTip);
+  leyenda(o, [["curva elegida", C.azul], ["con k óptimo", C.linea], ["medido sobre el flujo", C.verde]]);
+  pie("#c-bloom", "Falsos positivos del filtro de Bloom según su tamaño",
+    `Los puntos verdes son las tasas medidas de verdad sobre el flujo de proveedores, y caen sobre
+     la curva teórica: eso valida la implementación. La línea punteada marca lo mejor alcanzable
+     para cada tamaño, usando el número óptimo de hashes. Cada orden de magnitud de precisión cuesta
+     unos diez bits más por elemento: la memoria crece de forma lineal mientras el error cae de
+     forma exponencial, y por eso un filtro de Bloom es difícil de batir cuando la pregunta es solo
+     de pertenencia.`);
+}
+
+function gCMS() {
+  const w = +document.getElementById("cm-w").value, d = +document.getElementById("cm-d").value;
+  document.getElementById("v-cm-w").textContent = nf(w);
+  document.getElementById("v-cm-d").textContent = d;
+  const total = D.resumen_flujos.eventos_items, claves = D.resumen_flujos.claves_items;
+  const err = Math.E / w * total, delta = Math.exp(-d);
+  const kib = w * d * 8 / 1024, exacto = claves * 60 / 1024;
+  document.getElementById("s-cms").innerHTML =
+    `Memoria <b>${nf(kib, 0)} KiB</b> frente a <b>${nf(exacto, 0)} KiB</b> del diccionario exacto de
+     ${nf(claves)} códigos. Cota de error <b>${nf(err, 0)} apariciones</b> sobre un total de
+     ${nf(total)}, que se excede con probabilidad menor a
+     <b>${delta < .001 ? delta.toExponential(1) : nf(delta, 4)}</b>. El ancho controla cuánto error
+     y la profundidad con qué seguridad se respeta.`;
+
+  const o = lienzo("#g-cms", 290, {t:30, r:16, b:46, l:58});
+  const x = d3.scaleLog().domain([20, 20000]).range([0, o.w]);
+  const y = d3.scaleLog().domain([1, 1e5]).range([o.h, 0]);
+  ejeY(o, y, d3.format("~s"));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(5, "~s"));
+  rotY(o, "error máximo en el conteo"); rotX(o, "memoria del sketch en KiB, ambas escalas logarítmicas");
+  o.g.append("path").datum(d3.range(1, 5.01, .02)
+      .map(e => [Math.pow(10, e) * d * 8 / 1024, Math.E / Math.pow(10, e) * total])
+      .filter(p => p[0] >= 20 && p[0] <= 20000))
+    .attr("fill", "none").attr("stroke", C.azul).attr("stroke-width", 2.8)
+    .attr("d", d3.line().x(p => x(p[0])).y(p => y(Math.max(p[1], 1))));
+  o.g.append("circle").attr("cx", x(Math.min(Math.max(kib, 20), 20000)))
+    .attr("cy", y(Math.max(err, 1))).attr("r", 6).attr("fill", C.rojo)
+    .attr("stroke", C.fondo).attr("stroke-width", 2);
+  o.g.selectAll("circle.med").data(D.cms).join("circle").attr("class", "med")
+    .attr("cx", p => x(Math.min(Math.max(p.memoria_kib, 20), 20000)))
+    .attr("cy", p => y(Math.max(p.error_max, 1))).attr("r", 4).attr("fill", C.verde)
+    .attr("stroke", C.fondo).attr("stroke-width", 1.4)
+    .on("mousemove", (ev, p) => mostrarTip(ev,
+      `<b>ancho ${nf(p.ancho_w)}, profundidad ${p.profundidad_d}</b><br>${nf(p.memoria_kib, 0)} KiB<br>
+       error máximo observado ${nf(p.error_max)}<br>cota teórica ${nf(p.cota_teorica)}<br>
+       subestimaciones ${p.subestimaciones}`))
+    .on("mouseleave", ocultarTip);
+  leyenda(o, [["cota teórica", C.azul], ["error observado", C.verde]]);
+  pie("#c-cms", "Error del Count-Min Sketch frente a su memoria",
+    `El error observado, en verde, queda siempre por debajo de la cota teórica, y nunca hay
+     subestimaciones: eso es lo que garantiza tomar el mínimo de las filas. Conviene mirar la
+     comparación con la alternativa exacta antes de celebrar. A este volumen el diccionario de
+     ${nf(claves)} códigos cabe sin problema, así que el sketch todavía no compensa. Compensa
+     cuando el universo de claves crece, que es el escenario de diez o cien veces más datos.`);
+}
+
+function gDGIM() {
+  const d = D.dgim;
+  const o = lienzo("#g-dgim", 300, {t:30, r:16, b:52, l:54});
+  const x0 = d3.scaleBand().domain(d.map(r => r.ventana_N)).range([0, o.w]).padding(.22);
+  const x1 = d3.scaleBand().domain(["exacto","dgim"]).range([0, x0.bandwidth()]).padding(.1);
+  const y = d3.scaleLinear().domain([0, d3.max(d, r => Math.max(r.exacto, r.dgim)) * 1.1]).range([o.h, 0]);
+  ejeY(o, y, v => nf(v));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x0).tickFormat(v => nf(v / 1000) + " k"));
+  rotY(o, "procesos con un solo postor"); rotX(o, "tamaño de la ventana");
+  [["exacto", C.azul], ["dgim", C.verde]].forEach(([k, c]) => {
+    o.g.selectAll(`rect.${k}`).data(d).join("rect").attr("class", k)
+      .attr("x", r => x0(r.ventana_N) + x1(k)).attr("y", r => y(r[k]))
+      .attr("width", x1.bandwidth()).attr("height", r => o.h - y(r[k])).attr("fill", c)
+      .on("mousemove", (ev, r) => mostrarTip(ev,
+        `<b>ventana de ${nf(r.ventana_N)}</b><br>exacto ${nf(r.exacto)}<br>DGIM ${nf(r.dgim)}<br>
+         error ${nf(r.error_relativo * 100, 1)} por ciento<br>
+         ${r.cubos} cubos, ${nf(r.memoria_dgim_bytes)} bytes<br>
+         ventana completa ${nf(r.memoria_exacta_bytes)} bytes`))
+      .on("mouseleave", ocultarTip);
+  });
+  leyenda(o, [["conteo exacto", C.azul], ["estimación de DGIM", C.verde]]);
+  const peor = d.reduce((a, b) => b.error_relativo > a.error_relativo ? b : a), g = d[d.length - 1];
+  pie("#c-dgim", "DGIM frente al conteo exacto sobre la ventana reciente",
+    `Las barras quedan casi a la misma altura en todas las ventanas: el peor error relativo es
+     ${nf(peor.error_relativo * 100, 1)} por ciento, muy por debajo de la cota del cincuenta por
+     ciento que garantiza usar dos cubos por tamaño. Lo que compra ese error es memoria. Para la
+     ventana de ${nf(g.ventana_N)} elementos, DGIM usa ${g.cubos} cubos frente a los
+     ${nf(g.memoria_exacta_bytes)} bytes de la ventana completa en bits, una reducción de
+     ${nf(g.memoria_exacta_bytes / g.memoria_dgim_bytes, 0)} veces. Con ventanas pequeñas no
+     compensa e incluso pierde; la ventaja crece con el logaritmo de la ventana.`);
+}
+
+/* ====================================================== Parte V ======= */
+function gAlgoritmos() {
+  const d = D.costo_algoritmos;
+  const o = lienzo("#g-algoritmos", 260, {t:12, r:16, b:46, l:52});
+  const x = d3.scaleLog().domain([d3.max(d, r => r.soporte) * 1.3, d3.min(d, r => r.soporte) * .75]).range([0, o.w]);
+  const y = d3.scaleLog().domain([d3.min(d, r => Math.min(r.apriori_s, r.fpgrowth_s)) * .6,
+    d3.max(d, r => r.apriori_s) * 1.7]).range([o.h, 0]);
+  ejeY(o, y, v => nf(v, v < 1 ? 1 : 0) + " s");
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(4, "~g"));
+  rotY(o, "segundos"); rotX(o, "soporte mínimo, decreciente hacia la derecha");
+  [["apriori_s", C.rojo, "A-Priori propio"], ["fpgrowth_s", C.verde, "FP-Growth de MLlib"]]
+    .forEach(([campo, c, et], i) => {
+      o.g.append("path").datum(d).attr("fill", "none").attr("stroke", c).attr("stroke-width", 2.4)
+        .attr("d", d3.line().x(r => x(r.soporte)).y(r => y(r[campo])));
+      o.g.selectAll(`circle.a${i}`).data(d).join("circle").attr("class", `a${i}`)
+        .attr("cx", r => x(r.soporte)).attr("cy", r => y(r[campo])).attr("r", 4.5).attr("fill", c)
+        .attr("stroke", C.fondo).attr("stroke-width", 1.5)
+        .on("mousemove", (ev, r) => mostrarTip(ev,
+          `<b>soporte ${nf(r.soporte, 4)}</b><br>${nf(r.conjuntos)} conjuntos frecuentes<br>
+           A-Priori ${nf(r.apriori_s, 2)} s<br>FP-Growth ${nf(r.fpgrowth_s, 2)} s`))
+        .on("mouseleave", ocultarTip);
+      const u = d[d.length - 1];
+      o.g.append("text").attr("x", x(u.soporte)).attr("y", y(u[campo]) - 10)
+        .attr("text-anchor", "end").attr("class", "rotulo-eje").attr("fill", c).text(et);
+    });
+  const a = d[0], u = d[d.length - 1];
+  pie("#c-algoritmos", "Costo de A-Priori y FP-Growth al bajar el umbral de soporte",
+    `Con soporte alto los dos cuestan parecido, porque hay pocos conjuntos frecuentes y A-Priori
+     poda casi todo en el primer nivel. Al bajar el umbral de ${nf(a.soporte, 3)} a
+     ${nf(u.soporte, 4)} el número de conjuntos pasa de ${nf(a.conjuntos)} a ${nf(u.conjuntos)} y
+     A-Priori pasa de ${nf(a.apriori_s, 2)} a ${nf(u.apriori_s, 1)} segundos, mientras que FP-Growth
+     se mantiene alrededor de ${nf(u.fpgrowth_s, 1)}. La diferencia es estructural: A-Priori genera
+     y cuenta candidatos nivel por nivel y ese número explota, FP-Growth no genera candidatos.`);
+}
+
+function gReglas() {
+  const sop = +document.getElementById("rg-sop").value / 1000;
+  const conf = +document.getElementById("rg-conf").value / 100;
+  const lift = +document.getElementById("rg-lift").value;
+  document.getElementById("v-rg-sop").textContent = nf(sop, 3);
+  document.getElementById("v-rg-conf").textContent = nf(conf, 2);
+  document.getElementById("v-rg-lift").textContent = lift;
+  const pasa = r => r.soporte >= sop && r.confianza >= conf && r.lift >= lift;
+  const todas = D.reglas, vivas = todas.filter(pasa);
+  document.getElementById("s-reglas").innerHTML =
+    `<b>${nf(vivas.length)}</b> reglas de ${nf(todas.length)} superan los tres umbrales.
+     ${vivas.length ? `Lift máximo <b>${nf(d3.max(vivas, r => r.lift), 1)}</b>, soporte máximo
+     <b>${nf(d3.max(vivas, r => r.soporte), 4)}</b>.`
+     : "Ninguna regla sobrevive, hay que relajar algún umbral."}`;
+
+  const o = lienzo("#g-reglas", 290, {t:12, r:16, b:46, l:52});
+  const x = d3.scaleLog().domain([d3.min(todas, r => r.soporte) * .8, d3.max(todas, r => r.soporte) * 1.3]).range([0, o.w]);
+  const y = d3.scaleLog().domain([.8, d3.max(todas, r => r.lift) * 1.5]).range([o.h, 0]);
+  ejeY(o, y, d3.format("~g"));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(5, "~g"));
+  rotY(o, "lift, escala logarítmica"); rotX(o, "soporte, escala logarítmica");
+  o.g.append("line").attr("x1", 0).attr("x2", o.w).attr("y1", y(1)).attr("y2", y(1))
+    .attr("stroke", C.rojo).attr("stroke-dasharray", "4,3");
+  o.g.append("text").attr("x", 3).attr("y", y(1) - 5).attr("class", "rotulo-eje")
+    .attr("fill", C.rojo).text("lift igual a 1, independencia");
+  o.g.selectAll("circle.r").data(todas).join("circle").attr("class", "r")
+    .attr("cx", r => x(r.soporte)).attr("cy", r => y(r.lift)).attr("r", 4)
+    .attr("fill", r => pasa(r) ? C.morado : C.linea).attr("opacity", r => pasa(r) ? .85 : .55)
+    .on("mousemove", (ev, r) => mostrarTip(ev,
+      `<b>${r.antecedente}</b><br>implica<br><b>${r.consecuente}</b><br>
+       soporte ${nf(r.soporte, 4)}<br>confianza ${nf(r.confianza, 3)}<br>lift ${nf(r.lift, 1)}`))
+    .on("mouseleave", ocultarTip);
+  pie("#c-reglas", "Cada regla como un punto, según su soporte y su lift",
+    `Las reglas en morado son las que superan los umbrales de los controles. La nube muestra el
+     compromiso central de esta técnica: las reglas de soporte alto tienen lift cercano a uno y
+     describen ítems que coinciden por ser ambos frecuentes, no porque uno prediga al otro; las de
+     lift alto viven en la zona de soporte bajo, donde el patrón es fuerte pero afecta a pocas
+     transacciones. Por eso el criterio es lift alto con soporte suficiente, y filtrar solo por
+     confianza traería las reglas inútiles del borde.`);
+
+  const filas = vivas.slice().sort((a, b) => b.lift - a.lift).slice(0, 10);
+  document.getElementById("t-reglas").innerHTML =
+    `<thead><tr><th>Si la entidad compra</th><th>también compra</th><th>Soporte</th>
+     <th>Confianza</th><th>Lift</th></tr></thead><tbody>` +
+    (filas.length ? filas.map(r => `<tr><td>${r.antecedente}</td><td>${r.consecuente}</td>
+      <td class="n">${nf(r.soporte, 4)}</td><td class="n">${nf(r.confianza, 3)}</td>
+      <td class="n">${nf(r.lift, 1)}</td></tr>`).join("")
+     : `<tr><td colspan="5">Ninguna regla supera los umbrales actuales.</td></tr>`) + "</tbody>";
+}
+
+/* ====================================================== portada y tablas */
+function cifras() {
+  const c = D.concentracion[0], p = D.portada;
+  const items = [
+    [nf(p.procesos_limpios), `procesos analizados, de ${nf(p.procesos_crudos)} crudos`],
+    [nf(p.gb_csv, 2) + " GB", "de CSV en 21 tablas por año, 2023 a 2025"],
+    [nf(c.gini, 3), "coeficiente de Gini del monto por proveedor"],
+    [nf(c.pct_del_monto, 1) + " %", "del monto se lo lleva el uno por ciento de proveedores"]];
+  document.getElementById("cifras").innerHTML = items.map(([n, t]) =>
+    `<div class="cifra"><div class="n">${n}</div><div class="t">${t}</div></div>`).join("");
+}
+function tablaCasos() {
+  document.getElementById("t-casos").innerHTML =
+    `<thead><tr><th>Jaccard</th><th>Entidades</th><th>Objeto contractual</th></tr></thead><tbody>` +
+    D.casos.map(c => `<tr><td class="n">${nf(c.jaccard, 3)}</td>
+      <td>${c.entidad_A}<br>${c.entidad_B}</td>
+      <td>${c.objeto_A}<br>${c.objeto_B}</td></tr>`).join("") + "</tbody>";
+}
+function tablaFlujos() {
+  document.getElementById("t-flujos").innerHTML =
+    `<thead><tr><th>Estructura</th><th>Qué pregunta responde</th><th>Memoria</th><th>Error</th>
+     <th>Por qué se usa</th></tr></thead><tbody>` +
+    D.resumen_estructuras.map(r => `<tr><td><b>${r.estructura}</b></td><td>${r.pregunta}</td>
+      <td class="n">${r.memoria}</td><td>${r.error}</td><td>${r.por_que_se_usa}</td></tr>`).join("") +
+    "</tbody>";
+}
+
+/* ====================================================== arranque ====== */
+function dibujar() {
+  N_FIG = 0;
+  cifras(); tablaCasos(); tablaFlujos();
+  gMensual(); gEstacional(); gLorenz(); gGini(); gCompetencia(); gHistograma();
+  gMinHash(); gLSH(); gANN(); gEscalado(); gBloom(); gCMS(); gDGIM(); gAlgoritmos(); gReglas();
+}
+[["lsh-b", gLSH], ["lsh-r", gLSH], ["bl-bits", gBloom], ["bl-k", gBloom],
+ ["cm-w", gCMS], ["cm-d", gCMS], ["rg-sop", gReglas], ["rg-conf", gReglas], ["rg-lift", gReglas]]
+  .forEach(([id, fn]) => document.getElementById(id).addEventListener("input", () => {
+    // Los controles redibujan solo su figura, pero el pie lleva numero, asi que
+    // se renumera todo para que la secuencia no se desordene.
+    dibujar();
+  }));
+
+let temporizador;
+addEventListener("resize", () => {clearTimeout(temporizador); temporizador = setTimeout(dibujar, 160);});
+dibujar();
+</script>

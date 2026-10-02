@@ -1,0 +1,23 @@
+[
+ {
+  "metodo":"conteo exacto",
+  "estimacion":2498,
+  "memoria_bytes":2500,
+  "responde_ventana":true,
+  "error_pct":0.0
+ },
+ {
+  "metodo":"DGIM",
+  "estimacion":2841,
+  "memoria_bytes":256,
+  "responde_ventana":true,
+  "error_pct":13.73
+ },
+ {
+  "metodo":"reservoir filtrado",
+  "estimacion":2820,
+  "memoria_bytes":32000,
+  "responde_ventana":false,
+  "error_pct":12.89
+ }
+]

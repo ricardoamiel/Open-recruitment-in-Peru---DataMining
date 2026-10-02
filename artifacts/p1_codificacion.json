@@ -1,0 +1,52 @@
+[
+ {
+  "codigo":"U+00A5",
+  "trato":"reparado a Ñ",
+  "filas":0
+ },
+ {
+  "codigo":"U+00A2",
+  "trato":"reparado a ó",
+  "filas":0
+ },
+ {
+  "codigo":"U+00E0",
+  "trato":"reparado a Ó",
+  "filas":0
+ },
+ {
+  "codigo":"U+00D6",
+  "trato":"reparado a Í",
+  "filas":0
+ },
+ {
+  "codigo":"U+00B5",
+  "trato":"reparado a Á",
+  "filas":0
+ },
+ {
+  "codigo":"U+0090",
+  "trato":"reparado a É",
+  "filas":0
+ },
+ {
+  "codigo":"U+00D2",
+  "trato":"reparado a Ó",
+  "filas":6
+ },
+ {
+  "codigo":"U+00CC",
+  "trato":"reparado a Í",
+  "filas":5
+ },
+ {
+  "codigo":"U+00BF",
+  "trato":"conservado, interrogacion invertida",
+  "filas":31547
+ },
+ {
+  "codigo":"U+00B4",
+  "trato":"conservado, acento suelto",
+  "filas":143
+ }
+]

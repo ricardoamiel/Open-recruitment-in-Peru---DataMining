@@ -1,0 +1,74 @@
+[
+ {
+  "antecedente":"METODO=Regímen Especial + NIVEL=Gobierno nacional + TRAMO=menos de 50 mil",
+  "soporte":0.01761,
+  "confianza":1.0,
+  "lift":8.06114
+ },
+ {
+  "antecedente":"METODO=Regímen Especial + NIVEL=Gobierno nacional + RUBRO=8010 + TRAMO=menos de 50 mil",
+  "soporte":0.01572,
+  "confianza":1.0,
+  "lift":8.06114
+ },
+ {
+  "antecedente":"METODO=Regímen Especial + RUBRO=8010 + TRAMO=menos de 50 mil",
+  "soporte":0.01572,
+  "confianza":1.0,
+  "lift":8.06114
+ },
+ {
+  "antecedente":"METODO=Contratación Internacional + RUBRO=8210",
+  "soporte":0.0058,
+  "confianza":1.0,
+  "lift":8.06114
+ },
+ {
+  "antecedente":"METODO=Contratación Internacional + NIVEL=Gobierno nacional + RUBRO=8210",
+  "soporte":0.00578,
+  "confianza":1.0,
+  "lift":8.06114
+ },
+ {
+  "antecedente":"METODO=Regímen Especial + NIVEL=Gobierno nacional + RUBRO=8010",
+  "soporte":0.0171,
+  "confianza":0.99659,
+  "lift":8.03362
+ },
+ {
+  "antecedente":"METODO=Regímen Especial + TRAMO=menos de 50 mil",
+  "soporte":0.0177,
+  "confianza":0.99604,
+  "lift":8.02926
+ },
+ {
+  "antecedente":"METODO=Regímen Especial + RUBRO=8010",
+  "soporte":0.01711,
+  "confianza":0.99489,
+  "lift":8.01996
+ },
+ {
+  "antecedente":"METODO=Contratación Internacional + NIVEL=Gobierno nacional + TRAMO=50 mil a 500 mil",
+  "soporte":0.00623,
+  "confianza":0.99439,
+  "lift":8.01594
+ },
+ {
+  "antecedente":"METODO=Contratación Directa + RUBRO=8013 + TRAMO=50 mil a 500 mil",
+  "soporte":0.00751,
+  "confianza":0.98996,
+  "lift":7.98022
+ },
+ {
+  "antecedente":"METODO=Contratación Directa + NIVEL=Gobierno nacional + RUBRO=8013",
+  "soporte":0.005,
+  "confianza":0.98841,
+  "lift":7.96773
+ },
+ {
+  "antecedente":"METODO=Contratación Internacional + TRAMO=50 mil a 500 mil",
+  "soporte":0.00744,
+  "confianza":0.9868,
+  "lift":7.95474
+ }
+]

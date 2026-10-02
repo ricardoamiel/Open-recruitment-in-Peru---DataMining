@@ -1,0 +1,58 @@
+[
+ {
+  "indice":"IVF nprobe=1",
+  "recall_at_10":0.751,
+  "ms_lote":0.0074,
+  "ms_unitaria":0.0207,
+  "nprobe":1,
+  "celdas_visitadas_pct":0.35
+ },
+ {
+  "indice":"IVF nprobe=2",
+  "recall_at_10":0.8759,
+  "ms_lote":0.0101,
+  "ms_unitaria":0.0304,
+  "nprobe":2,
+  "celdas_visitadas_pct":0.71
+ },
+ {
+  "indice":"IVF nprobe=4",
+  "recall_at_10":0.946,
+  "ms_lote":0.0197,
+  "ms_unitaria":0.0475,
+  "nprobe":4,
+  "celdas_visitadas_pct":1.42
+ },
+ {
+  "indice":"IVF nprobe=8",
+  "recall_at_10":0.9767,
+  "ms_lote":0.034,
+  "ms_unitaria":0.0776,
+  "nprobe":8,
+  "celdas_visitadas_pct":2.84
+ },
+ {
+  "indice":"IVF nprobe=16",
+  "recall_at_10":0.9895,
+  "ms_lote":0.055,
+  "ms_unitaria":0.1221,
+  "nprobe":16,
+  "celdas_visitadas_pct":5.67
+ },
+ {
+  "indice":"IVF nprobe=32",
+  "recall_at_10":0.9942,
+  "ms_lote":0.1118,
+  "ms_unitaria":0.2167,
+  "nprobe":32,
+  "celdas_visitadas_pct":11.35
+ },
+ {
+  "indice":"IVF nprobe=64",
+  "recall_at_10":0.9965,
+  "ms_lote":0.2429,
+  "ms_unitaria":0.4446,
+  "nprobe":64,
+  "celdas_visitadas_pct":22.7
+ }
+]

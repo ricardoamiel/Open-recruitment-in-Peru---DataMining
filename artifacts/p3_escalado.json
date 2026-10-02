@@ -1,0 +1,32 @@
+[
+ {
+  "vectores":5000,
+  "fuerza_bruta_ms":0.064,
+  "hnsw_ms":0.0237,
+  "factor":2.7
+ },
+ {
+  "vectores":10000,
+  "fuerza_bruta_ms":0.1102,
+  "hnsw_ms":0.0268,
+  "factor":4.1
+ },
+ {
+  "vectores":20000,
+  "fuerza_bruta_ms":0.2574,
+  "hnsw_ms":0.0326,
+  "factor":7.9
+ },
+ {
+  "vectores":40000,
+  "fuerza_bruta_ms":0.7987,
+  "hnsw_ms":0.0406,
+  "factor":19.7
+ },
+ {
+  "vectores":80000,
+  "fuerza_bruta_ms":1.9404,
+  "hnsw_ms":0.0529,
+  "factor":36.7
+ }
+]

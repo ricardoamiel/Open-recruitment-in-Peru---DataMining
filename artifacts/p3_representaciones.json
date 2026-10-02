@@ -1,0 +1,12 @@
+[
+ {
+  "representacion":"TF-IDF de palabras",
+  "vocabulario":22037,
+  "coincidencia_top10":1.0
+ },
+ {
+  "representacion":"TF-IDF de 4-gramas de caracteres",
+  "vocabulario":54286,
+  "coincidencia_top10":0.4407
+ }
+]

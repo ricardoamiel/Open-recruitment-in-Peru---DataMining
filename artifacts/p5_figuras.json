@@ -1,0 +1,18 @@
+[
+ {
+  "figura":"f34_definicion_transaccion",
+  "lectura":"Esta figura decide la parte entera, y da una respuesta incómoda: la definición natural no sirve. Solo el 2.1 % de los procesos tiene dos o más ítems, con un tamaño medio de canasta de 0.74. Un conjunto de un solo elemento no contiene coocurrencia, así que A-Priori y FP-Growth sobre esa definición devolverían únicamente conjuntos de tamaño uno, es decir un ranking de frecuencias disfrazado de minería de patrones. El motivo es que el catálogo CUBSO identifica el objeto del proceso y la mayoría de los procesos peruanos tienen un objeto único: la analogía del supermercado no se sostiene a nivel de acto administrativo. Agrupar por entidad y mes sube la coocurrencia al 53.6 % con tamaño medio 2.78, y es la definición que se adopta."
+ },
+ {
+  "figura":"f35_apriori_vs_fpgrowth",
+  "lectura":"Con soporte alto los dos cuestan parecido porque hay pocos conjuntos frecuentes y A-Priori poda casi todo en el primer nivel. Al bajar el umbral de 0.02 a 0.0025 el número de conjuntos pasa de 34 a 554 y A-Priori pasa de 0.17 s a 19.27 s, mientras que FP-Growth se mantiene en el entorno de 0.44 s. La diferencia es estructural: A-Priori genera y cuenta candidatos nivel por nivel, de modo que el número de candidatos explota cuando el umbral baja, y FP-Growth no genera candidatos en absoluto. Esa es exactamente la razón por la que el segundo desplazó al primero."
+ },
+ {
+  "figura":"f36_reglas",
+  "lectura":"La nube muestra el compromiso central de la minería de reglas. Las reglas de soporte alto tienen lift cercano a uno: describen ítems que coinciden por ser ambos frecuentes, no porque uno prediga al otro. Las de lift alto viven en la zona de soporte bajo, donde el patrón es fuerte pero afecta a pocas transacciones. El máximo de lift es 139, es decir que ese par aparece junto 139 veces más de lo que cabría esperar si fueran independientes. Filtrar solo por confianza traería las reglas inútiles del borde derecho; por eso el criterio de selección es lift alto con soporte suficiente para que la regla no sea una anécdota."
+ },
+ {
+  "figura":"f37_postor_unico",
+  "lectura":"Esta figura responde la pregunta que quedó abierta en la Parte I: el suelo de procesos sin competencia no se reparte al azar. La tasa base de postor único es 12.4 %, de modo que el lift máximo posible es 8.1 y lo alcanza toda condición con confianza igual a uno. Hay 5 combinaciones empatadas en ese máximo, así que el ranking por lift no distingue entre ellas y se desempata por soporte: la más extendida es [METODO=Regímen Especial + NIVEL=Gobierno nacional + TRAMO=menos de 50 ], presente en el 1.8 % de los procesos. Que un régimen especial o una contratación internacional tengan un solo postor es administrativamente esperable y no indica nada irregular; el valor de la figura es acotar dónde buscar, y lo informativo son las combinaciones donde el procedimiento sí preveía concurrencia."
+ }
+]

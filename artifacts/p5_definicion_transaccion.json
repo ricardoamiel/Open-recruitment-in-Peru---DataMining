@@ -1,0 +1,29 @@
+[
+ {
+  "definicion":"un proceso",
+  "canastas":177398,
+  "tam_medio":0.74,
+  "tam_mediano":1,
+  "tam_max":130,
+  "con_dos_o_mas":3694,
+  "pct_coocurrencia":2.1
+ },
+ {
+  "definicion":"una entidad en un mes",
+  "canastas":37114,
+  "tam_medio":2.78,
+  "tam_mediano":2,
+  "tam_max":191,
+  "con_dos_o_mas":19911,
+  "pct_coocurrencia":53.6
+ },
+ {
+  "definicion":"una entidad en un trimestre",
+  "canastas":21098,
+  "tam_medio":4.49,
+  "tam_mediano":2,
+  "tam_max":337,
+  "con_dos_o_mas":14348,
+  "pct_coocurrencia":68.0
+ }
+]

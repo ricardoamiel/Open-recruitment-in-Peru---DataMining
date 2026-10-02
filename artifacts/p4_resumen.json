@@ -1,0 +1,37 @@
+[
+ {
+  "estructura":"Muestreo por clave",
+  "pregunta":"métricas por entidad sobre una muestra",
+  "memoria":"proporcional a la fracción de claves",
+  "error":"ninguno dentro de las claves elegidas",
+  "por_que_se_usa":"es la unica que conserva entidades completas"
+ },
+ {
+  "estructura":"Reservoir sampling",
+  "pregunta":"proporciones sobre todo el flujo",
+  "memoria":"k elementos, fija y conocida de antemano",
+  "error":"desviacion maxima 0.06 puntos en la composicion",
+  "por_que_se_usa":"no necesita conocer el largo del flujo"
+ },
+ {
+  "estructura":"Bloom Filter",
+  "pregunta":"apareció antes este proveedor",
+  "memoria":"79.0 KiB para 67,510 claves",
+  "error":"0.172% de falsos positivos, cero falsos negativos",
+  "por_que_se_usa":"un bit por posicion, imbatible en pertenencia"
+ },
+ {
+  "estructura":"Count-Min Sketch",
+  "pregunta":"cuántas veces apareció cada ítem",
+  "memoria":"149 KiB",
+  "error":"nunca subestima, maximo 19 apariciones",
+  "por_que_se_usa":"unica que da frecuencias sin diccionario"
+ },
+ {
+  "estructura":"DGIM",
+  "pregunta":"cuántos en los últimos N elementos",
+  "memoria":"19 cubos para N=100,000",
+  "error":"25.0% observado, cota teorica 50%",
+  "por_que_se_usa":"unica con noción de recencia"
+ }
+]

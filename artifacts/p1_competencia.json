@@ -1,0 +1,38 @@
+[
+ {
+  "tramo":"1. menos de 50 mil",
+  "procesos":10156,
+  "postores_mediano":1.0,
+  "pct_postor_unico":57.01063
+ },
+ {
+  "tramo":"2. 50 a 200 mil",
+  "procesos":83628,
+  "postores_mediano":7.0,
+  "pct_postor_unico":10.05883
+ },
+ {
+  "tramo":"3. 200 mil a 1 M",
+  "procesos":55872,
+  "postores_mediano":11.0,
+  "pct_postor_unico":8.7074
+ },
+ {
+  "tramo":"4. 1 a 5 M",
+  "procesos":15931,
+  "postores_mediano":15.0,
+  "pct_postor_unico":10.0182
+ },
+ {
+  "tramo":"5. 5 a 20 M",
+  "procesos":3998,
+  "postores_mediano":18.0,
+  "pct_postor_unico":9.65483
+ },
+ {
+  "tramo":"6. mas de 20 M",
+  "procesos":1158,
+  "postores_mediano":19.0,
+  "pct_postor_unico":11.39896
+ }
+]

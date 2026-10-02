@@ -1,0 +1,30 @@
+[
+ {
+  "figura":"f27_muestreo",
+  "lectura":"Los tres conservan aproximadamente el mismo número de eventos, así que por tamaño son equivalentes. Por utilidad no lo son en absoluto. Con muestreo por evento solo el 46.9 % de los proveedores queda completo, de modo que cualquier pregunta del tipo cuántas adjudicaciones acumuló este proveedor da una respuesta falsa sobre la muestra. Con muestreo por clave el 100 % queda completo, porque la entidad entra entera o no entra. El reservoir se comporta como el muestreo por evento, que es lo esperado: su garantía es de uniformidad sobre eventos, no de integridad por entidad."
+ },
+ {
+  "figura":"f28_reservoir",
+  "lectura":"Verificación empírica de la garantía teórica. El invariante del reservoir es que, tras ver i elementos, cada uno está en la muestra con probabilidad k sobre i, y eso implica que la composición de la muestra debe reproducir la del flujo. La desviación máxima entre ambas distribuciones es de 0.06 puntos porcentuales sobre los ocho métodos más frecuentes, lo que confirma que la muestra es utilizable para estimar proporciones aunque no sirva para preguntas por entidad."
+ },
+ {
+  "figura":"f29_bloom",
+  "lectura":"La curva observada sigue a la teórica, lo que valida la implementación. Lo que decide es la comparación con la alternativa exacta: guardar los 67,510 identificadores en un conjunto de Python costaría del orden de 1,582 KiB, mientras que el filtro con 1 % de falsos positivos ocupa 79.0 KiB, unas 20 veces menos. Los falsos negativos observados son 0 en todas las configuraciones, como garantiza la construcción. Bajar de 1 % a 0,1 % cuesta un 50 % más de memoria, así que el punto razonable depende de qué se haga con un falso positivo."
+ },
+ {
+  "figura":"f30_cms",
+  "lectura":"El error observado queda siempre por debajo de la cota teórica, y nunca hay subestimaciones (0 en total), que es exactamente lo que garantiza tomar el mínimo de las filas. El ancho controla el error y la profundidad la probabilidad de excederlo. Pasar de 15 KiB a 1,487 KiB baja el error máximo de 480.0 a 2.0 apariciones. Para comparar: el diccionario exacto de 4,664 códigos ocupa del orden de 273 KiB, así que aquí el sketch solo compensa si el universo de claves fuera mucho mayor, y eso hay que decirlo."
+ },
+ {
+  "figura":"f31_bloom_vs_cms",
+  "lectura":"El Count-Min se dimensionó resolviendo su propia fórmula de colisión para que alcance la misma tasa de falsos positivos que el Bloom, no eligiendo parámetros a ojo. Con tasas equivalentes (0.0017 frente a 0.0017), necesita 5,060 KiB contra 79.0 KiB, es decir 64 veces más, y la razón es estructural: guarda un contador de ocho bytes donde al otro le basta un bit. No se sustituyen. El Bloom es la estructura correcta cuando la pregunta es si algo apareció; el Count-Min cuando la pregunta es cuántas veces. Usar el segundo para lo primero es pagar sesenta y cuatro veces por la misma respuesta."
+ },
+ {
+  "figura":"f32_dgim",
+  "lectura":"Las barras quedan casi a la misma altura en todas las ventanas: el peor error relativo es 25.0 % con N=50,000, muy por debajo de la cota teórica del 50 % que garantiza usar dos cubos por tamaño. Lo que compra ese error es la memoria: para la ventana de 100,000 elementos, DGIM usa 19 cubos, del orden de 304 bytes, frente a 12,500 bytes de la ventana completa en bits. Es una reducción de 41 veces, y crece con N porque la memoria de DGIM depende del logaritmo de la ventana y no de la ventana."
+ },
+ {
+  "figura":"f33_dgim_memoria",
+  "lectura":"Las dos rectas divergen y ese es el argumento entero. Multiplicar la ventana por 100 multiplica la memoria exacta por lo mismo, mientras que los cubos de DGIM pasan solo de 13 a 19, porque su número depende del logaritmo de N. Con ventanas pequeñas DGIM no compensa, incluso pierde; el cruce aparece alrededor de los primeros miles de elementos y a partir de ahí la distancia solo crece."
+ }
+]

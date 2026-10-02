@@ -1,0 +1,26 @@
+[
+ {
+  "soporte":0.02,
+  "conjuntos":34,
+  "apriori_s":0.17,
+  "fpgrowth_s":0.45
+ },
+ {
+  "soporte":0.01,
+  "conjuntos":80,
+  "apriori_s":0.67,
+  "fpgrowth_s":0.37
+ },
+ {
+  "soporte":0.005,
+  "conjuntos":202,
+  "apriori_s":2.99,
+  "fpgrowth_s":0.42
+ },
+ {
+  "soporte":0.0025,
+  "conjuntos":554,
+  "apriori_s":19.27,
+  "fpgrowth_s":0.44
+ }
+]

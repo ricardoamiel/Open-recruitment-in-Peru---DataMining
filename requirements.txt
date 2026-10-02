@@ -1,0 +1,18 @@
+# Entorno verificado: conda env spark310
+# Python 3.10.20, OpenJDK 21
+
+# Partes I, II y V
+pyspark==4.2.0
+pandas>=2.2
+numpy>=2.0
+pyarrow>=17
+
+# Parte III
+faiss-cpu>=1.9
+scikit-learn>=1.5
+scipy>=1.13
+
+# Figuras y notebooks
+matplotlib>=3.9
+jupyterlab>=4.0
+nbconvert>=7.0

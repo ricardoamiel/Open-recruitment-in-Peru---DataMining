@@ -1,0 +1,20 @@
+[
+ {
+  "tecnica":"por evento",
+  "eventos":17849,
+  "proveedores":11065,
+  "proveedores_completos":0.4693
+ },
+ {
+  "tecnica":"por clave",
+  "eventos":45781,
+  "proveedores":6814,
+  "proveedores_completos":1.0
+ },
+ {
+  "tecnica":"reservoir",
+  "eventos":17739,
+  "proveedores":10914,
+  "proveedores_completos":0.4748
+ }
+]

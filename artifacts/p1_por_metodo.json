@@ -1,0 +1,74 @@
+[
+ {
+  "metodo":"Adjudicación Simplificada",
+  "procesos":82503,
+  "monto_mmm":47.1431936838,
+  "postores_medio":16.1371586488
+ },
+ {
+  "metodo":"Subasta Inversa Electrónica",
+  "procesos":21150,
+  "monto_mmm":10.0013025424,
+  "postores_medio":8.2315839243
+ },
+ {
+  "metodo":"Comparación de Precios",
+  "procesos":12555,
+  "monto_mmm":0.8535547917,
+  "postores_medio":3.1368379132
+ },
+ {
+  "metodo":"Contratación Directa",
+  "procesos":11049,
+  "monto_mmm":14.5266488586,
+  "postores_medio":1.2264458322
+ },
+ {
+  "metodo":"Licitación Pública Abreviada",
+  "procesos":9601,
+  "monto_mmm":6.320720891,
+  "postores_medio":13.6124362046
+ },
+ {
+  "metodo":"Licitación Pública",
+  "procesos":9242,
+  "monto_mmm":106.6424709496,
+  "postores_medio":21.0186106903
+ },
+ {
+  "metodo":"Concurso Público Abreviado",
+  "procesos":8926,
+  "monto_mmm":1.920494454,
+  "postores_medio":14.5520950034
+ },
+ {
+  "metodo":"Concurso Público",
+  "procesos":6627,
+  "monto_mmm":27.1352954046,
+  "postores_medio":26.0742417383
+ },
+ {
+  "metodo":"Regímen Especial",
+  "procesos":4367,
+  "monto_mmm":4.8117264414,
+  "postores_medio":1.6365926265
+ },
+ {
+  "metodo":"Convenio",
+  "procesos":4009,
+  "monto_mmm":10.2872296717,
+  "postores_medio":1.9768021951
+ },
+ {
+  "metodo":"Contratación Internacional",
+  "procesos":2981,
+  "monto_mmm":1.3760767001,
+  "postores_medio":1.0801744381
+ },
+ {
+  "metodo":"Concurso Público de Servicios",
+  "procesos":974,
+  "monto_mmm":2.8506814357,
+  "postores_medio":25.046201232
+ }
+]

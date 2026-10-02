@@ -1,0 +1,22 @@
+[
+ {
+  "tramo":"top 1 %",
+  "pct_del_monto":47.1,
+  "gini":0.8567
+ },
+ {
+  "tramo":"top 5 %",
+  "pct_del_monto":70.1,
+  "gini":0.8567
+ },
+ {
+  "tramo":"top 10 %",
+  "pct_del_monto":80.2,
+  "gini":0.8567
+ },
+ {
+  "tramo":"top 25 %",
+  "pct_del_monto":91.3,
+  "gini":0.8567
+ }
+]

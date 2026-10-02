@@ -1,0 +1,42 @@
+[
+ {
+  "metodo":"Adjudicación Abreviada",
+  "flujo completo":0.05,
+  "reservoir":0.056
+ },
+ {
+  "metodo":"Adjudicación Selectiva",
+  "flujo completo":0.014,
+  "reservoir":0.006
+ },
+ {
+  "metodo":"Adjudicación Simplificada",
+  "flujo completo":46.507,
+  "reservoir":46.57
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Decreto Urgencia 012-2023",
+  "flujo completo":0.003,
+  "reservoir":0.0
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Decreto Urgencia 032-2023",
+  "flujo completo":0.276,
+  "reservoir":0.22
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Decreto Urgencia 034-2023",
+  "flujo completo":0.011,
+  "reservoir":0.017
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Ley N° 31125",
+  "flujo completo":0.005,
+  "reservoir":0.0
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Ley N° 31579",
+  "flujo completo":0.002,
+  "reservoir":0.0
+ }
+]

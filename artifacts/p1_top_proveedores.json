@@ -1,0 +1,77 @@
+[
+ {
+  "proveedor_nombre":"CONSORCIO SAN JUAN",
+  "adjudicaciones":122,
+  "monto_mm":1189.80611857
+ },
+ {
+  "proveedor_nombre":"J Y S SERVICIOS GENERALES SOCIEDAD ANONIMA CERRADA ¿ J Y S SERVICIOS GENERALES SAC",
+  "adjudicaciones":1,
+  "monto_mm":1134.90948419
+ },
+ {
+  "proveedor_nombre":"LABORATORIOS AMERICANOS S.A.",
+  "adjudicaciones":31,
+  "monto_mm":1067.41029488
+ },
+ {
+  "proveedor_nombre":"RIMAC SEGUROS Y REASEGUROS",
+  "adjudicaciones":96,
+  "monto_mm":791.13414145
+ },
+ {
+  "proveedor_nombre":"PETROLEOS DEL PERU S.A.",
+  "adjudicaciones":8,
+  "monto_mm":754.91711681
+ },
+ {
+  "proveedor_nombre":"GEOSATELITAL PERU E.I.R.L. - GEOSATELITAL E.I.R.L.",
+  "adjudicaciones":23,
+  "monto_mm":751.68200389
+ },
+ {
+  "proveedor_nombre":"CONSORCIO CASTILLA",
+  "adjudicaciones":8,
+  "monto_mm":692.80068164
+ },
+ {
+  "proveedor_nombre":"CONSORCIO AGUA CASTILLA",
+  "adjudicaciones":1,
+  "monto_mm":659.10438053
+ },
+ {
+  "proveedor_nombre":"IPESA S.A.C.",
+  "adjudicaciones":161,
+  "monto_mm":647.23767121
+ },
+ {
+  "proveedor_nombre":"CONSORCIO PUENTE CHALACO",
+  "adjudicaciones":1,
+  "monto_mm":615.7951254
+ },
+ {
+  "proveedor_nombre":"CONSORCIO HUASCARAN",
+  "adjudicaciones":20,
+  "monto_mm":593.35739312
+ },
+ {
+  "proveedor_nombre":"CONSORCIO HUAYLAS",
+  "adjudicaciones":4,
+  "monto_mm":587.80462273
+ },
+ {
+  "proveedor_nombre":"FERREYROS SOCIEDAD ANÓNIMA",
+  "adjudicaciones":188,
+  "monto_mm":581.12533547
+ },
+ {
+  "proveedor_nombre":"INDUSTRIAS ARGUELLES Y SERVICIOS GENERALES SOCIEDAD ANONIMA CERRADA",
+  "adjudicaciones":12,
+  "monto_mm":562.85661514
+ },
+ {
+  "proveedor_nombre":"SINOHYDRO CORPORATION LIMITED, SUCURSAL DEL PERU",
+  "adjudicaciones":1,
+  "monto_mm":548.3
+ }
+]

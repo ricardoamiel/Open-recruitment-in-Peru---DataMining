@@ -1,0 +1,26 @@
+[
+ {
+  "n_hashes":32,
+  "error_medio":0.0142,
+  "cota_1_sobre_raiz_n":0.1768,
+  "bytes_por_doc":256
+ },
+ {
+  "n_hashes":64,
+  "error_medio":0.01092,
+  "cota_1_sobre_raiz_n":0.125,
+  "bytes_por_doc":512
+ },
+ {
+  "n_hashes":128,
+  "error_medio":0.00715,
+  "cota_1_sobre_raiz_n":0.0884,
+  "bytes_por_doc":1024
+ },
+ {
+  "n_hashes":256,
+  "error_medio":0.0052,
+  "cota_1_sobre_raiz_n":0.0625,
+  "bytes_por_doc":2048
+ }
+]

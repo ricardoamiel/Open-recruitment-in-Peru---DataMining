@@ -1,0 +1,1528 @@
+[
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "consecuente":"LENTEJA CALIDAD SUPERIOR",
+  "soporte":0.00221,
+  "confianza":0.53012,
+  "lift":138.88459
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE + ARROZ PILADO SUPERIOR",
+  "consecuente":"LENTEJA CALIDAD SUPERIOR",
+  "soporte":0.00221,
+  "confianza":0.47312,
+  "lift":123.95076
+ },
+ {
+  "antecedente":"LENTEJA CALIDAD SUPERIOR + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "consecuente":"ACEITE VEGETAL COMESTIBLE",
+  "soporte":0.00221,
+  "confianza":0.89796,
+  "lift":118.40573
+ },
+ {
+  "antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + ARROZ PILADO SUPERIOR + HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "consecuente":"ACEITE VEGETAL COMESTIBLE",
+  "soporte":0.00211,
+  "confianza":0.89362,
+  "lift":117.83317
+ },
+ {
+  "antecedente":"LENTEJA CALIDAD SUPERIOR + ARROZ PILADO SUPERIOR",
+  "consecuente":"ACEITE VEGETAL COMESTIBLE",
+  "soporte":0.00221,
+  "confianza":0.8,
+  "lift":105.48874
+ },
+ {
+  "antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + ARROZ PILADO SUPERIOR",
+  "consecuente":"LENTEJA CALIDAD SUPERIOR",
+  "soporte":0.00216,
+  "confianza":0.40187,
+  "lift":105.28443
+ },
+ {
+  "antecedente":"MOTONIVELADORA CON HOJA DE 4.3 M",
+  "consecuente":"RODILLO COMPACTADOR VIBRATORIO LISO SIMPLE DE ",
+  "soporte":0.00256,
+  "confianza":0.52041,
+  "lift":102.59254
+ },
+ {
+  "antecedente":"RODILLO COMPACTADOR VIBRATORIO LISO SIMPLE DE ",
+  "consecuente":"MOTONIVELADORA CON HOJA DE 4.3 M",
+  "soporte":0.00256,
+  "confianza":0.50495,
+  "lift":102.59254
+ },
+ {
+  "antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "consecuente":"ACEITE VEGETAL COMESTIBLE",
+  "soporte":0.00246,
+  "confianza":0.69014,
+  "lift":91.00261
+ },
+ {
+  "antecedente":"LENTEJA CALIDAD SUPERIOR",
+  "consecuente":"ACEITE VEGETAL COMESTIBLE",
+  "soporte":0.00261,
+  "confianza":0.68421,
+  "lift":90.22063
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE",
+  "consecuente":"LENTEJA CALIDAD SUPERIOR",
+  "soporte":0.00261,
+  "confianza":0.34437,
+  "lift":90.22063
+ },
+ {
+  "antecedente":"ARROZ PILADO SUPERIOR + HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "consecuente":"ACEITE VEGETAL COMESTIBLE",
+  "soporte":0.00256,
+  "confianza":0.66234,
+  "lift":87.33646
+ },
+ {
+  "antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + ARROZ PILADO SUPERIOR",
+  "consecuente":"ACEITE VEGETAL COMESTIBLE",
+  "soporte":0.00336,
+  "confianza":0.62617,
+  "lift":82.56712
+ },
+ {
+  "antecedente":"LENTEJA CALIDAD SUPERIOR + ACEITE VEGETAL COMESTIBLE",
+  "consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "soporte":0.00221,
+  "confianza":0.84615,
+  "lift":78.36172
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE + ARROZ PILADO SUPERIOR + HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "soporte":0.00211,
+  "confianza":0.82353,
+  "lift":76.26648
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE + HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "soporte":0.00246,
+  "confianza":0.81667,
+  "lift":75.63093
+ },
+ {
+  "antecedente":"LENTEJA CALIDAD SUPERIOR + ARROZ PILADO SUPERIOR",
+  "consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "soporte":0.00216,
+  "confianza":0.78182,
+  "lift":72.40364
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE + ARROZ PILADO SUPERIOR",
+  "consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "soporte":0.00336,
+  "confianza":0.72043,
+  "lift":66.71853
+ },
+ {
+  "antecedente":"LENTEJA CALIDAD SUPERIOR",
+  "consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "soporte":0.00246,
+  "confianza":0.64474,
+  "lift":59.70863
+ },
+ {
+  "antecedente":"ARROZ PILADO SUPERIOR + HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "soporte":0.00236,
+  "confianza":0.61039,
+  "lift":56.52776
+ },
+ {
+  "antecedente":"LENTEJA CALIDAD SUPERIOR + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "consecuente":"ARROZ PILADO SUPERIOR",
+  "soporte":0.00216,
+  "confianza":0.87755,
+  "lift":53.92876
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "consecuente":"ARROZ PILADO SUPERIOR",
+  "soporte":0.00211,
+  "confianza":0.85714,
+  "lift":52.6746
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE + HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "consecuente":"ARROZ PILADO SUPERIOR",
+  "soporte":0.00256,
+  "confianza":0.85,
+  "lift":52.23565
+ },
+ {
+  "antecedente":"LENTEJA CALIDAD SUPERIOR + ACEITE VEGETAL COMESTIBLE",
+  "consecuente":"ARROZ PILADO SUPERIOR",
+  "soporte":0.00221,
+  "confianza":0.84615,
+  "lift":51.99929
+ },
+ {
+  "antecedente":"SEGURO DE VIDA LEY",
+  "consecuente":"SEGURO COMPLEMENTARIO DE TRABAJO DE RIESGO - S",
+  "soporte":0.00216,
+  "confianza":0.39091,
+  "lift":51.54564
+ },
+ {
+  "antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "consecuente":"ACEITE VEGETAL COMESTIBLE",
+  "soporte":0.00417,
+  "confianza":0.38605,
+  "lift":50.90445
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE",
+  "consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "soporte":0.00417,
+  "confianza":0.54967,
+  "lift":50.90445
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "consecuente":"ARROZ PILADO SUPERIOR",
+  "soporte":0.00336,
+  "confianza":0.80723,
+  "lift":49.60721
+ },
+ {
+  "antecedente":"LENTEJA CALIDAD SUPERIOR",
+  "consecuente":"ARROZ PILADO SUPERIOR",
+  "soporte":0.00276,
+  "confianza":0.72368,
+  "lift":44.47308
+ },
+ {
+  "antecedente":"MINICARGADOR FRONTAL DE 700 KG",
+  "consecuente":"CAMION VOLQUETE DE 15 M3",
+  "soporte":0.00271,
+  "confianza":0.37241,
+  "lift":43.61842
+ },
+ {
+  "antecedente":"CAMION VOLQUETE DE 15 M3",
+  "consecuente":"MINICARGADOR FRONTAL DE 700 KG",
+  "soporte":0.00271,
+  "confianza":0.31765,
+  "lift":43.61842
+ },
+ {
+  "antecedente":"MINICARGADOR FRONTAL DE 700 KG",
+  "consecuente":"RETROEXCAVADORA DE 0.3 M3 Y 1.1 M3",
+  "soporte":0.00221,
+  "confianza":0.30345,
+  "lift":41.38328
+ },
+ {
+  "antecedente":"RETROEXCAVADORA DE 0.3 M3 Y 1.1 M3",
+  "consecuente":"MINICARGADOR FRONTAL DE 700 KG",
+  "soporte":0.00221,
+  "confianza":0.30137,
+  "lift":41.38328
+ },
+ {
+  "antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "consecuente":"ARROZ PILADO SUPERIOR",
+  "soporte":0.00236,
+  "confianza":0.66197,
+  "lift":40.68062
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE",
+  "consecuente":"ARROZ PILADO SUPERIOR",
+  "soporte":0.00467,
+  "confianza":0.61589,
+  "lift":37.84897
+ },
+ {
+  "antecedente":"RETROEXCAVADORA DE 0.3 M3 Y 1.1 M3",
+  "consecuente":"CAMION VOLQUETE DE 15 M3",
+  "soporte":0.00221,
+  "confianza":0.30137,
+  "lift":35.2975
+ },
+ {
+  "antecedente":"ARROZ PILADO SUPERIOR",
+  "consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "soporte":0.00537,
+  "confianza":0.33025,
+  "lift":30.58394
+ },
+ {
+  "antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "consecuente":"ARROZ PILADO SUPERIOR",
+  "soporte":0.00537,
+  "confianza":0.49767,
+  "lift":30.58394
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE",
+  "soporte":0.00231,
+  "confianza":0.4381,
+  "lift":29.77104
+ },
+ {
+  "antecedente":"SERVICIO DE MANTENIMIENTO CORRECTIVO DE EQUIPO",
+  "consecuente":"SERVICIO DE MANTENIMIENTO CORRECTIVO DE EQUIPO",
+  "soporte":0.00336,
+  "confianza":0.34359,
+  "lift":27.69723
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG + DIESEL B5 S-50",
+  "consecuente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE",
+  "soporte":0.00231,
+  "confianza":0.34074,
+  "lift":23.15525
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG + DIESEL B5 S-50",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00231,
+  "confianza":0.80702,
+  "lift":20.76037
+ },
+ {
+  "antecedente":"ARENA GRUESA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"PIEDRA LAJA",
+  "soporte":0.00251,
+  "confianza":0.32258,
+  "lift":20.58623
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + SERVICIO DE ALQUILER DE CAMIONETA",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00231,
+  "confianza":0.7931,
+  "lift":20.40243
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG + DIESEL B5 S-50",
+  "consecuente":"PIEDRA LAJA",
+  "soporte":0.00211,
+  "confianza":0.31111,
+  "lift":19.85427
+ },
+ {
+  "antecedente":"ARENA GRUESA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60",
+  "soporte":0.00306,
+  "confianza":0.39355,
+  "lift":19.78773
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + DIESEL B5 S-50",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00397,
+  "confianza":0.75238,
+  "lift":19.35485
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00432,
+  "confianza":0.70492,
+  "lift":18.13388
+ },
+ {
+  "antecedente":"MADERA TORNILLO DE 1 1\/2 IN X 1 1\/2 IN X 10 FT + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60",
+  "soporte":0.00211,
+  "confianza":0.33871,
+  "lift":17.03043
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00889,
+  "confianza":0.6041,
+  "lift":15.54024
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + ARROZ PILADO SUPERIOR",
+  "consecuente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "soporte":0.00211,
+  "confianza":0.62687,
+  "lift":15.14748
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "consecuente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "soporte":0.00246,
+  "confianza":0.59036,
+  "lift":14.2654
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00271,
+  "confianza":0.55102,
+  "lift":14.17489
+ },
+ {
+  "antecedente":"PIEDRA LAJA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG + DIESEL B5 S-50",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00211,
+  "confianza":0.53165,
+  "lift":13.67648
+ },
+ {
+  "antecedente":"LENTEJA CALIDAD SUPERIOR",
+  "consecuente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "soporte":0.00211,
+  "confianza":0.55263,
+  "lift":13.3537
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE + ARROZ PILADO SUPERIOR",
+  "consecuente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "soporte":0.00256,
+  "confianza":0.54839,
+  "lift":13.25114
+ },
+ {
+  "antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30 + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00226,
+  "confianza":0.46392,
+  "lift":11.93419
+ },
+ {
+  "antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30 + DIESEL B5 S-50",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00231,
+  "confianza":0.46,
+  "lift":11.83341
+ },
+ {
+  "antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + DIESEL B5 S-50",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00256,
+  "confianza":0.43966,
+  "lift":11.31004
+ },
+ {
+  "antecedente":"PIEDRA LAJA + DIESEL B5 S-50",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00246,
+  "confianza":0.43363,
+  "lift":11.155
+ },
+ {
+  "antecedente":"BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60 + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG + DIESEL B5 S-50",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00201,
+  "confianza":0.42105,
+  "lift":10.8315
+ },
+ {
+  "antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + ARROZ PILADO SUPERIOR",
+  "consecuente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "soporte":0.00236,
+  "confianza":0.43925,
+  "lift":10.61402
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + DIESEL B5 S-50",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00271,
+  "confianza":0.40909,
+  "lift":10.52378
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE",
+  "consecuente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "soporte":0.00301,
+  "confianza":0.39735,
+  "lift":9.60152
+ },
+ {
+  "antecedente":"PIEDRA LAJA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00357,
+  "confianza":0.3641,
+  "lift":9.36647
+ },
+ {
+  "antecedente":"BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60 + DIESEL B5 S-50",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00226,
+  "confianza":0.36,
+  "lift":9.26093
+ },
+ {
+  "antecedente":"ARENA GRUESA + BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00306,
+  "confianza":0.91045,
+  "lift":9.23951
+ },
+ {
+  "antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00216,
+  "confianza":0.89583,
+  "lift":9.0912
+ },
+ {
+  "antecedente":"BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00201,
+  "confianza":0.88889,
+  "lift":9.02073
+ },
+ {
+  "antecedente":"HOJUELA DE AVENA, QUINUA Y KIWICHA PRECOCIDA E",
+  "consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.",
+  "soporte":0.01602,
+  "confianza":0.69651,
+  "lift":8.80517
+ },
+ {
+  "antecedente":"MEZCLA FORTIFICADA DE HARINA DE CEREALES Y LEG",
+  "consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.",
+  "soporte":0.00708,
+  "confianza":0.69458,
+  "lift":8.78083
+ },
+ {
+  "antecedente":"SERVICIO DE LIMPIEZA DE AREAS ADMINISTRATIVAS ",
+  "consecuente":"SERVICIO DE SEGURIDAD Y VIGILANCIA",
+  "soporte":0.00487,
+  "confianza":0.32226,
+  "lift":8.7777
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY",
+  "soporte":0.00201,
+  "confianza":0.39216,
+  "lift":8.71455
+ },
+ {
+  "antecedente":"PIEDRA LAJA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00211,
+  "confianza":0.85714,
+  "lift":8.69856
+ },
+ {
+  "antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00321,
+  "confianza":0.33161,
+  "lift":8.53051
+ },
+ {
+  "antecedente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.",
+  "soporte":0.02792,
+  "confianza":0.67476,
+  "lift":8.53022
+ },
+ {
+  "antecedente":"LECHE EVAPORADA ENTERA X 400 G APROX.",
+  "consecuente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "soporte":0.02792,
+  "confianza":0.35302,
+  "lift":8.53022
+ },
+ {
+  "antecedente":"BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00306,
+  "confianza":0.83562,
+  "lift":8.4801
+ },
+ {
+  "antecedente":"LADRILLO DE ARCILLA KING KONG DE 10 CM X 14 CM + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00261,
+  "confianza":0.8254,
+  "lift":8.37639
+ },
+ {
+  "antecedente":"PIEDRA LAJA + BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00206,
+  "confianza":0.82,
+  "lift":8.32162
+ },
+ {
+  "antecedente":"PIEDRA LAJA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00357,
+  "confianza":0.81609,
+  "lift":8.28196
+ },
+ {
+  "antecedente":"PIEDRA LAJA + CONCRETO PREMEZCLADO FC 210 KG\/CM2 CON CEMENTO",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00206,
+  "confianza":0.80392,
+  "lift":8.15845
+ },
+ {
+  "antecedente":"PIEDRA LAJA + MATERIAL GRANULAR PARA AFIRMADO TIPO A-1",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00216,
+  "confianza":0.7963,
+  "lift":8.08107
+ },
+ {
+  "antecedente":"HOJUELA DE AVENA, QUINUA Y KIWICHA PRECOCIDA E + DIESEL B5 S-50",
+  "consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.",
+  "soporte":0.00226,
+  "confianza":0.6338,
+  "lift":8.01247
+ },
+ {
+  "antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "consecuente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "soporte":0.00357,
+  "confianza":0.33023,
+  "lift":7.97969
+ },
+ {
+  "antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"CONSTRUCCION DE CENTROS EDUCATIVOS",
+  "soporte":0.00201,
+  "confianza":0.41237,
+  "lift":7.97932
+ },
+ {
+  "antecedente":"ARENA GRUESA + PIEDRA LAJA",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00251,
+  "confianza":0.78125,
+  "lift":7.92837
+ },
+ {
+  "antecedente":"ARENA GRUESA + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00301,
+  "confianza":0.76923,
+  "lift":7.8064
+ },
+ {
+  "antecedente":"ARENA GRUESA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00236,
+  "confianza":0.30323,
+  "lift":7.80043
+ },
+ {
+  "antecedente":"MADERA TORNILLO DE 1 1\/2 IN X 1 1\/2 IN X 10 FT + BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00211,
+  "confianza":0.76364,
+  "lift":7.74962
+ },
+ {
+  "antecedente":"BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60 + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00477,
+  "confianza":0.76,
+  "lift":7.71272
+ },
+ {
+  "antecedente":"HORMIGON",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00291,
+  "confianza":0.74359,
+  "lift":7.54619
+ },
+ {
+  "antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00321,
+  "confianza":0.73563,
+  "lift":7.46543
+ },
+ {
+  "antecedente":"ARENA GRUESA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00236,
+  "confianza":0.73438,
+  "lift":7.45267
+ },
+ {
+  "antecedente":"MADERA TORNILLO DE 1 1\/2 IN X 1 1\/2 IN X 10 FT + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00236,
+  "confianza":0.73438,
+  "lift":7.45267
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CAMINO VECINAL + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00291,
+  "confianza":0.59184,
+  "lift":7.42537
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CAMINO VECINAL + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00211,
+  "confianza":0.59155,
+  "lift":7.42176
+ },
+ {
+  "antecedente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO + DIESEL B5 S-50",
+  "consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.",
+  "soporte":0.00357,
+  "confianza":0.58197,
+  "lift":7.35717
+ },
+ {
+  "antecedente":"BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.01411,
+  "confianza":0.7096,
+  "lift":7.20121
+ },
+ {
+  "antecedente":"CONCRETO PREMEZCLADO FC 210 KG\/CM2 CON CEMENTO + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00352,
+  "confianza":0.70707,
+  "lift":7.17558
+ },
+ {
+  "antecedente":"PIEDRA LAJA + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00397,
+  "confianza":0.69912,
+  "lift":7.09484
+ },
+ {
+  "antecedente":"ARENA GRUESA",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00778,
+  "confianza":0.68889,
+  "lift":6.99106
+ },
+ {
+  "antecedente":"LADRILLO DE ARCILLA KING KONG DE 10 CM X 14 CM",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00748,
+  "confianza":0.68037,
+  "lift":6.90456
+ },
+ {
+  "antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00201,
+  "confianza":0.8,
+  "lift":6.84815
+ },
+ {
+  "antecedente":"CONCRETO PREMEZCLADO FC 210 KG\/CM2 CON CEMENTO + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00251,
+  "confianza":0.66667,
+  "lift":6.76555
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY",
+  "soporte":0.00251,
+  "confianza":0.3012,
+  "lift":6.6934
+ },
+ {
+  "antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + CONSTRUCCION DE CENTROS EDUCATIVOS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00201,
+  "confianza":0.53333,
+  "lift":6.69137
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"CONSTRUCCION DE CALLES CON PAVIMENTO",
+  "soporte":0.00251,
+  "confianza":0.3012,
+  "lift":6.68594
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00221,
+  "confianza":0.53012,
+  "lift":6.65106
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00221,
+  "confianza":0.77193,
+  "lift":6.60787
+ },
+ {
+  "antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + CONCRETO PREMEZCLADO FC 210 KG\/CM2 CON CEMENTO",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00231,
+  "confianza":0.63889,
+  "lift":6.48365
+ },
+ {
+  "antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00226,
+  "confianza":0.6338,
+  "lift":6.43203
+ },
+ {
+  "antecedente":"SERVICIO DE PRODUCCION Y REALIZACION DE EVENTO",
+  "consecuente":"SERVICIO DE ALQUILER DE INMUEBLE",
+  "soporte":0.00246,
+  "confianza":0.30625,
+  "lift":6.36508
+ },
+ {
+  "antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"CONSTRUCCION DE CENTROS EDUCATIVOS",
+  "soporte":0.00221,
+  "confianza":0.32836,
+  "lift":6.35368
+ },
+ {
+  "antecedente":"PIEDRA LAJA",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00979,
+  "confianza":0.625,
+  "lift":6.3427
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00477,
+  "confianza":0.50265,
+  "lift":6.30635
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO + CONSTRUCCION DE CENTROS EDUCATIVOS",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00251,
+  "confianza":0.4902,
+  "lift":6.15015
+ },
+ {
+  "antecedente":"GASOHOL REGULAR + LECHE EVAPORADA ENTERA X 400 G APROX.",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00336,
+  "confianza":0.87013,
+  "lift":6.06199
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00231,
+  "confianza":0.58228,
+  "lift":5.90915
+ },
+ {
+  "antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00336,
+  "confianza":0.57759,
+  "lift":5.86153
+ },
+ {
+  "antecedente":"BIODIGESTOR DE POLIETILENO DE 600 L",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00281,
+  "confianza":0.57143,
+  "lift":5.79904
+ },
+ {
+  "antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + CONSTRUCCION DE CENTROS EDUCATIVOS",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00377,
+  "confianza":0.65789,
+  "lift":5.6317
+ },
+ {
+  "antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + CONSTRUCCION DE CENTROS EDUCATIVOS",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00211,
+  "confianza":0.64615,
+  "lift":5.5312
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00286,
+  "confianza":0.54286,
+  "lift":5.50909
+ },
+ {
+  "antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + CONSTRUCCION DE CENTROS EDUCATIVOS",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00251,
+  "confianza":0.4386,
+  "lift":5.50277
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00251,
+  "confianza":0.43478,
+  "lift":5.45492
+ },
+ {
+  "antecedente":"CONCRETO PREMEZCLADO FC 210 KG\/CM2 CON CEMENTO",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00999,
+  "confianza":0.52368,
+  "lift":5.31451
+ },
+ {
+  "antecedente":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00331,
+  "confianza":0.42308,
+  "lift":5.30806
+ },
+ {
+  "antecedente":"ADOQUIN DE CONCRETO VEHICULAR LIGERO DE 20 CM ",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00457,
+  "confianza":0.52299,
+  "lift":5.30745
+ },
+ {
+  "antecedente":"MADERA TORNILLO DE 1 1\/2 IN X 1 1\/2 IN X 10 FT",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00623,
+  "confianza":0.51883,
+  "lift":5.26524
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00512,
+  "confianza":0.61446,
+  "lift":5.25988
+ },
+ {
+  "antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00969,
+  "confianza":0.51743,
+  "lift":5.25101
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00271,
+  "confianza":0.51429,
+  "lift":5.21913
+ },
+ {
+  "antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00342,
+  "confianza":0.40719,
+  "lift":5.10868
+ },
+ {
+  "antecedente":"AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00291,
+  "confianza":0.43609,
+  "lift":4.97878
+ },
+ {
+  "antecedente":"GASOHOL REGULAR",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.03475,
+  "confianza":0.71267,
+  "lift":4.96498
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CAMINO VECINAL + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00206,
+  "confianza":0.57746,
+  "lift":4.94321
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00432,
+  "confianza":0.48588,
+  "lift":4.93082
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00221,
+  "confianza":0.43137,
+  "lift":4.92492
+ },
+ {
+  "antecedente":"AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00352,
+  "confianza":0.42945,
+  "lift":4.90295
+ },
+ {
+  "antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30 + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00241,
+  "confianza":0.48,
+  "lift":4.87119
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CAMINO VECINAL + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00206,
+  "confianza":0.41837,
+  "lift":4.77644
+ },
+ {
+  "antecedente":"AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00311,
+  "confianza":0.38037,
+  "lift":4.77222
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00286,
+  "confianza":0.37748,
+  "lift":4.73603
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00678,
+  "confianza":0.46392,
+  "lift":4.70798
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00417,
+  "confianza":0.54967,
+  "lift":4.70527
+ },
+ {
+  "antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00487,
+  "confianza":0.54802,
+  "lift":4.69118
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CAMINO VECINAL",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00809,
+  "confianza":0.37269,
+  "lift":4.67583
+ },
+ {
+  "antecedente":"BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00201,
+  "confianza":0.65574,
+  "lift":4.56837
+ },
+ {
+  "antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00342,
+  "confianza":0.53125,
+  "lift":4.5476
+ },
+ {
+  "antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00231,
+  "confianza":0.64789,
+  "lift":4.51368
+ },
+ {
+  "antecedente":"CONSTRUCCION DE COBERTURA CON PLANCHA METALICA + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00256,
+  "confianza":0.44348,
+  "lift":4.50056
+ },
+ {
+  "antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00241,
+  "confianza":0.35556,
+  "lift":4.46091
+ },
+ {
+  "antecedente":"GASOHOL REGULAR + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00246,
+  "confianza":0.63636,
+  "lift":4.43339
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CANALES DE RIEGO",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00819,
+  "confianza":0.3881,
+  "lift":4.43083
+ },
+ {
+  "antecedente":"AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS + DIESEL B5 S-50",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00216,
+  "confianza":0.38739,
+  "lift":4.42275
+ },
+ {
+  "antecedente":"CONSTRUCCION DE PARQUES Y PLAZAS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00286,
+  "confianza":0.51351,
+  "lift":4.39577
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO + CONSTRUCCION DE CENTROS EDUCATIVOS",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00261,
+  "confianza":0.5098,
+  "lift":4.36402
+ },
+ {
+  "antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00487,
+  "confianza":0.34276,
+  "lift":4.30033
+ },
+ {
+  "antecedente":"BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00226,
+  "confianza":0.61644,
+  "lift":4.29458
+ },
+ {
+  "antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00241,
+  "confianza":0.375,
+  "lift":4.28132
+ },
+ {
+  "antecedente":"CONSTRUCCION DE LOSA DEPORTIVA + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00286,
+  "confianza":0.5,
+  "lift":4.28009
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00206,
+  "confianza":0.37273,
+  "lift":4.25537
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00613,
+  "confianza":0.41638,
+  "lift":4.22558
+ },
+ {
+  "antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00251,
+  "confianza":0.33557,
+  "lift":4.21017
+ },
+ {
+  "antecedente":"CONSTRUCCION DE PARQUES Y PLAZAS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00286,
+  "confianza":0.33529,
+  "lift":4.20671
+ },
+ {
+  "antecedente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.00673,
+  "confianza":0.33416,
+  "lift":4.19253
+ },
+ {
+  "antecedente":"SERVICIO DE FABRICACION DE PUERTAS Y VENTANAS ",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00367,
+  "confianza":0.40782,
+  "lift":4.1387
+ },
+ {
+  "antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00362,
+  "confianza":0.48322,
+  "lift":4.13647
+ },
+ {
+  "antecedente":"PIEDRA LAJA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00211,
+  "confianza":0.59155,
+  "lift":4.12118
+ },
+ {
+  "antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00256,
+  "confianza":0.58621,
+  "lift":4.08396
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO",
+  "consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "soporte":0.01462,
+  "confianza":0.32441,
+  "lift":4.07021
+ },
+ {
+  "antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00296,
+  "confianza":0.35329,
+  "lift":4.0335
+ },
+ {
+  "antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00673,
+  "confianza":0.47018,
+  "lift":4.02479
+ },
+ {
+  "antecedente":"AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00311,
+  "confianza":0.46617,
+  "lift":3.99046
+ },
+ {
+  "antecedente":"PIEDRA LAJA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00246,
+  "confianza":0.56322,
+  "lift":3.92381
+ },
+ {
+  "antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00487,
+  "confianza":0.38645,
+  "lift":3.92186
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + DIESEL B5 S-50",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00256,
+  "confianza":0.38636,
+  "lift":3.92094
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00286,
+  "confianza":0.34337,
+  "lift":3.92025
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.01487,
+  "confianza":0.38243,
+  "lift":3.88101
+ },
+ {
+  "antecedente":"AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.01843,
+  "confianza":0.33856,
+  "lift":3.8653
+ },
+ {
+  "antecedente":"CONSTRUCCION DE LOSA DEPORTIVA + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00231,
+  "confianza":0.44231,
+  "lift":3.78624
+ },
+ {
+  "antecedente":"CONSTRUCCION DE LOSA DEPORTIVA + CONSTRUCCION DE CENTROS EDUCATIVOS",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00231,
+  "confianza":0.4381,
+  "lift":3.75018
+ },
+ {
+  "antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00296,
+  "confianza":0.43704,
+  "lift":3.74112
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00231,
+  "confianza":0.53488,
+  "lift":3.72641
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00251,
+  "confianza":0.43478,
+  "lift":3.72182
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00256,
+  "confianza":0.52041,
+  "lift":3.62556
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00271,
+  "confianza":0.51429,
+  "lift":3.58291
+ },
+ {
+  "antecedente":"SERVICIO DE FABRICACION DE TECHO DE ESTRUCTURA",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00472,
+  "confianza":0.35075,
+  "lift":3.55948
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00226,
+  "confianza":0.40909,
+  "lift":3.5019
+ },
+ {
+  "antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30 + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00241,
+  "confianza":0.49485,
+  "lift":3.44747
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.02014,
+  "confianza":0.3897,
+  "lift":3.33589
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + DIESEL B5 S-50",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00216,
+  "confianza":0.38393,
+  "lift":3.2865
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00286,
+  "confianza":0.46721,
+  "lift":3.25496
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00678,
+  "confianza":0.45608,
+  "lift":3.17741
+ },
+ {
+  "antecedente":"GEOMEMBRANA DE HDPE DE 1.5 MM",
+  "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "soporte":0.00231,
+  "confianza":0.31081,
+  "lift":3.15421
+ },
+ {
+  "antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00211,
+  "confianza":0.36842,
+  "lift":3.15375
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00397,
+  "confianza":0.44633,
+  "lift":3.10946
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CAMINO VECINAL + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00291,
+  "confianza":0.36025,
+  "lift":3.08379
+ },
+ {
+  "antecedente":"CONSTRUCCION DE COBERTURA CON PLANCHA METALICA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00256,
+  "confianza":0.41463,
+  "lift":2.88866
+ },
+ {
+  "antecedente":"PIEDRA LAJA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00397,
+  "confianza":0.40513,
+  "lift":2.82243
+ },
+ {
+  "antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00477,
+  "confianza":0.32646,
+  "lift":2.79456
+ },
+ {
+  "antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00502,
+  "confianza":0.39841,
+  "lift":2.7756
+ },
+ {
+  "antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.01421,
+  "confianza":0.31585,
+  "lift":2.70372
+ },
+ {
+  "antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + DIESEL B5 S-50",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00296,
+  "confianza":0.31551,
+  "lift":2.70081
+ },
+ {
+  "antecedente":"ARENA GRUESA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00301,
+  "confianza":0.3871,
+  "lift":2.69681
+ },
+ {
+  "antecedente":"MADERA TORNILLO DE 1 1\/2 IN X 1 1\/2 IN X 10 FT + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00236,
+  "confianza":0.37903,
+  "lift":2.64063
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.01462,
+  "confianza":0.37597,
+  "lift":2.61929
+ },
+ {
+  "antecedente":"CONSTRUCCION DE PARQUES Y PLAZAS",
+  "consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA",
+  "soporte":0.00854,
+  "confianza":0.30576,
+  "lift":2.61732
+ },
+ {
+  "antecedente":"PIEDRA LAJA",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00568,
+  "confianza":0.36218,
+  "lift":2.52322
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00527,
+  "confianza":0.35836,
+  "lift":2.49662
+ },
+ {
+  "antecedente":"CONCRETO PREMEZCLADO FC 210 KG\/CM2 CON CEMENTO + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00352,
+  "confianza":0.35176,
+  "lift":2.45062
+ },
+ {
+  "antecedente":"LADRILLO DE ARCILLA KING KONG DE 10 CM X 14 CM + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00261,
+  "confianza":0.34899,
+  "lift":2.43135
+ },
+ {
+  "antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00336,
+  "confianza":0.34715,
+  "lift":2.41851
+ },
+ {
+  "antecedente":"ARENA GRUESA",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00392,
+  "confianza":0.34667,
+  "lift":2.41514
+ },
+ {
+  "antecedente":"BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60 + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00477,
+  "confianza":0.33808,
+  "lift":2.35531
+ },
+ {
+  "antecedente":"BARRA PARA CONSTRUCCION DE 1\/2 IN GRADO 60",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00628,
+  "confianza":0.31566,
+  "lift":2.1991
+ },
+ {
+  "antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1",
+  "consecuente":"DIESEL B5 S-50",
+  "soporte":0.00583,
+  "confianza":0.31099,
+  "lift":2.16661
+ }
+]

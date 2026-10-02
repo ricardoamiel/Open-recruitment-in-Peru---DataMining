@@ -1,0 +1,8 @@
+paso,detalle,filas_afectadas,filas_restantes
+entrada,tabla analitica cruda,0,281462
+duplicados,"una fila por ocid, la mas reciente",0,281462
+descarte,monto_pen nulo o no positivo,22830,258632
+descarte,fecha fuera de 2023 a 2025,81234,177398
+imputacion,n_postores con la mediana de su metodo,6655,177398
+marca,"monto fuera de [6.37, 17.99] en escala log, se conserva",565,177398
+recorte,"n_postores winsorizado al percentil 99,9, tope 107",263,177398

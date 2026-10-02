@@ -1,0 +1,222 @@
+{
+ "p1_perfil": {
+  "descripcion": "Nulos y cardinalidad de cada columna antes de limpiar",
+  "filas": 23
+ },
+ "p1_diagnostico": {
+  "descripcion": "Inconsistencias detectadas antes de limpiar",
+  "filas": 1
+ },
+ "p1_paquete_vs_anio": {
+  "descripcion": "Año del paquete frente a año de convocatoria",
+  "filas": 3
+ },
+ "p1_bitacora": {
+  "descripcion": "Bitacora de limpieza con filas afectadas por cada decision",
+  "filas": 7
+ },
+ "p1_codificacion": {
+  "descripcion": "Caracteres corrompidos reparados y conservados",
+  "filas": 10
+ },
+ "p1_serie_mensual": {
+  "descripcion": "Procesos y monto por mes",
+  "filas": 36
+ },
+ "p1_estacionalidad": {
+  "descripcion": "Procesos por mes y anio",
+  "filas": 12
+ },
+ "p1_outliers": {
+  "descripcion": "Procesos marcados como extremos frente al resto",
+  "filas": 2
+ },
+ "p1_por_metodo": {
+  "descripcion": "Procesos, monto y postores por metodo de contratacion",
+  "filas": 12
+ },
+ "p1_por_nivel": {
+  "descripcion": "Procesos, monto y entidades por nivel de gobierno",
+  "filas": 9
+ },
+ "p1_top_compradores": {
+  "descripcion": "Quince entidades con mayor monto convocado",
+  "filas": 15
+ },
+ "p1_top_proveedores": {
+  "descripcion": "Quince proveedores con mayor monto adjudicado",
+  "filas": 15
+ },
+ "p1_concentracion": {
+  "descripcion": "Concentracion del monto por tramos de proveedores",
+  "filas": 4
+ },
+ "p1_concentracion_departamento": {
+  "descripcion": "Proveedores, monto y Gini por departamento",
+  "filas": 25
+ },
+ "p1_competencia": {
+  "descripcion": "Postores medianos y porcentaje de postor unico por tramo de monto",
+  "filas": 6
+ },
+ "p1_monto_departamento": {
+  "descripcion": "Monto y procesos por departamento",
+  "filas": 25
+ },
+ "p1_postores_metodo": {
+  "descripcion": "Postores medios por metodo, sin imputados",
+  "filas": 38
+ },
+ "p1_tiempos": {
+  "descripcion": "Tiempo de las dos agregaciones en ambos estilos",
+  "filas": 2
+ },
+ "p1_shuffle": {
+  "descripcion": "Tiempo de una agregacion segun particiones de barajado",
+  "filas": 4
+ },
+ "p1_figuras": {
+  "descripcion": "Figuras de la Parte I con su lectura",
+  "filas": 15
+ },
+ "p2_calibracion_k": {
+  "descripcion": "Fondo y senal de Jaccard segun el tamano del shingle",
+  "filas": 6
+ },
+ "p2_representaciones": {
+  "descripcion": "Las dos representaciones como conjunto",
+  "filas": 2
+ },
+ "p2_error_minhash": {
+  "descripcion": "Error de estimacion de MinHash segun el numero de hashes",
+  "filas": 4
+ },
+ "p2_barrido_lsh": {
+  "descripcion": "Recall y costo de verificacion segun bandas y filas",
+  "filas": 7
+ },
+ "p2_simhash": {
+  "descripcion": "Correlacion de SimHash con coseno y con Jaccard",
+  "filas": 1
+ },
+ "p2_contraste_mllib": {
+  "descripcion": "Implementacion propia frente a Spark MLlib, ambas verificadas",
+  "filas": 4
+ },
+ "p2_casos": {
+  "descripcion": "Pares de procesos con objeto casi identico",
+  "filas": 5
+ },
+ "p2_escala": {
+  "descripcion": "Reduccion de comparaciones que logra LSH a escala completa",
+  "filas": 1
+ },
+ "p2_figuras": {
+  "descripcion": "Figuras de la Parte II con su lectura",
+  "filas": 6
+ },
+ "p3_ivf": {
+  "descripcion": "Recall y latencia de IVF segun nprobe",
+  "filas": 7
+ },
+ "p3_hnsw": {
+  "descripcion": "Recall y latencia de HNSW segun efSearch",
+  "filas": 6
+ },
+ "p3_comparacion": {
+  "descripcion": "Recall y latencia de los tres indices en ambos regimenes",
+  "filas": 14
+ },
+ "p3_escalado": {
+  "descripcion": "Latencia unitaria de fuerza bruta y HNSW segun el tamano de la base",
+  "filas": 5
+ },
+ "p3_representaciones": {
+  "descripcion": "Efecto de la representacion vectorial sobre los vecinos",
+  "filas": 2
+ },
+ "p3_costos": {
+  "descripcion": "Construccion, memoria y latencia de cada indice",
+  "filas": 3
+ },
+ "p3_figuras": {
+  "descripcion": "Figuras de la Parte III con su lectura",
+  "filas": 5
+ },
+ "p4_muestreo": {
+  "descripcion": "Tres tecnicas de muestreo y que preguntas sobreviven",
+  "filas": 3
+ },
+ "p4_reservoir_distribucion": {
+  "descripcion": "Distribucion de metodos en el flujo y en el reservoir",
+  "filas": 8
+ },
+ "p4_bloom": {
+  "descripcion": "Bloom Filter: memoria frente a tasa de falsos positivos",
+  "filas": 5
+ },
+ "p4_cms": {
+  "descripcion": "Count-Min Sketch: memoria frente a error de frecuencia",
+  "filas": 5
+ },
+ "p4_bloom_vs_cms": {
+  "descripcion": "Bloom y Count-Min sobre la misma tarea de pertenencia",
+  "filas": 2
+ },
+ "p4_dgim": {
+  "descripcion": "DGIM frente al conteo exacto sobre la ventana",
+  "filas": 5
+ },
+ "p4_dgim_vs_reservoir": {
+  "descripcion": "DGIM y reservoir sobre la pregunta de ventana reciente",
+  "filas": 3
+ },
+ "p4_resumen": {
+  "descripcion": "Las cinco estructuras de resumen y su compromiso",
+  "filas": 5
+ },
+ "p4_figuras": {
+  "descripcion": "Figuras de la Parte IV con su lectura",
+  "filas": 7
+ },
+ "p5_definicion_transaccion": {
+  "descripcion": "Tres definiciones de transaccion, medidas",
+  "filas": 3
+ },
+ "p5_costo_algoritmos": {
+  "descripcion": "Tiempo de A-Priori y FP-Growth segun el soporte minimo",
+  "filas": 4
+ },
+ "p5_reglas": {
+  "descripcion": "Reglas de asociacion sobre canastas de entidad y mes",
+  "filas": 218
+ },
+ "p5_reglas_relevantes": {
+  "descripcion": "Diez reglas con soporte y lift relevantes",
+  "filas": 10
+ },
+ "p5_postor_unico": {
+  "descripcion": "Condiciones asociadas a procesos con un solo postor",
+  "filas": 12
+ },
+ "p5_figuras": {
+  "descripcion": "Figuras de la Parte V con su lectura",
+  "filas": 4
+ },
+ "p4_escalares": {
+  "descripcion": "Cardinalidades del flujo para el reporte interactivo de la Parte VI",
+  "filas": 1
+ },
+ "p1_portada": {
+  "descripcion": "Cifras de portada para el reporte interactivo de la Parte VI",
+  "filas": 1
+ },
+ "p1_histograma_monto": {
+  "descripcion": "Histograma del valor referencial en escala logaritmica",
+  "filas": 43
+ },
+ "p1_lorenz": {
+  "descripcion": "Curva de Lorenz del monto adjudicado, remuestreada a 200 puntos",
+  "filas": 200
+ }
+}

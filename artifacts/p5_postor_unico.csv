@@ -1,0 +1,13 @@
+antecedente,soporte,confianza,lift
+METODO=Regímen Especial + NIVEL=Gobierno nacional + TRAMO=menos de 50 mil,0.01761,1.0,8.06114
+METODO=Regímen Especial + NIVEL=Gobierno nacional + RUBRO=8010 + TRAMO=menos de 50 mil,0.01572,1.0,8.06114
+METODO=Regímen Especial + RUBRO=8010 + TRAMO=menos de 50 mil,0.01572,1.0,8.06114
+METODO=Contratación Internacional + RUBRO=8210,0.0058,1.0,8.06114
+METODO=Contratación Internacional + NIVEL=Gobierno nacional + RUBRO=8210,0.00578,1.0,8.06114
+METODO=Regímen Especial + NIVEL=Gobierno nacional + RUBRO=8010,0.0171,0.99659,8.03362
+METODO=Regímen Especial + TRAMO=menos de 50 mil,0.0177,0.99604,8.02926
+METODO=Regímen Especial + RUBRO=8010,0.01711,0.99489,8.01996
+METODO=Contratación Internacional + NIVEL=Gobierno nacional + TRAMO=50 mil a 500 mil,0.00623,0.99439,8.01594
+METODO=Contratación Directa + RUBRO=8013 + TRAMO=50 mil a 500 mil,0.00751,0.98996,7.98022
+METODO=Contratación Directa + NIVEL=Gobierno nacional + RUBRO=8013,0.005,0.98841,7.96773
+METODO=Contratación Internacional + TRAMO=50 mil a 500 mil,0.00744,0.9868,7.95474

@@ -1,0 +1,72 @@
+[
+ {
+  "antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "consecuente":"ACEITE VEGETAL COMESTIBLE",
+  "soporte":0.00417,
+  "confianza":0.38605,
+  "lift":50.90445
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE",
+  "consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "soporte":0.00417,
+  "confianza":0.54967,
+  "lift":50.90445
+ },
+ {
+  "antecedente":"ACEITE VEGETAL COMESTIBLE",
+  "consecuente":"ARROZ PILADO SUPERIOR",
+  "soporte":0.00467,
+  "confianza":0.61589,
+  "lift":37.84897
+ },
+ {
+  "antecedente":"ARROZ PILADO SUPERIOR",
+  "consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "soporte":0.00537,
+  "confianza":0.33025,
+  "lift":30.58394
+ },
+ {
+  "antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV",
+  "consecuente":"ARROZ PILADO SUPERIOR",
+  "soporte":0.00537,
+  "confianza":0.49767,
+  "lift":30.58394
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00432,
+  "confianza":0.70492,
+  "lift":18.13388
+ },
+ {
+  "antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE",
+  "consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "soporte":0.00889,
+  "confianza":0.6041,
+  "lift":15.54024
+ },
+ {
+  "antecedente":"HOJUELA DE AVENA, QUINUA Y KIWICHA PRECOCIDA E",
+  "consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.",
+  "soporte":0.01602,
+  "confianza":0.69651,
+  "lift":8.80517
+ },
+ {
+  "antecedente":"MEZCLA FORTIFICADA DE HARINA DE CEREALES Y LEG",
+  "consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.",
+  "soporte":0.00708,
+  "confianza":0.69458,
+  "lift":8.78083
+ },
+ {
+  "antecedente":"SERVICIO DE LIMPIEZA DE AREAS ADMINISTRATIVAS ",
+  "consecuente":"SERVICIO DE SEGURIDAD Y VIGILANCIA",
+  "soporte":0.00487,
+  "confianza":0.32226,
+  "lift":8.7777
+ }
+]

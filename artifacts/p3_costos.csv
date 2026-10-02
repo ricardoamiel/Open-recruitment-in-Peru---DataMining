@@ -1,0 +1,4 @@
+indice,construccion_s,memoria_mb,recall_al_95pct_ms
+fuerza bruta,0.0,41.0,1.924
+IVF nlist=282,0.4,41.1,0.078
+HNSW M=32,7.1,61.4,0.028

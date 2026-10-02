@@ -1,0 +1,14 @@
+[
+ {
+  "representacion":"shingles del objeto, k=9",
+  "elementos_medios":186.9,
+  "universo":137412,
+  "docs_vacios":0
+ },
+ {
+  "representacion":"conjunto de codigos CUBSO",
+  "elementos_medios":0.94,
+  "universo":654,
+  "docs_vacios":270
+ }
+]

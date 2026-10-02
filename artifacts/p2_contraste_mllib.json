@@ -1,0 +1,26 @@
+[
+ {
+  "configuracion":"propia b=64, r=2, verificada",
+  "candidatos_crudos":171259.0,
+  "pares_verificados":262,
+  "recall":0.9962
+ },
+ {
+  "configuracion":"MLlib numHashTables=8",
+  "candidatos_crudos":null,
+  "pares_verificados":252,
+  "recall":0.9582
+ },
+ {
+  "configuracion":"MLlib numHashTables=16",
+  "candidatos_crudos":null,
+  "pares_verificados":261,
+  "recall":0.9924
+ },
+ {
+  "configuracion":"MLlib numHashTables=32",
+  "candidatos_crudos":null,
+  "pares_verificados":261,
+  "recall":0.9924
+ }
+]
