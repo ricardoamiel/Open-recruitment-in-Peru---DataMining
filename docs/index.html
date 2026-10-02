@@ -1,0 +1,1114 @@
+<title>Patrones del Gasto Público Peruano</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+
+<style>
+/* Informe de una sola columna, todo alineado al margen izquierdo. Tipografia
+   Arial en el documento entero. Un solo tema, claro: esto es un informe que se
+   lee sobre fondo blanco, no una aplicacion. */
+:root{
+  color-scheme:light;
+  --fondo:#FFFFFF; --panel:#F6F8FA; --linea:#D5DCE3; --linea-suave:#E8ECF0;
+  --tinta:#1A1A1A; --tinta2:#454C54; --tinta3:#737B84;
+  --azul:#2E6DB4; --rojo:#B3441F; --verde:#4F8C28; --morado:#8B5BB5; --teal:#00807E;
+  --azul-claro:#DCE9F6; --azul-muy-claro:#F0F6FC;
+  --texto:Arial,Helvetica,sans-serif;
+  --dato:Consolas,"Courier New",monospace;
+}
+
+*{box-sizing:border-box;}
+body{
+  background:var(--fondo); color:var(--tinta);
+  font-family:var(--texto); font-size:15.5px; line-height:1.6;
+  padding-inline:24px; padding-block:0;
+}
+.doc{max-width:1060px;margin-inline:auto;}
+/* El texto arranca en el margen izquierdo del documento, nunca centrado. */
+.txt{max-width:82ch;}
+
+h1{font-size:30px;font-weight:bold;line-height:1.2;margin:0 0 10px;}
+h2{font-size:21px;font-weight:bold;margin:38px 0 4px;line-height:1.3;}
+h3{font-size:16.5px;font-weight:bold;margin:26px 0 6px;}
+p{margin:0 0 12px;max-width:82ch;}
+p:last-child{margin-bottom:0;}
+a{color:var(--azul);}
+
+header{padding-block:40px 20px;border-bottom:3px solid var(--tinta);}
+.sobre{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--tinta3);margin:0 0 12px;}
+.resumen{font-size:16.5px;color:var(--tinta2);margin:14px 0 0;max-width:80ch;}
+.ficha{margin:22px 0 0;font-size:13.5px;color:var(--tinta2);}
+.ficha div{margin-bottom:4px;}
+.ficha b{display:inline-block;min-width:104px;color:var(--tinta);}
+
+.cifras{display:flex;flex-wrap:wrap;margin-block:24px 0;border:1px solid var(--linea);}
+.cifra{flex:1 1 190px;min-width:0;padding:14px 16px;border-right:1px solid var(--linea);}
+.cifra:last-child{border-right:none;}
+.cifra .n{font-size:24px;font-weight:bold;line-height:1.15;}
+.cifra .t{font-size:12.5px;color:var(--tinta3);margin-top:3px;line-height:1.35;}
+
+nav{border-bottom:1px solid var(--linea);margin-top:24px;position:sticky;
+  top:env(safe-area-inset-top,0px);background:var(--fondo);z-index:10;}
+nav div{display:flex;gap:2px;overflow-x:auto;padding-block:8px;}
+nav a{font-size:12.5px;color:var(--tinta2);text-decoration:none;padding:5px 10px;white-space:nowrap;}
+nav a:hover{color:var(--azul);background:var(--azul-muy-claro);}
+
+section{padding-block:6px 20px;}
+.rotulo{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--azul);
+  margin:34px 0 0;font-weight:bold;}
+.pregunta{margin:18px 0 10px;padding-left:12px;border-left:3px solid var(--azul);
+  font-weight:bold;font-size:16px;max-width:82ch;}
+.ruta{font-family:var(--dato);font-size:12px;color:var(--tinta2);background:var(--panel);
+  border:1px solid var(--linea-suave);padding:7px 10px;margin:0 0 14px;max-width:82ch;}
+
+figure{margin:18px 0 26px;}
+.grafico{width:100%;overflow-x:auto;border:1px solid var(--linea);padding:14px 12px 8px;}
+figcaption{font-size:14px;color:var(--tinta2);margin-top:9px;max-width:88ch;line-height:1.55;}
+figcaption .num{font-weight:bold;color:var(--tinta);}
+svg{display:block;max-width:100%;height:auto;}
+.eje text{font-family:var(--dato);font-size:10px;fill:var(--tinta3);}
+.eje line,.eje path{stroke:var(--linea);}
+.rejilla line{stroke:var(--linea-suave);}
+.rejilla .domain{display:none;}
+.rotulo-eje{font-family:var(--dato);font-size:10.5px;fill:var(--tinta3);}
+
+.controles{background:var(--panel);border:1px solid var(--linea);padding:13px 15px;
+  margin:0 0 14px;display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;}
+.control{flex:1 1 180px;min-width:0;}
+.control label{display:block;font-size:12.5px;color:var(--tinta2);margin-bottom:5px;}
+.control label b{color:var(--azul);}
+input[type=range]{width:100%;accent-color:var(--azul);margin:0;display:block;}
+.salida{flex:1 1 100%;font-size:13px;color:var(--tinta2);line-height:1.6;
+  border-top:1px solid var(--linea);padding-top:10px;}
+.salida b{color:var(--tinta);}
+
+#tip{position:fixed;pointer-events:none;opacity:0;transition:opacity .08s;z-index:50;
+  background:#1A1A1A;color:#FFFFFF;padding:7px 10px;font-family:var(--dato);
+  font-size:11.5px;line-height:1.5;max-width:280px;box-shadow:0 3px 12px rgba(0,0,0,.25);}
+
+.tabla{overflow-x:auto;margin:14px 0 22px;}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:480px;}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--tinta3);
+  text-align:left;padding:0 12px 7px 0;border-bottom:2px solid var(--tinta);font-weight:bold;}
+td{padding:8px 12px 8px 0;border-bottom:1px solid var(--linea-suave);vertical-align:top;}
+th:last-child,td:last-child{padding-right:0;}
+td.n{font-family:var(--dato);white-space:nowrap;}
+
+ol{margin:0 0 12px;padding-left:22px;max-width:82ch;}
+ol li{margin-bottom:7px;}
+
+footer{padding-block:24px 50px;border-top:2px solid var(--tinta);margin-top:36px;
+  font-size:13px;color:var(--tinta3);line-height:1.7;}
+:focus-visible{outline:2px solid var(--azul);outline-offset:2px;}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+
+<div id="tip"></div>
+
+<div class="doc">
+
+<header>
+  <p class="sobre">Proyecto Integrador · Minería de Datos Masivos y Flujos de Datos</p>
+  <h1>Patrones del Gasto Público Peruano</h1>
+  <p class="resumen">Seis técnicas de minería aplicadas a las contrataciones del Estado peruano
+  entre 2023 y 2025. Las figuras son interactivas: al pasar el cursor muestran el dato exacto, y
+  donde hay controles se puede mover el parámetro del algoritmo y ver cómo cambia la curva.</p>
+  <div class="ficha">
+    <div><b>Integrantes</b> Ricardo Amiel Acuña Villogas, Juan Leibniz Aquino Espinoza y Camilo Ernesto Soto Cristóbal</div>
+    <div><b>Fuente</b> <a href="https://data.open-contracting.org/es/publication/135">Contrataciones Abiertas del Perú, estándar OCDS, publicación 135 del registro de Open Contracting Partnership</a></div>
+  </div>
+</header>
+
+<div class="cifras" id="cifras"></div>
+
+<nav><div>
+  <a href="#p1">I. KDD y EDA</a>
+  <a href="#p2">II. Similitud</a>
+  <a href="#p3">III. Vecinos</a>
+  <a href="#p4">IV. Flujos</a>
+  <a href="#p5">V. Reglas</a>
+  <a href="#p6">VI. Discusión</a>
+</div></nav>
+
+<section id="p1">
+  <p class="rotulo">Parte I</p>
+  <h2>KDD, análisis exploratorio y procesamiento distribuido</h2>
+  <div class="txt">
+  <p>De 281.462 procesos crudos quedan 177.398 utilizables. La limpieza descartó el 37 por ciento
+  de las filas en dos decisiones. Los procesos con valor referencial cero no admiten imputación,
+  porque el cero marca un campo no publicado y no un monto. Y el paquete anual del registro arrastra
+  convocatorias de años anteriores que recién entonces se publicaron, de modo que mezclarlas produce
+  picos que describen al publicador y no al Estado comprador.</p>
+  <p>Con los montos extremos se tomó la decisión contraria: se marcan y se conservan. Son el 0,3 por
+  ciento de las filas y concentran cerca del 38 por ciento del gasto, así que eliminarlos habría
+  dejado una tabla más ordenada y habría borrado un tercio del dinero público que se quiere estudiar.</p>
+  </div>
+
+  <p class="pregunta">¿Hay apresuramiento del gasto en el cierre del ejercicio presupuestal?</p>
+  <p class="ruta">Parquet particionado por año → Spark SQL, agrupar por mes → 36 puntos</p>
+  <figure>
+    <div class="grafico" id="g-mensual"></div>
+    <figcaption id="c-mensual"></figcaption>
+  </figure>
+  <figure>
+    <div class="grafico" id="g-estacional"></div>
+    <figcaption id="c-estacional"></figcaption>
+  </figure>
+
+  <p class="pregunta">¿Qué tan concentrado está el gasto en pocos proveedores, y cambia entre territorios?</p>
+  <p class="ruta">filtrar adjudicados → sumar monto por proveedor → ordenar y acumular → Gini</p>
+  <figure>
+    <div class="grafico" id="g-lorenz"></div>
+    <figcaption id="c-lorenz"></figcaption>
+  </figure>
+  <figure>
+    <div class="grafico" id="g-gini"></div>
+    <figcaption id="c-gini"></figcaption>
+  </figure>
+
+  <p class="pregunta">¿Qué relación hay entre el número de postores y el monto adjudicado?</p>
+  <figure>
+    <div class="grafico" id="g-competencia"></div>
+    <figcaption id="c-competencia"></figcaption>
+  </figure>
+  <figure>
+    <div class="grafico" id="g-histograma"></div>
+    <figcaption id="c-histograma"></figcaption>
+  </figure>
+</section>
+
+<section id="p2">
+  <p class="rotulo">Parte II</p>
+  <h2>Similitud con MinHash y LSH</h2>
+  <div class="txt">
+  <p>Con 177.398 procesos hay más de quince mil millones de pares posibles. LSH evita casi todos:
+  divide la firma MinHash en bandas y solo compara los documentos que coinciden en alguna banda.
+  Importa una aclaración, porque decide cómo se mide todo lo que sigue. LSH es un generador de
+  candidatos y no un clasificador: su salida pasa por una verificación exacta que elimina los falsos
+  positivos, así que la precisión antes de verificar no mide calidad sino trabajo pendiente. Lo que
+  importa es el recall, porque un par perdido aquí se pierde para siempre.</p>
+  </div>
+  <figure>
+    <div class="grafico" id="g-minhash"></div>
+    <figcaption id="c-minhash"></figcaption>
+  </figure>
+
+  <p class="pregunta">Mueva las bandas y las filas para ver qué se considera parecido</p>
+  <div class="controles">
+    <div class="control">
+      <label for="lsh-b">Bandas: <b id="v-lsh-b">16</b></label>
+      <input type="range" id="lsh-b" min="2" max="128" step="1" value="16">
+    </div>
+    <div class="control">
+      <label for="lsh-r">Filas por banda: <b id="v-lsh-r">8</b></label>
+      <input type="range" id="lsh-r" min="1" max="32" step="1" value="8">
+    </div>
+    <div class="salida" id="s-lsh"></div>
+  </div>
+  <figure>
+    <div class="grafico" id="g-lsh"></div>
+    <figcaption id="c-lsh"></figcaption>
+  </figure>
+
+  <h3>Pares encontrados por el método</h3>
+  <div class="tabla"><table id="t-casos"></table></div>
+  <p class="txt">Un par con similitud alta dice que dos procesos describen casi lo mismo. Puede
+  reflejar una plantilla compartida entre entidades, una necesidad genuinamente idéntica o un
+  proceso fraccionado. Es una hipótesis que señala dónde mirar y nada más.</p>
+</section>
+
+<section id="p3">
+  <p class="rotulo">Parte III</p>
+  <h2>Búsqueda aproximada de vecinos</h2>
+  <div class="txt">
+  <p>Antes de comparar índices hay que fijar el régimen de medición, porque la biblioteca cambia de
+  implementación según el tamaño del lote de consultas. Con un lote grande el índice plano resuelve
+  la búsqueda como un producto de matrices y aprovecha los ocho núcleos; con una consulta aislada no
+  tiene nada que amortizar. Mezclar ambos regímenes produce diferencias de un orden de magnitud que
+  no son del índice sino del método de medición.</p>
+  </div>
+  <figure>
+    <div class="grafico" id="g-ann"></div>
+    <figcaption id="c-ann"></figcaption>
+  </figure>
+  <figure>
+    <div class="grafico" id="g-escalado"></div>
+    <figcaption id="c-escalado"></figcaption>
+  </figure>
+</section>
+
+<section id="p4">
+  <p class="rotulo">Parte IV</p>
+  <h2>Minería de flujos</h2>
+  <div class="txt">
+  <p>Las estructuras de esta parte no son alternativas entre sí. Un filtro de Bloom responde si algo
+  apareció, un Count-Min Sketch responde cuántas veces y DGIM responde cuántos hubo en los últimos
+  elementos. Forzar una sobre la tarea de otra se paga, y abajo está medido cuánto.</p>
+  </div>
+
+  <p class="pregunta">Mueva el tamaño del filtro de Bloom y vea qué precisión compra</p>
+  <div class="controles">
+    <div class="control">
+      <label for="bl-bits">Bits por elemento: <b id="v-bl-bits">10</b></label>
+      <input type="range" id="bl-bits" min="2" max="40" step="1" value="10">
+    </div>
+    <div class="control">
+      <label for="bl-k">Funciones hash: <b id="v-bl-k">7</b></label>
+      <input type="range" id="bl-k" min="1" max="20" step="1" value="7">
+    </div>
+    <div class="salida" id="s-bloom"></div>
+  </div>
+  <figure>
+    <div class="grafico" id="g-bloom"></div>
+    <figcaption id="c-bloom"></figcaption>
+  </figure>
+
+  <p class="pregunta">Reparta el presupuesto de memoria del Count-Min entre ancho y profundidad</p>
+  <div class="controles">
+    <div class="control">
+      <label for="cm-w">Ancho de la tabla: <b id="v-cm-w">2700</b></label>
+      <input type="range" id="cm-w" min="200" max="20000" step="100" value="2700">
+    </div>
+    <div class="control">
+      <label for="cm-d">Profundidad: <b id="v-cm-d">7</b></label>
+      <input type="range" id="cm-d" min="1" max="15" step="1" value="7">
+    </div>
+    <div class="salida" id="s-cms"></div>
+  </div>
+  <figure>
+    <div class="grafico" id="g-cms"></div>
+    <figcaption id="c-cms"></figcaption>
+  </figure>
+
+  <figure>
+    <div class="grafico" id="g-dgim"></div>
+    <figcaption id="c-dgim"></figcaption>
+  </figure>
+  <div class="tabla"><table id="t-flujos"></table></div>
+</section>
+
+<section id="p5">
+  <p class="rotulo">Parte V</p>
+  <h2>Conjuntos frecuentes y reglas de asociación</h2>
+  <div class="txt">
+  <p>La definición de transacción era el problema real y no el algoritmo. La canasta natural, el
+  conjunto de códigos de catálogo de un proceso, no sirve: apenas el 2,1 por ciento de los procesos
+  tiene dos o más ítems, y un conjunto de un solo elemento no contiene coocurrencia. El catálogo
+  identifica el objeto del proceso, y la mayoría de los procesos peruanos tienen un objeto único, así
+  que la analogía del supermercado no se sostiene a nivel de acto administrativo. La transacción se
+  redefinió como lo que una entidad compra dentro de un mismo mes, lo que sube la coocurrencia al
+  53,6 por ciento.</p>
+  </div>
+  <figure>
+    <div class="grafico" id="g-algoritmos"></div>
+    <figcaption id="c-algoritmos"></figcaption>
+  </figure>
+
+  <p class="pregunta">Filtre las reglas por soporte, confianza y lift</p>
+  <div class="controles">
+    <div class="control">
+      <label for="rg-sop">Soporte mínimo: <b id="v-rg-sop">0,004</b></label>
+      <input type="range" id="rg-sop" min="2" max="40" step="1" value="4">
+    </div>
+    <div class="control">
+      <label for="rg-conf">Confianza mínima: <b id="v-rg-conf">0,30</b></label>
+      <input type="range" id="rg-conf" min="30" max="100" step="5" value="30">
+    </div>
+    <div class="control">
+      <label for="rg-lift">Lift mínimo: <b id="v-rg-lift">3</b></label>
+      <input type="range" id="rg-lift" min="1" max="60" step="1" value="3">
+    </div>
+    <div class="salida" id="s-reglas"></div>
+  </div>
+  <figure>
+    <div class="grafico" id="g-reglas"></div>
+    <figcaption id="c-reglas"></figcaption>
+  </figure>
+  <div class="tabla"><table id="t-reglas"></table></div>
+</section>
+
+<section id="p6">
+  <p class="rotulo">Parte VI</p>
+  <h2>Análisis y discusión</h2>
+  <div class="txt">
+  <h3>Qué técnicas aportaron valor</h3>
+  <p>Las que respondieron una pregunta planteada de antemano. El análisis exploratorio y la curva de
+  Lorenz contestan la concentración con un número comparable entre territorios. Las reglas sobre la
+  canasta enriquecida contestan dónde se concentra la falta de competencia. LSH aporta candidatos de
+  objetos duplicados, que es el paso que faltaba para interpretar la concentración. La búsqueda
+  aproximada de vecinos aportó poco a las preguntas y mucho al aprendizaje sobre el compromiso entre
+  exactitud y latencia, y conviene decirlo así en lugar de inflar su utilidad.</p>
+
+  <h3>Cuánto se pierde con los métodos aproximados</h3>
+  <p>Está medido y no estimado. MinHash con 128 funciones hash tiene un error muy inferior al ancho
+  de la zona de decisión de LSH. LSH pierde recall de forma controlada según las bandas y las filas,
+  y a cambio evita más del noventa por ciento de las comparaciones. Los índices aproximados pierden
+  unos pocos puntos de recall. El filtro de Bloom respeta su tasa teórica, el Count-Min nunca
+  subestima y respeta su cota, y DGIM queda muy por debajo de su cota del cincuenta por ciento.</p>
+
+  <h3>Qué se benefició realmente de Spark</h3>
+  <p>La ingesta y el análisis exploratorio, sin duda: 2,98 GB de CSV en 21 tablas por año se
+  desnormalizan a una tabla analítica en menos de medio minuto. El agrupamiento por bandas de LSH
+  también, porque son millones de pares. No se benefició la búsqueda de vecinos, donde una biblioteca
+  de un solo nodo es mejor herramienta, ni la minería de flujos, cuyo recorrido es secuencial y con
+  estado. Afirmar que todo mejoró con Spark sería falso, y reconocer dónde no aporta es parte del
+  análisis.</p>
+
+  <h3>Qué cambiaría con diez o cien veces más volumen</h3>
+  <p>La búsqueda exacta dejaría de ser viable y el índice aproximado pasaría de ejercicio a
+  obligación. El Count-Min empezaría a ganarle al diccionario exacto, cosa que a este volumen todavía
+  no ocurre. A-Priori quedaría definitivamente fuera. El particionado por año dejaría de bastar y
+  habría que subparticionar por mes. Y una mala elección del número de particiones de barajado, que
+  hoy la ejecución adaptativa amortigua casi por completo, pasaría a costar tiempo real.</p>
+
+  <h3>Implicancias sobre datos públicos peruanos</h3>
+  <p>Estas técnicas sirven a la transparencia y al control del gasto, y ese es el motivo de que los
+  datos sean abiertos. Al mismo tiempo, un par de proveedores marcado como similar es una hipótesis
+  estadística y no una acusación, y una regla de asociación es una coocurrencia sobre datos de
+  publicación y no una afirmación sobre la conducta de una entidad. El riesgo concreto de este tipo
+  de trabajo es que un hallazgo estadístico se presente con el lenguaje de una conclusión. Los datos
+  además tienen sesgos de publicación que este proyecto documentó, como la subcobertura de los meses
+  más recientes, que un lector apresurado leería como una caída de la contratación.</p>
+
+  <h3>Lo que este trabajo no autoriza a concluir</h3>
+  <ol>
+    <li>Que un par de procesos con objeto casi idéntico implique fraccionamiento o colusión. Implica
+    que dos textos se parecen.</li>
+    <li>Que una concentración alta implique conducta anticompetitiva. Puede reflejar especialización,
+    contratos de gran escala o el propio mecanismo de compra.</li>
+    <li>Que una regla de asociación con lift alto implique causalidad.</li>
+    <li>Que las cifras agregadas aquí sean cifras oficiales. Describen el paquete descargado, con sus
+    sesgos de publicación, y no el gasto público ejecutado.</li>
+  </ol>
+  </div>
+</section>
+
+<footer>
+  Proyecto Integrador de Minería de Datos Masivos y Flujos de Datos.<br>
+  Ricardo Amiel Acuña Villogas, Juan Leibniz Aquino Espinoza y Camilo Ernesto Soto Cristóbal.<br>
+  Datos de <a href="https://data.open-contracting.org/es/publication/135">Open Contracting Partnership, Data Registry, publicación 135, Perú, OECE</a>, paquetes anuales 2023 a 2025.<br>
+  Los agregados se generan con los notebooks del proyecto y van incrustados en este archivo.
+</footer>
+
+</div>
+
+<script>
+// Los agregados los producen los notebooks del proyecto y se incrustan aqui al
+// generar la pagina. No hay ninguna peticion de red.
+const D = {"portada":{"procesos_crudos":281462,"procesos_limpios":177398,"gb_csv":2.976,"mb_parquet":29.8},"serie_mensual":[{"anio_mes":1672531200000,"procesos":316,"monto_millones":483.13853252},{"anio_mes":1675209600000,"procesos":1995,"monto_millones":3280.42485762},{"anio_mes":1677628800000,"procesos":5020,"monto_millones":4802.84524841},{"anio_mes":1680307200000,"procesos":4704,"monto_millones":4746.65578513},{"anio_mes":1682899200000,"procesos":6782,"monto_millones":5836.6171176},{"anio_mes":1685577600000,"procesos":6631,"monto_millones":7543.90143889},{"anio_mes":1688169600000,"procesos":5779,"monto_millones":7194.95457395},{"anio_mes":1690848000000,"procesos":6361,"monto_millones":12128.74015281},{"anio_mes":1693526400000,"procesos":6549,"monto_millones":9025.94901341},{"anio_mes":1696118400000,"procesos":7339,"monto_millones":8282.77337044},{"anio_mes":1698796800000,"procesos":7166,"monto_millones":9982.75643476},{"anio_mes":1701388800000,"procesos":7280,"monto_millones":12549.81056663},{"anio_mes":1704067200000,"procesos":576,"monto_millones":1872.1308992},{"anio_mes":1706745600000,"procesos":2722,"monto_millones":3592.76478909},{"anio_mes":1709251200000,"procesos":3918,"monto_millones":9201.72269125},{"anio_mes":1711929600000,"procesos":5354,"monto_millones":5223.78446646},{"anio_mes":1714521600000,"procesos":5171,"monto_millones":7444.17430936},{"anio_mes":1717200000000,"procesos":4685,"monto_millones":7438.80958143},{"anio_mes":1719792000000,"procesos":5010,"monto_millones":10635.07190854},{"anio_mes":1722470400000,"procesos":5605,"monto_millones":8162.33377076},{"anio_mes":1725148800000,"procesos":5616,"monto_millones":9189.34453978},{"anio_mes":1727740800000,"procesos":6223,"monto_millones":8573.80215935},{"anio_mes":1730419200000,"procesos":5242,"monto_millones":7616.86640264},{"anio_mes":1733011200000,"procesos":6498,"monto_millones":14372.76288917},{"anio_mes":1735689600000,"procesos":995,"monto_millones":3334.3516457},{"anio_mes":1738368000000,"procesos":4202,"monto_millones":5273.21161544},{"anio_mes":1740787200000,"procesos":6995,"monto_millones":5974.8937873},{"anio_mes":1743465600000,"procesos":7656,"monto_millones":10349.12378059},{"anio_mes":1746057600000,"procesos":2273,"monto_millones":2402.55160505},{"anio_mes":1748736000000,"procesos":4655,"monto_millones":4013.83139315},{"anio_mes":1751328000000,"procesos":5689,"monto_millones":9605.89368225},{"anio_mes":1754006400000,"procesos":6255,"monto_millones":6272.7256802},{"anio_mes":1756684800000,"procesos":6066,"monto_millones":9005.22051546},{"anio_mes":1759276800000,"procesos":5748,"monto_millones":7233.03436473},{"anio_mes":1761955200000,"procesos":3380,"monto_millones":3709.06784695},{"anio_mes":1764547200000,"procesos":942,"monto_millones":2250.07808024}],"concentracion":[{"tramo":"top 1 %","pct_del_monto":47.1,"gini":0.8567},{"tramo":"top 5 %","pct_del_monto":70.1,"gini":0.8567},{"tramo":"top 10 %","pct_del_monto":80.2,"gini":0.8567},{"tramo":"top 25 %","pct_del_monto":91.3,"gini":0.8567}],"gini_departamento":[{"departamento":"PASCO","proveedores":1282,"monto_mm":3545.6040759,"gini":0.9089586589},{"departamento":"LIMA","proveedores":20504,"monto_mm":72147.90341871,"gini":0.8994204267},{"departamento":"HUANCAVELICA","proveedores":1958,"monto_mm":2469.45602273,"gini":0.8326515176},{"departamento":"LORETO","proveedores":2011,"monto_mm":4536.32573154,"gini":0.8248399972},{"departamento":"JUNIN","proveedores":3428,"monto_mm":5038.68355654,"gini":0.8195848617},{"departamento":"SAN MARTIN","proveedores":1810,"monto_mm":2946.55101316,"gini":0.8063798579},{"departamento":"LA LIBERTAD","proveedores":3295,"monto_mm":5268.10813925,"gini":0.7968107845},{"departamento":"AREQUIPA","proveedores":3153,"monto_mm":4536.43301076,"gini":0.7923823171},{"departamento":"LAMBAYEQUE","proveedores":1739,"monto_mm":2937.56549371,"gini":0.7910824663},{"departamento":"PIURA","proveedores":3282,"monto_mm":5449.31073301,"gini":0.7891910913},{"departamento":"CALLAO","proveedores":1820,"monto_mm":2555.33886781,"gini":0.7823525315},{"departamento":"CAJAMARCA","proveedores":3438,"monto_mm":4454.73822599,"gini":0.7789725014},{"departamento":"AMAZONAS","proveedores":1470,"monto_mm":1874.87872091,"gini":0.7747258687},{"departamento":"CUSCO","proveedores":6067,"monto_mm":5298.20846321,"gini":0.7725728482},{"departamento":"ICA","proveedores":2106,"monto_mm":3192.42865085,"gini":0.766496581},{"departamento":"TACNA","proveedores":1123,"monto_mm":1188.53583663,"gini":0.7612668349},{"departamento":"HUANUCO","proveedores":2717,"monto_mm":2805.31090345,"gini":0.7595634771},{"departamento":"AYACUCHO","proveedores":3143,"monto_mm":2786.42907265,"gini":0.7574427748},{"departamento":"PUNO","proveedores":2943,"monto_mm":2721.80671667,"gini":0.7539674351},{"departamento":"MOQUEGUA","proveedores":1198,"monto_mm":961.81169324,"gini":0.7449696286},{"departamento":"UCAYALI","proveedores":1896,"monto_mm":1717.75342545,"gini":0.7445367758},{"departamento":"APURIMAC","proveedores":2142,"monto_mm":1616.95431172,"gini":0.73173915},{"departamento":"TUMBES","proveedores":576,"monto_mm":728.37519841,"gini":0.729817803},{"departamento":"MADRE DE DIOS","proveedores":555,"monto_mm":392.34598166,"gini":0.7163790846},{"departamento":"ANCASH","proveedores":5418,"monto_mm":4568.54287919,"gini":0.7106201763}],"competencia":[{"tramo":"1. menos de 50 mil","procesos":10156,"postores_mediano":1.0,"pct_postor_unico":57.01063},{"tramo":"2. 50 a 200 mil","procesos":83628,"postores_mediano":7.0,"pct_postor_unico":10.05883},{"tramo":"3. 200 mil a 1 M","procesos":55872,"postores_mediano":11.0,"pct_postor_unico":8.7074},{"tramo":"4. 1 a 5 M","procesos":15931,"postores_mediano":15.0,"pct_postor_unico":10.0182},{"tramo":"5. 5 a 20 M","procesos":3998,"postores_mediano":18.0,"pct_postor_unico":9.65483},{"tramo":"6. mas de 20 M","procesos":1158,"postores_mediano":19.0,"pct_postor_unico":11.39896}],"estacionalidad":[{"mes":"ene","2023":316,"2024":576,"2025":995},{"mes":"feb","2023":1995,"2024":2722,"2025":4202},{"mes":"mar","2023":5020,"2024":3918,"2025":6995},{"mes":"abr","2023":4704,"2024":5354,"2025":7656},{"mes":"may","2023":6782,"2024":5171,"2025":2273},{"mes":"jun","2023":6631,"2024":4685,"2025":4655},{"mes":"jul","2023":5779,"2024":5010,"2025":5689},{"mes":"ago","2023":6361,"2024":5605,"2025":6255},{"mes":"sep","2023":6549,"2024":5616,"2025":6066},{"mes":"oct","2023":7339,"2024":6223,"2025":5748},{"mes":"nov","2023":7166,"2024":5242,"2025":3380},{"mes":"dic","2023":7280,"2024":6498,"2025":942}],"lorenz":[{"pct_proveedores":1e-05,"pct_monto":0.0},{"pct_proveedores":0.00504,"pct_monto":1e-05},{"pct_proveedores":0.01006,"pct_monto":3e-05},{"pct_proveedores":0.01508,"pct_monto":6e-05},{"pct_proveedores":0.0201,"pct_monto":0.00011},{"pct_proveedores":0.02514,"pct_monto":0.00017},{"pct_proveedores":0.03016,"pct_monto":0.00024},{"pct_proveedores":0.03518,"pct_monto":0.00033},{"pct_proveedores":0.0402,"pct_monto":0.00043},{"pct_proveedores":0.04524,"pct_monto":0.00054},{"pct_proveedores":0.05026,"pct_monto":0.00065},{"pct_proveedores":0.05528,"pct_monto":0.00077},{"pct_proveedores":0.0603,"pct_monto":0.00088},{"pct_proveedores":0.06534,"pct_monto":0.001},{"pct_proveedores":0.07036,"pct_monto":0.00113},{"pct_proveedores":0.07538,"pct_monto":0.00126},{"pct_proveedores":0.0804,"pct_monto":0.00139},{"pct_proveedores":0.08544,"pct_monto":0.00153},{"pct_proveedores":0.09046,"pct_monto":0.00166},{"pct_proveedores":0.09548,"pct_monto":0.0018},{"pct_proveedores":0.1005,"pct_monto":0.00195},{"pct_proveedores":0.10554,"pct_monto":0.00209},{"pct_proveedores":0.11056,"pct_monto":0.00224},{"pct_proveedores":0.11558,"pct_monto":0.00239},{"pct_proveedores":0.1206,"pct_monto":0.00255},{"pct_proveedores":0.12564,"pct_monto":0.00271},{"pct_proveedores":0.13066,"pct_monto":0.00287},{"pct_proveedores":0.13568,"pct_monto":0.00303},{"pct_proveedores":0.14071,"pct_monto":0.0032},{"pct_proveedores":0.14573,"pct_monto":0.00337},{"pct_proveedores":0.15076,"pct_monto":0.00354},{"pct_proveedores":0.15578,"pct_monto":0.00371},{"pct_proveedores":0.16081,"pct_monto":0.00389},{"pct_proveedores":0.16583,"pct_monto":0.00407},{"pct_proveedores":0.17086,"pct_monto":0.00425},{"pct_proveedores":0.17589,"pct_monto":0.00444},{"pct_proveedores":0.18091,"pct_monto":0.00462},{"pct_proveedores":0.18593,"pct_monto":0.00481},{"pct_proveedores":0.19096,"pct_monto":0.00501},{"pct_proveedores":0.19599,"pct_monto":0.00521},{"pct_proveedores":0.20101,"pct_monto":0.00542},{"pct_proveedores":0.20603,"pct_monto":0.00562},{"pct_proveedores":0.21107,"pct_monto":0.00584},{"pct_proveedores":0.21609,"pct_monto":0.00606},{"pct_proveedores":0.22111,"pct_monto":0.00628},{"pct_proveedores":0.22613,"pct_monto":0.00651},{"pct_proveedores":0.23117,"pct_monto":0.00674},{"pct_proveedores":0.23619,"pct_monto":0.00697},{"pct_proveedores":0.24121,"pct_monto":0.00721},{"pct_proveedores":0.24623,"pct_monto":0.00746},{"pct_proveedores":0.25127,"pct_monto":0.00771},{"pct_proveedores":0.25629,"pct_monto":0.00796},{"pct_proveedores":0.26131,"pct_monto":0.00823},{"pct_proveedores":0.26633,"pct_monto":0.00849},{"pct_proveedores":0.27137,"pct_monto":0.00877},{"pct_proveedores":0.27639,"pct_monto":0.00905},{"pct_proveedores":0.28141,"pct_monto":0.00933},{"pct_proveedores":0.28643,"pct_monto":0.00962},{"pct_proveedores":0.29145,"pct_monto":0.00991},{"pct_proveedores":0.29649,"pct_monto":0.01021},{"pct_proveedores":0.30151,"pct_monto":0.01052},{"pct_proveedores":0.30653,"pct_monto":0.01083},{"pct_proveedores":0.31155,"pct_monto":0.01114},{"pct_proveedores":0.31659,"pct_monto":0.01147},{"pct_proveedores":0.32161,"pct_monto":0.0118},{"pct_proveedores":0.32663,"pct_monto":0.01213},{"pct_proveedores":0.33165,"pct_monto":0.01248},{"pct_proveedores":0.33669,"pct_monto":0.01282},{"pct_proveedores":0.34171,"pct_monto":0.01318},{"pct_proveedores":0.34673,"pct_monto":0.01353},{"pct_proveedores":0.35176,"pct_monto":0.0139},{"pct_proveedores":0.35679,"pct_monto":0.01428},{"pct_proveedores":0.36181,"pct_monto":0.01466},{"pct_proveedores":0.36683,"pct_monto":0.01504},{"pct_proveedores":0.37186,"pct_monto":0.01544},{"pct_proveedores":0.37689,"pct_monto":0.01584},{"pct_proveedores":0.38191,"pct_monto":0.01625},{"pct_proveedores":0.38694,"pct_monto":0.01667},{"pct_proveedores":0.39196,"pct_monto":0.0171},{"pct_proveedores":0.39699,"pct_monto":0.01753},{"pct_proveedores":0.40201,"pct_monto":0.01797},{"pct_proveedores":0.40704,"pct_monto":0.01842},{"pct_proveedores":0.41206,"pct_monto":0.01888},{"pct_proveedores":0.41709,"pct_monto":0.01935},{"pct_proveedores":0.42212,"pct_monto":0.01982},{"pct_proveedores":0.42714,"pct_monto":0.0203},{"pct_proveedores":0.43216,"pct_monto":0.0208},{"pct_proveedores":0.43718,"pct_monto":0.0213},{"pct_proveedores":0.44222,"pct_monto":0.02181},{"pct_proveedores":0.44724,"pct_monto":0.02234},{"pct_proveedores":0.45226,"pct_monto":0.02287},{"pct_proveedores":0.45728,"pct_monto":0.02342},{"pct_proveedores":0.46232,"pct_monto":0.02398},{"pct_proveedores":0.46734,"pct_monto":0.02455},{"pct_proveedores":0.47236,"pct_monto":0.02513},{"pct_proveedores":0.47738,"pct_monto":0.02572},{"pct_proveedores":0.48242,"pct_monto":0.02632},{"pct_proveedores":0.48744,"pct_monto":0.02694},{"pct_proveedores":0.49246,"pct_monto":0.02756},{"pct_proveedores":0.49748,"pct_monto":0.02821},{"pct_proveedores":0.50252,"pct_monto":0.02886},{"pct_proveedores":0.50754,"pct_monto":0.02953},{"pct_proveedores":0.51256,"pct_monto":0.03021},{"pct_proveedores":0.51758,"pct_monto":0.0309},{"pct_proveedores":0.52262,"pct_monto":0.0316},{"pct_proveedores":0.52764,"pct_monto":0.03232},{"pct_proveedores":0.53266,"pct_monto":0.03306},{"pct_proveedores":0.53768,"pct_monto":0.03381},{"pct_proveedores":0.54272,"pct_monto":0.03457},{"pct_proveedores":0.54774,"pct_monto":0.03535},{"pct_proveedores":0.55276,"pct_monto":0.03615},{"pct_proveedores":0.55778,"pct_monto":0.03697},{"pct_proveedores":0.56282,"pct_monto":0.0378},{"pct_proveedores":0.56784,"pct_monto":0.03864},{"pct_proveedores":0.57286,"pct_monto":0.0395},{"pct_proveedores":0.57788,"pct_monto":0.04038},{"pct_proveedores":0.58291,"pct_monto":0.04128},{"pct_proveedores":0.58794,"pct_monto":0.0422},{"pct_proveedores":0.59296,"pct_monto":0.04314},{"pct_proveedores":0.59799,"pct_monto":0.04409},{"pct_proveedores":0.60301,"pct_monto":0.04506},{"pct_proveedores":0.60804,"pct_monto":0.04606},{"pct_proveedores":0.61306,"pct_monto":0.04708},{"pct_proveedores":0.61809,"pct_monto":0.04812},{"pct_proveedores":0.62311,"pct_monto":0.04918},{"pct_proveedores":0.62814,"pct_monto":0.05027},{"pct_proveedores":0.63317,"pct_monto":0.05137},{"pct_proveedores":0.63819,"pct_monto":0.05249},{"pct_proveedores":0.64321,"pct_monto":0.05363},{"pct_proveedores":0.64824,"pct_monto":0.0548},{"pct_proveedores":0.65327,"pct_monto":0.05601},{"pct_proveedores":0.65829,"pct_monto":0.05725},{"pct_proveedores":0.66331,"pct_monto":0.05853},{"pct_proveedores":0.66835,"pct_monto":0.05984},{"pct_proveedores":0.67337,"pct_monto":0.06117},{"pct_proveedores":0.67839,"pct_monto":0.06255},{"pct_proveedores":0.68341,"pct_monto":0.06396},{"pct_proveedores":0.68845,"pct_monto":0.0654},{"pct_proveedores":0.69347,"pct_monto":0.06688},{"pct_proveedores":0.69849,"pct_monto":0.0684},{"pct_proveedores":0.70351,"pct_monto":0.06996},{"pct_proveedores":0.70855,"pct_monto":0.07156},{"pct_proveedores":0.71357,"pct_monto":0.0732},{"pct_proveedores":0.71859,"pct_monto":0.07489},{"pct_proveedores":0.72361,"pct_monto":0.07663},{"pct_proveedores":0.72863,"pct_monto":0.07841},{"pct_proveedores":0.73367,"pct_monto":0.08025},{"pct_proveedores":0.73869,"pct_monto":0.08214},{"pct_proveedores":0.74371,"pct_monto":0.08408},{"pct_proveedores":0.74873,"pct_monto":0.08609},{"pct_proveedores":0.75377,"pct_monto":0.08816},{"pct_proveedores":0.75879,"pct_monto":0.09029},{"pct_proveedores":0.76381,"pct_monto":0.09248},{"pct_proveedores":0.76883,"pct_monto":0.09474},{"pct_proveedores":0.77387,"pct_monto":0.09708},{"pct_proveedores":0.77889,"pct_monto":0.09949},{"pct_proveedores":0.78391,"pct_monto":0.10198},{"pct_proveedores":0.78893,"pct_monto":0.10457},{"pct_proveedores":0.79397,"pct_monto":0.10725},{"pct_proveedores":0.79899,"pct_monto":0.11001},{"pct_proveedores":0.80401,"pct_monto":0.11286},{"pct_proveedores":0.80904,"pct_monto":0.11583},{"pct_proveedores":0.81407,"pct_monto":0.11889},{"pct_proveedores":0.81909,"pct_monto":0.12206},{"pct_proveedores":0.82411,"pct_monto":0.12535},{"pct_proveedores":0.82914,"pct_monto":0.12878},{"pct_proveedores":0.83417,"pct_monto":0.13234},{"pct_proveedores":0.83919,"pct_monto":0.13604},{"pct_proveedores":0.84422,"pct_monto":0.13989},{"pct_proveedores":0.84924,"pct_monto":0.1439},{"pct_proveedores":0.85427,"pct_monto":0.14811},{"pct_proveedores":0.85929,"pct_monto":0.15251},{"pct_proveedores":0.86432,"pct_monto":0.15711},{"pct_proveedores":0.86934,"pct_monto":0.16198},{"pct_proveedores":0.87436,"pct_monto":0.16711},{"pct_proveedores":0.8794,"pct_monto":0.17253},{"pct_proveedores":0.88442,"pct_monto":0.17823},{"pct_proveedores":0.88944,"pct_monto":0.18423},{"pct_proveedores":0.89446,"pct_monto":0.19053},{"pct_proveedores":0.8995,"pct_monto":0.19722},{"pct_proveedores":0.90452,"pct_monto":0.20436},{"pct_proveedores":0.90954,"pct_monto":0.21198},{"pct_proveedores":0.91456,"pct_monto":0.22011},{"pct_proveedores":0.9196,"pct_monto":0.22883},{"pct_proveedores":0.92462,"pct_monto":0.2382},{"pct_proveedores":0.92964,"pct_monto":0.2483},{"pct_proveedores":0.93466,"pct_monto":0.25918},{"pct_proveedores":0.9397,"pct_monto":0.27107},{"pct_proveedores":0.94472,"pct_monto":0.28412},{"pct_proveedores":0.94974,"pct_monto":0.29849},{"pct_proveedores":0.95476,"pct_monto":0.3146},{"pct_proveedores":0.9598,"pct_monto":0.33263},{"pct_proveedores":0.96482,"pct_monto":0.35264},{"pct_proveedores":0.96984,"pct_monto":0.37508},{"pct_proveedores":0.97486,"pct_monto":0.4014},{"pct_proveedores":0.9799,"pct_monto":0.43322},{"pct_proveedores":0.98492,"pct_monto":0.47321},{"pct_proveedores":0.98994,"pct_monto":0.52819},{"pct_proveedores":0.99496,"pct_monto":0.61695},{"pct_proveedores":1.0,"pct_monto":1.0}],"histograma":[{"desde":0.04,"hasta":0.07,"procesos":0},{"desde":0.07,"hasta":0.12,"procesos":0},{"desde":0.12,"hasta":0.21,"procesos":0},{"desde":0.21,"hasta":0.38,"procesos":0},{"desde":0.38,"hasta":0.66,"procesos":0},{"desde":0.66,"hasta":1.15,"procesos":12},{"desde":1.15,"hasta":2.01,"procesos":4},{"desde":2.01,"hasta":3.52,"procesos":1},{"desde":3.52,"hasta":6.16,"procesos":42},{"desde":6.16,"hasta":10.79,"procesos":1},{"desde":10.79,"hasta":18.88,"procesos":2},{"desde":18.88,"hasta":33.05,"procesos":2},{"desde":33.05,"hasta":57.84,"procesos":0},{"desde":57.84,"hasta":101.23,"procesos":1},{"desde":101.23,"hasta":177.18,"procesos":1},{"desde":177.18,"hasta":310.11,"procesos":1},{"desde":310.11,"hasta":542.75,"procesos":7},{"desde":542.75,"hasta":949.93,"procesos":32},{"desde":949.93,"hasta":1662.58,"procesos":34},{"desde":1662.58,"hasta":2909.88,"procesos":92},{"desde":2909.88,"hasta":5092.9,"procesos":275},{"desde":5092.9,"hasta":8913.66,"procesos":780},{"desde":8913.66,"hasta":15600.79,"procesos":988},{"desde":15600.79,"hasta":27304.7,"procesos":1913},{"desde":27304.7,"hasta":47789.02,"procesos":4264},{"desde":47789.02,"hasta":83640.93,"procesos":35064},{"desde":83640.93,"hasta":146389.39,"procesos":33901},{"desde":146389.39,"hasta":256212.51,"procesos":30798},{"desde":256212.51,"hasta":448426.28,"procesos":24928},{"desde":448426.28,"hasta":784841.18,"procesos":15550},{"desde":784841.18,"hasta":1373638.67,"procesos":9830},{"desde":1373638.67,"hasta":2404159.27,"procesos":6794},{"desde":2404159.27,"hasta":4207789.07,"procesos":4500},{"desde":4207789.07,"hasta":7364524.1,"procesos":3018},{"desde":7364524.1,"hasta":12889480.52,"procesos":2064},{"desde":12889480.52,"hasta":22559327.07,"procesos":1077},{"desde":22559327.07,"hasta":39483611.24,"procesos":639},{"desde":39483611.24,"hasta":69104701.2,"procesos":346},{"desde":69104701.2,"hasta":120947896.57,"procesos":181},{"desde":120947896.57,"hasta":211684493.67,"procesos":124},{"desde":211684493.67,"hasta":370492800.07,"procesos":75},{"desde":370492800.07,"hasta":648441047.92,"procesos":36},{"desde":648441047.92,"hasta":1134909484.19,"procesos":20}],"error_minhash":[{"n_hashes":32,"error_medio":0.0142,"cota_1_sobre_raiz_n":0.1768,"bytes_por_doc":256},{"n_hashes":64,"error_medio":0.01092,"cota_1_sobre_raiz_n":0.125,"bytes_por_doc":512},{"n_hashes":128,"error_medio":0.00715,"cota_1_sobre_raiz_n":0.0884,"bytes_por_doc":1024},{"n_hashes":256,"error_medio":0.0052,"cota_1_sobre_raiz_n":0.0625,"bytes_por_doc":2048}],"barrido_lsh":[{"configuracion":"b=128, r=1","salida_verificada":false,"candidatos":993962,"recall":1.0,"pct_pares_a_verificar":49.723,"b":128,"r":1,"umbral_teorico":0.008},{"configuracion":"b=64, r=2","salida_verificada":false,"candidatos":171259,"recall":0.9962,"pct_pares_a_verificar":8.567,"b":64,"r":2,"umbral_teorico":0.125},{"configuracion":"b=42, r=3","salida_verificada":false,"candidatos":32337,"recall":0.8783,"pct_pares_a_verificar":1.618,"b":42,"r":3,"umbral_teorico":0.288},{"configuracion":"b=32, r=4","salida_verificada":false,"candidatos":1177,"recall":0.4791,"pct_pares_a_verificar":0.059,"b":32,"r":4,"umbral_teorico":0.42},{"configuracion":"b=25, r=5","salida_verificada":false,"candidatos":139,"recall":0.2852,"pct_pares_a_verificar":0.007,"b":25,"r":5,"umbral_teorico":0.525},{"configuracion":"b=21, r=6","salida_verificada":false,"candidatos":59,"recall":0.1559,"pct_pares_a_verificar":0.003,"b":21,"r":6,"umbral_teorico":0.602},{"configuracion":"b=16, r=8","salida_verificada":false,"candidatos":24,"recall":0.0913,"pct_pares_a_verificar":0.001,"b":16,"r":8,"umbral_teorico":0.707}],"casos":[{"jaccard":1.0,"entidad_A":"AUTORIDAD NACIONAL DEL AGUA","entidad_B":"AUTORIDAD NACIONAL DEL AGUA","mismo_proveedor":false,"objeto_A":"CONTRATACIÓN DEL SERVICIO DE SEGURO TREC (TODO RIESGO EQUIPO DE CONTRATISTA) PARA LOS","objeto_B":"CONTRATACIÓN DEL SERVICIO DE SEGURO TREC (TODO RIESGO EQUIPO DE CONTRATISTA) PARA LOS"},{"jaccard":1.0,"entidad_A":"CENTRO NACIONAL DE ABASTECIMIENTO DE RECURSO","entidad_B":"CENTRO NACIONAL DE ABASTECIMIENTO DE RECURSO","mismo_proveedor":true,"objeto_A":"ADQUISICIÓN DE DISPOSITIVOS MÉDICOS - COMPRA CORPORATIVA PARA EL ABASTECIMIENTO POR U","objeto_B":"ADQUISICIÓN DE DISPOSITIVOS MÉDICOS - COMPRA CORPORATIVA PARA EL ABASTECIMIENTO POR U"},{"jaccard":0.963,"entidad_A":"MUNICIPALIDAD DISTRITAL DE TAMBO DE MORA","entidad_B":"MUNICIPALIDAD DISTRITAL DE SAN BARTOLO","mismo_proveedor":false,"objeto_A":"ADQUISICION DE INSUMOS PARA EL PROGRAMA DE VASO DE LECHE 2024","objeto_B":"ADQUISICION DE INSUMOS PARA EL PROGRAMA DE VASO DE LECHE 2023"},{"jaccard":0.934,"entidad_A":"UNIDAD EJECUTORA 003 GESTION INTEGRAL DE LA ","entidad_B":"UNIDAD EJECUTORA 003 GESTION INTEGRAL DE LA ","mismo_proveedor":false,"objeto_A":"'CONSULTORÍA INDIVIDUAL PARA LA CONTRATACIÓN DE CONSULTOR TÉCNICO AMBIENTAL PARA LA I","objeto_B":"'CONSULTORÍA INDIVIDUAL PARA LA CONTRATACIÓN DE CONSULTOR TÉCNICO AMBIENTAL PARA LA I"},{"jaccard":0.869,"entidad_A":"COMISION DE PROMOCION DEL PERU PARA LA EXPOR","entidad_B":"COMISION DE PROMOCION DEL PERU PARA LA EXPOR","mismo_proveedor":false,"objeto_A":"SERVICIO DE EJECUCIÓN DE UNA ESTRATEGIA DE GENERACIÓN DE CONTENIDOS DIGITALES, DESARR","objeto_B":"SERVICIO DE EJECUCIÓN DE UNA ESTRATEGIA DE GENERACIÓN DE CONTENIDOS DIGITALES, DESARR"}],"ann":[{"indice":"IVF nprobe=1","recall_at_10":0.751,"ms_lote":0.0074,"ms_unitaria":0.0207,"nprobe":1.0,"celdas_visitadas_pct":0.35,"familia":"IVF","efSearch":null},{"indice":"IVF nprobe=2","recall_at_10":0.8759,"ms_lote":0.0101,"ms_unitaria":0.0304,"nprobe":2.0,"celdas_visitadas_pct":0.71,"familia":"IVF","efSearch":null},{"indice":"IVF nprobe=4","recall_at_10":0.946,"ms_lote":0.0197,"ms_unitaria":0.0475,"nprobe":4.0,"celdas_visitadas_pct":1.42,"familia":"IVF","efSearch":null},{"indice":"IVF nprobe=8","recall_at_10":0.9767,"ms_lote":0.034,"ms_unitaria":0.0776,"nprobe":8.0,"celdas_visitadas_pct":2.84,"familia":"IVF","efSearch":null},{"indice":"IVF nprobe=16","recall_at_10":0.9895,"ms_lote":0.055,"ms_unitaria":0.1221,"nprobe":16.0,"celdas_visitadas_pct":5.67,"familia":"IVF","efSearch":null},{"indice":"IVF nprobe=32","recall_at_10":0.9942,"ms_lote":0.1118,"ms_unitaria":0.2167,"nprobe":32.0,"celdas_visitadas_pct":11.35,"familia":"IVF","efSearch":null},{"indice":"IVF nprobe=64","recall_at_10":0.9965,"ms_lote":0.2429,"ms_unitaria":0.4446,"nprobe":64.0,"celdas_visitadas_pct":22.7,"familia":"IVF","efSearch":null},{"indice":"HNSW efSearch=10","recall_at_10":0.9891,"ms_lote":0.0088,"ms_unitaria":0.0279,"nprobe":null,"celdas_visitadas_pct":null,"familia":"HNSW","efSearch":10.0},{"indice":"HNSW efSearch=16","recall_at_10":0.9932,"ms_lote":0.0122,"ms_unitaria":0.0358,"nprobe":null,"celdas_visitadas_pct":null,"familia":"HNSW","efSearch":16.0},{"indice":"HNSW efSearch=32","recall_at_10":0.9952,"ms_lote":0.0239,"ms_unitaria":0.0569,"nprobe":null,"celdas_visitadas_pct":null,"familia":"HNSW","efSearch":32.0},{"indice":"HNSW efSearch=64","recall_at_10":0.9962,"ms_lote":0.0393,"ms_unitaria":0.0947,"nprobe":null,"celdas_visitadas_pct":null,"familia":"HNSW","efSearch":64.0},{"indice":"HNSW efSearch=128","recall_at_10":0.9964,"ms_lote":0.07,"ms_unitaria":0.1722,"nprobe":null,"celdas_visitadas_pct":null,"familia":"HNSW","efSearch":128.0},{"indice":"HNSW efSearch=256","recall_at_10":0.9965,"ms_lote":0.1206,"ms_unitaria":0.3164,"nprobe":null,"celdas_visitadas_pct":null,"familia":"HNSW","efSearch":256.0},{"indice":"fuerza bruta (exacta)","recall_at_10":1.0,"ms_lote":0.0777,"ms_unitaria":1.9238,"nprobe":null,"celdas_visitadas_pct":null,"familia":"fuerza bruta","efSearch":null}],"escalado":[{"vectores":5000,"fuerza_bruta_ms":0.064,"hnsw_ms":0.0237,"factor":2.7},{"vectores":10000,"fuerza_bruta_ms":0.1102,"hnsw_ms":0.0268,"factor":4.1},{"vectores":20000,"fuerza_bruta_ms":0.2574,"hnsw_ms":0.0326,"factor":7.9},{"vectores":40000,"fuerza_bruta_ms":0.7987,"hnsw_ms":0.0406,"factor":19.7},{"vectores":80000,"fuerza_bruta_ms":1.9404,"hnsw_ms":0.0529,"factor":36.7}],"bloom":[{"fpr_objetivo":0.2,"m_bits":226148,"k_hashes":2,"memoria_kib":27.6,"fpr_teorica":0.5258,"fpr_observada":0.07848,"falsos_negativos":0},{"fpr_objetivo":0.1,"m_bits":323544,"k_hashes":3,"memoria_kib":39.5,"fpr_teorica":0.40817,"fpr_observada":0.03062,"falsos_negativos":0},{"fpr_objetivo":0.05,"m_bits":420940,"k_hashes":4,"memoria_kib":51.4,"fpr_teorica":0.31696,"fpr_observada":0.01261,"falsos_negativos":0},{"fpr_objetivo":0.01,"m_bits":647088,"k_hashes":7,"memoria_kib":79.0,"fpr_teorica":0.19887,"fpr_observada":0.00172,"falsos_negativos":0},{"fpr_objetivo":0.001,"m_bits":970631,"k_hashes":10,"memoria_kib":118.5,"fpr_teorica":0.0811,"fpr_observada":0.00012,"falsos_negativos":0}],"cms":[{"epsilon":0.01,"ancho_w":272,"profundidad_d":7,"memoria_kib":14.9,"error_medio":97.24,"error_max":480,"cota_teorica":1320,"subestimaciones":0},{"epsilon":0.005,"ancho_w":544,"profundidad_d":7,"memoria_kib":29.8,"error_medio":30.7,"error_max":319,"cota_teorica":660,"subestimaciones":0},{"epsilon":0.001,"ancho_w":2719,"profundidad_d":7,"memoria_kib":148.7,"error_medio":0.57,"error_max":19,"cota_teorica":132,"subestimaciones":0},{"epsilon":0.0005,"ancho_w":5437,"profundidad_d":7,"memoria_kib":297.3,"error_medio":0.04,"error_max":8,"cota_teorica":66,"subestimaciones":0},{"epsilon":0.0001,"ancho_w":27183,"profundidad_d":7,"memoria_kib":1486.6,"error_medio":0.0,"error_max":2,"cota_teorica":13,"subestimaciones":0}],"dgim":[{"ventana_N":1000,"exacto":291,"dgim":313,"error_relativo":0.0756,"cubos":13,"memoria_dgim_bytes":208,"memoria_exacta_bytes":125},{"ventana_N":5000,"exacto":879,"dgim":793,"error_relativo":0.0978,"cubos":14,"memoria_dgim_bytes":224,"memoria_exacta_bytes":625},{"ventana_N":20000,"exacto":2498,"dgim":2841,"error_relativo":0.1373,"cubos":16,"memoria_dgim_bytes":256,"memoria_exacta_bytes":2500},{"ventana_N":50000,"exacto":5959,"dgim":7449,"error_relativo":0.25,"cubos":18,"memoria_dgim_bytes":288,"memoria_exacta_bytes":6250},{"ventana_N":100000,"exacto":12120,"dgim":11545,"error_relativo":0.0474,"cubos":19,"memoria_dgim_bytes":304,"memoria_exacta_bytes":12500}],"resumen_estructuras":[{"estructura":"Muestreo por clave","pregunta":"métricas por entidad sobre una muestra","memoria":"proporcional a la fracción de claves","error":"ninguno dentro de las claves elegidas","por_que_se_usa":"es la unica que conserva entidades completas"},{"estructura":"Reservoir sampling","pregunta":"proporciones sobre todo el flujo","memoria":"k elementos, fija y conocida de antemano","error":"desviacion maxima 0.06 puntos en la composicion","por_que_se_usa":"no necesita conocer el largo del flujo"},{"estructura":"Bloom Filter","pregunta":"apareció antes este proveedor","memoria":"79.0 KiB para 67,510 claves","error":"0.172% de falsos positivos, cero falsos negativos","por_que_se_usa":"un bit por posicion, imbatible en pertenencia"},{"estructura":"Count-Min Sketch","pregunta":"cuántas veces apareció cada ítem","memoria":"149 KiB","error":"nunca subestima, maximo 19 apariciones","por_que_se_usa":"unica que da frecuencias sin diccionario"},{"estructura":"DGIM","pregunta":"cuántos en los últimos N elementos","memoria":"19 cubos para N=100,000","error":"25.0% observado, cota teorica 50%","por_que_se_usa":"unica con noción de recencia"}],"resumen_flujos":{"claves_bloom":67510,"eventos_items":132091,"claves_items":4664,"eventos_flujo":177398},"costo_algoritmos":[{"soporte":0.02,"conjuntos":34,"apriori_s":0.17,"fpgrowth_s":0.45},{"soporte":0.01,"conjuntos":80,"apriori_s":0.67,"fpgrowth_s":0.37},{"soporte":0.005,"conjuntos":202,"apriori_s":2.99,"fpgrowth_s":0.42},{"soporte":0.0025,"conjuntos":554,"apriori_s":19.27,"fpgrowth_s":0.44}],"reglas":[{"antecedente":"ACEITE VEGETAL COMESTIBLE + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","consecuente":"LENTEJA CALIDAD SUPERIOR","soporte":0.00221,"confianza":0.53012,"lift":138.88459},{"antecedente":"ACEITE VEGETAL COMESTIBLE + ARROZ PILADO SUPERIOR","consecuente":"LENTEJA CALIDAD SUPERIOR","soporte":0.00221,"confianza":0.47312,"lift":123.95076},{"antecedente":"LENTEJA CALIDAD SUPERIOR + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","consecuente":"ACEITE VEGETAL COMESTIBLE","soporte":0.00221,"confianza":0.89796,"lift":118.40573},{"antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + ARROZ PILADO SUPERIOR + HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","consecuente":"ACEITE VEGETAL COMESTIBLE","soporte":0.00211,"confianza":0.89362,"lift":117.83317},{"antecedente":"LENTEJA CALIDAD SUPERIOR + ARROZ PILADO SUPERIOR","consecuente":"ACEITE VEGETAL COMESTIBLE","soporte":0.00221,"confianza":0.8,"lift":105.48874},{"antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + ARROZ PILADO SUPERIOR","consecuente":"LENTEJA CALIDAD SUPERIOR","soporte":0.00216,"confianza":0.40187,"lift":105.28443},{"antecedente":"MOTONIVELADORA CON HOJA DE 4.3 M","consecuente":"RODILLO COMPACTADOR VIBRATORIO LISO SIMPLE DE ","soporte":0.00256,"confianza":0.52041,"lift":102.59254},{"antecedente":"RODILLO COMPACTADOR VIBRATORIO LISO SIMPLE DE ","consecuente":"MOTONIVELADORA CON HOJA DE 4.3 M","soporte":0.00256,"confianza":0.50495,"lift":102.59254},{"antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","consecuente":"ACEITE VEGETAL COMESTIBLE","soporte":0.00246,"confianza":0.69014,"lift":91.00261},{"antecedente":"LENTEJA CALIDAD SUPERIOR","consecuente":"ACEITE VEGETAL COMESTIBLE","soporte":0.00261,"confianza":0.68421,"lift":90.22063},{"antecedente":"ACEITE VEGETAL COMESTIBLE","consecuente":"LENTEJA CALIDAD SUPERIOR","soporte":0.00261,"confianza":0.34437,"lift":90.22063},{"antecedente":"ARROZ PILADO SUPERIOR + HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","consecuente":"ACEITE VEGETAL COMESTIBLE","soporte":0.00256,"confianza":0.66234,"lift":87.33646},{"antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + ARROZ PILADO SUPERIOR","consecuente":"ACEITE VEGETAL COMESTIBLE","soporte":0.00336,"confianza":0.62617,"lift":82.56712},{"antecedente":"LENTEJA CALIDAD SUPERIOR + ACEITE VEGETAL COMESTIBLE","consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","soporte":0.00221,"confianza":0.84615,"lift":78.36172},{"antecedente":"ACEITE VEGETAL COMESTIBLE + ARROZ PILADO SUPERIOR + HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","soporte":0.00211,"confianza":0.82353,"lift":76.26648},{"antecedente":"ACEITE VEGETAL COMESTIBLE + HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","soporte":0.00246,"confianza":0.81667,"lift":75.63093},{"antecedente":"LENTEJA CALIDAD SUPERIOR + ARROZ PILADO SUPERIOR","consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","soporte":0.00216,"confianza":0.78182,"lift":72.40364},{"antecedente":"ACEITE VEGETAL COMESTIBLE + ARROZ PILADO SUPERIOR","consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","soporte":0.00336,"confianza":0.72043,"lift":66.71853},{"antecedente":"LENTEJA CALIDAD SUPERIOR","consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","soporte":0.00246,"confianza":0.64474,"lift":59.70863},{"antecedente":"ARROZ PILADO SUPERIOR + HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","soporte":0.00236,"confianza":0.61039,"lift":56.52776},{"antecedente":"LENTEJA CALIDAD SUPERIOR + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","consecuente":"ARROZ PILADO SUPERIOR","soporte":0.00216,"confianza":0.87755,"lift":53.92876},{"antecedente":"ACEITE VEGETAL COMESTIBLE + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","consecuente":"ARROZ PILADO SUPERIOR","soporte":0.00211,"confianza":0.85714,"lift":52.6746},{"antecedente":"ACEITE VEGETAL COMESTIBLE + HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","consecuente":"ARROZ PILADO SUPERIOR","soporte":0.00256,"confianza":0.85,"lift":52.23565},{"antecedente":"LENTEJA CALIDAD SUPERIOR + ACEITE VEGETAL COMESTIBLE","consecuente":"ARROZ PILADO SUPERIOR","soporte":0.00221,"confianza":0.84615,"lift":51.99929},{"antecedente":"SEGURO DE VIDA LEY","consecuente":"SEGURO COMPLEMENTARIO DE TRABAJO DE RIESGO - S","soporte":0.00216,"confianza":0.39091,"lift":51.54564},{"antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","consecuente":"ACEITE VEGETAL COMESTIBLE","soporte":0.00417,"confianza":0.38605,"lift":50.90445},{"antecedente":"ACEITE VEGETAL COMESTIBLE","consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","soporte":0.00417,"confianza":0.54967,"lift":50.90445},{"antecedente":"ACEITE VEGETAL COMESTIBLE + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","consecuente":"ARROZ PILADO SUPERIOR","soporte":0.00336,"confianza":0.80723,"lift":49.60721},{"antecedente":"LENTEJA CALIDAD SUPERIOR","consecuente":"ARROZ PILADO SUPERIOR","soporte":0.00276,"confianza":0.72368,"lift":44.47308},{"antecedente":"MINICARGADOR FRONTAL DE 700 KG","consecuente":"CAMION VOLQUETE DE 15 M3","soporte":0.00271,"confianza":0.37241,"lift":43.61842},{"antecedente":"CAMION VOLQUETE DE 15 M3","consecuente":"MINICARGADOR FRONTAL DE 700 KG","soporte":0.00271,"confianza":0.31765,"lift":43.61842},{"antecedente":"MINICARGADOR FRONTAL DE 700 KG","consecuente":"RETROEXCAVADORA DE 0.3 M3 Y 1.1 M3","soporte":0.00221,"confianza":0.30345,"lift":41.38328},{"antecedente":"RETROEXCAVADORA DE 0.3 M3 Y 1.1 M3","consecuente":"MINICARGADOR FRONTAL DE 700 KG","soporte":0.00221,"confianza":0.30137,"lift":41.38328},{"antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","consecuente":"ARROZ PILADO SUPERIOR","soporte":0.00236,"confianza":0.66197,"lift":40.68062},{"antecedente":"ACEITE VEGETAL COMESTIBLE","consecuente":"ARROZ PILADO SUPERIOR","soporte":0.00467,"confianza":0.61589,"lift":37.84897},{"antecedente":"RETROEXCAVADORA DE 0.3 M3 Y 1.1 M3","consecuente":"CAMION VOLQUETE DE 15 M3","soporte":0.00221,"confianza":0.30137,"lift":35.2975},{"antecedente":"ARROZ PILADO SUPERIOR","consecuente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","soporte":0.00537,"confianza":0.33025,"lift":30.58394},{"antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","consecuente":"ARROZ PILADO SUPERIOR","soporte":0.00537,"confianza":0.49767,"lift":30.58394},{"antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE","soporte":0.00231,"confianza":0.4381,"lift":29.77104},{"antecedente":"SERVICIO DE MANTENIMIENTO CORRECTIVO DE EQUIPO","consecuente":"SERVICIO DE MANTENIMIENTO CORRECTIVO DE EQUIPO","soporte":0.00336,"confianza":0.34359,"lift":27.69723},{"antecedente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG + DIESEL B5 S-50","consecuente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE","soporte":0.00231,"confianza":0.34074,"lift":23.15525},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG + DIESEL B5 S-50","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00231,"confianza":0.80702,"lift":20.76037},{"antecedente":"ARENA GRUESA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"PIEDRA LAJA","soporte":0.00251,"confianza":0.32258,"lift":20.58623},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + SERVICIO DE ALQUILER DE CAMIONETA","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00231,"confianza":0.7931,"lift":20.40243},{"antecedente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG + DIESEL B5 S-50","consecuente":"PIEDRA LAJA","soporte":0.00211,"confianza":0.31111,"lift":19.85427},{"antecedente":"ARENA GRUESA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60","soporte":0.00306,"confianza":0.39355,"lift":19.78773},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + DIESEL B5 S-50","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00397,"confianza":0.75238,"lift":19.35485},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00432,"confianza":0.70492,"lift":18.13388},{"antecedente":"MADERA TORNILLO DE 1 1/2 IN X 1 1/2 IN X 10 FT + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60","soporte":0.00211,"confianza":0.33871,"lift":17.03043},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00889,"confianza":0.6041,"lift":15.54024},{"antecedente":"ACEITE VEGETAL COMESTIBLE + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + ARROZ PILADO SUPERIOR","consecuente":"HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","soporte":0.00211,"confianza":0.62687,"lift":15.14748},{"antecedente":"ACEITE VEGETAL COMESTIBLE + CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","consecuente":"HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","soporte":0.00246,"confianza":0.59036,"lift":14.2654},{"antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00271,"confianza":0.55102,"lift":14.17489},{"antecedente":"PIEDRA LAJA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG + DIESEL B5 S-50","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00211,"confianza":0.53165,"lift":13.67648},{"antecedente":"LENTEJA CALIDAD SUPERIOR","consecuente":"HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","soporte":0.00211,"confianza":0.55263,"lift":13.3537},{"antecedente":"ACEITE VEGETAL COMESTIBLE + ARROZ PILADO SUPERIOR","consecuente":"HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","soporte":0.00256,"confianza":0.54839,"lift":13.25114},{"antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30 + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00226,"confianza":0.46392,"lift":11.93419},{"antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30 + DIESEL B5 S-50","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00231,"confianza":0.46,"lift":11.83341},{"antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + DIESEL B5 S-50","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00256,"confianza":0.43966,"lift":11.31004},{"antecedente":"PIEDRA LAJA + DIESEL B5 S-50","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00246,"confianza":0.43363,"lift":11.155},{"antecedente":"BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60 + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG + DIESEL B5 S-50","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00201,"confianza":0.42105,"lift":10.8315},{"antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV + ARROZ PILADO SUPERIOR","consecuente":"HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","soporte":0.00236,"confianza":0.43925,"lift":10.61402},{"antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + DIESEL B5 S-50","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00271,"confianza":0.40909,"lift":10.52378},{"antecedente":"ACEITE VEGETAL COMESTIBLE","consecuente":"HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","soporte":0.00301,"confianza":0.39735,"lift":9.60152},{"antecedente":"PIEDRA LAJA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00357,"confianza":0.3641,"lift":9.36647},{"antecedente":"BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60 + DIESEL B5 S-50","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00226,"confianza":0.36,"lift":9.26093},{"antecedente":"ARENA GRUESA + BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00306,"confianza":0.91045,"lift":9.23951},{"antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00216,"confianza":0.89583,"lift":9.0912},{"antecedente":"BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00201,"confianza":0.88889,"lift":9.02073},{"antecedente":"HOJUELA DE AVENA, QUINUA Y KIWICHA PRECOCIDA E","consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.","soporte":0.01602,"confianza":0.69651,"lift":8.80517},{"antecedente":"MEZCLA FORTIFICADA DE HARINA DE CEREALES Y LEG","consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.","soporte":0.00708,"confianza":0.69458,"lift":8.78083},{"antecedente":"SERVICIO DE LIMPIEZA DE AREAS ADMINISTRATIVAS ","consecuente":"SERVICIO DE SEGURIDAD Y VIGILANCIA","soporte":0.00487,"confianza":0.32226,"lift":8.7777},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY","soporte":0.00201,"confianza":0.39216,"lift":8.71455},{"antecedente":"PIEDRA LAJA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00211,"confianza":0.85714,"lift":8.69856},{"antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00321,"confianza":0.33161,"lift":8.53051},{"antecedente":"HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.","soporte":0.02792,"confianza":0.67476,"lift":8.53022},{"antecedente":"LECHE EVAPORADA ENTERA X 400 G APROX.","consecuente":"HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","soporte":0.02792,"confianza":0.35302,"lift":8.53022},{"antecedente":"BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00306,"confianza":0.83562,"lift":8.4801},{"antecedente":"LADRILLO DE ARCILLA KING KONG DE 10 CM X 14 CM + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00261,"confianza":0.8254,"lift":8.37639},{"antecedente":"PIEDRA LAJA + BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00206,"confianza":0.82,"lift":8.32162},{"antecedente":"PIEDRA LAJA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00357,"confianza":0.81609,"lift":8.28196},{"antecedente":"PIEDRA LAJA + CONCRETO PREMEZCLADO FC 210 KG/CM2 CON CEMENTO","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00206,"confianza":0.80392,"lift":8.15845},{"antecedente":"PIEDRA LAJA + MATERIAL GRANULAR PARA AFIRMADO TIPO A-1","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00216,"confianza":0.7963,"lift":8.08107},{"antecedente":"HOJUELA DE AVENA, QUINUA Y KIWICHA PRECOCIDA E + DIESEL B5 S-50","consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.","soporte":0.00226,"confianza":0.6338,"lift":8.01247},{"antecedente":"CONSERVA DE ENTERO DE SARDINA PERUANA O ANCHOV","consecuente":"HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO","soporte":0.00357,"confianza":0.33023,"lift":7.97969},{"antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"CONSTRUCCION DE CENTROS EDUCATIVOS","soporte":0.00201,"confianza":0.41237,"lift":7.97932},{"antecedente":"ARENA GRUESA + PIEDRA LAJA","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00251,"confianza":0.78125,"lift":7.92837},{"antecedente":"ARENA GRUESA + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00301,"confianza":0.76923,"lift":7.8064},{"antecedente":"ARENA GRUESA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","soporte":0.00236,"confianza":0.30323,"lift":7.80043},{"antecedente":"MADERA TORNILLO DE 1 1/2 IN X 1 1/2 IN X 10 FT + BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00211,"confianza":0.76364,"lift":7.74962},{"antecedente":"BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60 + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00477,"confianza":0.76,"lift":7.71272},{"antecedente":"HORMIGON","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00291,"confianza":0.74359,"lift":7.54619},{"antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00321,"confianza":0.73563,"lift":7.46543},{"antecedente":"ARENA GRUESA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00236,"confianza":0.73438,"lift":7.45267},{"antecedente":"MADERA TORNILLO DE 1 1/2 IN X 1 1/2 IN X 10 FT + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00236,"confianza":0.73438,"lift":7.45267},{"antecedente":"CONSTRUCCION DE CAMINO VECINAL + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00291,"confianza":0.59184,"lift":7.42537},{"antecedente":"CONSTRUCCION DE CAMINO VECINAL + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00211,"confianza":0.59155,"lift":7.42176},{"antecedente":"HOJUELA DE CEREAL Y/O LEGUMINOSAS ENRIQUECIDO + DIESEL B5 S-50","consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.","soporte":0.00357,"confianza":0.58197,"lift":7.35717},{"antecedente":"BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.01411,"confianza":0.7096,"lift":7.20121},{"antecedente":"CONCRETO PREMEZCLADO FC 210 KG/CM2 CON CEMENTO + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00352,"confianza":0.70707,"lift":7.17558},{"antecedente":"PIEDRA LAJA + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00397,"confianza":0.69912,"lift":7.09484},{"antecedente":"ARENA GRUESA","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00778,"confianza":0.68889,"lift":6.99106},{"antecedente":"LADRILLO DE ARCILLA KING KONG DE 10 CM X 14 CM","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00748,"confianza":0.68037,"lift":6.90456},{"antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00201,"confianza":0.8,"lift":6.84815},{"antecedente":"CONCRETO PREMEZCLADO FC 210 KG/CM2 CON CEMENTO + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00251,"confianza":0.66667,"lift":6.76555},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY","soporte":0.00251,"confianza":0.3012,"lift":6.6934},{"antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + CONSTRUCCION DE CENTROS EDUCATIVOS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00201,"confianza":0.53333,"lift":6.69137},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"CONSTRUCCION DE CALLES CON PAVIMENTO","soporte":0.00251,"confianza":0.3012,"lift":6.68594},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00221,"confianza":0.53012,"lift":6.65106},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00221,"confianza":0.77193,"lift":6.60787},{"antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + CONCRETO PREMEZCLADO FC 210 KG/CM2 CON CEMENTO","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00231,"confianza":0.63889,"lift":6.48365},{"antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00226,"confianza":0.6338,"lift":6.43203},{"antecedente":"SERVICIO DE PRODUCCION Y REALIZACION DE EVENTO","consecuente":"SERVICIO DE ALQUILER DE INMUEBLE","soporte":0.00246,"confianza":0.30625,"lift":6.36508},{"antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"CONSTRUCCION DE CENTROS EDUCATIVOS","soporte":0.00221,"confianza":0.32836,"lift":6.35368},{"antecedente":"PIEDRA LAJA","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00979,"confianza":0.625,"lift":6.3427},{"antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00477,"confianza":0.50265,"lift":6.30635},{"antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO + CONSTRUCCION DE CENTROS EDUCATIVOS","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00251,"confianza":0.4902,"lift":6.15015},{"antecedente":"GASOHOL REGULAR + LECHE EVAPORADA ENTERA X 400 G APROX.","consecuente":"DIESEL B5 S-50","soporte":0.00336,"confianza":0.87013,"lift":6.06199},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00231,"confianza":0.58228,"lift":5.90915},{"antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00336,"confianza":0.57759,"lift":5.86153},{"antecedente":"BIODIGESTOR DE POLIETILENO DE 600 L","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00281,"confianza":0.57143,"lift":5.79904},{"antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + CONSTRUCCION DE CENTROS EDUCATIVOS","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00377,"confianza":0.65789,"lift":5.6317},{"antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + CONSTRUCCION DE CENTROS EDUCATIVOS","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00211,"confianza":0.64615,"lift":5.5312},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00286,"confianza":0.54286,"lift":5.50909},{"antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + CONSTRUCCION DE CENTROS EDUCATIVOS","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00251,"confianza":0.4386,"lift":5.50277},{"antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00251,"confianza":0.43478,"lift":5.45492},{"antecedente":"CONCRETO PREMEZCLADO FC 210 KG/CM2 CON CEMENTO","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00999,"confianza":0.52368,"lift":5.31451},{"antecedente":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00331,"confianza":0.42308,"lift":5.30806},{"antecedente":"ADOQUIN DE CONCRETO VEHICULAR LIGERO DE 20 CM ","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00457,"confianza":0.52299,"lift":5.30745},{"antecedente":"MADERA TORNILLO DE 1 1/2 IN X 1 1/2 IN X 10 FT","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00623,"confianza":0.51883,"lift":5.26524},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00512,"confianza":0.61446,"lift":5.25988},{"antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00969,"confianza":0.51743,"lift":5.25101},{"antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00271,"confianza":0.51429,"lift":5.21913},{"antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00342,"confianza":0.40719,"lift":5.10868},{"antecedente":"AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00291,"confianza":0.43609,"lift":4.97878},{"antecedente":"GASOHOL REGULAR","consecuente":"DIESEL B5 S-50","soporte":0.03475,"confianza":0.71267,"lift":4.96498},{"antecedente":"CONSTRUCCION DE CAMINO VECINAL + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00206,"confianza":0.57746,"lift":4.94321},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00432,"confianza":0.48588,"lift":4.93082},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00221,"confianza":0.43137,"lift":4.92492},{"antecedente":"AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00352,"confianza":0.42945,"lift":4.90295},{"antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30 + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00241,"confianza":0.48,"lift":4.87119},{"antecedente":"CONSTRUCCION DE CAMINO VECINAL + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00206,"confianza":0.41837,"lift":4.77644},{"antecedente":"AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00311,"confianza":0.38037,"lift":4.77222},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00286,"confianza":0.37748,"lift":4.73603},{"antecedente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00678,"confianza":0.46392,"lift":4.70798},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00417,"confianza":0.54967,"lift":4.70527},{"antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00487,"confianza":0.54802,"lift":4.69118},{"antecedente":"CONSTRUCCION DE CAMINO VECINAL","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00809,"confianza":0.37269,"lift":4.67583},{"antecedente":"BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00201,"confianza":0.65574,"lift":4.56837},{"antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00342,"confianza":0.53125,"lift":4.5476},{"antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"DIESEL B5 S-50","soporte":0.00231,"confianza":0.64789,"lift":4.51368},{"antecedente":"CONSTRUCCION DE COBERTURA CON PLANCHA METALICA + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00256,"confianza":0.44348,"lift":4.50056},{"antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00241,"confianza":0.35556,"lift":4.46091},{"antecedente":"GASOHOL REGULAR + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"DIESEL B5 S-50","soporte":0.00246,"confianza":0.63636,"lift":4.43339},{"antecedente":"CONSTRUCCION DE CANALES DE RIEGO","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00819,"confianza":0.3881,"lift":4.43083},{"antecedente":"AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS + DIESEL B5 S-50","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00216,"confianza":0.38739,"lift":4.42275},{"antecedente":"CONSTRUCCION DE PARQUES Y PLAZAS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00286,"confianza":0.51351,"lift":4.39577},{"antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO + CONSTRUCCION DE CENTROS EDUCATIVOS","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00261,"confianza":0.5098,"lift":4.36402},{"antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00487,"confianza":0.34276,"lift":4.30033},{"antecedente":"BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"DIESEL B5 S-50","soporte":0.00226,"confianza":0.61644,"lift":4.29458},{"antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00241,"confianza":0.375,"lift":4.28132},{"antecedente":"CONSTRUCCION DE LOSA DEPORTIVA + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00286,"confianza":0.5,"lift":4.28009},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00206,"confianza":0.37273,"lift":4.25537},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00613,"confianza":0.41638,"lift":4.22558},{"antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00251,"confianza":0.33557,"lift":4.21017},{"antecedente":"CONSTRUCCION DE PARQUES Y PLAZAS + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00286,"confianza":0.33529,"lift":4.20671},{"antecedente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.00673,"confianza":0.33416,"lift":4.19253},{"antecedente":"SERVICIO DE FABRICACION DE PUERTAS Y VENTANAS ","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00367,"confianza":0.40782,"lift":4.1387},{"antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00362,"confianza":0.48322,"lift":4.13647},{"antecedente":"PIEDRA LAJA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00211,"confianza":0.59155,"lift":4.12118},{"antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"DIESEL B5 S-50","soporte":0.00256,"confianza":0.58621,"lift":4.08396},{"antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO","consecuente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","soporte":0.01462,"confianza":0.32441,"lift":4.07021},{"antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00296,"confianza":0.35329,"lift":4.0335},{"antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00673,"confianza":0.47018,"lift":4.02479},{"antecedente":"AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00311,"confianza":0.46617,"lift":3.99046},{"antecedente":"PIEDRA LAJA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"DIESEL B5 S-50","soporte":0.00246,"confianza":0.56322,"lift":3.92381},{"antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00487,"confianza":0.38645,"lift":3.92186},{"antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + DIESEL B5 S-50","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00256,"confianza":0.38636,"lift":3.92094},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00286,"confianza":0.34337,"lift":3.92025},{"antecedente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.01487,"confianza":0.38243,"lift":3.88101},{"antecedente":"AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.01843,"confianza":0.33856,"lift":3.8653},{"antecedente":"CONSTRUCCION DE LOSA DEPORTIVA + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00231,"confianza":0.44231,"lift":3.78624},{"antecedente":"CONSTRUCCION DE LOSA DEPORTIVA + CONSTRUCCION DE CENTROS EDUCATIVOS","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00231,"confianza":0.4381,"lift":3.75018},{"antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE PUENTES + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00296,"confianza":0.43704,"lift":3.74112},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00231,"confianza":0.53488,"lift":3.72641},{"antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO + ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00251,"confianza":0.43478,"lift":3.72182},{"antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00256,"confianza":0.52041,"lift":3.62556},{"antecedente":"SERVICIO DE ALQUILER DE CAMIONETA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"DIESEL B5 S-50","soporte":0.00271,"confianza":0.51429,"lift":3.58291},{"antecedente":"SERVICIO DE FABRICACION DE TECHO DE ESTRUCTURA","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00472,"confianza":0.35075,"lift":3.55948},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + AMPLIACION DE SISTEMA DE AGUA POTABLE Y DE SIS","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00226,"confianza":0.40909,"lift":3.5019},{"antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30 + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00241,"confianza":0.49485,"lift":3.44747},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.02014,"confianza":0.3897,"lift":3.33589},{"antecedente":"CONSTRUCCION DE CENTROS EDUCATIVOS + DIESEL B5 S-50","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00216,"confianza":0.38393,"lift":3.2865},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00286,"confianza":0.46721,"lift":3.25496},{"antecedente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00678,"confianza":0.45608,"lift":3.17741},{"antecedente":"GEOMEMBRANA DE HDPE DE 1.5 MM","consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","soporte":0.00231,"confianza":0.31081,"lift":3.15421},{"antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00211,"confianza":0.36842,"lift":3.15375},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"DIESEL B5 S-50","soporte":0.00397,"confianza":0.44633,"lift":3.10946},{"antecedente":"CONSTRUCCION DE CAMINO VECINAL + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00291,"confianza":0.36025,"lift":3.08379},{"antecedente":"CONSTRUCCION DE COBERTURA CON PLANCHA METALICA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00256,"confianza":0.41463,"lift":2.88866},{"antecedente":"PIEDRA LAJA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00397,"confianza":0.40513,"lift":2.82243},{"antecedente":"CONSTRUCCION DE CALLES CON PAVIMENTO + SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES ","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00477,"confianza":0.32646,"lift":2.79456},{"antecedente":"ASFALTO LIQUIDO CUT-BACK GRADO MC-30","consecuente":"DIESEL B5 S-50","soporte":0.00502,"confianza":0.39841,"lift":2.7756},{"antecedente":"CONSULTORIA PARA ELABORACION DE PERFIL DE PROY","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.01421,"confianza":0.31585,"lift":2.70372},{"antecedente":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES  + DIESEL B5 S-50","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00296,"confianza":0.31551,"lift":2.70081},{"antecedente":"ARENA GRUESA + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00301,"confianza":0.3871,"lift":2.69681},{"antecedente":"MADERA TORNILLO DE 1 1/2 IN X 1 1/2 IN X 10 FT + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00236,"confianza":0.37903,"lift":2.64063},{"antecedente":"SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ","consecuente":"DIESEL B5 S-50","soporte":0.01462,"confianza":0.37597,"lift":2.61929},{"antecedente":"CONSTRUCCION DE PARQUES Y PLAZAS","consecuente":"ELABORACION DE EXPEDIENTE TECNICO DE OBRA PARA","soporte":0.00854,"confianza":0.30576,"lift":2.61732},{"antecedente":"PIEDRA LAJA","consecuente":"DIESEL B5 S-50","soporte":0.00568,"confianza":0.36218,"lift":2.52322},{"antecedente":"SERVICIO DE ALQUILER DE CAMION VOLQUETE","consecuente":"DIESEL B5 S-50","soporte":0.00527,"confianza":0.35836,"lift":2.49662},{"antecedente":"CONCRETO PREMEZCLADO FC 210 KG/CM2 CON CEMENTO + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00352,"confianza":0.35176,"lift":2.45062},{"antecedente":"LADRILLO DE ARCILLA KING KONG DE 10 CM X 14 CM + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00261,"confianza":0.34899,"lift":2.43135},{"antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1 + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00336,"confianza":0.34715,"lift":2.41851},{"antecedente":"ARENA GRUESA","consecuente":"DIESEL B5 S-50","soporte":0.00392,"confianza":0.34667,"lift":2.41514},{"antecedente":"BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60 + CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG","consecuente":"DIESEL B5 S-50","soporte":0.00477,"confianza":0.33808,"lift":2.35531},{"antecedente":"BARRA PARA CONSTRUCCION DE 1/2 IN GRADO 60","consecuente":"DIESEL B5 S-50","soporte":0.00628,"confianza":0.31566,"lift":2.1991},{"antecedente":"MATERIAL GRANULAR PARA AFIRMADO TIPO A-1","consecuente":"DIESEL B5 S-50","soporte":0.00583,"confianza":0.31099,"lift":2.16661}]};
+
+const C = {azul:"#2E6DB4", rojo:"#B3441F", verde:"#4F8C28", morado:"#8B5BB5", teal:"#00807E",
+           tinta:"#1A1A1A", tinta2:"#454C54", tinta3:"#737B84",
+           linea:"#D5DCE3", suave:"#E8ECF0", claro:"#DCE9F6", fondo:"#FFFFFF"};
+
+const tip = document.getElementById("tip");
+const nf = (x, d = 0) => x.toLocaleString("es-ES", {minimumFractionDigits:d, maximumFractionDigits:d});
+
+function mostrarTip(ev, html) {
+  tip.innerHTML = html; tip.style.opacity = 1;
+  const r = tip.getBoundingClientRect();
+  let x = ev.clientX + 14, y = ev.clientY - r.height - 10;
+  if (x + r.width > innerWidth - 10) x = ev.clientX - r.width - 14;
+  if (y < 6) y = ev.clientY + 18;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+const ocultarTip = () => tip.style.opacity = 0;
+
+// Las fechas llegan en UTC. Hay que leerlas y formatearlas en UTC: con hora
+// local de Lima el primero de enero retrocede al 31 de diciembre anterior.
+const esES = d3.timeFormatLocale({
+  dateTime:"%A %e de %B de %Y, %X", date:"%d/%m/%Y", time:"%H:%M:%S",
+  periods:["a. m.","p. m."],
+  days:["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],
+  shortDays:["dom","lun","mar","mié","jue","vie","sáb"],
+  months:["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],
+  shortMonths:["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]});
+const mesCorto = esES.utcFormat("%b %y"), mesLargo = esES.utcFormat("%B de %Y");
+
+let N_FIG = 0;
+/* Lienzo responsivo. Devuelve el grupo ya desplazado por el margen. */
+function lienzo(sel, alto, m) {
+  const cont = d3.select(sel); cont.selectAll("*").remove();
+  const ancho = Math.max(320, cont.node().clientWidth);
+  const svg = cont.append("svg").attr("viewBox", `0 0 ${ancho} ${alto}`)
+    .attr("width", "100%").attr("height", alto);
+  return {svg, ancho, alto, m, w: ancho - m.l - m.r, h: alto - m.t - m.b,
+          g: svg.append("g").attr("transform", `translate(${m.l},${m.t})`)};
+}
+const ejeY = (o, y, f) => o.g.append("g").attr("class", "eje rejilla")
+  .call(d3.axisLeft(y).ticks(5).tickSize(-o.w).tickFormat(f));
+function ejeX(o, x, op = {}) {
+  const e = o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(op.ticks || 6).tickFormat(op.fmt || null));
+  if (op.rotar) e.selectAll("text").attr("transform", "rotate(-28)")
+    .style("text-anchor", "end").attr("dx", "-.5em").attr("dy", ".3em");
+  return e;
+}
+const rotY = (o, t) => o.svg.append("text").attr("class", "rotulo-eje")
+  .attr("transform", "rotate(-90)").attr("x", -(o.m.t + o.h / 2)).attr("y", 12)
+  .attr("text-anchor", "middle").text(t);
+const rotX = (o, t) => o.svg.append("text").attr("class", "rotulo-eje")
+  .attr("x", o.m.l + o.w / 2).attr("y", o.alto - 3).attr("text-anchor", "middle").text(t);
+function leyenda(o, items, nota) {
+  // Arriba del area de trazado. Abajo chocaba con los rotulos del eje.
+  const g = o.svg.append("g").attr("transform", `translate(${o.m.l},11)`);
+  let x = 0;
+  items.forEach(([t, c]) => {
+    const e = g.append("g").attr("transform", `translate(${x},0)`);
+    e.append("rect").attr("width", 10).attr("height", 10).attr("y", -9).attr("fill", c);
+    e.append("text").attr("x", 14).attr("class", "rotulo-eje").text(t);
+    x += t.length * 6.1 + 32;
+  });
+  if (nota) g.append("text").attr("y", 15).attr("class", "rotulo-eje").text(nota);
+}
+/* Escribe el pie de figura numerado, que es donde va la interpretacion. */
+function pie(sel, titulo, texto) {
+  N_FIG += 1;
+  document.querySelector(sel).innerHTML =
+    `<span class="num">Figura ${N_FIG}. ${titulo}.</span> ${texto.replace(/\s+/g, " ").trim()}`;
+}
+
+/* ====================================================== Parte I ======= */
+function gMensual() {
+  const d = D.serie_mensual.map(r => ({...r, f: new Date(r.anio_mes)}));
+  const o = lienzo("#g-mensual", 320, {t:30, r:14, b:40, l:52});
+  const x = d3.scaleUtc().domain(d3.extent(d, r => r.f)).range([0, o.w]);
+  const y = d3.scaleLinear().domain([0, d3.max(d, r => r.procesos) * 1.1]).range([o.h, 0]);
+  const y2 = d3.scaleLinear().domain([0, d3.max(d, r => r.monto_millones) * 1.1]).range([o.h, 0]);
+  ejeY(o, y, v => nf(v / 1000) + " k"); ejeX(o, x, {fmt: mesCorto, ticks: 7});
+  rotY(o, "procesos convocados");
+
+  o.g.append("path").datum(d).attr("fill", C.claro)
+    .attr("d", d3.area().x(r => x(r.f)).y0(o.h).y1(r => y2(r.monto_millones)).curve(d3.curveMonotoneX));
+  o.g.append("path").datum(d).attr("fill", "none").attr("stroke", C.azul).attr("stroke-width", 2.2)
+    .attr("d", d3.line().x(r => x(r.f)).y(r => y(r.procesos)).curve(d3.curveMonotoneX));
+  // Diciembre marcado, que es el mes que responde la pregunta.
+  o.g.selectAll("circle.dic").data(d.filter(r => r.f.getUTCMonth() === 11)).join("circle")
+    .attr("class", "dic").attr("cx", r => x(r.f)).attr("cy", r => y(r.procesos)).attr("r", 5)
+    .attr("fill", C.rojo).attr("stroke", C.fondo).attr("stroke-width", 2);
+
+  const foco = o.g.append("circle").attr("r", 4.5).attr("fill", C.azul).style("opacity", 0);
+  const guia = o.g.append("line").attr("y1", 0).attr("y2", o.h).attr("stroke", C.tinta3)
+    .attr("stroke-dasharray", "3,3").style("opacity", 0);
+  o.g.append("rect").attr("width", o.w).attr("height", o.h).attr("fill", "transparent")
+    .on("mousemove", ev => {
+      const fx = x.invert(d3.pointer(ev, o.g.node())[0]);
+      const r = d.reduce((a, b) => Math.abs(b.f - fx) < Math.abs(a.f - fx) ? b : a);
+      foco.attr("cx", x(r.f)).attr("cy", y(r.procesos)).style("opacity", 1);
+      guia.attr("x1", x(r.f)).attr("x2", x(r.f)).style("opacity", .7);
+      mostrarTip(ev, `<b>${mesLargo(r.f)}</b><br>${nf(r.procesos)} procesos<br>
+        S/ ${nf(r.monto_millones)} millones<br>mediana S/ ${nf(r.monto_mediano)}`);
+    }).on("mouseleave", () => {foco.style("opacity", 0); guia.style("opacity", 0); ocultarTip();});
+  leyenda(o, [["procesos convocados", C.azul], ["monto, escala propia", C.claro],
+              ["diciembre", C.rojo]]);
+
+  const dic = d.filter(r => r.f.getUTCMonth() === 11);
+  pie("#c-mensual", "Procesos convocados y monto por mes, 2023 a 2025",
+    `Los puntos rojos marcan diciembre. Es el máximo de su año en 2023 y en 2024, los dos años con
+     cobertura completa, con ${nf(dic[0].procesos)} y ${nf(dic[1].procesos)} procesos. El área de
+     fondo es el monto, en su propia escala: su pico de diciembre es mucho más marcado que el del
+     conteo, de modo que a fin de año no solo se convoca más, se convoca más caro. La caída del
+     tramo final de 2025 no es menos contratación sino subcobertura, porque los procesos tardan en
+     entrar al registro.`);
+}
+
+function gEstacional() {
+  const filas = D.estacionalidad, anios = Object.keys(filas[0]).filter(k => k !== "mes");
+  const o = lienzo("#g-estacional", 260, {t:24, r:14, b:34, l:48});
+  const x = d3.scaleBand().domain(anios).range([0, Math.min(o.w, 380)]).padding(.06);
+  const y = d3.scaleBand().domain(filas.map(r => r.mes)).range([0, o.h]).padding(.06);
+  const todos = filas.flatMap(r => anios.map(a => +r[a]));
+  const color = d3.scaleSequential(d3.interpolateBlues).domain([0, d3.max(todos)]);
+
+  o.g.append("g").attr("class", "eje").call(d3.axisLeft(y).tickSize(0));
+  o.g.append("g").attr("class", "eje").attr("transform", "translate(0,-4)")
+    .call(d3.axisTop(x).tickSize(0));
+  filas.forEach(r => anios.forEach(a => {
+    o.g.append("rect").attr("x", x(a)).attr("y", y(r.mes))
+      .attr("width", x.bandwidth()).attr("height", y.bandwidth())
+      .attr("fill", color(+r[a]))
+      .on("mousemove", ev => mostrarTip(ev,
+        `<b>${r.mes} de ${a}</b><br>${nf(+r[a])} procesos convocados`))
+      .on("mouseleave", ocultarTip);
+    o.g.append("text").attr("x", x(a) + x.bandwidth() / 2).attr("y", y(r.mes) + y.bandwidth() / 2 + 3)
+      .attr("text-anchor", "middle").style("font-size", "9.5px").style("font-family", "var(--dato)")
+      .attr("fill", +r[a] > d3.max(todos) * .6 ? "#FFFFFF" : C.tinta).attr("pointer-events", "none")
+      .text(nf(+r[a]));
+  }));
+  pie("#c-estacional", "Procesos por mes y año",
+    `Aísla el calendario del ruido de cada año. Las columnas de 2023 y 2024 se oscurecen hacia el
+     último trimestre y alcanzan su máximo en diciembre; la de 2025 se apaga al final por la
+     subcobertura ya señalada. Que el patrón se repita en los dos años completos es lo que permite
+     atribuirlo al cierre del ejercicio presupuestal y no a un año particular.`);
+}
+
+function gLorenz() {
+  const d = D.lorenz, c = D.concentracion;
+  const o = lienzo("#g-lorenz", 330, {t:14, r:16, b:42, l:50});
+  const lado = Math.min(o.w, o.h);
+  const x = d3.scaleLinear().domain([0, 1]).range([0, lado]);
+  const y = d3.scaleLinear().domain([0, 1]).range([o.h, o.h - lado]);
+  o.g.append("g").attr("class", "eje rejilla")
+    .call(d3.axisLeft(y).ticks(5).tickSize(-lado).tickFormat(d3.format(".0%")));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format(".0%")));
+  rotY(o, "porcentaje acumulado del monto");
+  // El rotulo se centra sobre el area cuadrada, no sobre el ancho del lienzo.
+  o.svg.append("text").attr("class", "rotulo-eje").attr("x", o.m.l + lado / 2)
+    .attr("y", o.alto - 3).attr("text-anchor", "middle")
+    .text("porcentaje acumulado de proveedores");
+
+  o.g.append("line").attr("x1", x(0)).attr("y1", y(0)).attr("x2", x(1)).attr("y2", y(1))
+    .attr("stroke", C.tinta3).attr("stroke-dasharray", "5,4");
+  const pts = [{pct_proveedores:0, pct_monto:0}, ...d];
+  o.g.append("path").datum(pts).attr("fill", C.claro)
+    .attr("d", d3.area().x(r => x(r.pct_proveedores)).y0(r => y(r.pct_proveedores)).y1(r => y(r.pct_monto)));
+  o.g.append("path").datum(pts).attr("fill", "none").attr("stroke", C.azul).attr("stroke-width", 2.4)
+    .attr("d", d3.line().x(r => x(r.pct_proveedores)).y(r => y(r.pct_monto)));
+
+  // Los tramos del ranking, marcados sobre la curva.
+  const tramos = c.filter(r => r.tramo.startsWith("top")).map(r => {
+    const p = 1 - parseFloat(r.tramo.replace(/[^0-9.]/g, "")) / 100;
+    return {p, pct: r.pct_del_monto, etiqueta: r.tramo};
+  });
+  o.g.selectAll("circle.t").data(tramos).join("circle").attr("class", "t")
+    .attr("cx", r => x(r.p)).attr("cy", r => y(1 - r.pct / 100)).attr("r", 5)
+    .attr("fill", C.rojo).attr("stroke", C.fondo).attr("stroke-width", 2)
+    .on("mousemove", (ev, r) => mostrarTip(ev,
+      `<b>El ${r.etiqueta.replace("top ", "")} con mayor monto</b><br>
+       concentra el ${nf(r.pct, 1)} por ciento del gasto`))
+    .on("mouseleave", ocultarTip);
+
+  o.g.append("rect").attr("width", lado).attr("height", o.h).attr("fill", "transparent")
+    .on("mousemove", ev => {
+      const px = Math.max(0, Math.min(1, x.invert(d3.pointer(ev, o.g.node())[0])));
+      const r = d.reduce((a, b) => Math.abs(b.pct_proveedores - px) < Math.abs(a.pct_proveedores - px) ? b : a);
+      mostrarTip(ev, `<b>El ${nf(r.pct_proveedores * 100, 1)} por ciento de proveedores
+        con menor monto</b><br>acumula el ${nf(r.pct_monto * 100, 1)} por ciento del gasto`);
+    }).on("mouseleave", ocultarTip);
+  o.g.append("text").attr("x", x(.06)).attr("y", y(.88)).style("font-size", "17px")
+    .style("font-weight", "bold").attr("fill", C.tinta).text(`Gini = ${nf(c[0].gini, 3)}`);
+
+  pie("#c-lorenz", "Curva de Lorenz del monto adjudicado entre proveedores",
+    `La diagonal sería el reparto perfectamente igualitario y el área sombreada mide cuánto se
+     aparta de él. Los puntos rojos marcan los tramos del ranking: el uno por ciento de los
+     proveedores concentra el ${nf(c[0].pct_del_monto, 1)} por ciento del monto y el diez por
+     ciento se lleva el ${nf(c[2].pct_del_monto, 1)} por ciento. El coeficiente de Gini resume esa
+     desigualdad en ${nf(c[0].gini, 3)}, sobre un máximo de 1.`);
+}
+
+function gGini() {
+  const dep = D.gini_departamento.slice().sort((a, b) => b.gini - a.gini).slice(0, 15);
+  const nac = D.concentracion[0].gini;
+  const o = lienzo("#g-gini", 340, {t:12, r:16, b:40, l:140});
+  const x = d3.scaleLinear().domain([.7, d3.max(dep, r => r.gini) * 1.02]).range([0, o.w]);
+  const y = d3.scaleBand().domain(dep.map(r => r.departamento)).range([0, o.h]).padding(.25);
+  o.g.append("g").attr("class", "eje rejilla").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(5).tickSize(-o.h).tickFormat(v => nf(v, 2)));
+  o.g.append("g").attr("class", "eje").call(d3.axisLeft(y).tickSize(0));
+  o.g.selectAll("rect.b").data(dep).join("rect").attr("class", "b")
+    .attr("y", r => y(r.departamento)).attr("height", y.bandwidth()).attr("width", r => x(r.gini))
+    .attr("fill", r => r.gini > nac ? C.rojo : C.morado)
+    .on("mousemove", (ev, r) => mostrarTip(ev,
+      `<b>${r.departamento}</b><br>Gini ${nf(r.gini, 3)}<br>${nf(r.proveedores)} proveedores<br>
+       S/ ${nf(r.monto_mm)} millones<br>${r.gini > nac ? "por encima" : "por debajo"} del nacional`))
+    .on("mouseleave", ocultarTip);
+  o.g.append("line").attr("x1", x(nac)).attr("x2", x(nac)).attr("y1", -4).attr("y2", o.h)
+    .attr("stroke", C.tinta).attr("stroke-width", 1.6).attr("stroke-dasharray", "4,3");
+  o.g.append("text").attr("x", x(nac) + 5).attr("y", 8).attr("class", "rotulo-eje")
+    .attr("fill", C.tinta).text(`nacional ${nf(nac, 3)}`);
+  rotX(o, "coeficiente de Gini del monto adjudicado");
+
+  const encima = dep.filter(r => r.gini > nac);
+  pie("#c-gini", "Concentración del gasto por departamento",
+    `El monto absoluto solo diría que Lima gasta más; el Gini hace comparables mercados de tamaños
+     muy distintos. El resultado va en contra de lo esperado: solo ${encima.length} de los
+     ${D.gini_departamento.length} departamentos superan el Gini nacional, y son
+     ${encima.map(r => r.departamento).join(" y ")}. Los demás quedan por debajo, así que el Gini
+     del país no describe a un mercado regional típico, está empujado hacia arriba por Lima.`);
+}
+
+function gCompetencia() {
+  const d = D.competencia;
+  const o = lienzo("#g-competencia", 330, {t:30, r:14, b:72, l:50});
+  const x0 = d3.scaleBand().domain(d.map(r => r.tramo)).range([0, o.w]).padding(.2);
+  const x1 = d3.scaleBand().domain(["a", "b"]).range([0, x0.bandwidth()]).padding(.1);
+  const y = d3.scaleLinear().domain([0, Math.max(d3.max(d, r => r.pct_postor_unico),
+    d3.max(d, r => r.postores_mediano)) * 1.12]).range([o.h, 0]);
+  ejeY(o, y, v => nf(v)); ejeX(o, x0, {rotar: true, ticks: d.length});
+  [["a", "postores_mediano", C.azul], ["b", "pct_postor_unico", C.rojo]].forEach(([k, campo, c]) => {
+    o.g.selectAll(`rect.${k}`).data(d).join("rect").attr("class", k)
+      .attr("x", r => x0(r.tramo) + x1(k)).attr("y", r => y(r[campo]))
+      .attr("width", x1.bandwidth()).attr("height", r => o.h - y(r[campo])).attr("fill", c)
+      .on("mousemove", (ev, r) => mostrarTip(ev,
+        `<b>${r.tramo}</b><br>${nf(r.procesos)} procesos<br>
+         ${nf(r.postores_mediano)} postores medianos<br>
+         ${nf(r.pct_postor_unico, 1)} por ciento con un solo postor`))
+      .on("mouseleave", ocultarTip);
+  });
+  leyenda(o, [["postores medianos", C.azul], ["por ciento con un solo postor", C.rojo]]);
+
+  const bajo = d[0], resto = d.slice(1);
+  const media = resto.reduce((a, r) => a + r.pct_postor_unico, 0) / resto.length;
+  pie("#c-competencia", "Competencia por tramo de monto",
+    `El número mediano de postores crece con el monto, de ${nf(bajo.postores_mediano)} a
+     ${nf(d[d.length - 1].postores_mediano)}. Lo que importa es dónde se rompe: en el tramo más
+     bajo el ${nf(bajo.pct_postor_unico, 0)} por ciento de los procesos tuvo un único postor,
+     mientras que en los demás esa proporción se estabiliza cerca del ${nf(media, 0)} por ciento y
+     ya no baja, ni siquiera por encima de veinte millones. Son dos fenómenos distintos: una franja
+     pequeña competitiva solo en el papel, y un suelo persistente de uno de cada diez procesos sin
+     competencia que atraviesa todo el rango.`);
+}
+
+function gHistograma() {
+  const d = D.histograma.filter(r => r.procesos > 0);
+  const o = lienzo("#g-histograma", 270, {t:12, r:14, b:44, l:50});
+  const x = d3.scaleLog().domain([d[0].desde, d[d.length - 1].hasta]).range([0, o.w]);
+  const y = d3.scaleLinear().domain([0, d3.max(d, r => r.procesos) * 1.08]).range([o.h, 0]);
+  ejeY(o, y, v => nf(v / 1000) + " k");
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(6, "~s"));
+  rotY(o, "procesos"); rotX(o, "valor referencial en soles, escala logarítmica");
+  o.g.selectAll("rect.h").data(d).join("rect").attr("class", "h")
+    .attr("x", r => x(r.desde)).attr("width", r => Math.max(1, x(r.hasta) - x(r.desde) - 1))
+    .attr("y", r => y(r.procesos)).attr("height", r => o.h - y(r.procesos)).attr("fill", C.azul)
+    .on("mousemove", (ev, r) => mostrarTip(ev,
+      `<b>S/ ${nf(r.desde)} a ${nf(r.hasta)}</b><br>${nf(r.procesos)} procesos`))
+    .on("mouseleave", ocultarTip);
+  const tot = d.reduce((a, r) => a + r.procesos, 0);
+  pie("#c-histograma", "Distribución del valor referencial",
+    `En escala lineal esta figura sería una sola barra pegada al eje: el monto abarca seis órdenes
+     de magnitud. El logaritmo es lo que la hace legible y lo que justifica haber aplicado el
+     criterio de valores extremos sobre esa misma escala y no sobre el valor directo. La forma es
+     la de una distribución de cola muy larga, con la masa entre decenas y cientos de miles de
+     soles y una cola que llega a los cientos de millones.`);
+}
+
+/* ====================================================== Parte II ====== */
+function gMinHash() {
+  const d = D.error_minhash;
+  const o = lienzo("#g-minhash", 270, {t:30, r:14, b:44, l:54});
+  const x = d3.scaleLog().base(2).domain([d[0].n_hashes * .8, d[d.length-1].n_hashes * 1.25]).range([0, o.w]);
+  const y = d3.scaleLog().domain([d3.min(d, r => r.error_medio) * .7,
+                                  d3.max(d, r => r.cota_1_sobre_raiz_n) * 1.4]).range([o.h, 0]);
+  ejeY(o, y, d3.format(".3f"));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(4, "~s"));
+  rotY(o, "error absoluto medio"); rotX(o, "número de funciones hash, ambas escalas logarítmicas");
+  [["cota_1_sobre_raiz_n", C.rojo, "cota teórica"], ["error_medio", C.azul, "error observado"]]
+    .forEach(([campo, c, et], i) => {
+      o.g.append("path").datum(d).attr("fill", "none").attr("stroke", c).attr("stroke-width", 2.2)
+        .attr("stroke-dasharray", i === 0 ? "5,3" : null)
+        .attr("d", d3.line().x(r => x(r.n_hashes)).y(r => y(r[campo])));
+      o.g.selectAll(`circle.m${i}`).data(d).join("circle").attr("class", `m${i}`)
+        .attr("cx", r => x(r.n_hashes)).attr("cy", r => y(r[campo])).attr("r", 4).attr("fill", c)
+        .on("mousemove", (ev, r) => mostrarTip(ev,
+          `<b>${r.n_hashes} funciones hash</b><br>error observado ${nf(r.error_medio, 4)}<br>
+           cota teórica ${nf(r.cota_1_sobre_raiz_n, 4)}<br>${nf(r.bytes_por_doc)} bytes por documento`))
+        .on("mouseleave", ocultarTip);
+    });
+  leyenda(o, [["cota 1 sobre raíz de n", C.rojo], ["error observado", C.azul]]);
+  const p = d[0], u = d[d.length - 1];
+  pie("#c-minhash", "Precisión de MinHash frente a su costo",
+    `El error observado sigue la cota teórica y baja como uno sobre la raíz de n, así que
+     cuadruplicar las funciones hash solo divide el error entre dos. Pasar de ${p.n_hashes} a
+     ${u.n_hashes} baja el error de ${nf(p.error_medio, 4)} a ${nf(u.error_medio, 4)} a cambio de
+     multiplicar por ocho la memoria de la firma. Se eligieron 128: el error que da es muy inferior
+     al ancho de la zona de decisión de LSH, así que gastar más no compra nada útil.`);
+}
+
+const probCand = (s, b, r) => 1 - Math.pow(1 - Math.pow(s, r), b);
+const umbralLSH = (b, r) => Math.pow(1 / b, 1 / r);
+
+function gLSH() {
+  const b = +document.getElementById("lsh-b").value, r = +document.getElementById("lsh-r").value;
+  document.getElementById("v-lsh-b").textContent = b;
+  document.getElementById("v-lsh-r").textContent = r;
+  const u = umbralLSH(b, r), pu = probCand(u, b, r);
+  document.getElementById("s-lsh").innerHTML =
+    `Firma de <b>${b * r}</b> valores. Umbral teórico <b>${nf(u, 3)}</b>, el punto donde la curva
+     cambia de concavidad. Ahí la probabilidad de ser candidato vale <b>${nf(pu, 3)}</b>, que es
+     1 menos 1 sobre e y no un medio, confusión frecuente. Un par con Jaccard 0,30 es candidato con
+     probabilidad <b>${nf(probCand(.3, b, r), 3)}</b>; uno con 0,80, con <b>${nf(probCand(.8, b, r), 3)}</b>.`;
+
+  const o = lienzo("#g-lsh", 310, {t:12, r:16, b:46, l:48});
+  const x = d3.scaleLinear().domain([0, 1]).range([0, o.w]);
+  const y = d3.scaleLinear().domain([0, 1]).range([o.h, 0]);
+  ejeY(o, y, d3.format(".1f")); ejeX(o, x, {fmt: d3.format(".1f")});
+  rotY(o, "probabilidad de ser candidato"); rotX(o, "similitud de Jaccard real del par");
+
+  D.barrido_lsh.forEach(cfg => {
+    o.g.append("path").datum(d3.range(0, 1.004, .006).map(s => [s, probCand(s, cfg.b, cfg.r)]))
+      .attr("fill", "none").attr("stroke", C.linea).attr("stroke-width", 1.3)
+      .attr("d", d3.line().x(p => x(p[0])).y(p => y(p[1])));
+  });
+  o.g.append("path").datum(d3.range(0, 1.002, .002).map(s => [s, probCand(s, b, r)]))
+    .attr("fill", "none").attr("stroke", C.azul).attr("stroke-width", 2.8)
+    .attr("d", d3.line().x(p => x(p[0])).y(p => y(p[1])));
+  o.g.append("line").attr("x1", x(u)).attr("x2", x(u)).attr("y1", 0).attr("y2", o.h)
+    .attr("stroke", C.rojo).attr("stroke-dasharray", "4,3").attr("stroke-width", 1.6);
+  o.g.append("circle").attr("cx", x(u)).attr("cy", y(pu)).attr("r", 5.5).attr("fill", C.rojo)
+    .attr("stroke", C.fondo).attr("stroke-width", 2);
+  o.g.append("text").attr("x", x(u) + 7).attr("y", 12).attr("class", "rotulo-eje")
+    .attr("fill", C.rojo).text(`umbral ${nf(u, 3)}`);
+  o.g.selectAll("circle.med").data(D.barrido_lsh).join("circle").attr("class", "med")
+    .attr("cx", x(.3)).attr("cy", p => y(p.recall)).attr("r", 4).attr("fill", C.verde)
+    .attr("stroke", C.fondo).attr("stroke-width", 1.5)
+    .on("mousemove", (ev, p) => mostrarTip(ev,
+      `<b>b=${p.b}, r=${p.r}</b> medido sobre la muestra<br>recall ${nf(p.recall, 3)}<br>
+       ${nf(p.candidatos)} candidatos a verificar<br>
+       ${nf(p.pct_pares_a_verificar, 2)} por ciento de los pares`))
+    .on("mouseleave", ocultarTip);
+
+  const mejor = D.barrido_lsh.filter(p => p.recall >= .95)
+    .sort((a, c) => a.candidatos - c.candidatos)[0] || D.barrido_lsh[0];
+  pie("#c-lsh", "Curva S de LSH según las bandas y las filas",
+    `La curva azul es la configuración elegida con los controles y las grises son las demás del
+     barrido; los puntos verdes marcan el recall que cada una obtuvo de verdad sobre la muestra,
+     medido contra la similitud exacta. Subir las bandas levanta la curva temprano: atrapa todo lo
+     parecido y también mucha basura. Subir las filas la desplaza a la derecha: casi no quedan
+     falsos positivos, pero se escapan pares legítimos. La configuración de menor costo con recall
+     sobre 0,95 es b igual a ${mejor.b} y r igual a ${mejor.r}, que verifica el
+     ${nf(mejor.pct_pares_a_verificar, 2)} por ciento de los pares.`);
+}
+
+/* ====================================================== Parte III ===== */
+function gANN() {
+  const d = D.ann;
+  const o = lienzo("#g-ann", 330, {t:46, r:16, b:46, l:50});
+  const x = d3.scaleLog().domain([d3.min(d, r => Math.min(r.ms_lote, r.ms_unitaria)) * .7,
+    d3.max(d, r => Math.max(r.ms_lote, r.ms_unitaria)) * 1.4]).range([0, o.w]);
+  const y = d3.scaleLinear().domain([.7, 1.02]).range([o.h, 0]);
+  ejeY(o, y, d3.format(".2f"));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(6, "~g"));
+  rotY(o, "recall@10"); rotX(o, "milisegundos por consulta, escala logarítmica");
+  const fams = [["IVF", C.azul], ["HNSW", C.verde], ["fuerza bruta", C.rojo]];
+  [["ms_lote", null], ["ms_unitaria", "5,3"]].forEach(([campo, guion]) => {
+    fams.forEach(([fam, c]) => {
+      const sub = d.filter(r => r.familia === fam).sort((a, b) => a[campo] - b[campo]);
+      if (sub.length > 1) o.g.append("path").datum(sub).attr("fill", "none").attr("stroke", c)
+        .attr("stroke-width", 2).attr("stroke-dasharray", guion)
+        .attr("d", d3.line().x(r => x(r[campo])).y(r => y(r.recall_at_10)));
+      o.g.selectAll(`circle.${fam.replace(/ /g,"")}${campo}`).data(sub).join("circle")
+        .attr("class", `${fam.replace(/ /g,"")}${campo}`)
+        .attr("cx", r => x(r[campo])).attr("cy", r => y(r.recall_at_10))
+        .attr("r", fam === "fuerza bruta" ? 7 : 4.5).attr("fill", c)
+        .attr("stroke", C.fondo).attr("stroke-width", 1.5)
+        .on("mousemove", (ev, r) => mostrarTip(ev,
+          `<b>${r.indice}</b><br>recall@10 ${nf(r.recall_at_10, 4)}<br>
+           en lote ${nf(r.ms_lote, 4)} ms<br>consulta aislada ${nf(r.ms_unitaria, 3)} ms`))
+        .on("mouseleave", ocultarTip);
+    });
+  });
+  leyenda(o, [["IVF", C.azul], ["HNSW", C.verde], ["fuerza bruta, exacta", C.rojo]],
+          "línea continua: lote de mil consultas     línea punteada: consulta aislada");
+
+  const fb = d.find(r => r.familia === "fuerza bruta");
+  const h95 = d.filter(r => r.familia === "HNSW" && r.recall_at_10 >= .95)
+    .sort((a, b) => a.ms_unitaria - b.ms_unitaria)[0];
+  pie("#c-ann", "Recall frente a latencia, en los dos regímenes de consulta",
+    `Los dos regímenes cuentan historias opuestas. En lote la búsqueda exacta tarda
+     ${nf(fb.ms_lote, 4)} ms por consulta y el índice aproximado no aporta nada, porque el índice
+     plano resuelve el lote como un producto de matrices sobre los ocho núcleos. Consulta a consulta
+     la situación se invierte: la exacta tarda ${nf(fb.ms_unitaria, 3)} ms y HNSW
+     ${nf(h95.ms_unitaria, 3)} ms con recall ${nf(h95.recall_at_10, 3)}, es decir
+     ${nf(fb.ms_unitaria / h95.ms_unitaria, 1)} veces más rápido. La pregunta de si un índice
+     aproximado vale la pena no tiene respuesta sin decir antes si el uso es por lotes o en línea.`);
+}
+
+function gEscalado() {
+  const d = D.escalado;
+  const o = lienzo("#g-escalado", 270, {t:12, r:16, b:46, l:52});
+  const x = d3.scaleLog().domain([d[0].vectores * .8, d[d.length-1].vectores * 1.3]).range([0, o.w]);
+  const y = d3.scaleLog().domain([d3.min(d, r => r.hnsw_ms) * .7,
+    d3.max(d, r => r.fuerza_bruta_ms) * 1.5]).range([o.h, 0]);
+  ejeY(o, y, v => nf(v, v < 1 ? 2 : 1));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(5, "~s"));
+  rotY(o, "ms por consulta"); rotX(o, "vectores en el índice, ambas escalas logarítmicas");
+  [["fuerza_bruta_ms", C.rojo, "fuerza bruta"], ["hnsw_ms", C.verde, "HNSW"]]
+    .forEach(([campo, c, et], i) => {
+      o.g.append("path").datum(d).attr("fill", "none").attr("stroke", c).attr("stroke-width", 2.4)
+        .attr("d", d3.line().x(r => x(r.vectores)).y(r => y(r[campo])));
+      o.g.selectAll(`circle.e${i}`).data(d).join("circle").attr("class", `e${i}`)
+        .attr("cx", r => x(r.vectores)).attr("cy", r => y(r[campo])).attr("r", 4.5).attr("fill", c)
+        .attr("stroke", C.fondo).attr("stroke-width", 1.5)
+        .on("mousemove", (ev, r) => mostrarTip(ev,
+          `<b>${nf(r.vectores)} vectores</b><br>fuerza bruta ${nf(r.fuerza_bruta_ms, 3)} ms<br>
+           HNSW ${nf(r.hnsw_ms, 3)} ms<br>ventaja ${nf(r.factor, 1)} veces`))
+        .on("mouseleave", ocultarTip);
+      const u = d[d.length - 1];
+      o.g.append("text").attr("x", x(u.vectores) - 6).attr("y", y(u[campo]) - 9)
+        .attr("text-anchor", "end").attr("class", "rotulo-eje").attr("fill", c).text(et);
+    });
+  const p = d[0], u = d[d.length - 1];
+  pie("#c-escalado", "Cómo escala cada índice al crecer la base",
+    `Las dos rectas tienen pendientes distintas y esa diferencia es todo el argumento. Multiplicar
+     la base por ${nf(u.vectores / p.vectores)} multiplica el tiempo de la búsqueda exacta por
+     ${nf(u.fuerza_bruta_ms / p.fuerza_bruta_ms, 1)}, que es crecimiento lineal, y el de HNSW por
+     solo ${nf(u.hnsw_ms / p.hnsw_ms, 1)}. La ventaja pasa de ${nf(p.factor, 1)} a
+     ${nf(u.factor, 1)} veces. Lo que justifica implementar un índice aproximado no es el volumen
+     actual sino el escenario de diez o cien veces más datos.`);
+}
+
+/* ====================================================== Parte IV ====== */
+const fprBloom = (bits, k) => Math.pow(1 - Math.exp(-k / bits), k);
+const kOpt = bits => Math.max(1, Math.round(bits * Math.LN2));
+
+function gBloom() {
+  const bits = +document.getElementById("bl-bits").value, k = +document.getElementById("bl-k").value;
+  document.getElementById("v-bl-bits").textContent = bits;
+  document.getElementById("v-bl-k").textContent = k;
+  const n = D.resumen_flujos.claves_bloom, fpr = fprBloom(bits, k);
+  const kib = n * bits / 8 / 1024, exacto = n * 24 / 1024;
+  document.getElementById("s-bloom").innerHTML =
+    `Con ${nf(n)} proveedores distintos: <b>${nf(kib, 1)} KiB</b> de filtro frente a
+     <b>${nf(exacto, 0)} KiB</b> del conjunto exacto, unas ${nf(exacto / kib, 0)} veces menos.
+     Falsos positivos <b>${nf(fpr * 100, 3)} por ciento</b>, falsos negativos <b>cero</b>, imposibles
+     por construcción. El número óptimo de hashes para ${bits} bits por elemento es
+     <b>${kOpt(bits)}</b>${k === kOpt(bits) ? ", que es el que está puesto" : `, y hay ${k} puestos`}.`;
+
+  const o = lienzo("#g-bloom", 300, {t:30, r:16, b:44, l:56});
+  const x = d3.scaleLinear().domain([2, 40]).range([0, o.w]);
+  const y = d3.scaleLog().domain([1e-6, 1]).range([o.h, 0]);
+  ejeY(o, y, d3.format(".0e")); ejeX(o, x);
+  rotY(o, "tasa de falsos positivos"); rotX(o, "bits por elemento");
+  o.g.append("path").datum(d3.range(2, 40.2, .2).map(b => [b, fprBloom(b, kOpt(b))]))
+    .attr("fill", "none").attr("stroke", C.linea).attr("stroke-width", 2).attr("stroke-dasharray", "4,3")
+    .attr("d", d3.line().x(p => x(p[0])).y(p => y(Math.max(p[1], 1e-6))));
+  o.g.append("path").datum(d3.range(2, 40.2, .2).map(b => [b, fprBloom(b, k)]))
+    .attr("fill", "none").attr("stroke", C.azul).attr("stroke-width", 2.8)
+    .attr("d", d3.line().x(p => x(p[0])).y(p => y(Math.max(p[1], 1e-6))));
+  o.g.append("circle").attr("cx", x(bits)).attr("cy", y(Math.max(fpr, 1e-6))).attr("r", 6)
+    .attr("fill", C.rojo).attr("stroke", C.fondo).attr("stroke-width", 2);
+  o.g.selectAll("circle.med").data(D.bloom).join("circle").attr("class", "med")
+    .attr("cx", p => x(p.m_bits / n)).attr("cy", p => y(Math.max(p.fpr_observada, 1e-6))).attr("r", 4)
+    .attr("fill", C.verde).attr("stroke", C.fondo).attr("stroke-width", 1.4)
+    .on("mousemove", (ev, p) => mostrarTip(ev,
+      `<b>objetivo ${nf(p.fpr_objetivo * 100, 1)} por ciento</b><br>
+       ${nf(p.m_bits / n, 1)} bits por elemento, k igual a ${p.k_hashes}<br>
+       teórica ${nf(p.fpr_teorica * 100, 3)} por ciento<br>
+       observada ${nf(p.fpr_observada * 100, 3)} por ciento<br>${nf(p.memoria_kib, 1)} KiB`))
+    .on("mouseleave", ocultarTip);
+  leyenda(o, [["curva elegida", C.azul], ["con k óptimo", C.linea], ["medido sobre el flujo", C.verde]]);
+  pie("#c-bloom", "Falsos positivos del filtro de Bloom según su tamaño",
+    `Los puntos verdes son las tasas medidas de verdad sobre el flujo de proveedores, y caen sobre
+     la curva teórica: eso valida la implementación. La línea punteada marca lo mejor alcanzable
+     para cada tamaño, usando el número óptimo de hashes. Cada orden de magnitud de precisión cuesta
+     unos diez bits más por elemento: la memoria crece de forma lineal mientras el error cae de
+     forma exponencial, y por eso un filtro de Bloom es difícil de batir cuando la pregunta es solo
+     de pertenencia.`);
+}
+
+function gCMS() {
+  const w = +document.getElementById("cm-w").value, d = +document.getElementById("cm-d").value;
+  document.getElementById("v-cm-w").textContent = nf(w);
+  document.getElementById("v-cm-d").textContent = d;
+  const total = D.resumen_flujos.eventos_items, claves = D.resumen_flujos.claves_items;
+  const err = Math.E / w * total, delta = Math.exp(-d);
+  const kib = w * d * 8 / 1024, exacto = claves * 60 / 1024;
+  document.getElementById("s-cms").innerHTML =
+    `Memoria <b>${nf(kib, 0)} KiB</b> frente a <b>${nf(exacto, 0)} KiB</b> del diccionario exacto de
+     ${nf(claves)} códigos. Cota de error <b>${nf(err, 0)} apariciones</b> sobre un total de
+     ${nf(total)}, que se excede con probabilidad menor a
+     <b>${delta < .001 ? delta.toExponential(1) : nf(delta, 4)}</b>. El ancho controla cuánto error
+     y la profundidad con qué seguridad se respeta.`;
+
+  const o = lienzo("#g-cms", 290, {t:30, r:16, b:46, l:58});
+  const x = d3.scaleLog().domain([20, 20000]).range([0, o.w]);
+  const y = d3.scaleLog().domain([1, 1e5]).range([o.h, 0]);
+  ejeY(o, y, d3.format("~s"));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(5, "~s"));
+  rotY(o, "error máximo en el conteo"); rotX(o, "memoria del sketch en KiB, ambas escalas logarítmicas");
+  o.g.append("path").datum(d3.range(1, 5.01, .02)
+      .map(e => [Math.pow(10, e) * d * 8 / 1024, Math.E / Math.pow(10, e) * total])
+      .filter(p => p[0] >= 20 && p[0] <= 20000))
+    .attr("fill", "none").attr("stroke", C.azul).attr("stroke-width", 2.8)
+    .attr("d", d3.line().x(p => x(p[0])).y(p => y(Math.max(p[1], 1))));
+  o.g.append("circle").attr("cx", x(Math.min(Math.max(kib, 20), 20000)))
+    .attr("cy", y(Math.max(err, 1))).attr("r", 6).attr("fill", C.rojo)
+    .attr("stroke", C.fondo).attr("stroke-width", 2);
+  o.g.selectAll("circle.med").data(D.cms).join("circle").attr("class", "med")
+    .attr("cx", p => x(Math.min(Math.max(p.memoria_kib, 20), 20000)))
+    .attr("cy", p => y(Math.max(p.error_max, 1))).attr("r", 4).attr("fill", C.verde)
+    .attr("stroke", C.fondo).attr("stroke-width", 1.4)
+    .on("mousemove", (ev, p) => mostrarTip(ev,
+      `<b>ancho ${nf(p.ancho_w)}, profundidad ${p.profundidad_d}</b><br>${nf(p.memoria_kib, 0)} KiB<br>
+       error máximo observado ${nf(p.error_max)}<br>cota teórica ${nf(p.cota_teorica)}<br>
+       subestimaciones ${p.subestimaciones}`))
+    .on("mouseleave", ocultarTip);
+  leyenda(o, [["cota teórica", C.azul], ["error observado", C.verde]]);
+  pie("#c-cms", "Error del Count-Min Sketch frente a su memoria",
+    `El error observado, en verde, queda siempre por debajo de la cota teórica, y nunca hay
+     subestimaciones: eso es lo que garantiza tomar el mínimo de las filas. Conviene mirar la
+     comparación con la alternativa exacta antes de celebrar. A este volumen el diccionario de
+     ${nf(claves)} códigos cabe sin problema, así que el sketch todavía no compensa. Compensa
+     cuando el universo de claves crece, que es el escenario de diez o cien veces más datos.`);
+}
+
+function gDGIM() {
+  const d = D.dgim;
+  const o = lienzo("#g-dgim", 300, {t:30, r:16, b:52, l:54});
+  const x0 = d3.scaleBand().domain(d.map(r => r.ventana_N)).range([0, o.w]).padding(.22);
+  const x1 = d3.scaleBand().domain(["exacto","dgim"]).range([0, x0.bandwidth()]).padding(.1);
+  const y = d3.scaleLinear().domain([0, d3.max(d, r => Math.max(r.exacto, r.dgim)) * 1.1]).range([o.h, 0]);
+  ejeY(o, y, v => nf(v));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x0).tickFormat(v => nf(v / 1000) + " k"));
+  rotY(o, "procesos con un solo postor"); rotX(o, "tamaño de la ventana");
+  [["exacto", C.azul], ["dgim", C.verde]].forEach(([k, c]) => {
+    o.g.selectAll(`rect.${k}`).data(d).join("rect").attr("class", k)
+      .attr("x", r => x0(r.ventana_N) + x1(k)).attr("y", r => y(r[k]))
+      .attr("width", x1.bandwidth()).attr("height", r => o.h - y(r[k])).attr("fill", c)
+      .on("mousemove", (ev, r) => mostrarTip(ev,
+        `<b>ventana de ${nf(r.ventana_N)}</b><br>exacto ${nf(r.exacto)}<br>DGIM ${nf(r.dgim)}<br>
+         error ${nf(r.error_relativo * 100, 1)} por ciento<br>
+         ${r.cubos} cubos, ${nf(r.memoria_dgim_bytes)} bytes<br>
+         ventana completa ${nf(r.memoria_exacta_bytes)} bytes`))
+      .on("mouseleave", ocultarTip);
+  });
+  leyenda(o, [["conteo exacto", C.azul], ["estimación de DGIM", C.verde]]);
+  const peor = d.reduce((a, b) => b.error_relativo > a.error_relativo ? b : a), g = d[d.length - 1];
+  pie("#c-dgim", "DGIM frente al conteo exacto sobre la ventana reciente",
+    `Las barras quedan casi a la misma altura en todas las ventanas: el peor error relativo es
+     ${nf(peor.error_relativo * 100, 1)} por ciento, muy por debajo de la cota del cincuenta por
+     ciento que garantiza usar dos cubos por tamaño. Lo que compra ese error es memoria. Para la
+     ventana de ${nf(g.ventana_N)} elementos, DGIM usa ${g.cubos} cubos frente a los
+     ${nf(g.memoria_exacta_bytes)} bytes de la ventana completa en bits, una reducción de
+     ${nf(g.memoria_exacta_bytes / g.memoria_dgim_bytes, 0)} veces. Con ventanas pequeñas no
+     compensa e incluso pierde; la ventaja crece con el logaritmo de la ventana.`);
+}
+
+/* ====================================================== Parte V ======= */
+function gAlgoritmos() {
+  const d = D.costo_algoritmos;
+  const o = lienzo("#g-algoritmos", 260, {t:12, r:16, b:46, l:52});
+  const x = d3.scaleLog().domain([d3.max(d, r => r.soporte) * 1.3, d3.min(d, r => r.soporte) * .75]).range([0, o.w]);
+  const y = d3.scaleLog().domain([d3.min(d, r => Math.min(r.apriori_s, r.fpgrowth_s)) * .6,
+    d3.max(d, r => r.apriori_s) * 1.7]).range([o.h, 0]);
+  ejeY(o, y, v => nf(v, v < 1 ? 1 : 0) + " s");
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(4, "~g"));
+  rotY(o, "segundos"); rotX(o, "soporte mínimo, decreciente hacia la derecha");
+  [["apriori_s", C.rojo, "A-Priori propio"], ["fpgrowth_s", C.verde, "FP-Growth de MLlib"]]
+    .forEach(([campo, c, et], i) => {
+      o.g.append("path").datum(d).attr("fill", "none").attr("stroke", c).attr("stroke-width", 2.4)
+        .attr("d", d3.line().x(r => x(r.soporte)).y(r => y(r[campo])));
+      o.g.selectAll(`circle.a${i}`).data(d).join("circle").attr("class", `a${i}`)
+        .attr("cx", r => x(r.soporte)).attr("cy", r => y(r[campo])).attr("r", 4.5).attr("fill", c)
+        .attr("stroke", C.fondo).attr("stroke-width", 1.5)
+        .on("mousemove", (ev, r) => mostrarTip(ev,
+          `<b>soporte ${nf(r.soporte, 4)}</b><br>${nf(r.conjuntos)} conjuntos frecuentes<br>
+           A-Priori ${nf(r.apriori_s, 2)} s<br>FP-Growth ${nf(r.fpgrowth_s, 2)} s`))
+        .on("mouseleave", ocultarTip);
+      const u = d[d.length - 1];
+      o.g.append("text").attr("x", x(u.soporte)).attr("y", y(u[campo]) - 10)
+        .attr("text-anchor", "end").attr("class", "rotulo-eje").attr("fill", c).text(et);
+    });
+  const a = d[0], u = d[d.length - 1];
+  pie("#c-algoritmos", "Costo de A-Priori y FP-Growth al bajar el umbral de soporte",
+    `Con soporte alto los dos cuestan parecido, porque hay pocos conjuntos frecuentes y A-Priori
+     poda casi todo en el primer nivel. Al bajar el umbral de ${nf(a.soporte, 3)} a
+     ${nf(u.soporte, 4)} el número de conjuntos pasa de ${nf(a.conjuntos)} a ${nf(u.conjuntos)} y
+     A-Priori pasa de ${nf(a.apriori_s, 2)} a ${nf(u.apriori_s, 1)} segundos, mientras que FP-Growth
+     se mantiene alrededor de ${nf(u.fpgrowth_s, 1)}. La diferencia es estructural: A-Priori genera
+     y cuenta candidatos nivel por nivel y ese número explota, FP-Growth no genera candidatos.`);
+}
+
+function gReglas() {
+  const sop = +document.getElementById("rg-sop").value / 1000;
+  const conf = +document.getElementById("rg-conf").value / 100;
+  const lift = +document.getElementById("rg-lift").value;
+  document.getElementById("v-rg-sop").textContent = nf(sop, 3);
+  document.getElementById("v-rg-conf").textContent = nf(conf, 2);
+  document.getElementById("v-rg-lift").textContent = lift;
+  const pasa = r => r.soporte >= sop && r.confianza >= conf && r.lift >= lift;
+  const todas = D.reglas, vivas = todas.filter(pasa);
+  document.getElementById("s-reglas").innerHTML =
+    `<b>${nf(vivas.length)}</b> reglas de ${nf(todas.length)} superan los tres umbrales.
+     ${vivas.length ? `Lift máximo <b>${nf(d3.max(vivas, r => r.lift), 1)}</b>, soporte máximo
+     <b>${nf(d3.max(vivas, r => r.soporte), 4)}</b>.`
+     : "Ninguna regla sobrevive, hay que relajar algún umbral."}`;
+
+  const o = lienzo("#g-reglas", 290, {t:12, r:16, b:46, l:52});
+  const x = d3.scaleLog().domain([d3.min(todas, r => r.soporte) * .8, d3.max(todas, r => r.soporte) * 1.3]).range([0, o.w]);
+  const y = d3.scaleLog().domain([.8, d3.max(todas, r => r.lift) * 1.5]).range([o.h, 0]);
+  ejeY(o, y, d3.format("~g"));
+  o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
+    .call(d3.axisBottom(x).ticks(5, "~g"));
+  rotY(o, "lift, escala logarítmica"); rotX(o, "soporte, escala logarítmica");
+  o.g.append("line").attr("x1", 0).attr("x2", o.w).attr("y1", y(1)).attr("y2", y(1))
+    .attr("stroke", C.rojo).attr("stroke-dasharray", "4,3");
+  o.g.append("text").attr("x", 3).attr("y", y(1) - 5).attr("class", "rotulo-eje")
+    .attr("fill", C.rojo).text("lift igual a 1, independencia");
+  o.g.selectAll("circle.r").data(todas).join("circle").attr("class", "r")
+    .attr("cx", r => x(r.soporte)).attr("cy", r => y(r.lift)).attr("r", 4)
+    .attr("fill", r => pasa(r) ? C.morado : C.linea).attr("opacity", r => pasa(r) ? .85 : .55)
+    .on("mousemove", (ev, r) => mostrarTip(ev,
+      `<b>${r.antecedente}</b><br>implica<br><b>${r.consecuente}</b><br>
+       soporte ${nf(r.soporte, 4)}<br>confianza ${nf(r.confianza, 3)}<br>lift ${nf(r.lift, 1)}`))
+    .on("mouseleave", ocultarTip);
+  pie("#c-reglas", "Cada regla como un punto, según su soporte y su lift",
+    `Las reglas en morado son las que superan los umbrales de los controles. La nube muestra el
+     compromiso central de esta técnica: las reglas de soporte alto tienen lift cercano a uno y
+     describen ítems que coinciden por ser ambos frecuentes, no porque uno prediga al otro; las de
+     lift alto viven en la zona de soporte bajo, donde el patrón es fuerte pero afecta a pocas
+     transacciones. Por eso el criterio es lift alto con soporte suficiente, y filtrar solo por
+     confianza traería las reglas inútiles del borde.`);
+
+  const filas = vivas.slice().sort((a, b) => b.lift - a.lift).slice(0, 10);
+  document.getElementById("t-reglas").innerHTML =
+    `<thead><tr><th>Si la entidad compra</th><th>también compra</th><th>Soporte</th>
+     <th>Confianza</th><th>Lift</th></tr></thead><tbody>` +
+    (filas.length ? filas.map(r => `<tr><td>${r.antecedente}</td><td>${r.consecuente}</td>
+      <td class="n">${nf(r.soporte, 4)}</td><td class="n">${nf(r.confianza, 3)}</td>
+      <td class="n">${nf(r.lift, 1)}</td></tr>`).join("")
+     : `<tr><td colspan="5">Ninguna regla supera los umbrales actuales.</td></tr>`) + "</tbody>";
+}
+
+/* ====================================================== portada y tablas */
+function cifras() {
+  const c = D.concentracion[0], p = D.portada;
+  const items = [
+    [nf(p.procesos_limpios), `procesos analizados, de ${nf(p.procesos_crudos)} crudos`],
+    [nf(p.gb_csv, 2) + " GB", "de CSV en 21 tablas por año, 2023 a 2025"],
+    [nf(c.gini, 3), "coeficiente de Gini del monto por proveedor"],
+    [nf(c.pct_del_monto, 1) + " %", "del monto se lo lleva el uno por ciento de proveedores"]];
+  document.getElementById("cifras").innerHTML = items.map(([n, t]) =>
+    `<div class="cifra"><div class="n">${n}</div><div class="t">${t}</div></div>`).join("");
+}
+function tablaCasos() {
+  document.getElementById("t-casos").innerHTML =
+    `<thead><tr><th>Jaccard</th><th>Entidades</th><th>Objeto contractual</th></tr></thead><tbody>` +
+    D.casos.map(c => `<tr><td class="n">${nf(c.jaccard, 3)}</td>
+      <td>${c.entidad_A}<br>${c.entidad_B}</td>
+      <td>${c.objeto_A}<br>${c.objeto_B}</td></tr>`).join("") + "</tbody>";
+}
+function tablaFlujos() {
+  document.getElementById("t-flujos").innerHTML =
+    `<thead><tr><th>Estructura</th><th>Qué pregunta responde</th><th>Memoria</th><th>Error</th>
+     <th>Por qué se usa</th></tr></thead><tbody>` +
+    D.resumen_estructuras.map(r => `<tr><td><b>${r.estructura}</b></td><td>${r.pregunta}</td>
+      <td class="n">${r.memoria}</td><td>${r.error}</td><td>${r.por_que_se_usa}</td></tr>`).join("") +
+    "</tbody>";
+}
+
+/* ====================================================== arranque ====== */
+function dibujar() {
+  N_FIG = 0;
+  cifras(); tablaCasos(); tablaFlujos();
+  gMensual(); gEstacional(); gLorenz(); gGini(); gCompetencia(); gHistograma();
+  gMinHash(); gLSH(); gANN(); gEscalado(); gBloom(); gCMS(); gDGIM(); gAlgoritmos(); gReglas();
+}
+[["lsh-b", gLSH], ["lsh-r", gLSH], ["bl-bits", gBloom], ["bl-k", gBloom],
+ ["cm-w", gCMS], ["cm-d", gCMS], ["rg-sop", gReglas], ["rg-conf", gReglas], ["rg-lift", gReglas]]
+  .forEach(([id, fn]) => document.getElementById(id).addEventListener("input", () => {
+    // Los controles redibujan solo su figura, pero el pie lleva numero, asi que
+    // se renumera todo para que la secuencia no se desordene.
+    dibujar();
+  }));
+
+let temporizador;
+addEventListener("resize", () => {clearTimeout(temporizador); temporizador = setTimeout(dibujar, 160);});
+dibujar();
+</script>
