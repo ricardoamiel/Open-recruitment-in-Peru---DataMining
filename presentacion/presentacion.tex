@@ -68,6 +68,14 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Cómo encajan las cinco partes}
+  \framesubtitle{Visión de conjunto}
+  \begin{center}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/arquitectura_diapositiva.pdf}
+  \end{center}
+  \lectura{Lo único que viaja entre partes es la tabla analítica, de modo que son independientes; las líneas discontinuas marcan la pregunta que una parte deja abierta y otra recoge.}
+\end{frame}
+
 \begin{frame}{Cada decisión de limpieza queda registrada}
   \framesubtitle{Parte I \textperiodcentered{} KDD}
   \begin{center}
@@ -92,7 +100,7 @@
 \begin{frame}{Dos decisiones cuestan el 37 por ciento de las filas}
   \framesubtitle{Parte I \textperiodcentered{} KDD}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f02_embudo.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f02_embudo.pdf}
   \end{center}
   \lectura{Se descartan los montos no positivos, que son campos no publicados, y las convocatorias fuera de la ventana 2023 a 2025.}
 \end{frame}
@@ -100,7 +108,7 @@
 \begin{frame}{Diciembre es el máximo en los dos años completos}
   \framesubtitle{Parte I \textperiodcentered{} EDA}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f05_estacionalidad.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f05_estacionalidad.pdf}
   \end{center}
   \lectura{El patrón se repite en 2023 y 2024, lo que permite atribuirlo al cierre presupuestal y no al ruido de un año.}
 \end{frame}
@@ -108,7 +116,7 @@
 \begin{frame}{El uno por ciento de proveedores concentra el 47 por ciento del monto}
   \framesubtitle{Parte I \textperiodcentered{} EDA}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f11_lorenz.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f11_lorenz.pdf}
   \end{center}
   \lectura{El coeficiente de Gini es 0,857 sobre un máximo de 1.}
 \end{frame}
@@ -116,7 +124,7 @@
 \begin{frame}{El Gini nacional no describe a un mercado regional típico}
   \framesubtitle{Parte I \textperiodcentered{} EDA}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f12_gini_departamento.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f12_gini_departamento.pdf}
   \end{center}
   \lectura{Solo Pasco y Lima superan el valor nacional, y el resto queda por debajo: la cifra del país está empujada por Lima.}
 \end{frame}
@@ -124,7 +132,7 @@
 \begin{frame}{La falta de competencia tiene dos formas distintas}
   \framesubtitle{Parte I \textperiodcentered{} EDA}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f13_competencia.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f13_competencia.pdf}
   \end{center}
   \lectura{Bajo cincuenta mil soles el 57 por ciento tuvo un solo postor, y en el resto de tramos se estabiliza cerca del 10 por ciento.}
 \end{frame}
@@ -132,7 +140,7 @@
 \begin{frame}{MapReduce sobre RDD frente a DataFrames}
   \framesubtitle{Parte I \textperiodcentered{} Spark}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f14_rdd_vs_dataframe.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f14_rdd_vs_dataframe.pdf}
   \end{center}
   \lectura{El mismo resultado, verificado con exceptAll en ambos sentidos, cuesta tres veces más en RDD por la serialización hacia Python.}
 \end{frame}
@@ -140,7 +148,7 @@
 \begin{frame}{El particionado por año permite descartar directorios}
   \framesubtitle{Parte I \textperiodcentered{} Spark}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f15_shuffle.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f15_shuffle.pdf}
   \end{center}
   \lectura{La ejecución adaptativa amortigua casi por completo una mala elección del número de particiones de barajado.}
 \end{frame}
@@ -148,7 +156,7 @@
 \begin{frame}{El tamaño del shingle no se optimiza, se fija con un criterio}
   \framesubtitle{Parte II \textperiodcentered{} Similitud}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f16_calibracion_k.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f16_calibracion_k.pdf}
   \end{center}
   \lectura{Las dos curvas bajan juntas, así que se toma el k más pequeño que deja el fondo de pares no relacionados por debajo de 0,02.}
 \end{frame}
@@ -156,7 +164,7 @@
 \begin{frame}{El error baja como uno sobre la raíz de n}
   \framesubtitle{Parte II \textperiodcentered{} MinHash}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f18_error_minhash.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f18_error_minhash.pdf}
   \end{center}
   \lectura{Cuadruplicar las funciones hash solo divide el error entre dos, y con 128 ya queda por debajo del ancho de decisión de LSH.}
 \end{frame}
@@ -164,7 +172,7 @@
 \begin{frame}{Las bandas y las filas definen qué se considera parecido}
   \framesubtitle{Parte II \textperiodcentered{} LSH}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f19_curva_s.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f19_curva_s.pdf}
   \end{center}
   \lectura{El umbral teórico marca el cambio de concavidad de la curva, donde la probabilidad vale 1 menos 1 sobre e y no un medio.}
 \end{frame}
@@ -212,7 +220,7 @@
 \begin{frame}{El régimen de medición cambia la conclusión}
   \framesubtitle{Parte III \textperiodcentered{} ANN}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f24_ann_vs_exacta.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f24_ann_vs_exacta.pdf}
   \end{center}
   \lectura{En lote el índice aproximado no aporta nada, y consulta a consulta HNSW es un orden de magnitud más rápido.}
 \end{frame}
@@ -220,7 +228,7 @@
 \begin{frame}{Por qué existen los índices aproximados}
   \framesubtitle{Parte III \textperiodcentered{} ANN}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f26_escalado.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f26_escalado.pdf}
   \end{center}
   \lectura{La búsqueda exacta crece de forma lineal con la base y HNSW casi no crece, así que la ventaja aparece al escalar.}
 \end{frame}
@@ -228,7 +236,7 @@
 \begin{frame}{El filtro de Bloom respeta su tasa teórica}
   \framesubtitle{Parte IV \textperiodcentered{} Flujos}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f29_bloom.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f29_bloom.pdf}
   \end{center}
   \lectura{Cada orden de magnitud de precisión cuesta unos diez bits más por elemento, y los falsos negativos son imposibles.}
 \end{frame}
@@ -236,7 +244,7 @@
 \begin{frame}{Por qué hacen falta Bloom y Count-Min, no uno de los dos}
   \framesubtitle{Parte IV \textperiodcentered{} Flujos}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f31_bloom_vs_cms.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f31_bloom_vs_cms.pdf}
   \end{center}
   \lectura{Con la misma tasa de error, el Count-Min necesita sesenta y cuatro veces más memoria para responder pertenencia.}
 \end{frame}
@@ -244,7 +252,7 @@
 \begin{frame}{DGIM sobre la ventana reciente}
   \framesubtitle{Parte IV \textperiodcentered{} Flujos}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f32_dgim.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f32_dgim.pdf}
   \end{center}
   \lectura{El peor error observado queda muy por debajo de la cota del cincuenta por ciento que garantizan dos cubos por tamaño.}
 \end{frame}
@@ -252,7 +260,7 @@
 \begin{frame}{El tiempo es la tercera dimensión del compromiso}
   \framesubtitle{Parte IV \textperiodcentered{} Flujos}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f38_tiempos_estructuras.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f38_tiempos_estructuras.pdf}
   \end{center}
   \lectura{Estas estructuras no ahorran tiempo: cambian memoria por tiempo y por un error acotado.}
 \end{frame}
@@ -279,7 +287,7 @@
 \begin{frame}{La definición de transacción era el problema}
   \framesubtitle{Parte V \textperiodcentered{} Reglas}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f34_definicion_transaccion.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f34_definicion_transaccion.pdf}
   \end{center}
   \lectura{La canasta natural tiene coocurrencia en el 2 por ciento de los procesos, así que se redefine como lo que una entidad compra en un mes.}
 \end{frame}
@@ -287,7 +295,7 @@
 \begin{frame}{Por qué FP-Growth desplazó a A-Priori}
   \framesubtitle{Parte V \textperiodcentered{} Reglas}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f35_apriori_vs_fpgrowth.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f35_apriori_vs_fpgrowth.pdf}
   \end{center}
   \lectura{Al bajar el umbral de soporte, A-Priori explota en candidatos y FP-Growth se mantiene plano.}
 \end{frame}
@@ -317,7 +325,7 @@
 \begin{frame}{Dónde se concentra la falta de competencia}
   \framesubtitle{Parte V \textperiodcentered{} Reglas}
   \begin{center}
-    \includegraphics[height=0.62\textheight,width=\textwidth,keepaspectratio]{../figs/f37_postor_unico.pdf}
+    \includegraphics[height=0.74\textheight,width=\textwidth,keepaspectratio]{../figs/f37_postor_unico.pdf}
   \end{center}
   \lectura{El suelo de procesos sin competencia no se reparte al azar, aunque parte de lo que aparece es administrativamente esperable.}
 \end{frame}
