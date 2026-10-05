@@ -120,6 +120,7 @@ footer{padding-block:24px 50px;border-top:2px solid var(--tinta);margin-top:36px
 <div class="cifras" id="cifras"></div>
 
 <nav><div>
+  <a href="#arq">Arquitectura</a>
   <a href="#p1">I. KDD y EDA</a>
   <a href="#p2">II. Similitud</a>
   <a href="#p3">III. Vecinos</a>
@@ -127,6 +128,184 @@ footer{padding-block:24px 50px;border-top:2px solid var(--tinta);margin-top:36px
   <a href="#p5">V. Reglas</a>
   <a href="#p6">VI. Discusión</a>
 </div></nav>
+
+<section id="arq">
+  <p class="rotulo">Visión de conjunto</p>
+  <h2>Cómo encajan las seis partes</h2>
+  <div class="txt">
+  <p>Las seis partes no son seis ejercicios sueltos sobre el mismo archivo. Comparten una sola
+  tabla analítica, producida una vez y leída por todas, y cada una responde una pregunta distinta
+  sobre ella. El diagrama dice qué técnica se aplica en cada punto, qué entrega y cuál de las dos
+  máquinas la ejecuta, porque no todas se benefician de Spark y conviene decir cuáles no.</p>
+  </div>
+  <figure>
+    <div class="grafico" id="g-arquitectura"><!--ARQUITECTURA-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 746" width="1120" height="746" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" role="img" aria-label="Arquitectura de las tecnicas del proyecto">
+<defs><marker id="punta" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5.5" markerHeight="5.5" orient="auto"><path d="M 0 0 L 8 4 L 0 8 z" fill="#C9D2DB"/></marker><marker id="punta2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5.5" markerHeight="5.5" orient="auto"><path d="M 0 0 L 8 4 L 0 8 z" fill="#5A5A5A"/></marker></defs>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<rect x="18" y="18" width="1084" height="49.2" rx="3" fill="#F4F6F8" stroke="#5A5A5A" stroke-width="1.1"/>
+<text x="560.0" y="36.7" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">Datos de origen</text>
+<text x="560.0" y="54.4" text-anchor="middle" font-size="10.5" fill="#3C4147">Contrataciones Abiertas del Perú en estándar OCDS, publicación 135. Paquetes anuales 2023 a 2025, 21 tablas por año, 2,98 GB de CSV, 281.462 procesos</text>
+<rect x="18" y="83.2" width="1084" height="49.2" rx="3" fill="#2E6DB40F" stroke="#2E6DB4" stroke-width="1.1"/>
+<text x="560.0" y="101.9" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">Ingesta y preparación según el proceso KDD</text>
+<text x="560.0" y="119.6" text-anchor="middle" font-size="10.5" fill="#3C4147">desnormalizar las 21 tablas a una fila por proceso, limpiar con bitácora de siete pasos que registra cada descarte, y escribir Parquet particionado por año: 29,8 MB y 177.398 filas analíticas</text>
+<rect x="1053.98828125" y="90.2" width="41.01171875" height="15" rx="7.5" fill="#2E6DB4" opacity="0.92"/>
+<text x="1074.494140625" y="100.80000000000001" text-anchor="middle" font-size="9" font-weight="bold" fill="#FFFFFF">Spark</text>
+<path d="M 560.0 67.2 L 560.0 80.2" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 560.0 132.4 V 145.9 H 120.8 V 159.4" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 560.0 132.4 V 145.9 H 340.4 V 159.4" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 560.0 132.4 V 145.9 H 560.0 V 159.4" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 560.0 132.4 V 145.9 H 779.6 V 159.4" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 560.0 132.4 V 145.9 H 999.2 V 159.4" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 120.8 196.4 V 214.4 H 922.4" stroke="#5A5A5A" stroke-width="1.2" fill="none" stroke-dasharray="5 3.5"/>
+<path d="M 702.8 214.4 L 702.8 239.4" stroke="#5A5A5A" stroke-width="1.2" fill="none" stroke-dasharray="5 3.5" marker-end="url(#punta2)"/>
+<path d="M 922.4 214.4 L 922.4 239.4" stroke="#5A5A5A" stroke-width="1.2" fill="none" stroke-dasharray="5 3.5" marker-end="url(#punta2)"/>
+<text x="129.8" y="210.4" font-size="9" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="3.2" paint-order="stroke">la pregunta que la Parte I deja abierta: el suelo de procesos con un solo postor</text>
+<path d="M 340.4 196.4 V 230.4 H 483.2" stroke="#5A5A5A" stroke-width="1.2" fill="none" stroke-dasharray="5 3.5"/>
+<path d="M 483.2 230.4 L 483.2 239.4" stroke="#5A5A5A" stroke-width="1.2" fill="none" stroke-dasharray="5 3.5" marker-end="url(#punta2)"/>
+<text x="349.4" y="226.4" font-size="9" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="3.2" paint-order="stroke">el mismo campo objeto</text>
+<path d="M 120.8 196.4 L 120.8 239.4" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 120.8 305.0 L 120.8 313.0" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 120.8 378.6 L 120.8 386.6" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 120.8 452.2 L 120.8 463.2" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<rect x="18.0" y="162.4" width="205.6" height="34.0" rx="3" fill="#2E6DB41C" stroke="#2E6DB4" stroke-width="1.1"/>
+<text x="120.8" y="181.9" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#1A1A1A">I. KDD y EDA</text>
+<rect x="175.58828125" y="169.4" width="41.01171875" height="15" rx="7.5" fill="#2E6DB4" opacity="0.92"/>
+<text x="196.094140625" y="180.0" text-anchor="middle" font-size="9" font-weight="bold" fill="#FFFFFF">Spark</text>
+<rect x="18.0" y="242.4" width="205.6" height="62.6" rx="3" fill="#FFFFFF" stroke="#2E6DB4" stroke-width="1.1"/>
+<text x="120.8" y="261.1" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">Spark SQL sobre Parquet</text>
+<text x="120.8" y="278.8" text-anchor="middle" font-size="10.5" fill="#3C4147">particiones por año, poda de</text>
+<text x="120.8" y="292.2" text-anchor="middle" font-size="10.5" fill="#3C4147">directorios</text>
+<rect x="18.0" y="316.0" width="205.6" height="62.6" rx="3" fill="#FFFFFF" stroke="#2E6DB4" stroke-width="1.1"/>
+<text x="120.8" y="334.7" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">MapReduce con RDD</text>
+<text x="120.8" y="352.4" text-anchor="middle" font-size="10.5" fill="#3C4147">el mismo agregado, contrastado y</text>
+<text x="120.8" y="365.8" text-anchor="middle" font-size="10.5" fill="#3C4147">cronometrado</text>
+<rect x="18.0" y="389.6" width="205.6" height="62.6" rx="3" fill="#FFFFFF" stroke="#2E6DB4" stroke-width="1.1"/>
+<text x="120.8" y="408.3" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">Lorenz, Gini y tramos</text>
+<text x="120.8" y="426.0" text-anchor="middle" font-size="10.5" fill="#3C4147">concentración, estacionalidad y</text>
+<text x="120.8" y="439.4" text-anchor="middle" font-size="10.5" fill="#3C4147">competencia</text>
+<rect x="18.0" y="466.20000000000005" width="205.6" height="74.1" rx="3" fill="#2E6DB414" stroke="#2E6DB4" stroke-width="1.1"/>
+<text x="120.8" y="483.6" text-anchor="middle" font-size="10" font-weight="bold" fill="#1A1A1A">Resultado</text>
+<text x="120.8" y="499.4" text-anchor="middle" font-size="10.5" fill="#3C4147">Gini 0,857. Diciembre es el máximo de</text>
+<text x="120.8" y="512.8" text-anchor="middle" font-size="10.5" fill="#3C4147">cada año. 57 % con postor único bajo</text>
+<text x="120.8" y="526.3" text-anchor="middle" font-size="10.5" fill="#3C4147">50 mil soles</text>
+<path d="M 340.4 196.4 L 340.4 239.4" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 340.4 305.0 L 340.4 313.0" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 340.4 378.6 L 340.4 386.6" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 340.4 438.8 L 340.4 446.8" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 340.4 499.0 L 340.4 510.0" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<rect x="237.6" y="162.4" width="205.6" height="34.0" rx="3" fill="#B3441F1C" stroke="#B3441F" stroke-width="1.1"/>
+<text x="340.4" y="181.9" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#1A1A1A">II. Similitud</text>
+<rect x="395.18828125" y="169.4" width="41.01171875" height="15" rx="7.5" fill="#B3441F" opacity="0.92"/>
+<text x="415.694140625" y="180.0" text-anchor="middle" font-size="9" font-weight="bold" fill="#FFFFFF">Spark</text>
+<rect x="237.6" y="242.4" width="205.6" height="62.6" rx="3" fill="#FFFFFF" stroke="#B3441F" stroke-width="1.1"/>
+<text x="340.4" y="261.1" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">Shingles de k = 9</text>
+<text x="340.4" y="278.8" text-anchor="middle" font-size="10.5" fill="#3C4147">calibrado por criterio, no por óptimo</text>
+<text x="340.4" y="292.2" text-anchor="middle" font-size="10.5" fill="#3C4147">inventado</text>
+<rect x="237.6" y="316.0" width="205.6" height="62.6" rx="3" fill="#FFFFFF" stroke="#B3441F" stroke-width="1.1"/>
+<text x="340.4" y="334.7" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">MinHash de 128 firmas</text>
+<text x="340.4" y="352.4" text-anchor="middle" font-size="10.5" fill="#3C4147">error 0,007, muy por debajo de la</text>
+<text x="340.4" y="365.8" text-anchor="middle" font-size="10.5" fill="#3C4147">banda</text>
+<rect x="237.6" y="389.6" width="205.6" height="49.2" rx="3" fill="#FFFFFF" stroke="#B3441F" stroke-width="1.1"/>
+<text x="340.4" y="408.3" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">LSH por bandas, b = 64 y r = 2</text>
+<text x="340.4" y="426.0" text-anchor="middle" font-size="10.5" fill="#3C4147">candidatos, luego verificación exacta</text>
+<rect x="237.6" y="449.8" width="205.6" height="49.2" rx="3" fill="#FFFFFF" stroke="#B3441F" stroke-width="1.1"/>
+<text x="340.4" y="468.5" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">SimHash sobre TF-IDF</text>
+<text x="340.4" y="486.2" text-anchor="middle" font-size="10.5" fill="#3C4147">contraste: cada esquema a su métrica</text>
+<rect x="237.6" y="513.0" width="205.6" height="60.7" rx="3" fill="#B3441F14" stroke="#B3441F" stroke-width="1.1"/>
+<text x="340.4" y="530.4" text-anchor="middle" font-size="10" font-weight="bold" fill="#1A1A1A">Resultado</text>
+<text x="340.4" y="546.2" text-anchor="middle" font-size="10.5" fill="#3C4147">Recall 0,996 verificando solo el 8,6 %</text>
+<text x="340.4" y="559.6" text-anchor="middle" font-size="10.5" fill="#3C4147">de los pares</text>
+<path d="M 560.0 196.4 L 560.0 239.4" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 560.0 291.6 L 560.0 299.6" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 560.0 365.2 L 560.0 373.2" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 560.0 425.4 L 560.0 436.4" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<rect x="457.2" y="162.4" width="205.6" height="34.0" rx="3" fill="#8B5BB51C" stroke="#8B5BB5" stroke-width="1.1"/>
+<text x="560.0" y="181.9" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#1A1A1A">III. Vecinos</text>
+<rect x="604.3234375" y="169.4" width="51.4765625" height="15" rx="7.5" fill="#8B5BB5" opacity="0.92"/>
+<text x="630.06171875" y="180.0" text-anchor="middle" font-size="9" font-weight="bold" fill="#FFFFFF">un nodo</text>
+<rect x="457.2" y="242.4" width="205.6" height="49.2" rx="3" fill="#FFFFFF" stroke="#8B5BB5" stroke-width="1.1"/>
+<text x="560.0" y="261.1" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">TF-IDF de caracteres y palabras</text>
+<text x="560.0" y="278.8" text-anchor="middle" font-size="10.5" fill="#3C4147">dos representaciones comparadas</text>
+<rect x="457.2" y="302.6" width="205.6" height="62.6" rx="3" fill="#FFFFFF" stroke="#8B5BB5" stroke-width="1.1"/>
+<text x="560.0" y="321.3" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">FAISS plano, IVF y HNSW</text>
+<text x="560.0" y="339.0" text-anchor="middle" font-size="10.5" fill="#3C4147">recall de los diez vecinos contra</text>
+<text x="560.0" y="352.4" text-anchor="middle" font-size="10.5" fill="#3C4147">latencia</text>
+<rect x="457.2" y="376.20000000000005" width="205.6" height="49.2" rx="3" fill="#FFFFFF" stroke="#8B5BB5" stroke-width="1.1"/>
+<text x="560.0" y="394.9" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">Dos regímenes de medición</text>
+<text x="560.0" y="412.6" text-anchor="middle" font-size="10.5" fill="#3C4147">por lote y consulta a consulta</text>
+<rect x="457.2" y="439.40000000000003" width="205.6" height="60.7" rx="3" fill="#8B5BB514" stroke="#8B5BB5" stroke-width="1.1"/>
+<text x="560.0" y="456.8" text-anchor="middle" font-size="10" font-weight="bold" fill="#1A1A1A">Resultado</text>
+<text x="560.0" y="472.6" text-anchor="middle" font-size="10.5" fill="#3C4147">HNSW 69 veces más rápido consulta a</text>
+<text x="560.0" y="486.0" text-anchor="middle" font-size="10.5" fill="#3C4147">consulta, y sin ventaja en lote</text>
+<path d="M 779.6 196.4 L 779.6 239.4" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 779.6 291.6 L 779.6 299.6" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 779.6 365.2 L 779.6 373.2" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 779.6 425.4 L 779.6 433.4" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 779.6 485.6 L 779.6 496.6" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<rect x="676.8" y="162.4" width="205.6" height="34.0" rx="3" fill="#00A0A01C" stroke="#00A0A0" stroke-width="1.1"/>
+<text x="779.5999999999999" y="181.9" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#1A1A1A">IV. Flujos</text>
+<rect x="823.9234375" y="169.4" width="51.4765625" height="15" rx="7.5" fill="#00A0A0" opacity="0.92"/>
+<text x="849.66171875" y="180.0" text-anchor="middle" font-size="9" font-weight="bold" fill="#FFFFFF">un nodo</text>
+<rect x="676.8" y="242.4" width="205.6" height="49.2" rx="3" fill="#FFFFFF" stroke="#00A0A0" stroke-width="1.1"/>
+<text x="779.5999999999999" y="261.1" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">Flujo de 177.398 eventos</text>
+<text x="779.5999999999999" y="278.8" text-anchor="middle" font-size="10.5" fill="#3C4147">ordenado por fecha, una sola pasada</text>
+<rect x="676.8" y="302.6" width="205.6" height="62.6" rx="3" fill="#FFFFFF" stroke="#00A0A0" stroke-width="1.1"/>
+<text x="779.5999999999999" y="321.3" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">Reservoir y muestreo por clave</text>
+<text x="779.5999999999999" y="339.0" text-anchor="middle" font-size="10.5" fill="#3C4147">uniformidad contra integridad por</text>
+<text x="779.5999999999999" y="352.4" text-anchor="middle" font-size="10.5" fill="#3C4147">entidad</text>
+<rect x="676.8" y="376.20000000000005" width="205.6" height="49.2" rx="3" fill="#FFFFFF" stroke="#00A0A0" stroke-width="1.1"/>
+<text x="779.5999999999999" y="394.9" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">Bloom y Count-Min Sketch</text>
+<text x="779.5999999999999" y="412.6" text-anchor="middle" font-size="10.5" fill="#3C4147">si apareció antes, y cuántas veces</text>
+<rect x="676.8" y="436.40000000000003" width="205.6" height="49.2" rx="3" fill="#FFFFFF" stroke="#00A0A0" stroke-width="1.1"/>
+<text x="779.5999999999999" y="455.1" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">DGIM: cuántos en la ventana</text>
+<text x="779.5999999999999" y="472.8" text-anchor="middle" font-size="10.5" fill="#3C4147">memoria logarítmica en N</text>
+<rect x="676.8" y="499.6" width="205.6" height="60.7" rx="3" fill="#00A0A014" stroke="#00A0A0" stroke-width="1.1"/>
+<text x="779.5999999999999" y="517.0" text-anchor="middle" font-size="10" font-weight="bold" fill="#1A1A1A">Resultado</text>
+<text x="779.5999999999999" y="532.8" text-anchor="middle" font-size="10.5" fill="#3C4147">Memoria a cambio de error acotado, y</text>
+<text x="779.5999999999999" y="546.2" text-anchor="middle" font-size="10.5" fill="#3C4147">de tiempo</text>
+<path d="M 999.2 196.4 L 999.2 239.4" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 999.2 291.6 L 999.2 299.6" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 999.2 351.8 L 999.2 359.8" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<path d="M 999.2 412.0 L 999.2 423.0" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<rect x="896.4" y="162.4" width="205.6" height="34.0" rx="3" fill="#6FAE3C1C" stroke="#6FAE3C" stroke-width="1.1"/>
+<text x="999.1999999999999" y="181.9" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#1A1A1A">V. Reglas</text>
+<rect x="1053.98828125" y="169.4" width="41.01171875" height="15" rx="7.5" fill="#6FAE3C" opacity="0.92"/>
+<text x="1074.494140625" y="180.0" text-anchor="middle" font-size="9" font-weight="bold" fill="#FFFFFF">Spark</text>
+<rect x="896.4" y="242.4" width="205.6" height="49.2" rx="3" fill="#FFFFFF" stroke="#6FAE3C" stroke-width="1.1"/>
+<text x="999.1999999999999" y="261.1" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">Transacción: entidad por mes</text>
+<text x="999.1999999999999" y="278.8" text-anchor="middle" font-size="10.5" fill="#3C4147">la canasta natural no era minable</text>
+<rect x="896.4" y="302.6" width="205.6" height="49.2" rx="3" fill="#FFFFFF" stroke="#6FAE3C" stroke-width="1.1"/>
+<text x="999.1999999999999" y="321.3" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">A-Priori propio y FP-Growth</text>
+<text x="999.1999999999999" y="339.0" text-anchor="middle" font-size="10.5" fill="#3C4147">la explosión de candidatos, medida</text>
+<rect x="896.4" y="362.8" width="205.6" height="49.2" rx="3" fill="#FFFFFF" stroke="#6FAE3C" stroke-width="1.1"/>
+<text x="999.1999999999999" y="381.5" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1A1A1A">Soporte, confianza y lift</text>
+<text x="999.1999999999999" y="399.2" text-anchor="middle" font-size="10.5" fill="#3C4147">el lift es el criterio de selección</text>
+<rect x="896.4" y="426.0" width="205.6" height="60.7" rx="3" fill="#6FAE3C14" stroke="#6FAE3C" stroke-width="1.1"/>
+<text x="999.1999999999999" y="443.4" text-anchor="middle" font-size="10" font-weight="bold" fill="#1A1A1A">Resultado</text>
+<text x="999.1999999999999" y="459.2" text-anchor="middle" font-size="10.5" fill="#3C4147">Reglas con lift hasta 139, y dónde falta</text>
+<text x="999.1999999999999" y="472.6" text-anchor="middle" font-size="10.5" fill="#3C4147">competencia</text>
+<path d="M 120.8 540.3 V 603.7" stroke="#C9D2DB" stroke-width="1.3" fill="none"/>
+<path d="M 340.4 573.7 V 603.7" stroke="#C9D2DB" stroke-width="1.3" fill="none"/>
+<path d="M 560.0 500.1 V 603.7" stroke="#C9D2DB" stroke-width="1.3" fill="none"/>
+<path d="M 779.6 560.3 V 603.7" stroke="#C9D2DB" stroke-width="1.3" fill="none"/>
+<path d="M 999.2 486.7 V 603.7" stroke="#C9D2DB" stroke-width="1.3" fill="none"/>
+<path d="M 120.8 603.7 H 999.2" stroke="#C9D2DB" stroke-width="1.3" fill="none"/>
+<path d="M 355.1 603.7 V 634.7" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<rect x="18" y="637.7" width="674.1" height="51.7" rx="3" fill="#00A0A016" stroke="#00A0A0" stroke-width="1.1"/>
+<text x="355.05" y="657.6" text-anchor="middle" font-size="13" font-weight="bold" fill="#1A1A1A">Reporte interactivo</text>
+<text x="355.05" y="677.3" text-anchor="middle" font-size="11" fill="#3C4147">las figuras de las cinco partes en D3, con seis parámetros de los algoritmos ajustables en vivo y la interpretación al pie de cada una</text>
+<path d="M 904.0 603.7 V 634.7" stroke="#C9D2DB" stroke-width="1.3" fill="none" marker-end="url(#punta)"/>
+<rect x="706.1" y="637.7" width="395.9" height="51.7" rx="3" fill="#2E6DB416" stroke="#2E6DB4" stroke-width="1.1"/>
+<text x="904.05" y="657.6" text-anchor="middle" font-size="13" font-weight="bold" fill="#1A1A1A">Informe</text>
+<text x="904.05" y="677.3" text-anchor="middle" font-size="11" fill="#3C4147">la propuesta de cada parte y los hallazgos del análisis exploratorio</text>
+<text x="18" y="710.4" font-size="9.5" fill="#5A5A5A">Línea continua: flujo de datos. Línea discontinua: pregunta que una parte deja abierta y otra recoge. El único dato que viaja entre partes es la tabla analítica, así que las cinco se pueden ejecutar en cualquier orden. Las tablas y figuras que exporta cada</text>
+<text x="18" y="723.4" font-size="9.5" fill="#5A5A5A">parte son material intermedio: lo que se entrega son los dos documentos del final.</text>
+</svg>
+<!--/ARQUITECTURA--></div>
+    <figcaption id="c-arquitectura"></figcaption>
+  </figure>
+</section>
 
 <section id="p1">
   <p class="rotulo">Parte I</p>
@@ -1139,6 +1318,17 @@ function tablaFlujos() {
 function dibujar() {
   N_FIG = 0;
   cifras(); tablaCasos(); tablaFlujos();
+  pie("#c-arquitectura", "Arquitectura de las técnicas aplicadas",
+      `La ingesta es el único punto por el que pasan todas las partes: produce la tabla analítica
+       y a partir de ahí los cinco caminos son independientes y se pueden ejecutar en cualquier
+       orden. La etiqueta de cada parte dice dónde corre. Spark aporta en la ingesta, en el
+       análisis exploratorio y en el agrupamiento por bandas de LSH, que son los pasos con muchas
+       filas o muchos pares. No aporta en la búsqueda de vecinos, donde una biblioteca de un solo
+       nodo es mejor herramienta, ni en la minería de flujos, cuyo recorrido es secuencial y con
+       estado. Las líneas discontinuas no transportan datos: marcan la pregunta que una parte deja
+       abierta y otra recoge. El suelo de procesos con un solo postor que aparece en la Parte I es
+       lo que la Parte IV cuenta sobre una ventana reciente y lo que la Parte V mete como ítem de
+       la canasta para saber en qué combinaciones se concentra.`);
   gMensual(); gEstacional(); gLorenz(); gGini(); gCompetencia(); gHistograma();
   gMinHash(); gLSH(); gANN(); gEscalado(); gBloom(); gCMS(); gDGIM(); gAlgoritmos(); gReglas();
 }

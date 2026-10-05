@@ -8,6 +8,16 @@ Aplicación articulada de las seis técnicas del curso sobre las contrataciones 
 
 **Fuente de datos:** Contrataciones Abiertas del Perú en estándar OCDS, publicadas por el OECE, antes OSCE. Paquetes anuales 2023 a 2025 del [Registro de Datos de Open Contracting Partnership, publicación 135](https://data.open-contracting.org/es/publication/135).
 
+## Arquitectura de las técnicas
+
+![Arquitectura de las técnicas aplicadas](figs/arquitectura.svg)
+
+La ingesta es el único punto por el que pasan todas las partes: produce la tabla analítica y desde ahí los cinco caminos son independientes y se pueden ejecutar en cualquier orden. La etiqueta de cada parte dice dónde corre. Spark aporta en la ingesta, en el análisis exploratorio y en el agrupamiento por bandas de LSH, que son los pasos con muchas filas o muchos pares. No aporta en la búsqueda de vecinos, donde una biblioteca de un solo nodo es mejor herramienta, ni en la minería de flujos, cuyo recorrido es secuencial y con estado.
+
+Las líneas continuas son flujo de datos y las discontinuas son preguntas que una parte deja abierta y otra recoge. El único dato que viaja entre partes es la tabla analítica, así que las cinco se pueden ejecutar en cualquier orden. Las dos dependencias de pregunta están dichas con todas las letras en los notebooks: la Parte IV cuenta sobre una ventana reciente el suelo de procesos con un solo postor que encontró la Parte I, y la Parte V mete ese mismo suelo como ítem de la canasta para averiguar en qué combinaciones de rubro, método y nivel de gobierno se concentra.
+
+El diagrama se genera con código, no se dibuja a mano: cada caja mide su propio texto con las métricas de la tipografía y crece hasta contenerlo, y una comprobación posterior recorre el SVG terminado y falla si alguna línea se sale de su recuadro.
+
 ## Qué hay aquí
 
 Un notebook por parte. La rúbrica puntúa cada parte por separado, las partes III y IV no usan Spark, y un notebook único pasaría de trescientas celdas.
@@ -40,7 +50,7 @@ PROYECTO/
 ├── presentacion/           diapositivas en pptx y en LaTeX Beamer
 ├── correr_todo.sh          reproduce las seis partes y pasa las revisiones
 ├── artifacts/              agregados ligeros que alimentan el reporte
-├── figs/                   las 37 figuras en SVG y PNG
+├── figs/                   las 38 figuras en SVG y PNG, más arquitectura.svg
 └── data/                   raw sin versionar, processed en Parquet
 ```
 
