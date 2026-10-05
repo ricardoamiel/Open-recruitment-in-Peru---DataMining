@@ -21,10 +21,14 @@
  },
  {
   "figura":"f32_dgim",
-  "lectura":"Las barras quedan casi a la misma altura en todas las ventanas: el peor error relativo es 25.0 % con N=50,000, muy por debajo de la cota teórica del 50 % que garantiza usar dos cubos por tamaño. Lo que compra ese error es la memoria: para la ventana de 100,000 elementos, DGIM usa 19 cubos, del orden de 304 bytes, frente a 12,500 bytes de la ventana completa en bits. Es una reducción de 41 veces, y crece con N porque la memoria de DGIM depende del logaritmo de la ventana y no de la ventana."
+  "lectura":"Las barras quedan casi a la misma altura en todas las ventanas: el peor error relativo es 25.0 % con N=50,000, muy por debajo de la cota teórica del 50 % que garantiza usar dos cubos por tamaño. Lo que compra ese error es la memoria: para la ventana de 150,000 elementos, DGIM usa 20 cubos, del orden de 320 bytes, frente a 18,750 bytes de la ventana completa en bits. Es una reducción de 59 veces, y crece con N porque la memoria de DGIM depende del logaritmo de la ventana y no de la ventana."
  },
  {
   "figura":"f33_dgim_memoria",
-  "lectura":"Las dos rectas divergen y ese es el argumento entero. Multiplicar la ventana por 100 multiplica la memoria exacta por lo mismo, mientras que los cubos de DGIM pasan solo de 13 a 19, porque su número depende del logaritmo de N. Con ventanas pequeñas DGIM no compensa, incluso pierde; el cruce aparece alrededor de los primeros miles de elementos y a partir de ahí la distancia solo crece."
+  "lectura":"Las dos rectas divergen y ese es el argumento entero. Multiplicar la ventana por 300 multiplica la memoria exacta por lo mismo, mientras que los cubos de DGIM pasan solo de 10 a 20, porque su número depende del logaritmo de N. Con ventanas pequeñas DGIM no compensa, incluso pierde; el cruce aparece alrededor de los primeros miles de elementos y a partir de ahí la distancia solo crece."
+ },
+ {
+  "figura":"f38_tiempos_estructuras",
+  "lectura":"El tiempo es la tercera dimensión del compromiso, junto a precisión y memoria, y conviene mirarla antes de celebrar el ahorro de memoria. El filtro de Bloom cuesta 7.35 microsegundos por elemento frente a 0.08 del conjunto exacto de Python, es decir 91.9 veces más, porque calcula varias funciones hash donde el conjunto nativo calcula una sola y está implementado en C. La conclusión honesta es que estas estructuras no ahorran tiempo: cambian memoria por tiempo y por un error acotado, y se eligen cuando la memoria es el recurso escaso."
  }
 ]

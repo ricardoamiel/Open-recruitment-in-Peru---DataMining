@@ -1,12 +1,39 @@
 [
  {
+  "ventana_N":500,
+  "exacto":200,
+  "dgim":193,
+  "error_relativo":0.035,
+  "cubos":10,
+  "memoria_dgim_bytes":160,
+  "memoria_exacta_bytes":62,
+  "dias_cubiertos":25,
+  "desde":"2025-12-05",
+  "hasta":"2025-12-30"
+ },
+ {
   "ventana_N":1000,
   "exacto":291,
   "dgim":313,
   "error_relativo":0.0756,
   "cubos":13,
   "memoria_dgim_bytes":208,
-  "memoria_exacta_bytes":125
+  "memoria_exacta_bytes":125,
+  "dias_cubiertos":31,
+  "desde":"2025-11-28",
+  "hasta":"2025-12-30"
+ },
+ {
+  "ventana_N":2500,
+  "exacto":556,
+  "dgim":665,
+  "error_relativo":0.196,
+  "cubos":13,
+  "memoria_dgim_bytes":208,
+  "memoria_exacta_bytes":312,
+  "dias_cubiertos":44,
+  "desde":"2025-11-15",
+  "hasta":"2025-12-30"
  },
  {
   "ventana_N":5000,
@@ -15,7 +42,22 @@
   "error_relativo":0.0978,
   "cubos":14,
   "memoria_dgim_bytes":224,
-  "memoria_exacta_bytes":625
+  "memoria_exacta_bytes":625,
+  "dias_cubiertos":61,
+  "desde":"2025-10-29",
+  "hasta":"2025-12-30"
+ },
+ {
+  "ventana_N":10000,
+  "exacto":1429,
+  "dgim":1561,
+  "error_relativo":0.0924,
+  "cubos":15,
+  "memoria_dgim_bytes":240,
+  "memoria_exacta_bytes":1250,
+  "dias_cubiertos":89,
+  "desde":"2025-10-01",
+  "hasta":"2025-12-30"
  },
  {
   "ventana_N":20000,
@@ -24,7 +66,22 @@
   "error_relativo":0.1373,
   "cubos":16,
   "memoria_dgim_bytes":256,
-  "memoria_exacta_bytes":2500
+  "memoria_exacta_bytes":2500,
+  "dias_cubiertos":138,
+  "desde":"2025-08-14",
+  "hasta":"2025-12-30"
+ },
+ {
+  "ventana_N":35000,
+  "exacto":4155,
+  "dgim":4377,
+  "error_relativo":0.0534,
+  "cubos":17,
+  "memoria_dgim_bytes":272,
+  "memoria_exacta_bytes":4375,
+  "dias_cubiertos":238,
+  "desde":"2025-05-05",
+  "hasta":"2025-12-30"
  },
  {
   "ventana_N":50000,
@@ -33,7 +90,22 @@
   "error_relativo":0.25,
   "cubos":18,
   "memoria_dgim_bytes":288,
-  "memoria_exacta_bytes":6250
+  "memoria_exacta_bytes":6250,
+  "dias_cubiertos":304,
+  "desde":"2025-02-28",
+  "hasta":"2025-12-30"
+ },
+ {
+  "ventana_N":75000,
+  "exacto":9504,
+  "dgim":11545,
+  "error_relativo":0.2148,
+  "cubos":19,
+  "memoria_dgim_bytes":304,
+  "memoria_exacta_bytes":9375,
+  "dias_cubiertos":467,
+  "desde":"2024-09-18",
+  "hasta":"2025-12-30"
  },
  {
   "ventana_N":100000,
@@ -42,6 +114,21 @@
   "error_relativo":0.0474,
   "cubos":19,
   "memoria_dgim_bytes":304,
-  "memoria_exacta_bytes":12500
+  "memoria_exacta_bytes":12500,
+  "dias_cubiertos":614,
+  "desde":"2024-04-25",
+  "hasta":"2025-12-30"
+ },
+ {
+  "ventana_N":150000,
+  "exacto":18043,
+  "dgim":17689,
+  "error_relativo":0.0196,
+  "cubos":20,
+  "memoria_dgim_bytes":320,
+  "memoria_exacta_bytes":18750,
+  "dias_cubiertos":902,
+  "desde":"2023-07-12",
+  "hasta":"2025-12-30"
  }
 ]

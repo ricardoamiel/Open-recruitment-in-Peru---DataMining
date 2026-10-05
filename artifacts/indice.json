@@ -92,7 +92,7 @@
   "filas": 4
  },
  "p2_barrido_lsh": {
-  "descripcion": "Recall y costo de verificacion segun bandas y filas",
+  "descripcion": "Falsos positivos, falsos negativos, recall y costo de verificacion por banda y fila",
   "filas": 7
  },
  "p2_simhash": {
@@ -165,7 +165,7 @@
  },
  "p4_dgim": {
   "descripcion": "DGIM frente al conteo exacto sobre la ventana",
-  "filas": 5
+  "filas": 11
  },
  "p4_dgim_vs_reservoir": {
   "descripcion": "DGIM y reservoir sobre la pregunta de ventana reciente",
@@ -177,7 +177,7 @@
  },
  "p4_figuras": {
   "descripcion": "Figuras de la Parte IV con su lectura",
-  "filas": 7
+  "filas": 8
  },
  "p5_definicion_transaccion": {
   "descripcion": "Tres definiciones de transaccion, medidas",
@@ -218,5 +218,9 @@
  "p1_lorenz": {
   "descripcion": "Curva de Lorenz del monto adjudicado, remuestreada a 200 puntos",
   "filas": 200
+ },
+ "p4_tiempos": {
+  "descripcion": "Costo en tiempo de cada estructura al recorrer el flujo",
+  "filas": 6
  }
 }

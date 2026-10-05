@@ -1,6 +1,7 @@
 [
  {
   "estructura":"Muestreo por clave",
+  "tiempo":"0.93 us",
   "pregunta":"métricas por entidad sobre una muestra",
   "memoria":"proporcional a la fracción de claves",
   "error":"ninguno dentro de las claves elegidas",
@@ -8,6 +9,7 @@
  },
  {
   "estructura":"Reservoir sampling",
+  "tiempo":"1.10 us",
   "pregunta":"proporciones sobre todo el flujo",
   "memoria":"k elementos, fija y conocida de antemano",
   "error":"desviacion maxima 0.06 puntos en la composicion",
@@ -15,6 +17,7 @@
  },
  {
   "estructura":"Bloom Filter",
+  "tiempo":"7.35 us",
   "pregunta":"apareció antes este proveedor",
   "memoria":"79.0 KiB para 67,510 claves",
   "error":"0.172% de falsos positivos, cero falsos negativos",
@@ -22,6 +25,7 @@
  },
  {
   "estructura":"Count-Min Sketch",
+  "tiempo":"7.74 us",
   "pregunta":"cuántas veces apareció cada ítem",
   "memoria":"149 KiB",
   "error":"nunca subestima, maximo 19 apariciones",
@@ -29,8 +33,9 @@
  },
  {
   "estructura":"DGIM",
+  "tiempo":"0.51 us",
   "pregunta":"cuántos en los últimos N elementos",
-  "memoria":"19 cubos para N=100,000",
+  "memoria":"20 cubos para N=150,000",
   "error":"25.0% observado, cota teorica 50%",
   "por_que_se_usa":"unica con noción de recencia"
  }

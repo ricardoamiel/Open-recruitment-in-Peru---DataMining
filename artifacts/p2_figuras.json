@@ -17,7 +17,7 @@
  },
  {
   "figura":"f20_recall_vs_costo",
-  "lectura":"Esta es la figura que decide la configuración, y no se mide con precisión sino con recall frente a costo, porque la verificación exacta posterior elimina los falsos positivos pero no recupera los falsos negativos. La configuración b=64 por r=2 alcanza recall 0.996 verificando solo el 8.57 % de los pares, es decir 171,259 de 1,999,000. Bajar el trabajo más allá sale caro en recall: b=16 por r=8 verifica apenas 24 pares pero se queda en recall 0.091, perdiendo la mayoría de los pares verdaderos."
+  "lectura":"Los dos errores no cuestan lo mismo y por eso la figura usa recall frente a costo. Un falso positivo lo elimina la verificación exacta posterior, de modo que es trabajo y no error; un falso negativo se pierde para siempre. La configuración b=64 por r=2 deja 1 falsos negativos de 263 pares verdaderos, con recall 0.996, y arrastra 170,997 falsos positivos, que es el 8.57 % de los pares a verificar. En el otro extremo, b=16 por r=8 baja los falsos positivos a 0 pero deja 239 falsos negativos, perdiendo la mayoría de lo que importa."
  },
  {
   "figura":"f21_simhash_vs_minhash",

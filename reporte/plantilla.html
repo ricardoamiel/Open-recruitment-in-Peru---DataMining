@@ -23,18 +23,18 @@ body{
 }
 .doc{max-width:1060px;margin-inline:auto;}
 /* El texto arranca en el margen izquierdo del documento, nunca centrado. */
-.txt{max-width:82ch;}
+.txt{max-width:none;}
 
 h1{font-size:30px;font-weight:bold;line-height:1.2;margin:0 0 10px;}
 h2{font-size:21px;font-weight:bold;margin:38px 0 4px;line-height:1.3;}
 h3{font-size:16.5px;font-weight:bold;margin:26px 0 6px;}
-p{margin:0 0 12px;max-width:82ch;}
+p{margin:0 0 12px;max-width:none;}
 p:last-child{margin-bottom:0;}
 a{color:var(--azul);}
 
 header{padding-block:40px 20px;border-bottom:3px solid var(--tinta);}
 .sobre{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--tinta3);margin:0 0 12px;}
-.resumen{font-size:16.5px;color:var(--tinta2);margin:14px 0 0;max-width:80ch;}
+.resumen{font-size:16.5px;color:var(--tinta2);margin:14px 0 0;max-width:none;}
 .ficha{margin:22px 0 0;font-size:13.5px;color:var(--tinta2);}
 .ficha div{margin-bottom:4px;}
 .ficha b{display:inline-block;min-width:104px;color:var(--tinta);}
@@ -55,13 +55,13 @@ section{padding-block:6px 20px;}
 .rotulo{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--azul);
   margin:34px 0 0;font-weight:bold;}
 .pregunta{margin:18px 0 10px;padding-left:12px;border-left:3px solid var(--azul);
-  font-weight:bold;font-size:16px;max-width:82ch;}
+  font-weight:bold;font-size:16px;max-width:none;}
 .ruta{font-family:var(--dato);font-size:12px;color:var(--tinta2);background:var(--panel);
-  border:1px solid var(--linea-suave);padding:7px 10px;margin:0 0 14px;max-width:82ch;}
+  border:1px solid var(--linea-suave);padding:7px 10px;margin:0 0 14px;max-width:none;}
 
 figure{margin:18px 0 26px;}
 .grafico{width:100%;overflow-x:auto;border:1px solid var(--linea);padding:14px 12px 8px;}
-figcaption{font-size:14px;color:var(--tinta2);margin-top:9px;max-width:88ch;line-height:1.55;}
+figcaption{font-size:14px;color:var(--tinta2);margin-top:9px;max-width:none;line-height:1.55;}
 figcaption .num{font-weight:bold;color:var(--tinta);}
 svg{display:block;max-width:100%;height:auto;}
 .eje text{font-family:var(--dato);font-size:10px;fill:var(--tinta3);}
@@ -92,7 +92,7 @@ td{padding:8px 12px 8px 0;border-bottom:1px solid var(--linea-suave);vertical-al
 th:last-child,td:last-child{padding-right:0;}
 td.n{font-family:var(--dato);white-space:nowrap;}
 
-ol{margin:0 0 12px;padding-left:22px;max-width:82ch;}
+ol{margin:0 0 12px;padding-left:22px;max-width:none;}
 ol li{margin-bottom:7px;}
 
 footer{padding-block:24px 50px;border-top:2px solid var(--tinta);margin-top:36px;
@@ -186,6 +186,14 @@ footer{padding-block:24px 50px;border-top:2px solid var(--tinta);margin-top:36px
   positivos, así que la precisión antes de verificar no mide calidad sino trabajo pendiente. Lo que
   importa es el recall, porque un par perdido aquí se pierde para siempre.</p>
   </div>
+  <p class="pregunta">Mueva el número de funciones hash y vea qué precisión compra</p>
+  <div class="controles">
+    <div class="control">
+      <label for="mh-n">Funciones hash: <b id="v-mh-n">128</b></label>
+      <input type="range" id="mh-n" min="4" max="10" step="1" value="7">
+    </div>
+    <div class="salida" id="s-minhash"></div>
+  </div>
   <figure>
     <div class="grafico" id="g-minhash"></div>
     <figcaption id="c-minhash"></figcaption>
@@ -278,6 +286,14 @@ footer{padding-block:24px 50px;border-top:2px solid var(--tinta);margin-top:36px
     <figcaption id="c-cms"></figcaption>
   </figure>
 
+  <p class="pregunta">Mueva el tamaño de la ventana y compare el conteo estimado con el exacto</p>
+  <div class="controles">
+    <div class="control">
+      <label for="dg-n">Ventana, últimos procesos: <b id="v-dg-n">20.000</b></label>
+      <input type="range" id="dg-n" min="0" max="10" step="1" value="5">
+    </div>
+    <div class="salida" id="s-dgim"></div>
+  </div>
   <figure>
     <div class="grafico" id="g-dgim"></div>
     <figcaption id="c-dgim"></figcaption>
@@ -684,35 +700,48 @@ function gHistograma() {
 
 /* ====================================================== Parte II ====== */
 function gMinHash() {
-  const d = D.error_minhash;
-  const o = lienzo("#g-minhash", 270, {t:30, r:14, b:44, l:54});
-  const x = d3.scaleLog().base(2).domain([d[0].n_hashes * .8, d[d.length-1].n_hashes * 1.25]).range([0, o.w]);
-  const y = d3.scaleLog().domain([d3.min(d, r => r.error_medio) * .7,
-                                  d3.max(d, r => r.cota_1_sobre_raiz_n) * 1.4]).range([o.h, 0]);
+  const n = Math.pow(2, +document.getElementById("mh-n").value);
+  document.getElementById("v-mh-n").textContent = nf(n);
+  const d = D.error_minhash, cota = 1 / Math.sqrt(n);
+  const medido = d.find(r => r.n_hashes === n);
+  document.getElementById("s-minhash").innerHTML =
+    `Cota de error <b>${nf(cota, 4)}</b>, que es 1 sobre la raíz de n. Firma de
+     <b>${nf(n * 8)} bytes</b> por documento.
+     ${medido ? `Error medido sobre la muestra: <b>${nf(medido.error_medio, 4)}</b>.` : ""}
+     Cuadruplicar las funciones solo divide el error entre dos, así que subir indefinidamente no
+     compra nada: lo que decide es que el error quede por debajo del ancho de la zona de decisión
+     de LSH.`;
+
+  const o = lienzo("#g-minhash", 280, {t:30, r:14, b:44, l:54});
+  const x = d3.scaleLog().base(2).domain([12, 1200]).range([0, o.w]);
+  const y = d3.scaleLog().domain([0.012, 0.4]).range([o.h, 0]);
   ejeY(o, y, d3.format(".3f"));
   o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
-    .call(d3.axisBottom(x).ticks(4, "~s"));
-  rotY(o, "error absoluto medio"); rotX(o, "número de funciones hash, ambas escalas logarítmicas");
-  [["cota_1_sobre_raiz_n", C.rojo, "cota teórica"], ["error_medio", C.azul, "error observado"]]
-    .forEach(([campo, c, et], i) => {
-      o.g.append("path").datum(d).attr("fill", "none").attr("stroke", c).attr("stroke-width", 2.2)
-        .attr("stroke-dasharray", i === 0 ? "5,3" : null)
-        .attr("d", d3.line().x(r => x(r.n_hashes)).y(r => y(r[campo])));
-      o.g.selectAll(`circle.m${i}`).data(d).join("circle").attr("class", `m${i}`)
-        .attr("cx", r => x(r.n_hashes)).attr("cy", r => y(r[campo])).attr("r", 4).attr("fill", c)
-        .on("mousemove", (ev, r) => mostrarTip(ev,
-          `<b>${r.n_hashes} funciones hash</b><br>error observado ${nf(r.error_medio, 4)}<br>
-           cota teórica ${nf(r.cota_1_sobre_raiz_n, 4)}<br>${nf(r.bytes_por_doc)} bytes por documento`))
-        .on("mouseleave", ocultarTip);
-    });
-  leyenda(o, [["cota 1 sobre raíz de n", C.rojo], ["error observado", C.azul]]);
-  const p = d[0], u = d[d.length - 1];
+    .call(d3.axisBottom(x).ticks(5, "~s"));
+  rotY(o, "error absoluto"); rotX(o, "número de funciones hash, ambas escalas logarítmicas");
+
+  o.g.append("path").datum(d3.range(4, 10.05, .05).map(e => [Math.pow(2, e), 1 / Math.sqrt(Math.pow(2, e))]))
+    .attr("fill", "none").attr("stroke", C.rojo).attr("stroke-width", 2.2).attr("stroke-dasharray", "5,3")
+    .attr("d", d3.line().x(p => x(p[0])).y(p => y(p[1])));
+  o.g.append("path").datum(d).attr("fill", "none").attr("stroke", C.azul).attr("stroke-width", 2.2)
+    .attr("d", d3.line().x(r => x(r.n_hashes)).y(r => y(r.error_medio)));
+  o.g.selectAll("circle.m").data(d).join("circle").attr("class", "m")
+    .attr("cx", r => x(r.n_hashes)).attr("cy", r => y(r.error_medio)).attr("r", 4).attr("fill", C.azul)
+    .on("mousemove", (ev, r) => mostrarTip(ev,
+      `<b>${r.n_hashes} funciones hash</b><br>error observado ${nf(r.error_medio, 4)}<br>
+       cota teórica ${nf(r.cota_1_sobre_raiz_n, 4)}<br>${nf(r.bytes_por_doc)} bytes por documento`))
+    .on("mouseleave", ocultarTip);
+  o.g.append("circle").attr("cx", x(n)).attr("cy", y(cota)).attr("r", 6).attr("fill", C.verde)
+    .attr("stroke", C.fondo).attr("stroke-width", 2);
+  leyenda(o, [["cota 1 sobre raíz de n", C.rojo], ["error observado", C.azul], ["elegido", C.verde]]);
+
+  const p0 = d[0], u = d[d.length - 1];
   pie("#c-minhash", "Precisión de MinHash frente a su costo",
-    `El error observado sigue la cota teórica y baja como uno sobre la raíz de n, así que
-     cuadruplicar las funciones hash solo divide el error entre dos. Pasar de ${p.n_hashes} a
-     ${u.n_hashes} baja el error de ${nf(p.error_medio, 4)} a ${nf(u.error_medio, 4)} a cambio de
-     multiplicar por ocho la memoria de la firma. Se eligieron 128: el error que da es muy inferior
-     al ancho de la zona de decisión de LSH, así que gastar más no compra nada útil.`);
+    `El error observado sigue la cota teórica y baja como uno sobre la raíz de n, de modo que
+     cuadruplicar las funciones hash solo divide el error entre dos. Pasar de ${p0.n_hashes} a
+     ${u.n_hashes} baja el error de ${nf(p0.error_medio, 4)} a ${nf(u.error_medio, 4)} a cambio de
+     multiplicar por ocho la memoria de la firma. Se eligieron 128 porque su error queda muy por
+     debajo del ancho de la zona de decisión de LSH, y gastar más no compra nada útil.`);
 }
 
 const probCand = (s, b, r) => 1 - Math.pow(1 - Math.pow(s, r), b);
@@ -947,36 +976,49 @@ function gCMS() {
 }
 
 function gDGIM() {
-  const d = D.dgim;
+  const d = D.dgim, i = +document.getElementById("dg-n").value;
+  const f = d[Math.min(i, d.length - 1)];
+  document.getElementById("v-dg-n").textContent = nf(f.ventana_N);
+  document.getElementById("s-dgim").innerHTML =
+    `Ventana de <b>${nf(f.ventana_N)}</b> procesos, que cubre <b>${nf(f.dias_cubiertos)} días</b>,
+     del ${f.desde} al ${f.hasta}. Exacto <b>${nf(f.exacto)}</b>, estimado por DGIM
+     <b>${nf(f.dgim)}</b>, error <b>${nf(f.error_relativo * 100, 1)} por ciento</b> frente a una
+     cota teórica del 50. Memoria <b>${f.cubos} cubos</b>, ${nf(f.memoria_dgim_bytes)} bytes, contra
+     <b>${nf(f.memoria_exacta_bytes)} bytes</b> de guardar la ventana entera en bits.`;
+
   const o = lienzo("#g-dgim", 300, {t:30, r:16, b:52, l:54});
   const x0 = d3.scaleBand().domain(d.map(r => r.ventana_N)).range([0, o.w]).padding(.22);
   const x1 = d3.scaleBand().domain(["exacto","dgim"]).range([0, x0.bandwidth()]).padding(.1);
   const y = d3.scaleLinear().domain([0, d3.max(d, r => Math.max(r.exacto, r.dgim)) * 1.1]).range([o.h, 0]);
   ejeY(o, y, v => nf(v));
   o.g.append("g").attr("class", "eje").attr("transform", `translate(0,${o.h})`)
-    .call(d3.axisBottom(x0).tickFormat(v => nf(v / 1000) + " k"));
+    .call(d3.axisBottom(x0).tickFormat(v => v >= 1000 ? nf(v / 1000) + " k" : nf(v)))
+    .selectAll("text").attr("transform", "rotate(-30)").style("text-anchor", "end")
+    .attr("dx", "-.5em").attr("dy", ".3em");
   rotY(o, "procesos con un solo postor"); rotX(o, "tamaño de la ventana");
   [["exacto", C.azul], ["dgim", C.verde]].forEach(([k, c]) => {
     o.g.selectAll(`rect.${k}`).data(d).join("rect").attr("class", k)
       .attr("x", r => x0(r.ventana_N) + x1(k)).attr("y", r => y(r[k]))
-      .attr("width", x1.bandwidth()).attr("height", r => o.h - y(r[k])).attr("fill", c)
+      .attr("width", x1.bandwidth()).attr("height", r => o.h - y(r[k]))
+      .attr("fill", c).attr("opacity", r => r.ventana_N === f.ventana_N ? 1 : .42)
       .on("mousemove", (ev, r) => mostrarTip(ev,
-        `<b>ventana de ${nf(r.ventana_N)}</b><br>exacto ${nf(r.exacto)}<br>DGIM ${nf(r.dgim)}<br>
+        `<b>ventana de ${nf(r.ventana_N)}</b>, ${nf(r.dias_cubiertos)} días<br>
+         exacto ${nf(r.exacto)}<br>DGIM ${nf(r.dgim)}<br>
          error ${nf(r.error_relativo * 100, 1)} por ciento<br>
-         ${r.cubos} cubos, ${nf(r.memoria_dgim_bytes)} bytes<br>
-         ventana completa ${nf(r.memoria_exacta_bytes)} bytes`))
+         ${r.cubos} cubos frente a ${nf(r.memoria_exacta_bytes)} bytes`))
       .on("mouseleave", ocultarTip);
   });
   leyenda(o, [["conteo exacto", C.azul], ["estimación de DGIM", C.verde]]);
+
   const peor = d.reduce((a, b) => b.error_relativo > a.error_relativo ? b : a), g = d[d.length - 1];
   pie("#c-dgim", "DGIM frente al conteo exacto sobre la ventana reciente",
-    `Las barras quedan casi a la misma altura en todas las ventanas: el peor error relativo es
-     ${nf(peor.error_relativo * 100, 1)} por ciento, muy por debajo de la cota del cincuenta por
-     ciento que garantiza usar dos cubos por tamaño. Lo que compra ese error es memoria. Para la
-     ventana de ${nf(g.ventana_N)} elementos, DGIM usa ${g.cubos} cubos frente a los
-     ${nf(g.memoria_exacta_bytes)} bytes de la ventana completa en bits, una reducción de
-     ${nf(g.memoria_exacta_bytes / g.memoria_dgim_bytes, 0)} veces. Con ventanas pequeñas no
-     compensa e incluso pierde; la ventaja crece con el logaritmo de la ventana.`);
+    `El flujo va ordenado por fecha, así que la ventana de los últimos N procesos es un período
+     concreto: la resaltada cubre ${nf(f.dias_cubiertos)} días. Las barras quedan casi a la misma
+     altura en todas las ventanas, y el peor error relativo es ${nf(peor.error_relativo * 100, 1)}
+     por ciento, muy por debajo de la cota del cincuenta por ciento que garantiza usar dos cubos
+     por tamaño. Lo que compra ese error es memoria: para ${nf(g.ventana_N)} elementos, DGIM usa
+     ${g.cubos} cubos frente a los ${nf(g.memoria_exacta_bytes)} bytes de la ventana completa en
+     bits, una reducción de ${nf(g.memoria_exacta_bytes / g.memoria_dgim_bytes, 0)} veces.`);
 }
 
 /* ====================================================== Parte V ======= */
@@ -1101,7 +1143,8 @@ function dibujar() {
   gMinHash(); gLSH(); gANN(); gEscalado(); gBloom(); gCMS(); gDGIM(); gAlgoritmos(); gReglas();
 }
 [["lsh-b", gLSH], ["lsh-r", gLSH], ["bl-bits", gBloom], ["bl-k", gBloom],
- ["cm-w", gCMS], ["cm-d", gCMS], ["rg-sop", gReglas], ["rg-conf", gReglas], ["rg-lift", gReglas]]
+ ["cm-w", gCMS], ["cm-d", gCMS], ["rg-sop", gReglas], ["rg-conf", gReglas], ["rg-lift", gReglas],
+ ["mh-n", gMinHash], ["dg-n", gDGIM]]
   .forEach(([id, fn]) => document.getElementById(id).addEventListener("input", () => {
     // Los controles redibujan solo su figura, pero el pie lleva numero, asi que
     // se renumera todo para que la secuencia no se desordene.

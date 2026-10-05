@@ -1,0 +1,38 @@
+[
+ {
+  "estructura":"Bloom Filter",
+  "elementos":146025,
+  "segundos":1.074,
+  "microseg_por_elemento":7.35
+ },
+ {
+  "estructura":"Conjunto exacto, de referencia",
+  "elementos":146025,
+  "segundos":0.011,
+  "microseg_por_elemento":0.08
+ },
+ {
+  "estructura":"Count-Min Sketch",
+  "elementos":132091,
+  "segundos":1.023,
+  "microseg_por_elemento":7.74
+ },
+ {
+  "estructura":"DGIM, ventana de 20.000",
+  "elementos":177398,
+  "segundos":0.091,
+  "microseg_por_elemento":0.51
+ },
+ {
+  "estructura":"Reservoir sampling",
+  "elementos":177398,
+  "segundos":0.195,
+  "microseg_por_elemento":1.1
+ },
+ {
+  "estructura":"Muestreo por clave",
+  "elementos":177398,
+  "segundos":0.165,
+  "microseg_por_elemento":0.93
+ }
+]

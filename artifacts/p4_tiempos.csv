@@ -1,0 +1,7 @@
+estructura,elementos,segundos,microseg_por_elemento
+Bloom Filter,146025,1.074,7.35
+"Conjunto exacto, de referencia",146025,0.011,0.08
+Count-Min Sketch,132091,1.023,7.74
+"DGIM, ventana de 20.000",177398,0.091,0.51
+Reservoir sampling,177398,0.195,1.1
+Muestreo por clave,177398,0.165,0.93
