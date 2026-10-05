@@ -12,14 +12,14 @@ Aplicación articulada de las seis técnicas del curso sobre las contrataciones 
 
 Un notebook por parte. La rúbrica puntúa cada parte por separado, las partes III y IV no usan Spark, y un notebook único pasaría de trescientas celdas.
 
-| Notebook | Parte | Spark | Qué produce |
-| --- | --- | --- | --- |
-| 1_kdd_eda.ipynb | I. KDD, EDA y procesamiento distribuido | obligatorio | Tabla analítica en Parquet |
-| 2_similitud_lsh.ipynb | II. Jaccard, shingling, MinHash, LSH y SimHash | obligatorio | Pares similares y curvas de error |
-| 3_ann_ivf_hnsw.ipynb | III. Búsqueda aproximada de vecinos | no se usa | Recall frente a latencia |
-| 4_flujos.ipynb | IV. Muestreo, Bloom, Count-Min y DGIM | no se usa | Precisión, memoria y tiempo |
-| 5_reglas_asociacion.ipynb | V. A-Priori y FP-Growth | obligatorio | Reglas con soporte, confianza y lift |
-| 6_reporte_interactivo.ipynb | VI. Reporte técnico interactivo | no se usa | reporte/index.html |
+| Notebook                    | Parte                                          | Spark       | Qué produce                         |
+| --------------------------- | ---------------------------------------------- | ----------- | ------------------------------------ |
+| 1_kdd_eda.ipynb             | I. KDD, EDA y procesamiento distribuido        | obligatorio | Tabla analítica en Parquet          |
+| 2_similitud_lsh.ipynb       | II. Jaccard, shingling, MinHash, LSH y SimHash | obligatorio | Pares similares y curvas de error    |
+| 3_ann_ivf_hnsw.ipynb        | III. Búsqueda aproximada de vecinos           | no se usa   | Recall frente a latencia             |
+| 4_flujos.ipynb              | IV. Muestreo, Bloom, Count-Min y DGIM          | no se usa   | Precisión, memoria y tiempo         |
+| 5_reglas_asociacion.ipynb   | V. A-Priori y FP-Growth                        | obligatorio | Reglas con soporte, confianza y lift |
+| 6_reporte_interactivo.ipynb | VI. Reporte técnico interactivo               | no se usa   | reporte/index.html                   |
 
 En los notebooks va el resultado y una lectura corta de cada figura. El razonamiento completo, las alternativas descartadas y los límites de cada conclusión están en [docs/JUSTIFICACION.md](docs/JUSTIFICACION.md). Las treinta y ocho figuras, con lo que muestra cada una, cómo explicarla en voz alta y qué responder a la pregunta previsible, están en [docs/FIGURAS.md](docs/FIGURAS.md).
 
@@ -126,5 +126,3 @@ La versión publicada está en [GitHub Pages](https://ricardoamiel.github.io/Ope
 ## Sobre el uso de herramientas de asistencia
 
 El enunciado admite el uso de herramientas de IA y exige que el equipo comprenda y sepa explicar todo lo que entrega. Por eso el código está escrito para poder defenderse en una sustentación oral: funciones cortas, sin capas de abstracción, cada algoritmo verificado contra su definición y cada decisión argumentada por escrito en [docs/JUSTIFICACION.md](docs/JUSTIFICACION.md).
-
-Para la sustentación hay dos piezas más. [docs/FIGURAS.md](docs/FIGURAS.md) recorre las treinta y ocho figuras con el guion de lo que se dice de cada una y la respuesta a la pregunta previsible, incluidos los tres resultados que no salieron como esperábamos y el error de medición que tuvimos que corregir. La carpeta presentacion tiene las diapositivas en pptx y en LaTeX, generadas del mismo contenido declarado una sola vez para que las dos versiones no puedan divergir.
