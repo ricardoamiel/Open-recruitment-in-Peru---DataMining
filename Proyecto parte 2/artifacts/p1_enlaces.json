@@ -1,0 +1,22 @@
+[
+ {
+  "caso":"adjudicación con contrato",
+  "filas":143030,
+  "pct":90.7
+ },
+ {
+  "caso":"adjudicación sin contrato",
+  "filas":14653,
+  "pct":9.3
+ },
+ {
+  "caso":"contrato sin adjudicación",
+  "filas":1169,
+  "pct":0.7
+ },
+ {
+  "caso":"adjudicación sin proveedor",
+  "filas":1054,
+  "pct":0.7
+ }
+]

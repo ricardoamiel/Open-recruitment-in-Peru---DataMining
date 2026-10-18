@@ -1,0 +1,122 @@
+[
+ {
+  "proveedor_a":"GRUPO 3A CONSULTORIA & CONSTRUCCIONES S.A.C.",
+  "proveedor_b":"JATUN SACHA E.I.R.L",
+  "procesos":1771,
+  "pa":1979,
+  "pb":2343,
+  "afinidad":0.895
+ },
+ {
+  "proveedor_a":"GIL VELASQUEZ JUAN MANUEL",
+  "proveedor_b":"ARAUJO GUEVARA JUAN CARLOS",
+  "procesos":1164,
+  "pa":1396,
+  "pb":1435,
+  "afinidad":0.834
+ },
+ {
+  "proveedor_a":"PROFESIONALES ASOCIADOS EN SERVICIOS DE CALIDAD QNC-PASEC QNC S.A.C.",
+  "proveedor_b":"TVT QONTRATISTAS E.I.R.L.",
+  "procesos":1063,
+  "pa":1196,
+  "pb":8476,
+  "afinidad":0.889
+ },
+ {
+  "proveedor_a":"SUDAMERICANA LOGISTICA HISUKI SOCIEDAD ANONIMA CERRADA",
+  "proveedor_b":"MELTZER INTERNATIONAL SOCIEDAD ANONIMA CERRADA",
+  "procesos":1022,
+  "pa":1777,
+  "pb":1231,
+  "afinidad":0.83
+ },
+ {
+  "proveedor_a":"AUTOMOTRIZ SAN BLAS S.A.",
+  "proveedor_b":"CHALSA CORPORATION S.A.C.",
+  "procesos":1005,
+  "pa":1131,
+  "pb":2348,
+  "afinidad":0.889
+ },
+ {
+  "proveedor_a":"JN VIRDCO S.A.C",
+  "proveedor_b":"FORZAMAT S.A.C.",
+  "procesos":995,
+  "pa":3444,
+  "pb":1211,
+  "afinidad":0.822
+ },
+ {
+  "proveedor_a":"COMERCIAL FERRETERIA FATIMA SOCIEDAD ANONIMA CERRADA - COMERCIAL FERRETERIA FATIMA S.A.C.",
+  "proveedor_b":"GRUPO SANTA FE SOCIEDAD ANONIMA CERRADA - GRUPO SANTA FE S.A.C.",
+  "procesos":948,
+  "pa":1023,
+  "pb":3305,
+  "afinidad":0.927
+ },
+ {
+  "proveedor_a":"CORPORACION CLABE S.R.L.",
+  "proveedor_b":"GRUPO SANTA FE SOCIEDAD ANONIMA CERRADA - GRUPO SANTA FE S.A.C.",
+  "procesos":784,
+  "pa":922,
+  "pb":3305,
+  "afinidad":0.85
+ },
+ {
+  "proveedor_a":"VERA USCA KARINA",
+  "proveedor_b":"JN VIRDCO S.A.C",
+  "procesos":759,
+  "pa":798,
+  "pb":3444,
+  "afinidad":0.951
+ },
+ {
+  "proveedor_a":"CHALSA CORPORATION S.A.C.",
+  "proveedor_b":"AUTONIZA S.A.C.",
+  "procesos":693,
+  "pa":2348,
+  "pb":760,
+  "afinidad":0.912
+ },
+ {
+  "proveedor_a":"YONE Y NORMA EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA - YONYNOR E.I.R.L.",
+  "proveedor_b":"MILNER INVERSIONES Y SERVICIOS EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA - MILINSER E.I.R.L.",
+  "procesos":662,
+  "pa":827,
+  "pb":1929,
+  "afinidad":0.8
+ },
+ {
+  "proveedor_a":"REYES INVESTMENTS MANAGEMENT & CONSULTING E.I.R.L.",
+  "proveedor_b":"JN VIRDCO S.A.C",
+  "procesos":659,
+  "pa":746,
+  "pb":3444,
+  "afinidad":0.883
+ },
+ {
+  "proveedor_a":"GRUPO SANTA FE SOCIEDAD ANONIMA CERRADA - GRUPO SANTA FE S.A.C.",
+  "proveedor_b":"INVERSIONES & DISTRIBUCIONES D'MHARO S.A.C.",
+  "procesos":649,
+  "pa":3305,
+  "pb":810,
+  "afinidad":0.801
+ },
+ {
+  "proveedor_a":"R Y H FESER E.I.R.L.",
+  "proveedor_b":"MILNER INVERSIONES Y SERVICIOS EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA - MILINSER E.I.R.L.",
+  "procesos":629,
+  "pa":749,
+  "pb":1929,
+  "afinidad":0.84
+ },
+ {
+  "proveedor_a":"YONE Y NORMA EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA - YONYNOR E.I.R.L.",
+  "proveedor_b":"R Y H FESER E.I.R.L.",
+  "procesos":624,
+  "pa":827,
+  "pb":749,
+  "afinidad":0.833
+ }
+]

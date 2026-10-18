@@ -1,0 +1,150 @@
+{
+ "p1_enlaces": {
+  "descripcion": "Adjudicaciones y contratos con y sin su contraparte",
+  "filas": 4
+ },
+ "p1_sin_contrato_metodo": {
+  "descripcion": "Porcentaje de adjudicaciones sin contrato por metodo",
+  "filas": 16
+ },
+ "p1_ejemplos_fusion": {
+  "descripcion": "Muestra de nombres fusionados por MinHash y LSH",
+  "filas": 12
+ },
+ "p1_resolucion": {
+  "descripcion": "Identificadores publicados frente a proveedores resueltos, por tipo",
+  "filas": 4
+ },
+ "p1_matrices": {
+  "descripcion": "Tamano y densidad de las dos matrices de interaccion",
+  "filas": 2
+ },
+ "p1_sensibilidad_grafo": {
+  "descripcion": "Aristas y nodos del grafo segun tope de participantes y minimo de procesos",
+  "filas": 9
+ },
+ "p1_grafo": {
+  "descripcion": "Resumen del grafo de coparticipacion adoptado",
+  "filas": 1
+ },
+ "p1_pares_afines": {
+  "descripcion": "Pares de proveedores que casi siempre participan juntos",
+  "filas": 15
+ },
+ "p1_particiones": {
+  "descripcion": "Tiempo del autojoin del grafo segun particiones de barajado",
+  "filas": 4
+ },
+ "p1_plan": {
+  "descripcion": "Tiempo de las decisiones de particionado y de join",
+  "filas": 4
+ },
+ "p1_catalogo": {
+  "descripcion": "Tablas de la base relacional exportadas por la Parte I",
+  "filas": 9
+ },
+ "p1_figuras": {
+  "descripcion": "Figuras de la Parte I con su lectura",
+  "filas": 8
+ },
+ "p1_hallazgos": {
+  "descripcion": "Hallazgos de la Parte I con su accion propuesta",
+  "filas": 3
+ },
+ "p2_eleccion_k": {
+  "descripcion": "SSE y silueta por k, propio y MLlib",
+  "filas": 11
+ },
+ "p2_perfiles": {
+  "descripcion": "Perfil de cada cluster de proveedores",
+  "filas": 4
+ },
+ "p2_perfiles_z": {
+  "descripcion": "Promedio estandarizado de cada variable por cluster",
+  "filas": 4
+ },
+ "p2_spark_vs_local": {
+  "descripcion": "KMeans propio frente a MLlib en el k adoptado",
+  "filas": 2
+ },
+ "p2_densidad": {
+  "descripcion": "Clusters y ruido de los metodos de densidad",
+  "filas": 3
+ },
+ "p2_anomalias": {
+  "descripcion": "Anomalias de competencia o dependencia, por monto",
+  "filas": 25
+ },
+ "p2_anomalias_tipo": {
+  "descripcion": "Anomalias por tipo de rareza",
+  "filas": 2
+ },
+ "p2_puntos": {
+  "descripcion": "Muestra de proveedores en coordenadas de PCA para el reporte",
+  "filas": 3000
+ },
+ "p2_centroides": {
+  "descripcion": "Centroides de KMeans para k de 2 a 10",
+  "filas": 54
+ },
+ "p2_figuras": {
+  "descripcion": "Figuras de la Parte II con su lectura",
+  "filas": 7
+ },
+ "p2_hallazgos": {
+  "descripcion": "Hallazgos de la Parte II con su accion propuesta",
+  "filas": 2
+ },
+ "p3_desglose_prueba": {
+  "descripcion": "Composicion de los pares entidad y proveedor de 2025",
+  "filas": 4
+ },
+ "p3_validacion_k": {
+  "descripcion": "NDCG de validacion del vecindario segun k",
+  "filas": 5
+ },
+ "p3_validacion_als": {
+  "descripcion": "NDCG de validacion de ALS segun rango, regularizacion y alfa",
+  "filas": 8
+ },
+ "p3_resultados": {
+  "descripcion": "Precision, recall, NDCG y cobertura en 10 de cada recomendador",
+  "filas": 6
+ },
+ "p3_sorpresa_postor_unico": {
+  "descripcion": "Postor unico segun lo esperable que era la relacion nueva",
+  "filas": 5
+ },
+ "p3_inusuales": {
+  "descripcion": "Relaciones nuevas de 2025 de mayor monto que el modelo no esperaba",
+  "filas": 20
+ },
+ "p3_sustitutos": {
+  "descripcion": "Proveedores mas cercanos en el espacio de ALS al proveedor de ejemplo",
+  "filas": 8
+ },
+ "p3_figuras": {
+  "descripcion": "Figuras de la Parte III con su lectura",
+  "filas": 3
+ },
+ "p3_hallazgos": {
+  "descripcion": "Hallazgos de la Parte III con su accion propuesta",
+  "filas": 3
+ },
+ "p3_curva_k": {
+  "descripcion": "Recall y precision segun el numero de recomendaciones",
+  "filas": 24
+ },
+ "p3_ablacion": {
+  "descripcion": "NDCG del hibrido al quitar cada senal",
+  "filas": 4
+ },
+ "p3_sorpresa": {
+  "descripcion": "Postor unico y sin concurso segun lo esperable que era la relacion nueva",
+  "filas": 5
+ },
+ "p3_prueba_sorpresa": {
+  "descripcion": "Prueba de dos proporciones entre relaciones improbables y esperadas",
+  "filas": 2
+ }
+}

@@ -1,0 +1,202 @@
+[
+ {
+  "comprador_nombre":"MINISTERIO DE SALUD",
+  "departamento":"LIMA",
+  "nombre":"OFICINA DE LAS NACIONES UNIDAS DE SERVICIOS PARA PROYECTOS - UNOPS",
+  "percentil":15.92,
+  "monto":119977538.7199999988,
+  "adjudicaciones":1,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"MUNICIPALIDAD DISTRITAL DE CACHICADAN",
+  "departamento":"LA LIBERTAD",
+  "nombre":"KOMACV S.A.C.",
+  "percentil":30.52,
+  "monto":22450926.379999999,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE JUNIN SEDE CENTRAL",
+  "departamento":"JUNIN",
+  "nombre":"AUTOESPAR S A",
+  "percentil":28.73,
+  "monto":12605608.5999999996,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"MUNICIPALIDAD DISTRITAL DE KUNTURKANKI",
+  "departamento":"CUSCO",
+  "nombre":"NKMS E.I.R.L.",
+  "percentil":24.24,
+  "monto":11896668.0,
+  "adjudicaciones":2,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"MUNICIPALIDAD DISTRITAL DE SAN MARCOS",
+  "departamento":"ANCASH",
+  "nombre":"YAROMAC CONTRATISTAS GENERALES SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA",
+  "percentil":47.04,
+  "monto":7035908.8799999999,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"CORTE SUPERIOR DE JUSTICIA DE LIMA NORTE",
+  "departamento":"LIMA",
+  "nombre":"ASEPCIA PERU S.A.C.",
+  "percentil":27.2,
+  "monto":6753406.0800000001,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE PASCO SEDE CENTRAL",
+  "departamento":"PASCO",
+  "nombre":"JC & ED CONSTRUCTORA S.A.C",
+  "percentil":49.87,
+  "monto":6593528.4000000004,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"MUNICIPALIDAD DISTRITAL DE MAJES - VILLA EL PEDREGAL",
+  "departamento":"AREQUIPA",
+  "nombre":"GRUPO CIARQ SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA",
+  "percentil":46.53,
+  "monto":6465345.9900000002,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"SUPERINTENDENCIA DE BANCA, SEGUROS Y AFP",
+  "departamento":"LIMA",
+  "nombre":"MANPOWER PERU S.A.",
+  "percentil":28.0,
+  "monto":6068983.9199999999,
+  "adjudicaciones":2,
+  "postor_unico":0.5,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"MINISTERIO DE DESARROLLO E INCLUSION SOCIAL",
+  "departamento":"LIMA",
+  "nombre":"PETROLEOS DEL PERU PETROPERU SA",
+  "percentil":41.8,
+  "monto":5898417.1900000004,
+  "adjudicaciones":1,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"UNIDAD EJECUTORA 125 PROGRAMA NACIONAL DE INVERSIONES EN SALUD",
+  "departamento":"LIMA",
+  "nombre":"BIOMEDICAL HT E.I.R.L.",
+  "percentil":7.92,
+  "monto":5430500.0,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"MUNICIPALIDAD DISTRITAL DE ANDOAS",
+  "departamento":"LORETO",
+  "nombre":"IMPORT MEDICAL ANICAMA E.I.R.L.",
+  "percentil":11.54,
+  "monto":3800000.0,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"PROGRAMA SUBSECTORIAL DE IRRIGACIONES - PSI",
+  "departamento":"LIMA",
+  "nombre":"CONSTRUCTORA DMD E.I.R.L.",
+  "percentil":15.37,
+  "monto":2778400.0,
+  "adjudicaciones":1,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"PROGRAMA SUBSECTORIAL DE IRRIGACIONES - PSI",
+  "departamento":"LIMA",
+  "nombre":"MAQUINARIAS GUSVALSA S.R.L.",
+  "percentil":41.95,
+  "monto":2546000.0,
+  "adjudicaciones":1,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"SUPERINTENDENCIA NACIONAL DE SERVICIOS DE SANEAMIENTO",
+  "departamento":"LIMA",
+  "nombre":"RGZ TECHNOLOGY E.I.R.L.",
+  "percentil":23.21,
+  "monto":2417476.8599999999,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE LIMA SEDE CENTRAL",
+  "departamento":"LIMA",
+  "nombre":"CORPORACION TIERRA SOL S.A.C",
+  "percentil":40.5,
+  "monto":2105375.9700000002,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE JUNIN SEDE CENTRAL",
+  "departamento":"JUNIN",
+  "nombre":"SERMAX S.A.C.",
+  "percentil":23.6,
+  "monto":2042625.0,
+  "adjudicaciones":2,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE PIURA SEDE CENTRAL",
+  "departamento":"PIURA",
+  "nombre":"PEYSA II S.A.C.",
+  "percentil":43.51,
+  "monto":1943580.0,
+  "adjudicaciones":2,
+  "postor_unico":0.5,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE ICA SEDE CENTRAL",
+  "departamento":"ICA",
+  "nombre":"CASBOC INTERNATIONAL S.A.C.",
+  "percentil":19.08,
+  "monto":1850046.0,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"EMPRESA REGIONAL DE SERVICIOS PUBLICOS DE ELECTRICIDAD DEL SUR ESTE S.A.",
+  "departamento":"CUSCO",
+  "nombre":"INFRAESTRUCTURA EN TELECOMUNICACIONES Y SERVICIOS INTEGRALES S.A.C.",
+  "percentil":18.04,
+  "monto":1846729.27,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ }
+]

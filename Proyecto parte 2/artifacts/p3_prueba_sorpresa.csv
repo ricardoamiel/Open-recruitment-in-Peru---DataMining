@@ -1,0 +1,3 @@
+variable,improbables_pct,esperadas_pct,n_improbables,n_esperadas,z,p_valor
+postor_unico,5.8651,5.343,682,8441,0.5812,0.5611
+sin_concurso,7.1848,6.3381,682,8441,0.8689,0.3849

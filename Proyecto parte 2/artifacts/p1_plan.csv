@@ -1,0 +1,5 @@
+decision,segundos
+lectura con poda por año,0.05
+lectura de los tres años,0.13
+join con broadcast,0.14
+join con sort merge,0.17

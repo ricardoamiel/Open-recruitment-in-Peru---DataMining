@@ -1,0 +1,37 @@
+[
+ {
+  "tramo":"menos de 50",
+  "relaciones":682,
+  "pct_postor_unico":6.1,
+  "pct_sin_concurso":7.3,
+  "monto_mediano":147890.0
+ },
+ {
+  "tramo":"50 a 80",
+  "relaciones":801,
+  "pct_postor_unico":9.2,
+  "pct_sin_concurso":11.4,
+  "monto_mediano":174440.0
+ },
+ {
+  "tramo":"80 a 95",
+  "relaciones":1492,
+  "pct_postor_unico":7.9,
+  "pct_sin_concurso":9.8,
+  "monto_mediano":161999.8
+ },
+ {
+  "tramo":"95 a 99",
+  "relaciones":2843,
+  "pct_postor_unico":5.3,
+  "pct_sin_concurso":6.6,
+  "monto_mediano":158900.0
+ },
+ {
+  "tramo":"99 o más",
+  "relaciones":3681,
+  "pct_postor_unico":4.8,
+  "pct_sin_concurso":5.4,
+  "monto_mediano":170250.0
+ }
+]

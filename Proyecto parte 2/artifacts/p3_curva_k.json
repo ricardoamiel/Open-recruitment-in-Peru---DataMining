@@ -1,0 +1,146 @@
+[
+ {
+  "metodo":"popularidad global",
+  "k":1,
+  "recall":0.00665,
+  "precision":0.02208
+ },
+ {
+  "metodo":"popularidad global",
+  "k":3,
+  "recall":0.01155,
+  "precision":0.01268
+ },
+ {
+  "metodo":"popularidad global",
+  "k":5,
+  "recall":0.0144,
+  "precision":0.01231
+ },
+ {
+  "metodo":"popularidad global",
+  "k":10,
+  "recall":0.02639,
+  "precision":0.01155
+ },
+ {
+  "metodo":"popularidad en el departamento",
+  "k":1,
+  "recall":0.02327,
+  "precision":0.06858
+ },
+ {
+  "metodo":"popularidad en el departamento",
+  "k":3,
+  "recall":0.04135,
+  "precision":0.04384
+ },
+ {
+  "metodo":"popularidad en el departamento",
+  "k":5,
+  "recall":0.05247,
+  "precision":0.03438
+ },
+ {
+  "metodo":"popularidad en el departamento",
+  "k":10,
+  "recall":0.08034,
+  "precision":0.02748
+ },
+ {
+  "metodo":"vecindario usuario a usuario, k = 50",
+  "k":1,
+  "recall":0.02386,
+  "precision":0.08314
+ },
+ {
+  "metodo":"vecindario usuario a usuario, k = 50",
+  "k":3,
+  "recall":0.04715,
+  "precision":0.05558
+ },
+ {
+  "metodo":"vecindario usuario a usuario, k = 50",
+  "k":5,
+  "recall":0.06271,
+  "precision":0.04641
+ },
+ {
+  "metodo":"vecindario usuario a usuario, k = 50",
+  "k":10,
+  "recall":0.08314,
+  "precision":0.03504
+ },
+ {
+  "metodo":"contenido, TF-IDF de familia y departamento",
+  "k":1,
+  "recall":0.00242,
+  "precision":0.00845
+ },
+ {
+  "metodo":"contenido, TF-IDF de familia y departamento",
+  "k":3,
+  "recall":0.00605,
+  "precision":0.00673
+ },
+ {
+  "metodo":"contenido, TF-IDF de familia y departamento",
+  "k":5,
+  "recall":0.00769,
+  "precision":0.00582
+ },
+ {
+  "metodo":"contenido, TF-IDF de familia y departamento",
+  "k":10,
+  "recall":0.01357,
+  "precision":0.00507
+ },
+ {
+  "metodo":"ALS implícito, rango 48",
+  "k":1,
+  "recall":0.01986,
+  "precision":0.062
+ },
+ {
+  "metodo":"ALS implícito, rango 48",
+  "k":3,
+  "recall":0.04371,
+  "precision":0.04666
+ },
+ {
+  "metodo":"ALS implícito, rango 48",
+  "k":5,
+  "recall":0.05725,
+  "precision":0.03936
+ },
+ {
+  "metodo":"ALS implícito, rango 48",
+  "k":10,
+  "recall":0.08754,
+  "precision":0.03274
+ },
+ {
+  "metodo":"híbrido: vecindario, contenido, ALS y departamento",
+  "k":1,
+  "recall":0.0265,
+  "precision":0.08924
+ },
+ {
+  "metodo":"híbrido: vecindario, contenido, ALS y departamento",
+  "k":3,
+  "recall":0.05315,
+  "precision":0.06169
+ },
+ {
+  "metodo":"híbrido: vecindario, contenido, ALS y departamento",
+  "k":5,
+  "recall":0.07026,
+  "precision":0.05063
+ },
+ {
+  "metodo":"híbrido: vecindario, contenido, ALS y departamento",
+  "k":10,
+  "recall":0.10424,
+  "precision":0.04007
+ }
+]

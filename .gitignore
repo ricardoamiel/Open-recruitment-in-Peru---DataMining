@@ -1,6 +1,8 @@
-# Datos. El crudo son 3,2 GB descargables y el procesado se regenera con el notebook 1.
-data/raw/
-data/processed/
+# Datos. El crudo son 3,2 GB descargables y el procesado se regenera con los
+# notebooks. El prefijo **/ hace falta porque un patron con barra en medio se
+# ancla a la raiz del repositorio y ya no cubriria Proyecto parte 1 ni parte 2.
+**/data/raw/
+**/data/processed/
 *.tar.gz
 
 # Artefactos de Python
@@ -9,6 +11,10 @@ __pycache__/
 .ipynb_checkpoints/
 
 # Version anterior del proyecto, conservada solo en local
-_anterior/
-_build/
-Proyecto Integrador 1 - 2026 - 2.docx
+**/_anterior/
+**/_build/
+**/Proyecto Integrador 1 - 2026 - 2.docx
+**/Proyecto Integrador 2 - 2026 - 2.docx
+
+# Material del curso, no se publica
+**/Lectures/

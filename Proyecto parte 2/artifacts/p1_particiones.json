@@ -1,0 +1,18 @@
+[
+ {
+  "particiones":1,
+  "segundos":23.18
+ },
+ {
+  "particiones":8,
+  "segundos":7.2
+ },
+ {
+  "particiones":64,
+  "segundos":6.74
+ },
+ {
+  "particiones":200,
+  "segundos":8.5
+ }
+]

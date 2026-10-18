@@ -1,0 +1,25 @@
+metodo,k,recall,precision
+popularidad global,1,0.00665,0.02208
+popularidad global,3,0.01155,0.01268
+popularidad global,5,0.0144,0.01231
+popularidad global,10,0.02639,0.01155
+popularidad en el departamento,1,0.02327,0.06858
+popularidad en el departamento,3,0.04135,0.04384
+popularidad en el departamento,5,0.05247,0.03438
+popularidad en el departamento,10,0.08034,0.02748
+"vecindario usuario a usuario, k = 50",1,0.02386,0.08314
+"vecindario usuario a usuario, k = 50",3,0.04715,0.05558
+"vecindario usuario a usuario, k = 50",5,0.06271,0.04641
+"vecindario usuario a usuario, k = 50",10,0.08314,0.03504
+"contenido, TF-IDF de familia y departamento",1,0.00242,0.00845
+"contenido, TF-IDF de familia y departamento",3,0.00605,0.00673
+"contenido, TF-IDF de familia y departamento",5,0.00769,0.00582
+"contenido, TF-IDF de familia y departamento",10,0.01357,0.00507
+"ALS implícito, rango 48",1,0.01986,0.062
+"ALS implícito, rango 48",3,0.04371,0.04666
+"ALS implícito, rango 48",5,0.05725,0.03936
+"ALS implícito, rango 48",10,0.08754,0.03274
+"híbrido: vecindario, contenido, ALS y departamento",1,0.0265,0.08924
+"híbrido: vecindario, contenido, ALS y departamento",3,0.05315,0.06169
+"híbrido: vecindario, contenido, ALS y departamento",5,0.07026,0.05063
+"híbrido: vecindario, contenido, ALS y departamento",10,0.10424,0.04007

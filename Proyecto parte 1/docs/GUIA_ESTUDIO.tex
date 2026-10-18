@@ -1,0 +1,1734 @@
+\documentclass[11pt]{article}
+%% Hoja pequena para leer en el celular: el visor ajusta al ancho y el texto
+%% queda en un tamano legible sin zoom. Misma tipografia que las diapositivas.
+\usepackage[paperwidth=115mm,paperheight=180mm,
+            top=9mm,bottom=12mm,left=8mm,right=8mm]{geometry}
+\usepackage{iftex}
+\ifXeTeX
+  \usepackage{fontspec}
+  \IfFontExistsTF{Arial}{\setsansfont{Arial}}{\setsansfont{Liberation Sans}}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{helvet}
+\fi
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[hidelinks,bookmarksnumbered,bookmarksopen,bookmarksopenlevel=1,bookmarksdepth=3]{hyperref}
+
+\graphicspath{{../figs/}}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{-1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist[enumerate]{leftmargin=1.35em,itemsep=0.25em,topsep=0.3em,parsep=0.2em}
+\renewcommand{\arraystretch}{1.15}
+%% El relleno por defecto de 6pt por lado se come 4 mm de cada columna, que
+%% en una hoja de 115 mm es lo que hace desbordar a las tablas de seis columnas.
+\setlength{\tabcolsep}{3pt}
+\pagestyle{plain}
+\tolerance=2500
+\emergencystretch=2em
+
+%% Columna de tabla con ancho proporcional al contenido. La suma de los factores
+%% es el numero de columnas, que es lo que espera tabularx.
+\newcolumntype{Q}[1]{>{\hsize=#1\hsize\raggedright\arraybackslash\hspace{0pt}}X}
+
+%% Figura sin flotante: en una pagina estrecha un flotante se va a tres paginas
+%% de distancia del parrafo que lo explica. El tope de altura evita que una
+%% figura vertical desborde la hoja.
+\newcommand{\figuraguia}[3]{%
+  \par\medskip
+  \begin{center}
+    \includegraphics[width=\linewidth,height=0.70\textheight,keepaspectratio]{#1}\\[0.35em]
+    {\footnotesize\textbf{#2} #3\par}
+  \end{center}
+  \medskip}
+
+
+\begin{document}
+
+\thispagestyle{empty}
+\raggedright
+\vspace*{1.5em}
+{\LARGE\bfseries Guía de estudio del Proyecto Integrador\par}
+\vspace{1em}
+{\normalsize Contrataciones públicas del Perú en formato OCDS. Minería de Datos Masivos y Flujos de Datos.\par}
+\vspace{1.5em}
+\begin{enumerate}
+  \item Ricardo Amiel Acuña Villogas
+  \item Juan Leibniz Aquino Espinoza
+  \item Camilo Ernesto Soto Cristóbal
+\end{enumerate}
+\vspace{1.5em}
+{\footnotesize Este documento reúne las cinco guías de estudio de los notebooks y el glosario del dato. Explica qué hace cada paso, cómo funciona por dentro cada técnica, qué técnicas se descartaron y por qué, y cierra cada parte con las preguntas previsibles y su respuesta.\par}
+\clearpage
+\tableofcontents
+\clearpage
+
+\clearpage
+\phantomsection
+\section*{Notebook 1. KDD, análisis exploratorio y procesamiento distribuido}
+\addcontentsline{toc}{section}{Notebook 1. KDD, análisis exploratorio y procesamiento distribuido}
+Guía de estudio del notebook 1\_\allowbreak{}kdd\_\allowbreak{}eda.ipynb. Explica qué hace cada sección, cómo funciona por dentro cada técnica, qué dice cada figura y qué decisiones se tomaron y se descartaron. El porqué más profundo de cada decisión está en docs/JUSTIFICACION.md y el guion de sustentación de cada figura en docs/FIGURAS.md.
+
+Qué significa cada campo, cada código CUBSO y cada etiqueta del dato está en docs/GLOSARIO.md.
+
+\phantomsection
+\subsection*{1. Qué responde esta parte}
+\addcontentsline{toc}{subsection}{1. Qué responde esta parte}
+El enunciado pide aplicar el proceso KDD completo y demostrar procesamiento distribuido. Este notebook hace las dos cosas y, de paso, produce la tabla de la que viven las otras cuatro partes.
+
+Las tres preguntas de interés se fijan antes de mirar los datos, que es lo que distingue un análisis de una pesca de correlaciones.
+
+\begin{enumerate}
+  \item Qué tan concentrado está el gasto en pocos proveedores, y si eso cambia por territorio.
+  \item Qué relación hay entre el número de postores y el monto adjudicado.
+  \item Si hay apresuramiento del gasto en el cierre del ejercicio presupuestal.
+\end{enumerate}
+\phantomsection
+\subsection*{2. El dataset}
+\addcontentsline{toc}{subsection}{2. El dataset}
+Contrataciones Abiertas del Perú en el estándar \textbf{OCDS}, Open Contracting Data Standard, publicadas por el OECE, antes OSCE. Se descargan del \href{https://data.open-contracting.org/es/publication/135}{Registro de Datos de Open Contracting Partnership, publicación 135}, paquetes anuales 2023, 2024 y 2025.
+
+Hay que saber explicar tres cosas del formato.
+
+\textbf{Qué es OCDS.} Es un estándar internacional que describe una contratación pública como un proceso con etapas: planificación, licitación, adjudicación, contrato y ejecución. Cada proceso tiene un identificador único y estable llamado \textbf{ocid}. El paquete descargado trae 21 tablas en CSV que son la versión aplanada de ese documento JSON anidado: main, awards, awards\_\allowbreak{}suppliers, awards\_\allowbreak{}items, parties, contracts, tender\_\allowbreak{}items y demás.
+
+\textbf{Qué es el grano del dato.} Las 21 tablas tienen granos distintos. En main hay una fila por proceso; en awards\_\allowbreak{}items hay una fila por ítem adjudicado, de modo que un proceso puede aparecer en veinte filas. Mezclar tablas sin cuidar el grano duplica montos, y ese es el error silencioso más común con estos datos.
+
+\textbf{Qué es el código CUBSO.} Es el Catálogo Único de Bienes, Servicios y Obras del Estado peruano, derivado de la codificación UNSPSC. Tiene 16 dígitos: los 8 primeros ubican el bien o servicio en la jerarquía del catálogo y los 8 últimos son el correlativo del ítem concreto. El proyecto usa el prefijo de 8, porque el código completo es casi único por ítem y daría un universo tan disperso que ningún conjunto alcanzaría el soporte mínimo en la Parte V.
+
+Volumen: 2,98 GB de CSV, 281.462 procesos crudos, 177.398 tras la limpieza, 29,8 MB en Parquet.
+
+\phantomsection
+\subsection*{3. Entradas y salidas exactas}
+\addcontentsline{toc}{subsection}{3. Entradas y salidas exactas}
+\textbf{Entrada.} Los tres paquetes anuales. La función \textbf{asegurar\_\allowbreak{}datos} de notebooks/scripts/ingesta.py los descarga si faltan, de modo que el notebook corre de cero en otra máquina sin pasos manuales.
+
+\textbf{Salida.} La tabla analítica en Parquet particionado por año, en data/processed, más 18 artefactos en CSV y JSON y 15 figuras en SVG y PNG.
+
+\phantomsection
+\subsection*{4. El proceso KDD, que es el esqueleto del notebook}
+\addcontentsline{toc}{subsection}{4. El proceso KDD, que es el esqueleto del notebook}
+KDD, Knowledge Discovery in Databases, tiene cinco etapas y el notebook está ordenado por ellas. Conviene saber diferenciarlo de \textbf{CRISP DM}, que es un modelo de proceso de negocio con seis fases y un bucle explícito; KDD es más estrecho y se centra en el camino del dato.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.475}Q{0.743}Q{1.782}}
+\toprule
+\textbf{Etapa de KDD} & \textbf{Dónde está en el notebook} & \textbf{Qué produce} \\
+\midrule
+Selección & Sección 1 & 5 tablas de 21, desnormalizadas a una fila por proceso \\
+Preprocesamiento & Secciones 2 y 3 & Perfil de calidad y seis decisiones de limpieza con bitácora \\
+Transformación & Sección 4 & Variables derivadas y Parquet particionado por año \\
+Minería & Sección 5 & El análisis exploratorio, y las Partes II a V \\
+Interpretación & Sección 8 y Parte VI & Las lecturas de cada figura y el reporte \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\phantomsection
+\subsection*{5. Recorrido sección por sección}
+\addcontentsline{toc}{subsection}{5. Recorrido sección por sección}
+\phantomsection
+\subsubsection*{Sección 1. Selección}
+\addcontentsline{toc}{subsubsection}{Sección 1. Selección}
+De las 21 tablas se usan 5 y se unen a una fila por proceso.
+
+\begin{enumerate}
+  \item \textbf{main.csv} da el proceso: ocid, fecha de convocatoria, objeto, categoría, método, comprador, monto referencial en soles y número de postores.
+  \item \textbf{awards.csv} y \textbf{awards\_\allowbreak{}suppliers.csv} dan el proveedor adjudicado. Un proceso puede tener varias adjudicaciones, así que se usa una ventana \textbf{row\_\allowbreak{}number} ordenada por monto adjudicado descendente para quedarse con el proveedor de la mayor, y aparte se cuenta cuántos proveedores distintos hubo, que es una señal de fraccionamiento.
+  \item \textbf{awards\_\allowbreak{}items.csv} da la canasta de códigos CUBSO del proceso, recortados a 8 dígitos y agregados con \textbf{collect\_\allowbreak{}set}.
+  \item \textbf{parties.csv} da el departamento del comprador, filtrando por el rol buyer.
+\end{enumerate}
+Dos detalles que hay que saber defender.
+
+\textbf{Todo se lee como texto, con inferSchema en falso.} Si Spark infiriera el esquema, el código CUBSO de 16 dígitos pasaría a coma flotante y volvería en notación científica, perdiendo justo los dígitos que identifican el ítem. Los campos numéricos se convierten después, uno a uno y a propósito.
+
+\textbf{La fecha es tender\_\allowbreak{}datePublished y no publishedDate.} La primera es la fecha del evento, cuándo se convocó; la segunda es la fecha del registro, cuándo entró al paquete. Usar la del registro describiría la actividad del publicador y no la del Estado comprador.
+
+\phantomsection
+\subsubsection*{Sección 2. Perfilado y calidad}
+\addcontentsline{toc}{subsubsection}{Sección 2. Perfilado y calidad}
+Antes de decidir nada se mide. El perfil cuenta nulos y cardinalidad de cada columna.
+
+La cardinalidad se calcula con \textbf{approx\_\allowbreak{}count\_\allowbreak{}distinct}, que es \textbf{HyperLogLog}, con error relativo del 2 por ciento. Conviene saber por qué: contar distintos de forma exacta obliga a mantener en memoria todos los valores vistos, mientras que HyperLogLog guarda un arreglo de registros pequeños y estima la cardinalidad a partir del máximo número de ceros iniciales observado en el hash de cada valor. La intuición es que ver un hash con muchos ceros iniciales es improbable, así que su aparición sugiere que se han visto muchos elementos distintos. Para esta tarea solo hace falta el orden de magnitud, lo justo para distinguir un identificador de una categórica y de una continua, de modo que pagar un conteo exacto sería desperdicio.
+
+El perfil deja ver tres cosas.
+
+\begin{enumerate}
+  \item El monto no tiene ni un solo nulo, pero el valor faltante viene codificado como cero: 22.830 filas.
+  \item El proveedor falta en uno de cada cinco procesos, 61.807 filas, que son los desiertos, anulados o en trámite.
+  \item El año muestra trece valores distintos pese a que se bajaron tres paquetes anuales.
+\end{enumerate}
+Esa tercera anomalía se investiga con una tabla cruzada de año del paquete contra año de convocatoria, que produce la \textbf{figura f01}. Si cada paquete trajera solo sus procesos, toda la masa estaría en la diagonal. No lo está: 82.946 filas son convocatorias anteriores a 2023, y en el paquete 2024 casi la mitad son de 2015 y 2016. Es el hallazgo que justifica recortar la ventana temporal.
+
+\figuraguia{f01_paquete_vs_anio.pdf}{f01.}{Los paquetes anuales rellenan años anteriores}
+\phantomsection
+\subsubsection*{Sección 3. Limpieza}
+\addcontentsline{toc}{subsubsection}{Sección 3. Limpieza}
+Seis decisiones. La política es que eliminar es la última opción y que cada decisión deja constancia: la función \textbf{limpiar} devuelve la tabla y una bitácora con cuántas filas tocó cada paso.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.620}Q{2.096}Q{0.733}Q{0.550}}
+\toprule
+\textbf{Paso} & \textbf{Qué hace} & \textbf{Filas afectadas} & \textbf{Quedan} \\
+\midrule
+entrada & tabla analítica cruda & 0 & 281.462 \\
+duplicados & una fila por ocid, la más reciente & 0 & 281.462 \\
+descarte & monto nulo o no positivo & 22.830 & 258.632 \\
+descarte & fecha fuera de 2023 a 2025 & 81.234 & 177.398 \\
+imputación & postores con la mediana de su método & 6.655 & 177.398 \\
+marca & monto extremo en escala logarítmica, se conserva & 565 & 177.398 \\
+recorte & postores winsorizados al percentil 99,9, tope 107 & 263 & 177.398 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Cómo defender cada una.
+
+\begin{enumerate}
+  \item \textbf{Duplicados.} Ventana por ocid ordenada por fecha de registro descendente, se conserva la versión registrada más tarde. No elimina nada porque los ocid ya venían únicos, pero el paso se deja porque la unión de tres paquetes no garantiza esa unicidad.
+  \item \textbf{Monto no positivo.} El cero no es un monto bajo, es un campo no publicado. No admite imputación: poner la mediana inventaría gasto público que no existe y hundiría cualquier estimación agregada.
+  \item \textbf{Ventana temporal.} Es la consecuencia de la figura f01.
+  \item \textbf{Postores faltantes.} La ausencia no es al azar, se concentra en ciertos métodos, así que la mediana se calcula \textbf{dentro de cada método} y solo se cae a la mediana global si el método no tiene ninguna observación. Y se añade una columna booleana \textbf{n\_\allowbreak{}postores\_\allowbreak{}imputado}, de modo que todo análisis de competencia pueda excluir las filas imputadas y la relación no la produzca la propia imputación.
+  \item \textbf{Extremos de monto.} Se marcan y se conservan. El criterio es el intervalo intercuartílico pero aplicado sobre el logaritmo del monto y con factor 3 en lugar de 1,5, porque la distribución es de cola pesada y en escala lineal el criterio clásico marcaría como extremo una fracción enorme. El resultado es que 565 procesos, el 0,3 por ciento de las filas, concentran el 38 por ciento del gasto. Eliminarlos habría dejado una tabla más ordenada y habría borrado un tercio del dinero público que se quiere estudiar.
+  \item \textbf{Postores absurdos.} Aquí el extremo sí es error de carga y no tiene lectura sustantiva, así que se \textbf{winsoriza}, es decir se recorta al percentil 99,9, tope 107. Winsorizar no es eliminar: la fila sigue aportando monto, objeto y canasta.
+\end{enumerate}
+Además hay una reparación de codificación. El SEACE grabó parte de los textos en CP850 y el registro los leyó como Latin-1, de modo que cada letra acentuada quedó convertida siempre en el mismo carácter equivocado. Once sustituciones deshacen esa conversión. Lo ambiguo se deja sin tocar, sobre todo el signo de interrogación invertido, que unas veces sustituye una tilde y otras está puesto a propósito, y se cuenta cuántas filas lo llevan para que el lector sepa el tamaño del residuo. La celda de verificación comprueba que los caracteres reparables quedan en cero.
+
+La \textbf{figura f02} es la bitácora hecha gráfico: se pierden 104.064 filas en total, casi todas en dos pasos, y los demás pasos imputan, marcan o recortan sin perder ninguna.
+
+\figuraguia{f02_embudo.pdf}{f02.}{El embudo de limpieza con su costo en filas}
+Una columna resultó inservible y se documenta como tal: la duración de la convocatoria daba cero en todas las filas, porque la fecha de cierre de la licitación viene vacía en este paquete.
+
+\phantomsection
+\subsubsection*{Sección 4. Transformación y persistencia}
+\addcontentsline{toc}{subsubsection}{Sección 4. Transformación y persistencia}
+Las variables derivadas son el año, el mes, el año y mes, y el nivel de gobierno.
+
+El \textbf{nivel de gobierno} no viene en el dato crudo: se deriva con un CASE de expresiones regulares sobre el nombre de la entidad, con reglas para municipalidades, gobiernos regionales, universidades, establecimientos de salud, unidades educativas, fuerzas armadas y policiales, empresas del Estado y gobierno nacional. Es una heurística, y hay que presentarla como tal. La categoría Otro recoge lo que ninguna regla reconoce y es el 6,1 por ciento de los procesos; esa cifra es la medida honesta de cuánto falla la derivación y por eso se reporta.
+
+La tabla se guarda en \textbf{Parquet particionado por año}. Dos propiedades que conviene saber explicar.
+
+\begin{enumerate}
+  \item \textbf{Parquet es columnar.} Guarda los valores de una columna juntos y comprimidos, con estadísticas por grupo de filas. El análisis exploratorio lee dos o tres columnas de veinticinco en vez de la fila entera, y la compresión es mucho mejor porque los valores de una misma columna se parecen entre sí. De ahí que 2,98 GB de CSV queden en 29,8 MB.
+  \item \textbf{El particionado crea directorios.} Al escribir \textbf{partitionBy} por año Spark crea carpetas anio=\allowbreak{}2023, anio=\allowbreak{}2024 y anio=\allowbreak{}2025, y el año deja de almacenarse en los archivos: se lee del nombre de la carpeta.
+\end{enumerate}
+La columna de partición se elige por cómo se consulta la tabla. El año es la correcta porque toda la Parte IV la recorre en orden temporal. Particionar por departamento habría dado veinticinco directorios muy desiguales, con Lima concentrando casi todo, y esa asimetría se paga en cada barajado.
+
+\phantomsection
+\subsubsection*{Sección 5. El análisis exploratorio, figura por figura}
+\addcontentsline{toc}{subsubsection}{Sección 5. El análisis exploratorio, figura por figura}
+Todo el cálculo ocurre en Spark y a pandas solo llega el agregado ya reducido. Esa es la regla que hace que el EDA sea distribuido de verdad y no un \textbf{toPandas} disfrazado.
+
+\textbf{f03, procesos por mes.} Diciembre es el máximo de su año en los dos años con cobertura completa: 7.280 procesos en 2023 y 6.498 en 2024. La cola de 2025 cae a 3.380 en noviembre y 942 en diciembre. Eso no es menos contratación sino subcobertura, porque los procesos tardan en entrar al registro OCDS. Es un sesgo de publicación y hay que decirlo, porque un lector apresurado lo leería como una caída del gasto.
+
+\figuraguia{f03_procesos_mes.pdf}{f03.}{Procesos por mes y el límite de cobertura de 2025}
+\textbf{f04, monto por mes.} Se grafica aparte del conteo a propósito. Con dos series en un eje doble el lector lee una correlación que la figura no sostiene, y el eje doble permite elegir escalas que hagan coincidir dos curvas que no tienen por qué coincidir. El máximo de toda la serie es diciembre de 2024 con 14.373 millones de soles, 1,9 veces el mes anterior: a fin de año no solo se convoca más, se convoca más caro.
+
+\figuraguia{f04_monto_mes.pdf}{f04.}{Monto por mes, en escala propia}
+\textbf{f05, estacionalidad.} Es un mapa de calor de mes contra año y es la figura con la que se responde la pregunta 3. Aísla el efecto calendario del efecto año. Que el patrón del último trimestre se repita en 2023 y en 2024 es la evidencia mínima para atribuirlo al cierre del ejercicio presupuestal y no a un año particular. Con un solo año no se podría afirmar.
+
+\figuraguia{f05_estacionalidad.pdf}{f05.}{Estacionalidad del gasto, mes contra año}
+\textbf{f06, distribución del monto.} Histograma en escala logarítmica, con la mediana marcada. La media es 7,9 veces la mediana, así que la media no describe a ningún proceso representativo. En escala lineal esta figura sería una sola barra pegada al eje; el logaritmo es lo que la hace legible y es la misma escala sobre la que se aplicó el criterio de extremos, de modo que el criterio y su figura son coherentes.
+
+\figuraguia{f06_distribucion_monto.pdf}{f06.}{Distribución del monto en escala logarítmica}
+\textbf{f07, método de contratación.} Contar procesos y contar soles dan rankings casi inversos. Adjudicación Simplificada encabeza por volumen con 82.503 procesos pero mueve 47,1 mil millones; Licitación Pública, con 9.242 procesos, mueve 106,6 mil millones, el 46 por ciento del total. La consecuencia práctica es que toda afirmación debe decir en qué unidad está contando: la mitad de las lecturas erróneas de datos de contratación vienen de mezclar las dos.
+
+\figuraguia{f07_metodo.pdf}{f07.}{Método de contratación, por número y por monto}
+\textbf{f08, nivel de gobierno.} Los gobiernos locales convocan 73.456 procesos repartidos en 1.855 entidades y el gobierno nacional los supera en monto con 29.984 procesos y solo 277 entidades.
+
+\figuraguia{f08_nivel_gobierno.pdf}{f08.}{Nivel de gobierno, una variable derivada}
+\textbf{f09, los quince compradores con mayor monto.} Se ordena por monto y no por número de procesos porque la pregunta es a dónde va el dinero, no quién hace más trámites. Suman 89,9 mil millones de soles.
+
+\figuraguia{f09_top_compradores.pdf}{f09.}{Las quince entidades que más monto concentran}
+\textbf{f10, los quince proveedores con mayor monto.} Aquí está el hallazgo que abre la Parte II: hay dos formas distintas de llegar arriba y el ranking las pone una al lado de la otra sin distinguirlas. Un proveedor acumula 581 millones repartidos en 188 adjudicaciones; otro alcanza 1.135 millones en una sola. Recurrencia y magnitud puntual son fenómenos que no se parecen.
+
+\figuraguia{f10_top_proveedores.pdf}{f10.}{Los quince proveedores que más monto reciben}
+\textbf{f11, curva de Lorenz y coeficiente de Gini.} Esta es la respuesta cuantitativa a la pregunta 1.
+
+\figuraguia{f11_lorenz.pdf}{f11.}{Curva de Lorenz y coeficiente de Gini de proveedores}
+Cómo funciona. Se ordenan los proveedores de menor a mayor monto adjudicado y se dibuja, en el eje horizontal, la fracción acumulada de proveedores y en el vertical la fracción acumulada del monto. Si el reparto fuera perfecto la curva sería la diagonal. El \textbf{Gini} es el doble del área entre la diagonal y la curva, y va de 0, reparto perfecto, a 1, un solo proveedor se lleva todo.
+
+El resultado es Gini 0,857 sobre 67.510 proveedores. El uno por ciento superior se lleva el 47,1 por ciento del monto, el cinco por ciento el 70,1, el diez por ciento el 80,2 y el veinticinco por ciento el 91,3. Para dar referencia: los Gini de ingreso de los países suelen estar entre 0,25 y 0,60, así que 0,857 es concentración alta. Lo que no permite afirmar es que la causa sea anticompetitiva: puede ser economía de escala, especialización técnica o barreras de entrada.
+
+\textbf{f12, Gini por departamento.} Esta figura corrige lo que la anterior podría hacer creer. El Gini es adimensional, así que hace comparables mercados de tamaños muy distintos, cosa que el monto absoluto no permite. El resultado va en contra de lo esperado: solo 2 de 25 departamentos superan el Gini nacional, Pasco con 0,909 y Lima con 0,899. El resto queda por debajo. La cifra del país no describe a un mercado regional típico, está empujada hacia arriba por Lima. Se exige un mínimo de 50 proveedores por departamento para que el Gini sea estable.
+
+\figuraguia{f12_gini_departamento.pdf}{f12.}{Gini por departamento contra el nacional}
+\textbf{f13, competencia por tramo de monto.} Responde la pregunta 2 y el hallazgo es que hay dos fenómenos y no uno.
+
+\figuraguia{f13_competencia.pdf}{f13.}{Número de postores por tramo de monto}
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.980}Q{0.733}Q{1.111}Q{1.176}}
+\toprule
+\textbf{Tramo} & \textbf{Procesos} & \textbf{Postores medianos} & \textbf{Con un solo postor} \\
+\midrule
+menos de 50 mil & 10.156 & 1 & 57,0 \% \\
+50 a 200 mil & 83.628 & 7 & 10,1 \% \\
+200 mil a 1 M & 55.872 & 11 & 8,7 \% \\
+1 a 5 M & 15.931 & 15 & 10,0 \% \\
+5 a 20 M & 3.998 & 18 & 9,7 \% \\
+más de 20 M & 1.158 & 19 & 11,4 \% \\
+\bottomrule
+\end{tabularx}
+\end{center}
+El número mediano de postores sí crece con el monto. Lo que importa es dónde se rompe: debajo de cincuenta mil soles el 57 por ciento tuvo un único postor, y en los demás tramos la proporción se estabiliza cerca del 10 por ciento y ya no baja ni por encima de veinte millones. Son dos cosas distintas, una franja pequeña competitiva solo en el papel y un suelo persistente de uno de cada diez procesos sin competencia. Ese suelo es la pregunta que recogen la Parte IV y la Parte V.
+
+Se agrupa por tramos en lugar de graficar los puntos porque 170.743 puntos son una mancha negra sin estructura legible, y se excluyen los procesos con postores imputados.
+
+\phantomsection
+\subsubsection*{Sección 6. MapReduce sobre RDD frente a DataFrames y Spark SQL}
+\addcontentsline{toc}{subsubsection}{Sección 6. MapReduce sobre RDD frente a DataFrames y Spark SQL}
+Se implementan dos agregaciones en los dos estilos, cada una ligada a una pregunta: el monto por departamento alimenta la pregunta 1 y los postores por método alimentan la pregunta 2.
+
+\textbf{Cómo se escribe el estilo MapReduce.} Se mapea cada fila a un par clave y valor, donde el valor lleva la suma parcial y el conteo, y se combina con \textbf{reduceByKey}. Hay que saber por qué se usa \textbf{reduceByKey} y no \textbf{groupByKey}: el primero aplica la función de combinación \textbf{dentro de cada partición antes de barajar}, exactamente como el combiner de MapReduce clásico, de modo que por la red solo viaja un par por clave y partición. Con \textbf{groupByKey} viajarían todos los valores.
+
+\textbf{Cómo se verifica que dan lo mismo.} No se comparan sumas, que es fácil de hacer coincidir por casualidad, sino los conjuntos completos con \textbf{exceptAll} en los dos sentidos, que detecta filas sobrantes y faltantes.
+
+\textbf{Cómo se mide el tiempo.} Con calentamiento previo y mediana de tres corridas, porque una sola corrida no es una medición: la primera paga la carga de clases de la máquina virtual de Java y la caché del sistema de archivos.
+
+El resultado, en la \textbf{figura f14}, es que el camino RDD tarda entre 3,0 y 3,4 veces más. No es por gusto.
+
+\figuraguia{f14_rdd_vs_dataframe.pdf}{f14.}{El mismo agregado por RDD y por DataFrame}
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.470}Q{1.358}Q{1.173}}
+\toprule
+\textbf{Aspecto} & \textbf{MapReduce sobre RDD} & \textbf{DataFrame y Spark SQL} \\
+\midrule
+Qué se escribe & Cómo transformar cada fila y cómo combinar los parciales & Qué resultado se quiere; el planificador decide cómo \\
+Esquema & Spark ve tuplas opacas y no valida nombres ni tipos hasta ejecutar & Un error de columna se detecta al planificar \\
+Optimización & La que escriba a mano el programador & Catalyst poda columnas, reordena filtros y elige la unión \\
+Serialización & Cada fila cruza a Python, y ese es el costo dominante & El cómputo se queda en la máquina virtual de Java \\
+Cuándo conviene igual & Estado entre elementos, estructuras propias, algoritmos iterativos & Seleccionar, filtrar, agrupar, unir y agregar \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Las dos causas de la brecha son la frontera entre la máquina virtual de Java y el intérprete de Python, que cada fila tiene que cruzar en los dos sentidos, y que el planificador no puede podar columnas ni reordenar filtros sobre tuplas opacas.
+
+Si preguntan por qué implementar el RDD si el DataFrame siempre gana: porque la rúbrica pide demostrar MapReduce, y escribirlo obliga a declarar la clave, el valor y la función de reducción, que es justamente lo que Catalyst esconde; y porque el RDD sigue siendo la herramienta cuando la operación no se expresa en la API de DataFrames, que es lo que ocurre en las firmas MinHash de la Parte II.
+
+\phantomsection
+\subsubsection*{Sección 7. Particionado y plan de ejecución}
+\addcontentsline{toc}{subsubsection}{Sección 7. Particionado y plan de ejecución}
+Una partición es la unidad de paralelismo: Spark lanza una tarea por partición. Dos cosas se verifican leyendo el plan con \textbf{explain} en modo formateado en lugar de suponerlas.
+
+\begin{enumerate}
+  \item Un filtro sobre la columna de partición aparece en \textbf{PartitionFilters}. Spark lo resuelve en el catálogo de archivos antes de leer un byte y abre un directorio de tres.
+  \item Un filtro sobre una columna no particionada aparece en \textbf{PushedFilters}. Spark abre los tres directorios pero usa las estadísticas por grupo de filas de Parquet, mínimo y máximo de cada columna en cada bloque, para saltar bloques sin descomprimirlos. Es una optimización real pero de segundo orden frente a no abrir el archivo.
+\end{enumerate}
+La \textbf{figura f15} mide el tiempo de una agregación con 4, 16, 64 y 200 particiones de barajado, dos veces: con ejecución adaptativa y sin ella.
+
+\figuraguia{f15_shuffle.pdf}{f15.}{Tiempo según el número de particiones de barajado}
+Con \textbf{ejecución adaptativa}, que es la configuración real, el parámetro casi no cambia el tiempo, porque Spark conoce el tamaño real de la salida del barajado y fusiona las particiones pequeñas, de modo que doscientas declaradas terminan siendo unas pocas efectivas. Al desactivarla aparece el efecto que predice la teoría: 0,32 segundos con 200 particiones frente a 0,14 con 16, porque planificar y recoger doscientas tareas de unos cientos de filas cuesta más que el cálculo.
+
+La conclusión matizada, que es la que hay que decir: la regla de dos a cuatro veces el número de núcleos sigue siendo el punto de partida razonable, y la ejecución adaptativa protege contra declarar demasiadas particiones pero no contra declarar muy pocas, porque fusiona las pequeñas y no puede partir las grandes.
+
+\phantomsection
+\subsubsection*{Sección 8. Qué hereda cada parte}
+\addcontentsline{toc}{subsubsection}{Sección 8. Qué hereda cada parte}
+La tabla persistida deja listas tres representaciones que no hay que volver a construir.
+
+\begin{enumerate}
+  \item El objeto contractual normalizado y con la codificación reparada, del que salen los shingles de la Parte II y los vectores TF-IDF de la Parte III.
+  \item El conjunto de códigos CUBSO por proceso, entrada de Jaccard y MinHash en la Parte II y base de la canasta de la Parte V.
+  \item La fecha de convocatoria con resolución de minuto, que ordena el flujo simulado de la Parte IV.
+\end{enumerate}
+Y deja dos preguntas abiertas que otras partes recogen: si los proveedores distintos del ranking son en realidad la misma empresa, que es la Parte II, y en qué combinaciones de entidad, rubro y método se concentra el suelo de procesos sin competencia, que es la Parte V y, sobre una ventana reciente, la Parte IV.
+
+\phantomsection
+\subsection*{6. Alternativas para cada decisión, explicadas}
+\addcontentsline{toc}{subsection}{6. Alternativas para cada decisión, explicadas}
+Cada decisión de esta parte tenía al menos otra opción razonable. Saber nombrarla, explicar qué hace y por qué se descartó es lo que distingue una decisión de una costumbre.
+
+\phantomsection
+\subsubsection*{Para los valores faltantes}
+\addcontentsline{toc}{subsubsection}{Para los valores faltantes}
+\begin{enumerate}
+  \item \textbf{Imputar el monto cero con la mediana.} Es lo que se haría por defecto. Se descarta porque el cero no es un valor bajo sino un campo no publicado: imputarlo inventaría gasto público que no existe y, como la Parte I estima montos agregados, ese invento se propagaría a todas las conclusiones.
+  \item \textbf{Imputación por vecinos más cercanos.} Rellena con el promedio de las k filas más parecidas en las demás columnas. Es defendible para el número de postores, pero añade una estructura que después se usa como resultado: la Parte I analiza precisamente la relación entre postores y monto, de modo que imputar postores a partir del monto crearía la correlación que se quiere medir.
+  \item \textbf{Imputación múltiple por ecuaciones encadenadas.} Genera varias versiones del dataset y propaga la incertidumbre. Es lo correcto en inferencia estadística, y es desproporcionado aquí: el entregable no es un intervalo de confianza sino un análisis exploratorio.
+  \item \textbf{Lo que se hizo.} Mediana \textbf{condicional al método}, porque la ausencia no es al azar y se concentra en ciertos métodos, más una columna booleana que marca la fila como imputada para poder excluirla. Esa columna es la clave: permite que la figura f13 se calcule solo sobre datos observados.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para los valores extremos}
+\addcontentsline{toc}{subsubsection}{Para los valores extremos}
+\begin{enumerate}
+  \item \textbf{Puntuación z, es decir más de tres desviaciones típicas.} Supone normalidad. Con una distribución de cola pesada como el monto, la desviación típica está dominada por los propios extremos y el criterio deja de discriminar.
+  \item \textbf{Criterio de Tukey clásico, 1,5 veces el rango intercuartílico, en escala lineal.} Marcaría como extrema una fracción enorme de las filas, porque la distribución es asimétrica por naturaleza.
+  \item \textbf{Recorte por percentil, por ejemplo al 99.} Es arbitrario y además elimina.
+  \item \textbf{Bosque de aislamiento.} Detección multivariante de anomalías. Resuelve otro problema: aquí no se busca una fila rara en varias dimensiones, sino un monto alto, que es univariante y además es el objeto de estudio.
+  \item \textbf{Lo que se hizo.} Tukey con factor 3 sobre el logaritmo del monto, y \textbf{marcar en lugar de eliminar}. La escala logarítmica es la que hace simétrica la distribución, y el factor 3 en lugar de 1,5 reconoce que la cola es real. El resultado es que los 565 marcados concentran el 38 por ciento del gasto, que es justamente la razón para no borrarlos.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para el perfilado de cardinalidad}
+\addcontentsline{toc}{subsubsection}{Para el perfilado de cardinalidad}
+\begin{enumerate}
+  \item \textbf{Conteo exacto de distintos.} Obliga a mantener todos los valores vistos. Sobre 25 columnas y 281.462 filas es un gasto innecesario para una decisión que solo necesita el orden de magnitud.
+  \item \textbf{Flajolet y Martin.} El antecesor de HyperLogLog: estima la cardinalidad a partir del máximo número de ceros iniciales en los hashes de los elementos. Tiene varianza alta con un solo estimador.
+  \item \textbf{Lo que se hizo.} HyperLogLog, que es Flajolet y Martin promediando muchos registros con media armónica y corrigiendo el sesgo, con error relativo fijado en el 2 por ciento.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para la duplicación}
+\addcontentsline{toc}{subsubsection}{Para la duplicación}
+\begin{enumerate}
+  \item \textbf{Desduplicación difusa por nombre.} Dos proveedores escritos distinto que son la misma empresa. No se hace aquí a propósito: es precisamente el problema de la Parte II, y resolverlo con una regla de texto antes de medirlo sería dar por supuesto lo que se quiere demostrar.
+  \item \textbf{Lo que se hizo.} Desduplicación exacta por ocid, conservando la versión registrada más tarde.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para el modelo de proceso}
+\addcontentsline{toc}{subsubsection}{Para el modelo de proceso}
+\begin{enumerate}
+  \item \textbf{CRISP-DM.} Seis fases, con comprensión del negocio al inicio y despliegue al final, y bucles explícitos. Es un modelo de proyecto.
+  \item \textbf{SEMMA.} Muestrear, explorar, modificar, modelar y evaluar. Está centrado en el modelado y da por hecha la fase de datos.
+  \item \textbf{Lo que se hizo.} KDD, porque es el que el curso usa y porque su foco es el camino del dato, que es lo que esta parte entrega. Se menciona CRISP-DM porque la diferencia es una pregunta probable.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para el almacenamiento}
+\addcontentsline{toc}{subsubsection}{Para el almacenamiento}
+\begin{enumerate}
+  \item \textbf{CSV.} Lo que vino. Fila a fila, sin esquema y sin compresión por columna.
+  \item \textbf{ORC o Avro.} ORC es también columnar y comparable a Parquet; Avro es por filas, bueno para escribir flujos y malo para agregar columnas sueltas.
+  \item \textbf{Particionar por departamento.} Veinticinco directorios muy desiguales, con Lima concentrando casi todo. La asimetría se paga en cada barajado y ninguna parte recorre la tabla por territorio.
+  \item \textbf{No particionar.} Pierde la poda de directorios, que es lo que hace que un filtro por año no abra dos tercios de los archivos.
+  \item \textbf{Lo que se hizo.} Parquet particionado por año, porque toda la Parte IV recorre la tabla en orden temporal.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para el procesamiento}
+\addcontentsline{toc}{subsubsection}{Para el procesamiento}
+\begin{enumerate}
+  \item \textbf{pandas sobre la máquina entera.} Cabría, con 177 mil filas. No demostraría lo que la rúbrica pide y no serviría al escenario de diez veces más volumen.
+  \item \textbf{Solo DataFrames, sin RDD.} Sería lo más rápido, pero el RDD es donde se ve MapReduce con su clave, su valor y su función de reducción, que es justo lo que Catalyst esconde.
+  \item \textbf{Lo que se hizo.} Las dos, con la misma agregación, verificando que coinciden y midiendo la diferencia.
+\end{enumerate}
+\phantomsection
+\subsection*{7. Preguntas probables y qué responder}
+\addcontentsline{toc}{subsection}{7. Preguntas probables y qué responder}
+\textbf{¿Por qué eliminar el 37 por ciento de las filas no es demasiado?} Porque está concentrado en dos decisiones defendibles, el monto no publicado y la ventana temporal, y los otros cinco pasos juntos no pierden ninguna fila.
+
+\textbf{¿Cómo saben que la caída de 2025 es subcobertura y no una caída real del gasto?} Porque el patrón de los dos años completos es el inverso, con máximo en diciembre, y porque la caída empieza justo donde termina la ventana de publicación del registro.
+
+\textbf{¿Qué confianza tiene el nivel de gobierno si es una expresión regular?} La medimos en lugar de suponerla: la categoría Otro es el 6,1 por ciento y esa cifra es la cota de error de la derivación.
+
+\textbf{¿Un Gini de 0,857 es mucho?} Comparado con el caso teórico, cero es reparto perfecto y uno un solo proveedor; y comparado con los Gini de ingreso de los países, que suelen estar entre 0,25 y 0,60, es concentración alta. No permite afirmar conducta anticompetitiva.
+
+\textbf{¿Qué aporta Spark aquí de verdad?} La ingesta y el análisis exploratorio, sin duda: 2,98 GB en 21 tablas por año se desnormalizan a una tabla analítica en menos de medio minuto. Y queda demostrado con medición, no con afirmación, dónde conviene cada API.
+
+
+\clearpage
+\phantomsection
+\section*{Notebook 2. Similitud: shingling, Jaccard, MinHash, LSH y SimHash}
+\addcontentsline{toc}{section}{Notebook 2. Similitud: shingling, Jaccard, MinHash, LSH y SimHash}
+Guía de estudio del notebook 2\_\allowbreak{}similitud\_\allowbreak{}lsh.ipynb. El porqué de cada elección está en docs/JUSTIFICACION.md, sección Parte II.
+
+Qué significa cada campo, cada código CUBSO y cada etiqueta del dato está en docs/GLOSARIO.md.
+
+\phantomsection
+\subsection*{1. Qué responde esta parte}
+\addcontentsline{toc}{subsection}{1. Qué responde esta parte}
+La Parte I dejó dos cosas abiertas. Primero, hay procesos cuyo objeto contractual es prácticamente el mismo texto repetido entre entidades. Segundo, hay proveedores que aparecen como distintos siendo la misma empresa escrita de otra forma.
+
+Ninguna de las dos se detecta comparando todos los pares: con 177.398 procesos son más de quince mil millones de comparaciones. El problema es cuadrático y la parte entera trata de convertirlo en uno aproximadamente lineal sin perder lo que importa.
+
+Spark es obligatorio aquí. Las firmas y el agrupamiento por bandas corren sobre RDD, que es donde el estilo imperativo gana al declarativo.
+
+\phantomsection
+\subsection*{2. El esquema completo, en una frase}
+\addcontentsline{toc}{subsection}{2. El esquema completo, en una frase}
+Texto del objeto, pasado a \textbf{conjunto de k-shingles}, resumido en una \textbf{firma MinHash} de 128 enteros, partida en \textbf{bandas} que generan candidatos, y los candidatos pasan por una \textbf{verificación exacta} de Jaccard. En paralelo, el mismo texto pasado a \textbf{TF-IDF} y resumido con \textbf{SimHash}, para comparar los dos esquemas de hashing sensible a la localidad.
+
+\phantomsection
+\subsection*{3. Recorrido sección por sección}
+\addcontentsline{toc}{subsection}{3. Recorrido sección por sección}
+\phantomsection
+\subsubsection*{Sección 1. Dos representaciones como conjunto}
+\addcontentsline{toc}{subsubsection}{Sección 1. Dos representaciones como conjunto}
+El dataset ofrece dos formas de ver un proceso como conjunto, y compararlas es en sí mismo un resultado.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{1.583}Q{0.950}Q{0.733}Q{0.733}}
+\toprule
+\textbf{Representación} & \textbf{Elementos por proceso} & \textbf{Universo} & \textbf{Procesos vacíos} \\
+\midrule
+Shingles del objeto con k igual a 9 & 186,9 & 137.412 & 0 \\
+Conjunto de códigos CUBSO & 0,94 & 654 & 270 de 2.000 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+La tabla decide. El conjunto CUBSO tiene menos de un elemento por proceso en promedio y 270 procesos vacíos, así que no sostiene una similitud discriminante: la Jaccard entre dos conjuntos de un elemento solo puede ser cero o uno. Los shingles del objeto sí la sostienen. El CUBSO se reserva para la Parte V, donde la canasta se redefine por entidad y mes.
+
+\textbf{Qué es un k-shingle.} Es cada subcadena contigua de k caracteres del texto. El documento se representa por el \textbf{conjunto} de sus shingles, no por la lista: se pierde el orden global pero se conserva el orden local, porque cada shingle es un fragmento contiguo. Dos textos con las mismas palabras en distinto orden comparten pocos shingles si las fronteras caen distinto, que es lo que se quiere.
+
+\textbf{Por qué shingles de caracteres y no de palabras.} Porque el objeto lo escribe a mano cada entidad y abundan los errores de digitación, las abreviaturas y los plurales. Los shingles de caracteres toleran eso; los de palabras no.
+
+\textbf{La calibración de k.} Esta es la figura que más conviene saber defender porque documenta un resultado negativo.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.155}Q{1.057}Q{1.874}Q{0.913}}
+\toprule
+\textbf{k} & \textbf{Shingles por documento} & \textbf{Fondo, mediana de pares no relacionados} & \textbf{Señal, percentil 99} \\
+\midrule
+3 & 153,7 & 0,1384 & 0,3010 \\
+5 & 179,4 & 0,0549 & 0,2023 \\
+7 & 186,0 & 0,0247 & 0,1490 \\
+9 & 187,1 & 0,0114 & 0,1152 \\
+11 & 186,5 & 0,0047 & 0,0911 \\
+13 & 185,3 & 0,0000 & 0,0733 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Buscábamos un k óptimo y no existe: las dos curvas bajan juntas, así que ninguna métrica sobre pares aleatorios tiene un máximo interior, y construir una métrica que lo tuviera sería fabricar el resultado. Lo que se hace es \textbf{fijar un criterio explícito}: k debe ser lo bastante grande para que dos objetos no relacionados no compartan casi nada, en concreto que el fondo quede por debajo de 0,02. El primer k que lo cumple es 9.
+
+Con k igual a 3 el fondo está en 0,138, es decir que dos textos cualesquiera ya se parecen un 14 por ciento solo por ser español administrativo. Y la elección no es crítica: el barrido de LSH da resultados muy parecidos con 7 y con 11. Esta es la \textbf{figura f16}.
+
+\figuraguia{f16_calibracion_k.pdf}{f16.}{Calibración del tamaño del shingle}
+\phantomsection
+\subsubsection*{Sección 2. Jaccard exacta, la verdad de referencia}
+\addcontentsline{toc}{subsubsection}{Sección 2. Jaccard exacta, la verdad de referencia}
+Sobre una muestra de 2.000 procesos se calculan los 1.999.000 pares. Esa muestra existe para una sola cosa: tener una verdad de referencia contra la que medir todo lo aproximado.
+
+\textbf{Qué es Jaccard.} El tamaño de la intersección dividido entre el tamaño de la unión de los dos conjuntos. Va de 0, sin nada en común, a 1, idénticos.
+
+\textbf{Cómo se calcula para dos millones de pares sin un bucle.} Con álgebra dispersa. Se arma una matriz binaria M de documentos por shingles, donde la celda vale uno si el documento contiene ese shingle. Entonces el producto M por M traspuesta da, en cada celda, el \textbf{tamaño de la intersección} de ese par. La unión sale de la identidad de inclusión y exclusión: tamaño de A más tamaño de B menos la intersección. Es una sola multiplicación de matrices en lugar de dos millones de operaciones de conjunto en Python.
+
+La \textbf{figura f17} muestra la distribución, con el eje vertical en logaritmo porque la primera barra es tres órdenes de magnitud mayor que las demás y en escala lineal aplastaría la cola, que es la única parte interesante. Solo 42 pares de 1.999.000 superan 0,5, el 0,002 por ciento. Esa es la figura que justifica que LSH exista: comparar todos los pares para encontrar esa fracción es desperdicio.
+
+\figuraguia{f17_distribucion_jaccard.pdf}{f17.}{Distribución de la similitud de Jaccard exacta}
+\phantomsection
+\subsubsection*{Sección 3. MinHash}
+\addcontentsline{toc}{subsubsection}{Sección 3. MinHash}
+\textbf{La propiedad que lo sostiene.} Para una permutación aleatoria del universo de shingles, la probabilidad de que dos conjuntos tengan el mismo elemento mínimo es exactamente su similitud de Jaccard. La intuición: mirando solo los elementos que están en la unión de los dos conjuntos, el mínimo es uniformemente alguno de ellos, y coincide si y solo si cae en la intersección, lo que ocurre con probabilidad igual a intersección sobre unión.
+
+\textbf{Cómo se implementa sin permutar de verdad.} Permutar un universo de 137.412 shingles sería absurdo. En su lugar se usan funciones hash lineales de la forma a por x más b, módulo P, con P igual a 2 elevado a 31 menos 1, un primo de Mersenne. Cada par de coeficientes a y b sorteados define una permutación aproximada. La firma del conjunto es, para cada una de las n funciones, el mínimo de los valores hash de sus elementos.
+
+Dos detalles de implementación que conviene saber explicar.
+
+\begin{enumerate}
+  \item \textbf{El hash base es blake2b y no el de Python.} La función hash incorporada de Python viene aleatorizado por proceso, lo que haría irreproducibles las firmas y los buckets entre ejecuciones y, peor, entre el driver y los workers de Spark.
+  \item \textbf{P es un primo de Mersenne de 31 bits} para que el producto a por x quepa en un entero de 64 bits sin desbordar, lo que permite vectorizar con numpy: una sola matriz de n por tamaño del conjunto y un mínimo por fila, en vez de iterar en Python.
+\end{enumerate}
+\textbf{Cuánto error tiene.} La firma estima Jaccard como la fracción de posiciones en que las dos firmas coinciden. El error es del orden de uno sobre la raíz de n.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.733}Q{1.072}Q{1.225}Q{0.970}}
+\toprule
+\textbf{Funciones hash} & \textbf{Error medio observado} & \textbf{Cota uno sobre raíz de n} & \textbf{Bytes por documento} \\
+\midrule
+32 & 0,0142 & 0,1768 & 256 \\
+64 & 0,0109 & 0,1250 & 512 \\
+128 & 0,0072 & 0,0884 & 1.024 \\
+256 & 0,0052 & 0,0625 & 2.048 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+La \textbf{figura f18} muestra las dos curvas en escala logarítmica doble y tienen la misma pendiente, lo que confirma la ley. La consecuencia práctica es dura: cuadruplicar las funciones hash solo divide el error entre dos. Se eligen \textbf{128} porque su error, 0,0072, es un orden de magnitud menor que el ancho de la banda de decisión de LSH, así que afinar más la estimación por debajo de la resolución con la que luego se decide no compra nada.
+
+\figuraguia{f18_error_minhash.pdf}{f18.}{Error de MinHash según el número de funciones hash}
+\phantomsection
+\subsubsection*{Sección 4. LSH por bandas, en Spark}
+\addcontentsline{toc}{subsubsection}{Sección 4. LSH por bandas, en Spark}
+\textbf{Cómo funciona.} La firma de 128 enteros se parte en b bandas de r filas. Cada banda se resume en un hash, y dos documentos son candidatos si coinciden en el hash de \textbf{al menos una} banda. Solo los candidatos se verifican con Jaccard exacta.
+
+La probabilidad de que un par con similitud real s sea candidato es uno menos, uno menos s elevado a r, elevado a b. Esa es la \textbf{curva S}.
+
+\begin{enumerate}
+  \item La probabilidad de coincidir en una banda concreta es s elevado a r, porque la banda tiene r posiciones y todas deben coincidir.
+  \item La probabilidad de no coincidir en ninguna de las b bandas es, uno menos s elevado a r, elevado a b.
+  \item El complemento es la fórmula.
+\end{enumerate}
+\textbf{El umbral.} La aproximación estándar del punto de inflexión es uno sobre b, elevado a uno sobre r. Aquí hay un error frecuente que conviene no cometer: en ese umbral la probabilidad \textbf{no vale un medio}. Vale uno menos, uno menos uno sobre b, elevado a b, que tiende a uno menos uno sobre e, alrededor de \textbf{0,63}. El umbral marca dónde la curva cambia de concavidad, no dónde vale la mitad. Lo verificamos numéricamente antes de escribirlo.
+
+\textbf{Detalle de implementación.} Con r igual a 3 salen 42 bandas y sobran dos posiciones de las 128, porque 3 no divide a 128. La firma se recorta a b por r antes de partirla, y cada banda lleva su propia semilla de hash para que bandas distintas con el mismo contenido no colisionen entre sí.
+
+\textbf{Por qué RDD y no DataFrame.} El agrupamiento por bandas es un flatMap que emite un par por banda, seguido de un groupByKey y de las combinaciones dentro de cada bucket. Expresar eso en SQL sería forzado. Además se filtran los buckets con más de 400 elementos: un bucket enorme no informa, solo produce combinaciones cuadráticas de basura.
+
+\textbf{LSH es un generador de candidatos, no un clasificador.} Esta frase decide cómo se mide todo lo que sigue. Su salida pasa después por una verificación exacta que elimina \textbf{todos} los falsos positivos, de modo que la precisión antes de verificar no es una medida de calidad sino de cuánto trabajo queda. Las dos cifras que importan son el recall, porque un par perdido aquí se pierde para siempre, y el número de candidatos, porque es el costo de la verificación.
+
+El barrido, con umbral buscado de 0,3 y 263 pares verdaderos:
+
+\begin{center}\scriptsize
+\begin{tabularx}{\linewidth}{Q{1.018}Q{1.018}Q{1.045}Q{1.045}Q{0.764}Q{1.110}}
+\toprule
+\textbf{Configuración} & \textbf{Candidatos} & \textbf{Falsos positivos} & \textbf{Falsos negativos} & \textbf{Recall} & \textbf{Pares a verificar} \\
+\midrule
+b=\allowbreak{}128, r=\allowbreak{}1 & 993.962 & 993.699 & 0 & 1,0000 & 49,72 \% \\
+b=\allowbreak{}64, r=\allowbreak{}2 & 171.259 & 170.997 & 1 & 0,9962 & 8,57 \% \\
+b=\allowbreak{}42, r=\allowbreak{}3 & 32.337 & 32.106 & 32 & 0,8783 & 1,62 \% \\
+b=\allowbreak{}32, r=\allowbreak{}4 & 1.177 & 1.051 & 137 & 0,4791 & 0,06 \% \\
+b=\allowbreak{}25, r=\allowbreak{}5 & 139 & 64 & 188 & 0,2852 & 0,007 \% \\
+b=\allowbreak{}21, r=\allowbreak{}6 & 59 & 18 & 222 & 0,1559 & 0,003 \% \\
+b=\allowbreak{}16, r=\allowbreak{}8 & 24 & 0 & 239 & 0,0913 & 0,001 \% \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Las dos figuras que salen de aquí son la \textbf{f19}, la curva S de cada configuración, y la \textbf{f20}, recall contra costo de verificación.
+
+\figuraguia{f19_curva_s.pdf}{f19.}{Curva S de LSH según bandas y filas}
+\figuraguia{f20_recall_vs_costo.pdf}{f20.}{Recall contra costo de verificación en el barrido de LSH}
+\textbf{Por qué no se usa F1.} Lo intentamos primero con F1 y seleccionaba una configuración con recall por debajo de la mitad, que para un generador de candidatos es inservible. F1 trata los dos errores como equivalentes y aquí no lo son: un falso positivo lo elimina la verificación posterior, así que es trabajo; un falso negativo se pierde para siempre. La configuración elegida es \textbf{b igual a 64 y r igual a 2}, que recupera el 99,6 por ciento de los pares verdaderos verificando solo el 8,6 por ciento de los pares.
+
+\phantomsection
+\subsubsection*{Sección 5. SimHash frente a MinHash}
+\addcontentsline{toc}{subsubsection}{Sección 5. SimHash frente a MinHash}
+\textbf{Qué es SimHash.} Otro esquema de hashing sensible a la localidad, pero para similitud \textbf{coseno} en lugar de Jaccard. Se sortean tantos hiperplanos aleatorios como bits quiera tener la firma. Cada bit dice de qué lado del hiperplano cae el vector del documento. La probabilidad de que dos documentos coincidan en un bit es uno menos el ángulo entre ellos dividido entre pi, de modo que la distancia de Hamming entre las dos firmas estima el ángulo y, con él, el coseno.
+
+En la implementación, en lugar de sortear hiperplanos explícitos se usa el hash de cada término: cada bit del hash indica el signo con que ese término contribuye a esa coordenada, y se acumula sumando el peso del término con ese signo. Al final cada coordenada se reduce a un bit según su signo.
+
+\textbf{Por qué los dos y no uno.} No son intercambiables. MinHash trata un conjunto \textbf{sin pesos}; SimHash respeta el peso de cada término. En este dataset la palabra adquisición aparece en casi todos los objetos y el nombre de un equipo médico en muy pocos. MinHash las trata igual; TF-IDF con SimHash no.
+
+\textbf{TF-IDF.} Term Frequency por Inverse Document Frequency. Pesa cada término por lo frecuente que es en el documento y lo castiga por lo frecuente que es en la colección, de modo que lo que aparece en todas partes pesa poco.
+
+El resultado, en la \textbf{figura f21} sobre 2.091 pares: SimHash correlaciona \textbf{0,734} con el coseno de TF-IDF y \textbf{0,694} con Jaccard. Cada esquema estima la métrica para la que fue diseñado.
+
+\figuraguia{f21_simhash_vs_minhash.pdf}{f21.}{SimHash contra MinHash sobre los mismos pares}
+Dos cosas que conviene anticipar.
+
+\begin{enumerate}
+  \item \textbf{Los pares están estratificados por similitud real, no elegidos al azar.} Con pares aleatorios casi todos tienen similitud cero y la correlación medida sería ruido, no una propiedad de SimHash.
+  \item \textbf{Ninguna correlación llega a uno, y el motivo es la resolución.} Con 64 bits la similitud estimada solo puede tomar 65 valores distintos, lo que produce las bandas horizontales visibles en los dos paneles. Subir a 128 bits afinaría la escala a costa del doble de memoria por firma.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Sección 6. Contraste con Spark MLlib}
+\addcontentsline{toc}{subsubsection}{Sección 6. Contraste con Spark MLlib}
+Hay una \textbf{diferencia de contrato} que invalida la comparación ingenua. El método approxSimilarityJoin de MLlib no devuelve candidatos: genera los candidatos internamente y ya les aplica la verificación exacta, de modo que su salida son pares verificados. Comparar sus pares verificados contra los candidatos crudos de la implementación propia daría una ventaja aparente enorme a MLlib que es solo de contabilidad.
+
+Para que la comparación sea válida, a los candidatos propios se les aplica la misma verificación exacta.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{1.617}Q{0.916}Q{0.916}Q{0.550}}
+\toprule
+\textbf{Configuración} & \textbf{Candidatos crudos} & \textbf{Pares verificados} & \textbf{Recall} \\
+\midrule
+propia, b=\allowbreak{}64 y r=\allowbreak{}2, verificada & 171.259 & 262 & 0,9962 \\
+MLlib con 8 tablas hash & no expuesto & 252 & 0,9582 \\
+MLlib con 16 tablas hash & no expuesto & 261 & 0,9924 \\
+MLlib con 32 tablas hash & no expuesto & 261 & 0,9924 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Con el mismo contrato las dos producen pares verificados correctos, y lo que queda es una diferencia de configuración y no de corrección. MLlib usa tablas hash independientes, que equivale a bandas de una sola fila, y eso le da un umbral efectivo muy bajo: atrapa casi todo a costa de generar muchos más candidatos internos, que no expone. La implementación propia permite elegir explícitamente ese punto con b y r, que es lo que el enunciado pide analizar.
+
+\textbf{La verificación que importa.} Ningún par declarado por la implementación propia resulta falso tras la comprobación exacta: los 262 superan el umbral. Si el agrupamiento por bandas tuviera un error conceptual aparecerían pares que no lo superan, y no aparece ninguno. Y el recall queda al nivel de MLlib, 262 de 263 pares verdaderos frente a 261.
+
+\phantomsection
+\subsubsection*{Sección 7. Un caso concreto}
+\addcontentsline{toc}{subsubsection}{Sección 7. Un caso concreto}
+Los cinco pares de mayor similitud. Los de la misma entidad son reconvocatorias del mismo objeto. El interesante es la Municipalidad Distrital de Tambo de Mora contra la Municipalidad Distrital de San Bartolo, dos municipalidades distintas con el mismo pliego del programa Vaso de Leche, una de 2024 y otra de 2023.
+
+\textbf{Qué autoriza a concluir esto y qué no.} Un par con similitud alta dice que dos procesos describen casi lo mismo. Eso puede reflejar una plantilla compartida entre entidades, una necesidad genuinamente idéntica o un proceso fraccionado. Es una hipótesis que señala dónde mirar, no una conclusión sobre la conducta de nadie.
+
+\phantomsection
+\subsubsection*{Sección 8. A escala completa}
+\addcontentsline{toc}{subsubsection}{Sección 8. A escala completa}
+Todo lo anterior corre sobre 2.000 procesos porque ahí se puede calcular la verdad de referencia. El método, en cambio, se aplica al conjunto entero en Spark: 166.439 procesos con objeto suficientemente largo, 13.850.887.141 pares posibles, 28.161.739 candidatos. Una reducción de \textbf{492 a 1}.
+
+\phantomsection
+\subsection*{4. Alternativas para cada decisión, explicadas}
+\addcontentsline{toc}{subsection}{4. Alternativas para cada decisión, explicadas}
+\phantomsection
+\subsubsection*{Para encontrar pares parecidos sin compararlos todos}
+\addcontentsline{toc}{subsubsection}{Para encontrar pares parecidos sin compararlos todos}
+\begin{enumerate}
+  \item \textbf{Fuerza bruta.} Quince mil millones de comparaciones. Es la cota contra la que se mide todo, y es lo que la figura f17 demuestra que sería desperdicio: solo el 0,002 por ciento de los pares supera 0,5.
+  \item \textbf{Bloqueo, o vecindario ordenado.} Se ordenan los documentos por una clave, por ejemplo las primeras letras del objeto, y solo se comparan los que caen en la misma ventana. Es barato y es lo que se hacía antes de LSH. El problema es que es frágil: un error de digitación en la primera letra manda el documento a otro bloque y se pierde para siempre, y no hay forma de calcular la probabilidad de que eso pase. LSH tiene la misma idea pero con una \textbf{curva de probabilidad calculable}, que es lo que permite elegir el punto de operación a conciencia.
+  \item \textbf{Filtrado por prefijo, al estilo PPJoin.} Ordena los elementos del conjunto por frecuencia global y usa el hecho de que dos conjuntos con Jaccard alta deben compartir algo de su prefijo. Da resultados exactos sin falsos negativos y es más eficiente que la fuerza bruta, pero su costo depende mucho de la distribución y no se paraleliza tan limpiamente como el agrupamiento por bandas.
+  \item \textbf{Índice invertido con filtro de longitud.} Exacto y bueno cuando los conjuntos son pequeños. Aquí cada documento tiene 187 shingles y el universo es de 137.412, de modo que las listas de posteo serían enormes.
+  \item \textbf{Lo que se hizo.} LSH por bandas sobre firmas MinHash, porque es lo único de la lista que ofrece una curva S con parámetros explícitos y se expresa de forma natural como flatMap más groupByKey en Spark.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para resumir un conjunto en una firma}
+\addcontentsline{toc}{subsubsection}{Para resumir un conjunto en una firma}
+\begin{enumerate}
+  \item \textbf{Permutaciones reales del universo.} Es la definición del algoritmo y es inviable: permutar 137.412 shingles por cada una de las 128 funciones.
+  \item \textbf{MinHash con hashes lineales.} Lo que se usó: a por x más b, módulo un primo de Mersenne. Cada par de coeficientes es una permutación aproximada.
+  \item \textbf{Hashing de una sola permutación con densificación.} Una sola función hash y el universo partido en n franjas, tomando el mínimo de cada franja. Cuesta una pasada en lugar de n, pero hay que tratar las franjas vacías con un esquema de densificación que complica la explicación. Con 128 hashes vectorizados en numpy no hacía falta.
+  \item \textbf{Bocetos de los k mínimos, o bottom-k.} Se queda con los k valores hash más pequeños del conjunto entero, en vez de el mínimo de k funciones. Estima mejor para el mismo tamaño de firma, pero no se parte en bandas de forma natural, que es justo lo que LSH necesita.
+  \item \textbf{Minwise hashing de b bits.} Guarda solo los b bits bajos de cada mínimo, de modo que la firma ocupa mucho menos a cambio de más colisiones. Es la optimización evidente si la memoria apretara; con 1 KiB por documento no aprieta.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para la representación del documento}
+\addcontentsline{toc}{subsubsection}{Para la representación del documento}
+\begin{enumerate}
+  \item \textbf{Shingles de palabras.} Más interpretables y más baratos, pero frágiles ante errores de digitación, abreviaturas y plurales, que abundan porque el objeto lo escribe cada entidad a mano.
+  \item \textbf{Shingles de caracteres.} Lo que se usó, con k igual a 9 fijado por criterio.
+  \item \textbf{El conjunto de códigos CUBSO.} Medido y descartado: 0,94 elementos por proceso y 270 procesos vacíos de 2.000.
+  \item \textbf{TF-IDF.} Sí se usa, pero para SimHash y para la Parte III, porque es una representación \textbf{con pesos} y Jaccard no los admite.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para la métrica de similitud}
+\addcontentsline{toc}{subsubsection}{Para la métrica de similitud}
+\begin{enumerate}
+  \item \textbf{Jaccard.} Para conjuntos sin peso. Es la que estima MinHash.
+  \item \textbf{Coseno.} Para vectores con peso. Es la que estima SimHash, y la de la Parte III.
+  \item \textbf{Distancia de edición, o Levenshtein.} Es la métrica natural para errores de digitación, y se descarta por dos motivos: es cuadrática en la longitud de los textos, y no se conoce una familia de funciones sensibles a la localidad para ella, de modo que no admite el truco de LSH. Los shingles de caracteres son la forma práctica de capturar parte de esa tolerancia dentro de una métrica que sí la admite.
+  \item \textbf{Distancia de Hamming.} Es la que se usa \textbf{entre firmas SimHash}, no entre documentos.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para elegir bandas y filas}
+\addcontentsline{toc}{subsubsection}{Para elegir bandas y filas}
+\begin{enumerate}
+  \item \textbf{F1 sobre los candidatos crudos.} Fue el primer intento y seleccionaba una configuración con recall por debajo de la mitad. Trata los dos errores como equivalentes y aquí no lo son.
+  \item \textbf{Precisión.} Peor todavía: premia a la configuración que menos propone.
+  \item \textbf{Fijar el umbral teórico y despejar.} Se puede, y de hecho la fórmula está implementada, pero el umbral teórico es una aproximación y conviene comprobar con el barrido lo que realmente ocurre.
+  \item \textbf{Lo que se hizo.} Recall contra porcentaje de pares a verificar, eligiendo la configuración de menor costo entre las que superan el 95 por ciento de recall.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para el contraste con una biblioteca}
+\addcontentsline{toc}{subsubsection}{Para el contraste con una biblioteca}
+\begin{enumerate}
+  \item \textbf{Comparar los candidatos propios contra la salida de MLlib.} Inválido: son contratos distintos, porque MLlib ya verifica internamente.
+  \item \textbf{Lo que se hizo.} Aplicar a los candidatos propios la misma verificación exacta, y entonces comparar recall contra recall.
+\end{enumerate}
+\phantomsection
+\subsection*{5. Preguntas probables y qué responder}
+\addcontentsline{toc}{subsection}{5. Preguntas probables y qué responder}
+\textbf{¿Cuál es el criterio para k y qué pasa si se elige otro?} El criterio es que el fondo de pares no relacionados quede por debajo de 0,02, y el primer k que lo cumple es 9. No es crítico: con 7 y con 11 el barrido de LSH da resultados muy parecidos.
+
+\textbf{¿El umbral de LSH es donde la probabilidad vale un medio?} No. La fórmula marca el punto de inflexión, donde la probabilidad vale uno menos uno sobre e, unos 0,63.
+
+\textbf{¿Por qué 128 funciones hash y no más?} Porque el error con 128 ya es un orden de magnitud menor que el ancho de la banda de decisión de LSH; gastar más afina una estimación por debajo de la resolución con la que se decide.
+
+\textbf{¿Por qué ninguna correlación de SimHash llega a uno?} Por resolución: con 64 bits solo hay 65 valores posibles de similitud estimada.
+
+\textbf{¿Cómo saben que la implementación propia es correcta?} Porque todos sus pares verificados superan el umbral y porque coinciden con los de MLlib bajo el mismo contrato. Las dos comprobaciones hacen falta: la primera descarta falsos, la segunda descarta omisiones.
+
+
+\clearpage
+\phantomsection
+\section*{Notebook 3. Búsqueda aproximada de vecinos: IVF y HNSW}
+\addcontentsline{toc}{section}{Notebook 3. Búsqueda aproximada de vecinos: IVF y HNSW}
+Guía de estudio del notebook 3\_\allowbreak{}ann\_\allowbreak{}ivf\_\allowbreak{}hnsw.ipynb. El porqué de cada elección está en docs/JUSTIFICACION.md, sección Parte III.
+
+Qué significa cada campo, cada código CUBSO y cada etiqueta del dato está en docs/GLOSARIO.md.
+
+\phantomsection
+\subsection*{1. Qué responde esta parte}
+\addcontentsline{toc}{subsection}{1. Qué responde esta parte}
+Dado un proceso de contratación, cuáles son los diez más parecidos de todo el conjunto, y cuánto cuesta responder eso de forma exacta frente a aproximada.
+
+Es la misma pregunta de parecido de la Parte II, pero con otra representación y otra estructura. Allí el documento era un conjunto de shingles y la métrica Jaccard; aquí es un vector denso y la métrica el coseno. No es una cadena: son dos caminos distintos para la misma pregunta.
+
+\textbf{Spark no se usa aquí, y hay que argumentarlo.} FAISS es una biblioteca de un solo nodo, el subconjunto cabe holgadamente en memoria, y toda la consulta es búsqueda en un índice y no agregación distribuida. Distribuir agregaría barajado y serialización sin ganar nada. Reconocer dónde Spark no aporta es parte de lo que evalúa la Parte VI.
+
+\phantomsection
+\subsection*{2. Entradas y salidas}
+\addcontentsline{toc}{subsection}{2. Entradas y salidas}
+\textbf{Entrada.} El Parquet de la Parte I, filtrado a procesos con objeto de más de 60 caracteres y muestreado a 80.000. Ese tamaño está elegido para que la fuerza bruta duela y el índice tenga sentido, y para que el notebook corra en minutos.
+
+\textbf{Salida.} Cinco artefactos y cinco figuras, de la f22 a la f26.
+
+\figuraguia{f26_escalado.pdf}{f26.}{Escalado del tiempo con el tamaño de la base}
+\phantomsection
+\subsection*{3. Recorrido sección por sección}
+\addcontentsline{toc}{subsection}{3. Recorrido sección por sección}
+\phantomsection
+\subsubsection*{Sección 1. Dos representaciones vectoriales}
+\addcontentsline{toc}{subsubsection}{Sección 1. Dos representaciones vectoriales}
+Se construyen dos a propósito, para poder separar el efecto de la representación del efecto del índice.
+
+\begin{enumerate}
+  \item \textbf{TF-IDF de palabras}, 22.037 términos. Es la de referencia.
+  \item \textbf{TF-IDF de 4-gramas de caracteres} con el analizador char\_\allowbreak{}wb, 54.286 n-gramas. Es robusta frente a errores de digitación, que abundan porque el objeto lo escribe a mano cada entidad.
+\end{enumerate}
+Las dos pasan por el mismo tratamiento: TF-IDF disperso, reducción a 128 dimensiones con \textbf{SVD truncada}, y normalización a norma uno.
+
+\textbf{Por qué SVD.} FAISS trabaja sobre vectores densos y de dimensión fija. Un TF-IDF con 22.000 columnas sería inviable. La SVD truncada, que aplicada a TF-IDF se conoce como \textbf{Latent Semantic Analysis}, proyecta a un espacio de 128 dimensiones conservando la mayor parte de la varianza y, de paso, hace que términos que coocurren queden cerca.
+
+\textbf{Por qué normalizar.} Con los vectores de norma uno, el \textbf{producto interno es exactamente el coseno}. Así se puede usar el índice de producto interno de FAISS y leer el resultado como similitud coseno sin convertir nada.
+
+\textbf{Qué es sublinear\_\allowbreak{}tf.} En lugar de la frecuencia bruta del término usa uno más su logaritmo, de modo que un término repetido diez veces no pesa diez veces más que uno que aparece una vez.
+
+\phantomsection
+\subsubsection*{Sección 2. Cómo se mide la latencia, y por qué el detalle decide la conclusión}
+\addcontentsline{toc}{subsubsection}{Sección 2. Cómo se mide la latencia, y por qué el detalle decide la conclusión}
+Esta sección es la más importante del notebook y conviene saber contarla, porque corrige un error que cometimos nosotros.
+
+\textbf{El problema.} FAISS cambia de implementación según el tamaño del lote de consultas. Con un lote grande, el índice plano resuelve la búsqueda como un producto de matrices con BLAS y aprovecha los ocho núcleos. Con una sola consulta no tiene nada que amortizar.
+
+\textbf{Los dos regímenes corresponden a usos reales distintos.}
+
+\begin{enumerate}
+  \item \textbf{Por lote.} Un trabajo fuera de línea, por ejemplo deduplicar todo el catálogo de una vez.
+  \item \textbf{Consulta única.} Un servicio en línea que responde a una petición a la vez.
+\end{enumerate}
+Se miden los dos y toda comparación usa el mismo régimen en ambos lados. Mezclarlos produce diferencias de un orden de magnitud que no son del índice sino del método de medición. La primera versión del notebook medía la fuerza bruta con lotes de mil consultas y el escalado con lotes de trescientas, lo que daba un falso multiplicador de 28.
+
+\textbf{Por qué la consulta única se mide con un solo hilo de OpenMP.} Por dos razones. La primera es de realismo: un servicio en línea atiende cada petición en su hilo y no reparte una sola consulta entre los ocho núcleos. La segunda es de estabilidad: con ocho hilos el arranque del grupo de hilos domina el tiempo de una consulta individual, y la medición se vuelve sensible a la carga de la máquina hasta producir curvas no monótonas que no dicen nada del índice.
+
+Además hay calentamiento: se descartan las veinte primeras consultas y se toma la \textbf{mediana} de doscientas, no la media, porque la mediana no se mueve por una pausa del recolector de basura.
+
+\textbf{La verdad de referencia} son los diez vecinos que devuelve el índice plano exacto, y la métrica de calidad es \textbf{recall en 10}: de los diez vecinos verdaderos, cuántos devuelve el índice aproximado.
+
+\phantomsection
+\subsubsection*{Sección 3. IVF, listas invertidas}
+\addcontentsline{toc}{subsubsection}{Sección 3. IVF, listas invertidas}
+\textbf{Cómo funciona.} Un k-medias previo parte el espacio en nlist celdas de Voronoi y guarda cada vector en la lista de su centroide más cercano. Eso es el entrenamiento. En consulta, se calcula la distancia a los nlist centroides, se eligen las nprobe celdas más cercanas y se recorren solo esos vectores. El trabajo baja en proporción a nprobe sobre nlist.
+
+\textbf{El parámetro de calidad es nprobe.} Visitar más celdas acerca al resultado exacto y cuesta más tiempo. El valor de nlist se fija con la regla habitual, la raíz del número de vectores, que aquí da 282.
+
+\textbf{El error que comete.} Un vecino verdadero puede estar en una celda que no se visitó, porque la frontera de Voronoi no respeta la vecindad: dos puntos cercanos pueden caer en celdas distintas si están junto a la frontera.
+
+La \textbf{figura f22} muestra que el recall sube muy rápido y luego se aplana. Con nprobe igual a 1 se visita el 0,35 por ciento de las celdas y ya se recupera el 75 por ciento de los vecinos verdaderos; con 16 se llega al 99 por ciento en 0,122 milisegundos por consulta; con 64 se sube al 100 por ciento cuadruplicando el trabajo. La curva dice dónde dejar de pagar: más allá de la rodilla cada punto de recall cuesta desproporcionadamente.
+
+\figuraguia{f22_ivf.pdf}{f22.}{Recall y latencia de IVF según nprobe}
+\phantomsection
+\subsubsection*{Sección 4. HNSW, grafo navegable en capas}
+\addcontentsline{toc}{subsubsection}{Sección 4. HNSW, grafo navegable en capas}
+\textbf{Qué significa el nombre.} Hierarchical Navigable Small World. Es un grafo de vecindad con varias capas.
+
+\textbf{Cómo funciona.} Cada vector se conecta con hasta M vecinos cercanos. Las capas superiores son dispersas, con pocos nodos y aristas largas, y sirven para acercarse rápido a la región correcta; las inferiores son densas y afinan. La consulta entra por la capa superior, avanza con una búsqueda voraz hacia el vecino que más reduce la distancia, y al no poder mejorar baja una capa y repite. En la capa cero hace una búsqueda en haz con una lista de candidatos de tamaño efSearch.
+
+\textbf{Los parámetros.} M es el número de aristas por nodo, aquí 32. efConstruction controla la calidad del grafo al construirlo, aquí 200. efSearch es el parámetro de calidad en consulta.
+
+La \textbf{figura f23} muestra que HNSW llega muy alto con exploración mínima: con efSearch igual a 10 ya alcanza el 99 por ciento de recall en 0,028 milisegundos, y con 256 llega al 100 por ciento.
+
+\figuraguia{f23_hnsw.pdf}{f23.}{Recall y latencia de HNSW según efSearch}
+\textbf{La contrapartida está fuera de la figura y hay que decirla.} Construir el grafo tomó 7,1 segundos frente a 0,4 de IVF, y el grafo guarda hasta 32 aristas por nodo además de los vectores: 61,4 MB frente a 41,1 de IVF y 41,0 de la fuerza bruta.
+
+\phantomsection
+\subsubsection*{Sección 5. Los dos juntos, frente a la fuerza bruta}
+\addcontentsline{toc}{subsubsection}{Sección 5. Los dos juntos, frente a la fuerza bruta}
+La comparación honesta no es recall contra parámetro sino \textbf{recall contra latencia}, cada índice en su mejor configuración para cada presupuesto de tiempo.
+
+La \textbf{figura f24} tiene dos paneles y cuentan historias opuestas, que es por lo que hacen falta los dos.
+
+\figuraguia{f24_ann_vs_exacta.pdf}{f24.}{Lo aproximado contra lo exacto, en lote y consulta a consulta}
+\begin{enumerate}
+  \item \textbf{En lote}, la fuerza bruta tarda 0,0777 milisegundos por consulta y el mejor HNSW sobre el 95 por ciento de recall tarda 0,0088. El índice aproximado aporta poco, porque el índice plano resuelve el lote como un producto de matrices con BLAS sobre ocho núcleos y eso es extremadamente eficiente.
+  \item \textbf{Consulta a consulta} se invierte: la fuerza bruta tarda 1,924 milisegundos, HNSW 0,028, es decir 69 veces más rápido, e IVF 0,078.
+\end{enumerate}
+La moraleja: la pregunta de si un índice aproximado vale la pena no tiene respuesta sin decir antes si el uso es por lotes o en línea.
+
+\textbf{El escalado, figura f26.} Una sola medición no responde a partir de qué tamaño compensa, así que se mide sobre subconjuntos crecientes, en régimen de consulta única y con el mismo número de consultas en todos los puntos.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.941}Q{1.412}Q{0.941}Q{0.706}}
+\toprule
+\textbf{Vectores} & \textbf{Fuerza bruta} & \textbf{HNSW} & \textbf{Factor} \\
+\midrule
+5.000 & 0,064 ms & 0,024 ms & 2,7 \\
+10.000 & 0,110 ms & 0,027 ms & 4,1 \\
+20.000 & 0,257 ms & 0,033 ms & 7,9 \\
+40.000 & 0,799 ms & 0,041 ms & 19,7 \\
+80.000 & 1,940 ms & 0,053 ms & 36,7 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Las dos rectas tienen pendientes distintas y esa diferencia es todo el argumento. Multiplicar la base por 16 multiplica el tiempo de la fuerza bruta por 30, que es crecimiento lineal, y el de HNSW por 2,2, que es el crecimiento logarítmico que promete la estructura.
+
+\textbf{La conclusión incómoda que preferimos decir.} A nuestro volumen y en uso por lotes el índice aproximado no era necesario. Lo que lo justifica es el uso en línea y el escenario de volumen diez o cien veces mayor que plantea la Parte VI, y eso está medido aquí en lugar de supuesto.
+
+\textbf{El efecto de la representación, figura f25.} Con el índice fijo y exacto en los dos casos, las dos representaciones comparten solo el 44 por ciento de los diez vecinos. Es un recordatorio incómodo: una parte grande de lo que se llama error de un índice aproximado es en realidad una decisión de representación tomada mucho antes. Los n-gramas de caracteres agrupan por forma de escritura; las palabras agrupan por vocabulario compartido. Ninguna es la correcta en abstracto.
+
+\figuraguia{f25_representaciones.pdf}{f25.}{Dos representaciones del mismo texto, mismo índice exacto}
+\phantomsection
+\subsubsection*{Sección 6. Cuándo conviene cada uno}
+\addcontentsline{toc}{subsubsection}{Sección 6. Cuándo conviene cada uno}
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.984}Q{0.733}Q{0.642}Q{1.641}}
+\toprule
+\textbf{Índice} & \textbf{Construcción} & \textbf{Memoria} & \textbf{Latencia al 95 por ciento de recall} \\
+\midrule
+Fuerza bruta & 0,0 s & 41,0 MB & 1,924 ms \\
+IVF con 282 celdas & 0,4 s & 41,1 MB & 0,078 ms \\
+HNSW con M igual a 32 & 7,1 s & 61,4 MB & 0,028 ms \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\begin{enumerate}
+  \item \textbf{IVF} cuando la memoria es el límite y el conjunto cambia seguido. Se construye rápido, ocupa poco por encima de los vectores y admite insertar sin reconstruir. Degrada de forma predecible.
+  \item \textbf{HNSW} cuando la latencia es el límite y el conjunto es estable. Da más recall por milisegundo, pero el grafo cuesta construirlo y ocupa más memoria, y borrar elementos es incómodo.
+  \item \textbf{Fuerza bruta} cuando el conjunto es pequeño o la consulta es rara. No tiene ningún parámetro que calibrar mal y es la verdad de referencia.
+\end{enumerate}
+\phantomsection
+\subsection*{4. Alternativas para cada decisión, explicadas}
+\addcontentsline{toc}{subsection}{4. Alternativas para cada decisión, explicadas}
+\phantomsection
+\subsubsection*{Para indexar vecinos}
+\addcontentsline{toc}{subsubsection}{Para indexar vecinos}
+\begin{enumerate}
+  \item \textbf{Fuerza bruta, índice plano.} Exacta y sin parámetros. Se conserva siempre, porque es la verdad de referencia sin la cual el recall no se puede medir. Su costo crece de forma lineal con la base.
+  \item \textbf{Árboles k-dimensionales y árboles de bolas.} Parten el espacio con hiperplanos o esferas y podan ramas por desigualdad triangular. Funcionan muy bien hasta unas diez o veinte dimensiones y luego degradan hasta el recorrido completo, porque en dimensión alta casi todos los puntos acaban a distancias parecidas y la poda deja de podar. Es la maldición de la dimensionalidad, y con 128 dimensiones ya no aportan.
+  \item \textbf{IVF, listas invertidas.} Lo que se usó. k-medias y recorrido de las celdas más cercanas.
+  \item \textbf{HNSW, grafo navegable en capas.} Lo que se usó. Más recall por milisegundo, más memoria y más tiempo de construcción.
+  \item \textbf{IVFPQ, listas invertidas con cuantización por producto.} Parte el vector en subvectores y sustituye cada uno por el índice de su centroide en un pequeño libro de códigos, con lo que un vector de 128 flotantes pasa a ocupar unos pocos bytes. Es lo que se usa cuando los vectores no caben en memoria. No se usa aquí por dos razones: 41 MB caben de sobra, y añadiría una \textbf{segunda fuente de error}, la de la compresión, que se confundiría con el error del índice, que es justo lo que esta parte quiere medir por separado.
+  \item \textbf{Árboles de proyección aleatoria, al estilo Annoy.} Construye un bosque de árboles que parten el espacio con hiperplanos aleatorios. Más simple que HNSW y en general peor en recall por milisegundo a este tamaño, pero con la ventaja de poder cargarse en memoria compartida desde disco.
+  \item \textbf{LSH para coseno.} Es exactamente SimHash, que ya está implementado en la Parte II. Para vectores densos y este rango de tamaños, IVF y HNSW lo dominan en recall por milisegundo; LSH brilla cuando se necesita una garantía probabilística explícita o un esquema distribuible, no cuando se quiere la menor latencia en un nodo.
+  \item \textbf{Fuerza bruta en tarjeta gráfica.} FAISS la soporta y a este volumen sería competitiva con cualquier índice. No se usa porque el entorno del proyecto es solo de procesador, y porque la pregunta del curso es sobre estructuras de índice y no sobre acelerar la fuerza bruta.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para la representación vectorial}
+\addcontentsline{toc}{subsubsection}{Para la representación vectorial}
+\begin{enumerate}
+  \item \textbf{TF-IDF disperso directo.} No sirve: FAISS necesita vectores densos de dimensión fija.
+  \item \textbf{TF-IDF más SVD truncada.} Lo que se usó. Aplicada a TF-IDF esto se llama análisis semántico latente, y además de reducir la dimensión acerca términos que coocurren.
+  \item \textbf{Análisis de componentes principales.} Es casi lo mismo, pero centra los datos, cosa que sobre una matriz dispersa la vuelve densa y no cabría en memoria. La SVD truncada funciona sin centrar.
+  \item \textbf{Proyección aleatoria.} Más barata y con la garantía de Johnson y Lindenstrauss de que las distancias se conservan aproximadamente. Es una alternativa razonable y se descarta porque la SVD conserva mejor la estructura con la misma dimensión de llegada, y el costo de calcularla una vez es asumible.
+  \item \textbf{Incrustaciones de un modelo de lenguaje.} Darían similitud semántica de verdad y no de vocabulario. Se descartan a propósito: introducirían un componente que no se puede explicar línea por línea en una sustentación, y el curso trata de estructuras de índice y no de representaciones aprendidas.
+  \item \textbf{Normalizar a norma uno.} No es una alternativa sino un requisito del diseño: con norma uno el producto interno \textbf{es} el coseno, lo que permite usar el índice de producto interno y leer el resultado directamente.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para medir}
+\addcontentsline{toc}{subsubsection}{Para medir}
+\begin{enumerate}
+  \item \textbf{Un solo régimen.} Es lo que se hace casi siempre y es lo que nos dio un falso multiplicador de 28. La conclusión cambia según el régimen, de modo que presentar uno solo sería engañoso.
+  \item \textbf{Media en lugar de mediana.} La media se mueve con una pausa del recolector de basura o con cualquier otro proceso de la máquina. Se usa la mediana de doscientas consultas, tras descartar veinte de calentamiento.
+  \item \textbf{Todos los hilos en la consulta única.} Se descarta porque el arranque del grupo de hilos domina el tiempo de una consulta individual y vuelve la medición sensible a la carga de la máquina, hasta producir curvas no monótonas.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para distribuir}
+\addcontentsline{toc}{subsubsection}{Para distribuir}
+\begin{enumerate}
+  \item \textbf{Spark.} Descartado con argumento, no por comodidad: un nodo, 41 MB en memoria, y la operación es búsqueda en índice y no agregación. Distribuirlo añadiría barajado y serialización sin ganar nada. Si la base creciera cien veces, lo que se haría es \textbf{fragmentar} el índice por nodo y consultar todos los fragmentos en paralelo, combinando los diez mejores de cada uno, que es un patrón de dispersar y reunir y no un barajado.
+\end{enumerate}
+\phantomsection
+\subsection*{5. Preguntas probables y qué responder}
+\addcontentsline{toc}{subsection}{5. Preguntas probables y qué responder}
+\textbf{¿Cuál de los dos números de latencia es el correcto?} Los dos, para preguntas distintas. El error está en comparar un lado medido en lote contra el otro medido consulta a consulta, que es lo que nos dio un falso multiplicador de 28 la primera vez.
+
+\textbf{¿Dónde conviene dejar de subir nprobe?} En la rodilla de la curva. De 16 a 64 el recall sube un punto y el trabajo se cuadruplica.
+
+\textbf{¿Entonces HNSW es mejor que IVF?} En latencia de consulta sí, con este volumen. Pero compra esa latencia con memoria y con tiempo de construcción, y con un índice que admite peor las inserciones masivas. Si la base cambia todo el tiempo o la memoria es escasa, IVF sigue siendo la elección.
+
+\textbf{¿Cuál representación es la correcta?} Ninguna en abstracto. Depende de si el parecido que se busca es ortográfico o de vocabulario.
+
+\textbf{¿Para este proyecto el índice aproximado era necesario?} A nuestro volumen y en uso por lotes, no, y preferimos decirlo. Lo justifica el uso en línea y el escenario de más volumen, y eso está medido.
+
+
+\clearpage
+\phantomsection
+\section*{Notebook 4. Minería de flujos: muestreo, Bloom Filter, Count-Min Sketch y DGIM}
+\addcontentsline{toc}{section}{Notebook 4. Minería de flujos: muestreo, Bloom Filter, Count-Min Sketch y DGIM}
+Guía de estudio del notebook 4\_\allowbreak{}flujos.ipynb. El porqué de cada elección está en docs/JUSTIFICACION.md, sección Parte IV.
+
+Qué significa cada campo, cada código CUBSO y cada etiqueta del dato está en docs/GLOSARIO.md.
+
+\phantomsection
+\subsection*{1. La restricción que da sentido a todo}
+\addcontentsline{toc}{subsection}{1. La restricción que da sentido a todo}
+Los 177.398 procesos se recorren en orden de convocatoria, uno a uno, y cada uno se ve \textbf{una sola vez}. No se puede volver atrás ni guardar el flujo completo. Esa es la diferencia entre un flujo y una tabla, y es lo que obliga a usar estructuras de resumen.
+
+El flujo es simulado a partir del Parquet, ordenado por fecha, y va del 4 de enero de 2023 al 30 de diciembre de 2025. Hay que ser honesto en esto: no hay una fuente en tiempo real, se simula el régimen de una sola pasada para poder medir lo que el enunciado pide.
+
+\textbf{Spark es opcional aquí y no se usa.} El recorrido es inherentemente secuencial y con estado: cada elemento modifica una estructura que el siguiente consulta. Distribuirlo exigiría combinar resúmenes parciales, lo que se puede hacer con Bloom y Count-Min porque son aditivos, pero no con DGIM sin reescribirlo. Spark se usa solo para ordenar y materializar el flujo.
+
+\textbf{Qué hereda de la Parte I.} La pregunta abierta del suelo de procesos sin competencia. Sobre un flujo esa pregunta se convierte en si el suelo está subiendo o bajando ahora mismo, y eso es un conteo sobre una ventana reciente, que es exactamente para lo que existe DGIM. Y el filtro de Bloom consulta el identificador del proveedor, que es la recurrencia que la figura f10 de la Parte I puso sobre la mesa.
+
+\phantomsection
+\subsection*{2. Recorrido sección por sección}
+\addcontentsline{toc}{subsection}{2. Recorrido sección por sección}
+\phantomsection
+\subsubsection*{Sección 1. Tres formas de muestrear}
+\addcontentsline{toc}{subsubsection}{Sección 1. Tres formas de muestrear}
+Tres técnicas que suelen confundirse. La diferencia no es de eficiencia sino de \textbf{qué preguntas sobreviven a la muestra}.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{1.706}Q{0.642}Q{0.733}Q{0.919}}
+\toprule
+\textbf{Técnica} & \textbf{Eventos} & \textbf{Proveedores} & \textbf{Proveedores completos} \\
+\midrule
+Por evento, 10 por ciento & 17.849 & 11.065 & 46,9 \% \\
+Por clave, 10 por ciento de proveedores & 45.781 & 6.814 & 100 \% \\
+Reservoir de 17.739 elementos & 17.739 & 10.914 & 47,5 \% \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\begin{enumerate}
+  \item \textbf{Muestreo por evento.} Cada evento entra con probabilidad fija e independiente. Conserva proporciones globales y destroza la integridad por entidad.
+  \item \textbf{Muestreo por clave.} Se sortea la \textbf{entidad}, no el evento, hasheando la clave y comparando contra el umbral. Si la entidad entra, entran todos sus eventos. Conserva integridad por entidad y pierde uniformidad sobre eventos.
+  \item \textbf{Reservoir sampling.} Mantiene una muestra uniforme de tamaño fijo k sin saber cuánto durará el flujo. Los primeros k elementos entran; el elemento número i, con i mayor que k, entra con probabilidad k sobre i y desaloja a uno al azar.
+\end{enumerate}
+\textbf{Por qué el reservoir es uniforme, demostrado.} Esta es la parte bonita del algoritmo y conviene saber contarla, porque el enunciado del algoritmo parece magia hasta que se ve la inducción.
+
+La afirmación es que, tras procesar i elementos, cada uno de los i está en la muestra con probabilidad k sobre i.
+
+\begin{enumerate}
+  \item \textbf{Caso base.} Con i igual a k, los k primeros entraron todos, de modo que cada uno está con probabilidad k sobre k, que es uno.
+  \item \textbf{Paso inductivo.} Supongamos que vale tras i menos uno elementos, y llega el elemento i. Entra con probabilidad k sobre i, que es lo que queríamos para él. Para un elemento viejo x, que estaba con probabilidad k sobre i menos uno, hay que calcular la probabilidad de que sobreviva. Si el elemento i se rechaza, cosa que ocurre con probabilidad uno menos k sobre i, x sobrevive seguro. Si el elemento i se acepta, con probabilidad k sobre i, desaloja a una de las k posiciones elegida al azar, de modo que x sobrevive con probabilidad k menos uno, sobre k.
+  \item \textbf{La cuenta.} La probabilidad de que x siga dentro es k sobre i menos uno, multiplicado por la suma de los dos casos, que es uno menos k sobre i, más k sobre i por k menos uno sobre k. Esa suma vale uno menos k sobre i más k menos uno sobre i, es decir uno menos uno sobre i, que es i menos uno sobre i. Y entonces k sobre i menos uno, por i menos uno sobre i, es \textbf{k sobre i}, que es lo que había que probar.
+\end{enumerate}
+La consecuencia práctica es que el reservoir no necesita conocer el largo del flujo de antemano, que es exactamente lo que un muestreo del diez por ciento sí necesitaría para producir una muestra de tamaño acotado. Con un flujo sin final declarado, el muestreo por evento tiene memoria no acotada; el reservoir tiene memoria exactamente k.
+
+\textbf{Por qué importa que una entidad quede completa.} Porque cambia qué preguntas admite la muestra. Sobre muestreo por evento, la pregunta cuántas adjudicaciones acumuló este proveedor da una respuesta \textbf{falsa}, no imprecisa: le faltan filas, y el conteo es sistemáticamente bajo. Con muestreo por clave la respuesta es exacta dentro de las entidades elegidas. Es la \textbf{figura f27}.
+
+\figuraguia{f27_muestreo.pdf}{f27.}{Tres estrategias de muestreo sobre el mismo flujo}
+El reservoir se comporta como el muestreo por evento en integridad, lo cual es esperado: su garantía es de uniformidad sobre eventos, no de integridad por entidad.
+
+\textbf{La figura f28 verifica el reservoir.} El invariante es que, tras ver i elementos, cada uno está en la muestra con probabilidad k sobre i, y eso implica que la composición de la muestra debe reproducir la del flujo. La desviación máxima observada entre las dos distribuciones de métodos es de 0,06 puntos porcentuales.
+
+\figuraguia{f28_reservoir.pdf}{f28.}{El reservoir reproduce la composición del flujo}
+Si preguntan para qué verificar algo ya demostrado: para distinguir un error de teoría de un error de implementación. La demostración garantiza el algoritmo, no nuestro código. Esta figura es la que detecta si el índice aleatorio está mal calculado, que es el fallo típico al escribir reservoir.
+
+\phantomsection
+\subsubsection*{Sección 2. Bloom Filter}
+\addcontentsline{toc}{subsubsection}{Sección 2. Bloom Filter}
+\textbf{La pregunta.} Ha aparecido antes este proveedor, sin mantener el conjunto de todos los vistos.
+
+\textbf{Cómo funciona.} Un arreglo de m bits, todos en cero, y k funciones hash. Insertar un elemento pone en uno las k posiciones que le corresponden. Consultar devuelve sí solo si las k posiciones están en uno.
+
+\textbf{Por qué los falsos negativos son imposibles.} Por construcción, no por suerte: insertar solo enciende bits y nunca los apaga, así que si un elemento se insertó, sus k posiciones siguen encendidas. Esa asimetría es lo que lo hace útil como primer filtro: \textbf{un no es definitivo}.
+
+\textbf{Por qué puede haber falsos positivos.} Porque las k posiciones de un elemento ausente pueden haber sido encendidas por otros elementos.
+
+\textbf{El dimensionamiento.} Para n elementos y tasa objetivo p, el tamaño óptimo es m igual a menos n por el logaritmo de p dividido entre el logaritmo de 2 al cuadrado, y el número óptimo de funciones hash es k igual a m sobre n por el logaritmo de 2. La tasa teórica es uno menos e elevado a menos k n sobre m, todo elevado a k.
+
+\textbf{Un detalle de implementación que conviene saber.} No se calculan k hashes independientes, sino \textbf{doble hash de Kirsch y Mitzenmacher}: dos hashes h1 y h2, y la posición i es h1 más i por h2, módulo m. Se demuestra que tiene el mismo comportamiento asintótico que k funciones independientes y cuesta dos hashes en lugar de k.
+
+\begin{center}\scriptsize
+\begin{tabularx}{\linewidth}{Q{1.018}Q{0.754}Q{1.062}Q{0.891}Q{1.062}Q{1.213}}
+\toprule
+\textbf{Tasa objetivo} & \textbf{Bits} & \textbf{Funciones hash} & \textbf{Memoria} & \textbf{Tasa observada} & \textbf{Falsos negativos} \\
+\midrule
+0,200 & 226.148 & 2 & 27,6 KiB & 0,0785 & 0 \\
+0,100 & 323.544 & 3 & 39,5 KiB & 0,0306 & 0 \\
+0,050 & 420.940 & 4 & 51,4 KiB & 0,0126 & 0 \\
+0,010 & 647.088 & 7 & 79,0 KiB & 0,0017 & 0 \\
+0,001 & 970.631 & 10 & 118,5 KiB & 0,0001 & 0 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+La \textbf{figura f29} muestra que la curva observada sigue a la teórica, lo que valida la implementación. Lo que decide es la comparación con la alternativa exacta: guardar los 67.510 identificadores en un conjunto de Python costaría del orden de 1.582 KiB, y el filtro con 1 por ciento de error ocupa 79,0, unas 20 veces menos.
+
+\figuraguia{f29_bloom.pdf}{f29.}{Tasa de falsos positivos del filtro de Bloom}
+La tasa observada es menor que la teórica porque la teórica se evalúa con el filtro ya lleno, mientras que las consultas ocurren mientras se va llenando.
+
+\phantomsection
+\subsubsection*{Sección 3. Count-Min Sketch}
+\addcontentsline{toc}{subsubsection}{Sección 3. Count-Min Sketch}
+\textbf{La pregunta.} Cuántas veces apareció cada código CUBSO, sin guardar un diccionario.
+
+\textbf{Cómo funciona.} Una tabla de d filas por w columnas, inicialmente en cero, y d funciones hash, una por fila. Al llegar una clave se incrementa una celda en cada fila. Para estimar se toma el \textbf{mínimo} de las d celdas.
+
+\textbf{Por qué el mínimo y por qué nunca subestima.} Cada celda acumula la clave más todas las que colisionan con ella, de modo que cada celda es una cota superior del conteo real. El mínimo de cotas superiores sigue siendo una cota superior, y es la más ajustada de las d.
+
+\textbf{La garantía.} El error está acotado por epsilon por el total de eventos con probabilidad uno menos delta, donde w es e sobre epsilon y d es el logaritmo de uno sobre delta. El \textbf{ancho controla el error} y la \textbf{profundidad controla la probabilidad} de excederlo.
+
+\begin{center}\tiny
+\begin{tabularx}{\linewidth}{Q{0.948}Q{0.688}Q{1.083}Q{0.952}Q{0.952}Q{1.039}Q{1.039}Q{1.299}}
+\toprule
+\textbf{Epsilon} & \textbf{Ancho} & \textbf{Profundidad} & \textbf{Memoria} & \textbf{Error medio} & \textbf{Error máximo} & \textbf{Cota teórica} & \textbf{Subestimaciones} \\
+\midrule
+0,0100 & 272 & 7 & 14,9 KiB & 97,24 & 480 & 1.320 & 0 \\
+0,0050 & 544 & 7 & 29,8 KiB & 30,70 & 319 & 660 & 0 \\
+0,0010 & 2.719 & 7 & 148,7 KiB & 0,57 & 19 & 132 & 0 \\
+0,0005 & 5.437 & 7 & 297,3 KiB & 0,04 & 8 & 66 & 0 \\
+0,0001 & 27.183 & 7 & 1.486,6 KiB & 0,00 & 2 & 13 & 0 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+La \textbf{figura f30} muestra que el error observado queda siempre por debajo de la cota y que nunca hay subestimaciones, que es exactamente lo que garantiza tomar el mínimo.
+
+\figuraguia{f30_cms.pdf}{f30.}{Error del Count-Min Sketch según ancho y profundidad}
+\textbf{Aquí hay un resultado incómodo que se reporta igual.} El diccionario exacto de 4.664 códigos ocupa del orden de 273 KiB, y para bajar el error a dos apariciones el sketch necesita 1.487. A este volumen el Count-Min \textbf{no compensa}. Compensa cuando el universo de claves es mucho mayor que la memoria disponible, y nuestro universo de códigos CUBSO no lo es. Se incluye porque el curso lo pide y porque medir cuándo una estructura no conviene también es resultado.
+
+\phantomsection
+\subsubsection*{Sección 4. Por qué hacen falta los dos, y no uno de los dos}
+\addcontentsline{toc}{subsubsection}{Sección 4. Por qué hacen falta los dos, y no uno de los dos}
+Es la pregunta natural: una frecuencia mayor que cero es una respuesta de pertenencia, entonces para qué un Bloom.
+
+La respuesta se mide en lugar de afirmarse. El Count-Min se dimensiona resolviendo \textbf{su propia fórmula de colisión}, no eligiendo parámetros a ojo: un elemento ausente se declara presente solo si las d filas tienen su celda ocupada, y con n claves en w columnas una celda está ocupada con probabilidad uno menos e elevado a menos n sobre w, así que hay que resolver esa expresión elevada a d igual a la tasa objetivo, y elegir la combinación de menor memoria.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{1.025}Q{0.733}Q{0.705}Q{1.537}}
+\toprule
+\textbf{Estructura} & \textbf{Responde} & \textbf{Memoria} & \textbf{Tasa de falsos positivos} \\
+\midrule
+Bloom Filter & pertenencia & 79,0 KiB & 0,00172 \\
+Count-Min Sketch & frecuencia & 5.059,6 KiB & 0,00167 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+A igual tasa de error el Count-Min necesita \textbf{64 veces más memoria}, y la razón es estructural: guarda un contador de ocho bytes donde al Bloom le basta un bit. Es la \textbf{figura f31}.
+
+\figuraguia{f31_bloom_vs_cms.pdf}{f31.}{Bloom contra Count-Min a igual tasa de error}
+Conviene contar que la primera versión de esta figura daba lo contrario, porque habíamos dimensionado el Count-Min a ojo, y encontrarlo fue lo que nos obligó a derivar la fórmula.
+
+\phantomsection
+\subsubsection*{Sección 5. DGIM}
+\addcontentsline{toc}{subsubsection}{Sección 5. DGIM}
+\textbf{La pregunta.} Cuántos de los últimos N procesos tuvieron un solo postor. El flujo de bits es exactamente el indicador de postor único que la Parte I dejó abierto.
+
+\textbf{Cómo funciona.} Se mantienen \textbf{cubos}, cada uno con una marca de tiempo y un tamaño que es potencia de dos, y a lo más r cubos de cada tamaño, con r igual a 2. Cuando llega un uno se crea un cubo de tamaño uno; si hay más de r cubos del mismo tamaño, los dos más antiguos se fusionan en uno del doble de tamaño, que hereda la marca de tiempo del más reciente de los dos. Los cubos que salen de la ventana se descartan.
+
+\textbf{Cómo estima.} Suma el tamaño de todos los cubos vivos \textbf{menos el más antiguo, del que cuenta solo la mitad}, porque de ese cubo no se sabe qué parte cae todavía dentro de la ventana.
+
+\textbf{Por qué la memoria es logarítmica.} Hay a lo más r cubos de cada tamaño y los tamaños son potencias de dos hasta N, de modo que hay del orden del logaritmo de N cubos, cada uno con una marca de tiempo de del orden del logaritmo de N bits. De ahí el logaritmo al cuadrado.
+
+\textbf{La cota de error.} El único cubo del que se duda es el más antiguo, y su tamaño es a lo más la mitad del conteo, de modo que el error relativo está acotado por uno sobre r. Con r igual a 2 la cota es el 50 por ciento, y subiendo r baja a uno sobre r menos uno, a cambio de más memoria.
+
+\begin{center}\tiny
+\begin{tabularx}{\linewidth}{Q{0.948}Q{0.813}Q{0.688}Q{0.677}Q{0.677}Q{1.259}Q{1.469}Q{1.469}}
+\toprule
+\textbf{Ventana} & \textbf{Exacto} & \textbf{DGIM} & \textbf{Error} & \textbf{Cubos} & \textbf{Memoria DGIM} & \textbf{Memoria exacta} & \textbf{Días cubiertos} \\
+\midrule
+500 & 200 & 193 & 3,5 \% & 10 & 160 B & 62 B & 25 \\
+5.000 & 879 & 793 & 9,8 \% & 14 & 224 B & 625 B & 61 \\
+20.000 & 2.498 & 2.841 & 13,7 \% & 16 & 256 B & 2.500 B & 138 \\
+50.000 & 5.959 & 7.449 & 25,0 \% & 18 & 288 B & 6.250 B & 304 \\
+150.000 & 18.043 & 17.689 & 2,0 \% & 20 & 320 B & 18.750 B & 902 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+La \textbf{figura f32} muestra que el peor error relativo observado es del 25 por ciento, muy por debajo de la cota teórica del 50. La \textbf{figura f33} muestra las dos curvas de memoria divergiendo: multiplicar la ventana por 300 multiplica la memoria exacta por lo mismo y los cubos pasan solo de 10 a 20.
+
+\figuraguia{f32_dgim.pdf}{f32.}{Error de DGIM sobre ventanas de distinto tamaño}
+\figuraguia{f33_dgim_memoria.pdf}{f33.}{Memoria de DGIM contra la ventana exacta}
+\textbf{Un matiz que conviene decir.} Con ventanas pequeñas DGIM \textbf{pierde}: con N igual a 500 usa 160 bytes frente a 62 del conteo exacto, porque cada cubo guarda una marca de tiempo y eso cuesta más que unos pocos bits. El cruce aparece alrededor de los primeros miles de elementos. Afirmar que una estructura sublineal siempre gana es el error que esta figura evita.
+
+\phantomsection
+\subsubsection*{Sección 6. DGIM frente a reservoir}
+\addcontentsline{toc}{subsubsection}{Sección 6. DGIM frente a reservoir}
+Se confunden porque ambos son resúmenes de un flujo con memoria acotada, pero responden a preguntas ortogonales. El reservoir da una muestra uniforme de \textbf{todo} el flujo, sin noción de recencia. DGIM responde solo sobre los últimos N elementos y olvida el resto por construcción.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.974}Q{0.940}Q{0.822}Q{1.677}Q{0.587}}
+\toprule
+\textbf{Método} & \textbf{Estimación} & \textbf{Memoria} & \textbf{Responde la pregunta de ventana} & \textbf{Error} \\
+\midrule
+Conteo exacto & 2.498 & 2.500 B & sí & 0 \% \\
+DGIM & 2.841 & 256 B & sí & 13,7 \% \\
+Reservoir filtrado & 2.820 & 32.000 B & no & 12,9 \% \\
+\bottomrule
+\end{tabularx}
+\end{center}
+El reservoir puede aproximar la pregunta de ventana solo descartando casi toda su muestra, y lo hace con más memoria y más error. A la inversa, DGIM no puede responder qué proporción de todo el histórico tuvo un solo postor, porque ya lo olvidó. Por eso se implementan los dos.
+
+\phantomsection
+\subsubsection*{Sección 7. Cuánto cuesta cada estructura en tiempo}
+\addcontentsline{toc}{subsubsection}{Sección 7. Cuánto cuesta cada estructura en tiempo}
+El enunciado pide analizar precisión, memoria y tiempo. Las dos primeras ya están medidas; esta sección añade la tercera, que el discurso habitual sobre estas estructuras suele omitir.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{1.447}Q{0.537}Q{1.017}}
+\toprule
+\textbf{Estructura} & \textbf{Elementos} & \textbf{Microsegundos por elemento} \\
+\midrule
+Conjunto exacto de Python, referencia & 146.025 & 0,08 \\
+DGIM con ventana de 20.000 & 177.398 & 0,51 \\
+Muestreo por clave & 177.398 & 0,93 \\
+Reservoir sampling & 177.398 & 1,10 \\
+Bloom Filter & 146.025 & 7,35 \\
+Count-Min Sketch & 132.091 & 7,74 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+El filtro de Bloom cuesta unas 92 veces más tiempo por elemento que el conjunto exacto de Python, porque calcula varias funciones hash donde el conjunto nativo calcula una y está implementado en C.
+
+\textbf{La conclusión honesta, que es la que hay que decir:} estas estructuras \textbf{no ahorran tiempo}. Cambian memoria por tiempo y por un error acotado, y se eligen cuando la memoria es el recurso escaso. Presentarlas como una mejora en todos los ejes sería falso. Es la \textbf{figura f38}.
+
+\figuraguia{f38_tiempos_estructuras.pdf}{f38.}{Costo en tiempo de cada estructura}
+\phantomsection
+\subsubsection*{Sección 8. Las cinco estructuras, lado a lado}
+\addcontentsline{toc}{subsubsection}{Sección 8. Las cinco estructuras, lado a lado}
+La tabla es el entregable de la parte: no cuál es mejor, sino qué pregunta responde cada una y qué cuesta.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.940}Q{0.940}Q{0.822}Q{1.294}Q{1.004}}
+\toprule
+\textbf{Estructura} & \textbf{Qué pregunta responde} & \textbf{Memoria} & \textbf{Error} & \textbf{Por qué se usa} \\
+\midrule
+Muestreo por clave & métricas por entidad sobre una muestra & proporcional a la fracción de claves & ninguno dentro de las claves elegidas & la única que conserva entidades completas \\
+Reservoir sampling & proporciones sobre todo el flujo & k elementos, fija y conocida & 0,06 puntos de desviación & no necesita conocer el largo del flujo \\
+Bloom Filter & apareció antes este proveedor & 79,0 KiB para 67.510 claves & 0,17 por ciento de falsos positivos, cero falsos negativos & un bit por posición, imbatible en pertenencia \\
+Count-Min Sketch & cuántas veces apareció cada ítem & 149 KiB & nunca subestima, máximo 19 apariciones & única que da frecuencias sin diccionario \\
+DGIM & cuántos en los últimos N elementos & 20 cubos para N igual a 150.000 & 25 por ciento observado, cota teórica 50 & única con noción de recencia \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\phantomsection
+\subsection*{3. Por qué cada estructura y no la otra}
+\addcontentsline{toc}{subsection}{3. Por qué cada estructura y no la otra}
+Las preguntas del tipo si usan DGIM, por qué también reservoir, o por qué no solo uno de los dos, son las más probables. La respuesta corta es que cada una responde una pregunta que la otra no puede responder. La respuesta larga, pareja por pareja:
+
+\textbf{DGIM frente a reservoir.} DGIM responde cuántos unos hay en los últimos N elementos. El reservoir responde qué proporción tiene el flujo entero. El reservoir no tiene noción de recencia: un evento de 2023 tiene la misma probabilidad de estar en la muestra que uno de 2025. Si se le fuerza la pregunta de ventana filtrando su muestra por posición, quedan 234 elementos de 2.000 y el resultado cuesta 32.000 bytes con 12,9 por ciento de error, frente a 256 bytes y 13,7 por ciento de DGIM. En sentido contrario, DGIM no puede responder qué proporción de todo el histórico tuvo un solo postor, porque el histórico ya lo olvidó. La tabla de la sección 6 del recorrido es esa medición.
+
+\textbf{DGIM frente al muestreo por clave.} Ni siquiera compiten. El muestreo por clave decide qué entidades entran y conserva todos sus eventos, de modo que su eje es la entidad; el de DGIM es el tiempo. Si lo que se quiere es cuántos procesos sin competencia hubo en los últimos tres meses, el muestreo por clave da una respuesta sesgada por construcción, porque la respuesta depende de qué entidades salieron sorteadas y no del período.
+
+\textbf{Reservoir frente al muestreo por clave.} Esta es la pareja que de verdad se confunde, porque las dos producen una muestra. La diferencia está medida en la figura f27: con muestreo por evento o reservoir, solo el 47 por ciento de los proveedores de la muestra conserva todos sus eventos, y con muestreo por clave el 100 por ciento. Entonces la pregunta cuántas adjudicaciones acumuló este proveedor da una respuesta falsa sobre el reservoir, no imprecisa, porque le faltan filas. Y a la inversa, el muestreo por clave no es uniforme sobre eventos: una entidad enorme entra entera o no entra, de modo que la varianza de cualquier proporción estimada es mucho mayor. Hacen falta los dos.
+
+\textbf{Bloom frente a Count-Min.} Una frecuencia mayor que cero es una respuesta de pertenencia, así que la pregunta de por qué los dos es legítima. La sección 4 del recorrido la responde con una medición, no con una opinión: a igual tasa de error, el Count-Min necesita 64 veces más memoria para responder pertenencia, por una diferencia estructural de ocho bytes por celda contra un bit.
+
+\textbf{Cualquiera de ellas frente al conteo exacto.} Es la comparación que falta en casi toda exposición de este tema y que aquí se hace siempre. El Bloom gana claramente, 79 KiB contra 1.582. DGIM gana a partir de algunos miles de elementos y pierde por debajo. El Count-Min \textbf{pierde} a este volumen, 1.487 KiB contra 273, y se reporta así.
+
+\phantomsection
+\subsection*{4. Técnicas del temario que no se implementaron, y por qué}
+\addcontentsline{toc}{subsection}{4. Técnicas del temario que no se implementaron, y por qué}
+Conviene saber que existen y poder decir en una frase qué hacen y por qué no hacían falta.
+
+\begin{enumerate}
+  \item \textbf{HyperLogLog.} Responde cuántos elementos distintos hay en el flujo, con memoria del orden del logaritmo del logaritmo de la cardinalidad. Es la cuarta pregunta clásica sobre un flujo, junto a pertenencia, frecuencia y recencia. Sí se usa en el perfilado de la Parte I, con approx\_\allowbreak{}count\_\allowbreak{}distinct, pero no aquí: la cardinalidad exacta de proveedores, 67.510, cabe de sobra en memoria y no habría nada que ahorrar. Su antecesor es Flajolet y Martin, que estima la cardinalidad a partir del máximo número de ceros iniciales en los hashes; HyperLogLog lo mejora promediando muchos registros con media armónica y corrigiendo el sesgo.
+  \item \textbf{Misra y Gries, y Space-Saving.} Encuentran los elementos pesados, es decir los que superan una fracción del flujo, con memoria proporcional a uno sobre esa fracción. Son la alternativa al Count-Min cuando la pregunta no es cuántas veces apareció una clave cualquiera sino cuáles son las más frecuentes. No se usan porque nuestra pregunta es la primera: el conteo de una clave concreta, consultable después.
+  \item \textbf{Lossy Counting y Sticky Sampling, de Manku y Motwani.} Conteo aproximado de elementos frecuentes sobre flujos con garantía de error epsilon y sin falsos negativos. Mismo motivo que el anterior.
+  \item \textbf{Histogramas exponenciales, de Datar y otros.} Son la generalización de DGIM para sumar \textbf{valores} en una ventana y no solo contar unos. Es la extensión natural si en lugar de cuántos procesos sin competencia quisiéramos cuántos soles movieron esos procesos en los últimos N. No se implementó porque nuestra pregunta es un conteo sobre un indicador binario, que es exactamente el caso que DGIM cubre.
+  \item \textbf{Filtro de Bloom con contadores, y filtro cuckoo.} Variantes que permiten borrar elementos, cosa que el Bloom clásico no puede porque apagar bits introduciría falsos negativos. El cuckoo además ocupa menos a tasas de error bajas. No hacen falta: nuestro conjunto de proveedores vistos solo crece.
+  \item \textbf{Filtro de Bloom escalable.} Encadena filtros de tamaño creciente cuando no se conoce de antemano cuántos elementos habrá. Aquí sí se conoce, porque la cardinalidad se mide antes.
+  \item \textbf{Boceto de Alon, Matias y Szegedy.} Estima momentos de frecuencia, por ejemplo la suma de los cuadrados, que mide lo desigual que es la distribución. Sería otra forma de medir concentración, pero la Parte I ya la mide de forma exacta con Gini porque la tabla cabe.
+  \item \textbf{Ventana deslizante exacta con una cola.} Es la alternativa exacta contra la que se compara DGIM. Para N igual a 150.000 cuesta 18.750 bytes frente a 320.
+  \item \textbf{Subir r en DGIM.} La cota de error es uno sobre r menos uno, de modo que con tres cubos por tamaño bajaría del 50 al 33 por ciento. No se hace porque el error observado ya está muy por debajo de la cota, pero es la palanca disponible y conviene saberlo.
+  \item \textbf{Spark.} Descartado con argumento: el recorrido es secuencial y con estado. Bloom y Count-Min sí son aditivos, de modo que esos dos se podrían distribuir combinando resúmenes parciales con un or lógico y una suma respectivamente; DGIM no, sin reescribirlo. Decir esa diferencia es parte de entender las estructuras.
+\end{enumerate}
+\phantomsection
+\subsection*{5. Preguntas probables y qué responder}
+\addcontentsline{toc}{subsection}{5. Preguntas probables y qué responder}
+\textbf{¿Por qué no hay falsos negativos en el Bloom?} Por construcción: insertar solo enciende bits y nunca los apaga.
+
+\textbf{¿En este caso el sketch realmente ahorró memoria?} No, y lo reportamos así. El diccionario exacto ocupa 273 KiB y el sketch necesita 1.487 para bajar el error a dos apariciones.
+
+\textbf{¿De dónde sale el factor 64 entre Bloom y Count-Min?} De una diferencia estructural: ocho bytes por celda frente a un bit. No se sustituyen, responden preguntas distintas.
+
+\textbf{¿Un error del 25 por ciento en DGIM no es demasiado?} Depende de la pregunta. Para decidir si una entidad entró en una racha inusual, un conteo con error acotado llega antes y basta. Para una cifra que se publica, no sirve. Y la cota se ajusta subiendo r.
+
+\textbf{¿Entonces estas estructuras no sirven?} Sirven cuando la memoria es el recurso escaso, que es la situación de un flujo que no cabe. No ahorran tiempo: cambian memoria por tiempo y por error acotado.
+
+\textbf{¿Por qué el flujo es simulado?} Porque no hay una fuente en tiempo real del OCDS peruano. Se ordena la tabla por fecha de convocatoria y se recorre una sola vez, que es el régimen que importa para medir estas estructuras.
+
+
+\clearpage
+\phantomsection
+\section*{Notebook 5. Conjuntos frecuentes y reglas de asociación}
+\addcontentsline{toc}{section}{Notebook 5. Conjuntos frecuentes y reglas de asociación}
+Guía de estudio del notebook 5\_\allowbreak{}reglas\_\allowbreak{}asociacion.ipynb. El porqué de cada elección está en docs/JUSTIFICACION.md, sección Parte V.
+
+\phantomsection
+\subsection*{1. Qué responde esta parte}
+\addcontentsline{toc}{subsection}{1. Qué responde esta parte}
+La Parte I dejó un suelo de procesos sin competencia efectiva que atraviesa todos los tramos de monto. Falta saber si se reparte al azar o se concentra en combinaciones específicas de rubro, método y nivel de gobierno. Eso es, exactamente, una pregunta de patrones frecuentes.
+
+\textbf{Y la decisión que determina todo el resultado es qué se considera una transacción.} El enunciado pide justificarla; aquí se justifica con una medición y no con una intuición, porque la definición obvia resultó no servir.
+
+\phantomsection
+\subsection*{2. Qué es una entidad y por qué una contratación tiene canastas}
+\addcontentsline{toc}{subsection}{2. Qué es una entidad y por qué una contratación tiene canastas}
+\textbf{Entidad.} Es el comprador estatal, lo que en la tabla es el campo comprador\_\allowbreak{}id. No es una empresa: en contratación pública el Estado es el que compra y la empresa está al otro lado del mostrador, como postor o como proveedor. Entidad es una municipalidad distrital, un gobierno regional, un hospital, una UGEL, un ministerio o un programa social. Hay 2.968 compradores distintos en los tres años.
+
+Esto importa porque \textbf{el sujeto de nuestras reglas es la entidad compradora y no el proveedor}. Agrupar por proveedor y mes era posible, y respondería qué le compran juntos a un mismo proveedor, pero la pregunta que hereda esta parte es sobre el comportamiento del comprador.
+
+\textbf{La correspondencia con el supermercado}, que es la analogía con la que se enseña el tema:
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.687}Q{1.312}}
+\toprule
+\textbf{En el supermercado} & \textbf{En las contrataciones del Estado peruano} \\
+\midrule
+El cliente & La entidad pública compradora \\
+El ticket de compra & Todo lo que esa entidad contrató en un mes \\
+El producto del ticket & El código CUBSO del objeto contratado \\
+\bottomrule
+\end{tabularx}
+\end{center}
+El ítem no es un producto de abarrotes: es un código del \textbf{CUBSO}, el Catálogo Único de Bienes, Servicios y Obras, así que el universo incluye insumos, servicios y obras. Por eso entre los ítems aparecen cosas como servicio de alquiler de excavadora hidráulica o servicio de seguridad y vigilancia. La estructura del código, dígito por dígito, está en docs/GLOSARIO.md.
+
+\textbf{Por qué las reglas que salen tienen sentido.} No son el ejemplo del libro, son el resultado medido, y cada grupo tiene una causa institucional identificable.
+
+\begin{enumerate}
+  \item Conserva de sardina o anchoveta, aceite vegetal comestible, arroz pilado superior, leche evaporada, hojuela de avena con quinua y kiwicha. Es la canasta de los \textbf{programas sociales de alimentación}: Vaso de Leche, comedores populares y Qali Warma. La municipalidad que compra aceite en un mes compra también conserva y arroz porque está armando la misma ración.
+  \item Alquiler de camión volquete, cemento Portland, alquiler de excavadora hidráulica. Es la canasta de \textbf{obra pública}: maquinaria y material de la misma obra.
+  \item Servicio de limpieza de áreas administrativas junto con servicio de seguridad y vigilancia, con lift 8,8. Este es el mejor ejemplo para defender el método, porque demuestra que no está encontrando comida sino \textbf{paquetes de abastecimiento institucional}: la entidad renueva los dos contratos en el mismo mes.
+\end{enumerate}
+La frase corta, si preguntan qué hace una canasta de supermercado en un dataset de contrataciones: \textbf{la entidad es el cliente, el mes es el ticket y el código CUBSO es el producto.}
+
+\phantomsection
+\subsection*{3. El vocabulario mínimo}
+\addcontentsline{toc}{subsection}{3. El vocabulario mínimo}
+\begin{enumerate}
+  \item \textbf{Transacción o canasta.} El conjunto de ítems que ocurren juntos. En el supermercado, lo que lleva un cliente en un ticket.
+  \item \textbf{Conjunto frecuente.} Un conjunto de ítems cuyo soporte supera un umbral.
+  \item \textbf{Soporte.} La fracción de transacciones que contienen el conjunto. Es una probabilidad conjunta.
+  \item \textbf{Confianza} de la regla A implica B. El soporte del conjunto unión dividido entre el soporte de A. Es la probabilidad condicional de B dado A.
+  \item \textbf{Lift.} La confianza dividida entre el soporte de B. Mide cuántas veces más aparece B junto a A de lo que cabría esperar si fueran independientes. Lift igual a uno es independencia.
+  \item \textbf{Antimonotonía.} Si un conjunto no es frecuente, ningún superconjunto suyo puede serlo. Es la propiedad que hace viable toda la minería de patrones.
+\end{enumerate}
+\phantomsection
+\subsection*{4. Recorrido sección por sección}
+\addcontentsline{toc}{subsection}{4. Recorrido sección por sección}
+\phantomsection
+\subsubsection*{Sección 1. Qué es una transacción aquí}
+\addcontentsline{toc}{subsubsection}{Sección 1. Qué es una transacción aquí}
+La definición natural es que cada proceso es una canasta de códigos CUBSO. Se mide antes de usarla, junto con dos alternativas que agrupan por entidad y período.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{1.487}Q{0.940}Q{0.705}Q{0.822}Q{1.047}}
+\toprule
+\textbf{Definición} & \textbf{Canastas} & \textbf{Tamaño medio} & \textbf{Tamaño mediano} & \textbf{Con dos o más ítems} \\
+\midrule
+Un proceso & 177.398 & 0,74 & 1 & 2,1 \% \\
+Una entidad en un mes & 37.114 & 2,78 & 2 & 53,6 \% \\
+Una entidad en un trimestre & 21.098 & 4,49 & 2 & 68,0 \% \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Esta es la \textbf{figura f34} y decide la parte entera. La definición natural \textbf{no sirve}: solo el 2,1 por ciento de los procesos tiene dos o más ítems, con tamaño medio de canasta por debajo de uno. Un conjunto de un solo elemento no contiene coocurrencia, de modo que A-Priori y FP-Growth sobre esa definición devolverían únicamente conjuntos de tamaño uno, es decir un ranking de frecuencias disfrazado de minería de patrones.
+
+\figuraguia{f34_definicion_transaccion.pdf}{f34.}{La canasta natural contra la canasta por entidad y mes}
+\textbf{El motivo, que hay que saber explicar.} El catálogo CUBSO identifica el objeto del proceso, y la mayoría de los procesos peruanos tienen un objeto único. La analogía del supermercado no se sostiene a nivel de acto administrativo: el acto administrativo no es el ticket, es el producto.
+
+\textbf{Por qué mes y no trimestre.} El trimestre da más coocurrencia, 68 por ciento, pero se adopta el mes por dos razones. Conserva más transacciones, y un mismo umbral de soporte relativo es más exigente cuando hay más transacciones. Y es interpretable: la regla dice que la entidad que compra A compra también B dentro del mismo mes, lo que describe un patrón de abastecimiento. A escala trimestral la coocurrencia empieza a capturar simplemente que la entidad compra mucho.
+
+Si preguntan si cambiar la definición hasta que salga algo no es hacer trampa: sería trampa si la definición nueva no tuviera sentido, y lo tiene. Además la figura documenta \textbf{las tres} definiciones, incluida la que no funcionó, en lugar de presentar solo la que salió bien.
+
+Las canastas unitarias se descartan después del agrupamiento porque no aportan coocurrencia.
+
+\phantomsection
+\subsubsection*{Sección 2. A-Priori, implementación propia}
+\addcontentsline{toc}{subsubsection}{Sección 2. A-Priori, implementación propia}
+\textbf{Cómo funciona, por niveles.}
+
+\begin{enumerate}
+  \item Cuenta el soporte de cada ítem individual y se queda con los frecuentes.
+  \item Genera candidatos de tamaño dos uniendo pares de frecuentes de tamaño uno, cuenta su soporte con una pasada completa por las transacciones y se queda con los frecuentes.
+  \item Repite subiendo de nivel hasta que no quedan candidatos.
+\end{enumerate}
+\textbf{Dónde entra la antimonotonía.} En la generación de candidatos. Un candidato de tamaño k solo se considera si \textbf{todos} sus subconjuntos de tamaño k menos uno son frecuentes. Esa poda es lo que evita el crecimiento combinatorio completo.
+
+\textbf{Cuál es su costo.} Una pasada completa por las transacciones en cada nivel, y el conteo de todos los candidatos contra cada transacción. Cuando el umbral baja, el número de candidatos explota.
+
+Se corre sobre una muestra de 8.000 transacciones, porque A-Priori no escala al conjunto completo, y eso también es un resultado que se reporta.
+
+\phantomsection
+\subsubsection*{Sección 3. FP-Growth con Spark MLlib}
+\addcontentsline{toc}{subsubsection}{Sección 3. FP-Growth con Spark MLlib}
+\textbf{Cómo funciona.} Dos pasadas por el dato y ningún candidato.
+
+\begin{enumerate}
+  \item Primera pasada: cuenta la frecuencia de cada ítem y descarta los no frecuentes.
+  \item Segunda pasada: inserta cada transacción, con sus ítems ordenados por frecuencia descendente, en un \textbf{árbol de prefijos} llamado FP-tree. Las transacciones que comparten prefijo comparten camino, de modo que el árbol comprime el dataset.
+  \item Minería: para cada ítem, de menos a más frecuente, construye su \textbf{base de patrones condicional}, que son los caminos del árbol que terminan en ese ítem, y sobre ella construye un FP-tree condicional del que extrae recursivamente los conjuntos frecuentes.
+\end{enumerate}
+\textbf{Por qué es más rápido.} No genera ni cuenta candidatos. El trabajo depende del tamaño del árbol comprimido y no del número de combinaciones posibles.
+
+\textbf{La verificación.} Los dos algoritmos deben devolver exactamente los mismos conjuntos frecuentes sobre la misma muestra, y lo hacen: cero conjuntos exclusivos de uno u otro, y diferencia máxima de soporte nula. Esa comprobación es lo que permite confiar en FP-Growth para el conjunto completo y deja A-Priori como implementación de referencia.
+
+\textbf{El costo según el umbral}, que es la \textbf{figura f35}:
+
+\figuraguia{f35_apriori_vs_fpgrowth.pdf}{f35.}{A-Priori contra FP-Growth al bajar el soporte}
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{1.043}Q{1.490}Q{0.733}Q{0.733}}
+\toprule
+\textbf{Soporte mínimo} & \textbf{Conjuntos frecuentes} & \textbf{A-Priori} & \textbf{FP-Growth} \\
+\midrule
+0,0200 & 34 & 0,17 s & 0,45 s \\
+0,0100 & 80 & 0,67 s & 0,37 s \\
+0,0050 & 202 & 2,99 s & 0,42 s \\
+0,0025 & 554 & 19,27 s & 0,44 s \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Con soporte alto los dos cuestan parecido porque hay pocos conjuntos frecuentes y A-Priori poda casi todo en el primer nivel. Al bajar el umbral de 0,02 a 0,0025, A-Priori pasa de 0,17 a 19,27 segundos y FP-Growth se mantiene plano. La diferencia es estructural y es exactamente la razón por la que el segundo desplazó al primero.
+
+Si preguntan por qué implementar A-Priori si FP-Growth gana: porque A-Priori es donde se ve la antimonotonía, y porque sin medir la explosión de candidatos decir que FP-Growth es mejor sería repetir lo que dice el libro.
+
+\phantomsection
+\subsubsection*{Sección 4. Reglas sobre el conjunto completo}
+\addcontentsline{toc}{subsubsection}{Sección 4. Reglas sobre el conjunto completo}
+Sobre las 37.114 canastas de entidad y mes, con soporte mínimo 0,002 y confianza mínima 0,3.
+
+La \textbf{figura f36} es una nube de soporte contra lift, coloreada por confianza, con los dos ejes en logaritmo y la línea de lift igual a uno marcada. Muestra el compromiso central de la minería de reglas: las reglas de soporte alto tienen lift cercano a uno, porque describen ítems que coinciden por ser ambos frecuentes y no porque uno prediga al otro; las de lift alto viven en la zona de soporte bajo, donde el patrón es fuerte pero afecta a pocas transacciones. El máximo de lift es 139.
+
+\figuraguia{f36_reglas.pdf}{f36.}{Soporte, confianza y lift de las reglas obtenidas}
+\textbf{Por qué el criterio de selección es el lift y no la confianza.} Porque la confianza no descuenta la frecuencia del consecuente. Una regla que concluye en un ítem presente en la mitad de las canastas tiene confianza alta por construcción y no informa nada. El lift sí lo descuenta, porque compara contra la independencia.
+
+Las diez reglas seleccionadas exigen soporte de al menos 0,004 y lift de al menos 3:
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{1.500}Q{1.269}Q{0.822}Q{0.940}Q{0.470}}
+\toprule
+\textbf{Si la entidad compra} & \textbf{También compra} & \textbf{Soporte} & \textbf{Confianza} & \textbf{Lift} \\
+\midrule
+Conserva de sardina o anchoveta & Aceite vegetal comestible & 0,0042 & 0,386 & 50,9 \\
+Aceite vegetal comestible & Conserva de sardina o anchoveta & 0,0042 & 0,550 & 50,9 \\
+Aceite vegetal comestible & Arroz pilado superior & 0,0047 & 0,616 & 37,8 \\
+Arroz pilado superior & Conserva de sardina o anchoveta & 0,0054 & 0,330 & 30,6 \\
+Alquiler de camión volquete más cemento & Alquiler de excavadora hidráulica & 0,0043 & 0,705 & 18,1 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\textbf{Cómo interpretarlas.} Las primeras son la canasta de los programas sociales de alimentación, sobre todo Vaso de Leche y los comedores: la entidad que compra aceite en un mes compra también conserva y arroz. Las últimas son la canasta de obra pública: maquinaria y materiales que se contratan juntos. Ninguna es sorprendente para quien conozca el sector, y eso es buena señal: el método recupera estructura real antes de buscar lo inesperado.
+
+\phantomsection
+\subsubsection*{Sección 5. Canasta enriquecida, donde se responde la pregunta de la Parte I}
+\addcontentsline{toc}{subsubsection}{Sección 5. Canasta enriquecida, donde se responde la pregunta de la Parte I}
+Hasta aquí la canasta tiene solo códigos de catálogo, de modo que las reglas solo pueden hablar de qué se compra junto. Pero la pregunta que dejó abierta la Parte I es otra, y \textbf{tener un solo postor no es un producto del catálogo, es un atributo del proceso}.
+
+La técnica, que conviene saber nombrar, es \textbf{convertir atributos categóricos en ítems} para que el mismo algoritmo de patrones frecuentes descubra asociaciones entre atributos y no solo entre productos. A cada canasta se le agregan los atributos del proceso como ítems, con un prefijo que nombra el campo. Una canasta enriquecida se ve así:
+
+\textbf{\{ RUBRO=\allowbreak{}5013, METODO=\allowbreak{}Contratación Directa, NIVEL=\allowbreak{}Gobierno nacional, TRAMO=\allowbreak{}50 mil a 500 mil, POSTOR=\allowbreak{}unico \}}
+
+Cuatro detalles de implementación que hay que saber justificar.
+
+\begin{enumerate}
+  \item \textbf{El prefijo no es decoración.} Sin él un valor de un campo podría colisionar con el de otro, y la regla dejaría de leerse sola. Con él, el antecedente se lee en castellano.
+  \item \textbf{Aquí la canasta vuelve a ser el proceso}, no la entidad y el mes, porque los atributos pertenecen al proceso. Y ahora sí funciona, porque por construcción cada canasta tiene cinco ítems o más, así que hay coocurrencia de sobra. Es el mismo algoritmo sobre una definición de transacción distinta, elegida por la pregunta.
+  \item \textbf{El tramo de monto es una discretización obligatoria.} Un algoritmo de patrones frecuentes solo entiende ítems, no puede recibir una variable continua, así que el monto se parte en cuatro categorías: menos de 50 mil, de 50 mil a 500 mil, de 500 mil a 5 millones y más de 5 millones.
+  \item \textbf{Se excluyen los procesos con número de postores imputado.} Si no, la asociación la podría producir nuestra propia regla de imputación de la Parte I, que sería circular.
+\end{enumerate}
+Luego se filtran las reglas cuyo consecuente es exactamente la marca de postor único.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{2.258}Q{0.642}Q{0.733}Q{0.367}}
+\toprule
+\textbf{Si el proceso es} & \textbf{Soporte} & \textbf{Confianza} & \textbf{Lift} \\
+\midrule
+Régimen Especial más Gobierno nacional más menos de 50 mil & 0,0176 & 1,000 & 8,06 \\
+Régimen Especial más Gobierno nacional más rubro 8010 más menos de 50 mil & 0,0157 & 1,000 & 8,06 \\
+Contratación Internacional más rubro 8210 & 0,0058 & 1,000 & 8,06 \\
+Contratación Directa más rubro 8013 más de 50 mil a 500 mil & 0,0075 & 0,990 & 7,98 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+La última se lee así: cuando un proceso es Contratación Directa, del rubro 8013 y está en el tramo de 50 mil a 500 mil soles, tiene un solo postor el 99 por ciento de las veces, casi ocho veces más de lo que correspondería al azar.
+
+\textbf{Qué son esos rubros}, resuelto con las descripciones del propio dato. Esto es lo que convierte la figura en un hallazgo explicable y no en una lista de números:
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.336}Q{1.166}Q{1.499}}
+\toprule
+\textbf{Rubro} & \textbf{Qué agrupa} & \textbf{Lectura de la regla} \\
+\midrule
+8010 & Consultoría, seguimiento y monitoreo de proyectos de inversión pública & Contratación de un consultor concreto, donde el postor único es la norma del procedimiento \\
+8013 & Alquiler de inmuebles, locales y oficinas & El dueño de un local determinado es, por definición, el único que puede ofrecerlo \\
+8210 & Publicidad y difusión en medios de comunicación & Espacios de un medio concreto, que tampoco tiene sustituto \\
+5013 & Leche y derivados & El rubro del Vaso de Leche, que aparece en las reglas de productos \\
+\bottomrule
+\end{tabularx}
+\end{center}
+La \textbf{figura f37} es la respuesta: el suelo de procesos sin competencia \textbf{no se reparte al azar}, se concentra en combinaciones identificables.
+
+\figuraguia{f37_postor_unico.pdf}{f37.}{Dónde se concentran los procesos sin competencia}
+\textbf{Tres matices que hay que decir al presentarla.}
+
+\begin{enumerate}
+  \item La tasa base de postor único es del 12,4 por ciento, de modo que el lift máximo posible es 8,06 y lo alcanza \textbf{toda} condición con confianza igual a uno. Hay varias combinaciones empatadas en ese máximo, así que el ranking por lift no distingue entre ellas y se desempata por soporte.
+  \item Que un régimen especial, una contratación internacional o el alquiler de un inmueble tengan un solo postor es \textbf{administrativamente esperable} y no indica nada irregular. Los rubros de la tabla anterior lo muestran: son objetos sin sustituto.
+  \item Por eso el valor de la figura es acotar dónde buscar, y lo informativo son las combinaciones donde el procedimiento sí preveía concurrencia.
+\end{enumerate}
+\phantomsection
+\subsection*{5. Alternativas para cada decisión, explicadas}
+\addcontentsline{toc}{subsection}{5. Alternativas para cada decisión, explicadas}
+\phantomsection
+\subsubsection*{Para definir la transacción}
+\addcontentsline{toc}{subsubsection}{Para definir la transacción}
+\begin{enumerate}
+  \item \textbf{Un proceso igual a una canasta.} La definición natural. Medida y descartada: 2,1 por ciento de coocurrencia, tamaño medio 0,74.
+  \item \textbf{Una entidad en un trimestre.} Más coocurrencia, 68 por ciento, pero menos transacciones y peor interpretabilidad.
+  \item \textbf{Una entidad en un año, o la entidad entera.} Llevado al extremo, la canasta acabaría siendo el catálogo completo de lo que compra una entidad, y las reglas solo dirían que las entidades grandes compran de todo.
+  \item \textbf{Un proveedor en un mes.} Otra agrupación posible, que respondería qué le compran juntos a un mismo proveedor. No se usa porque la pregunta heredada de la Parte I es sobre el comportamiento de la \textbf{entidad compradora}.
+  \item \textbf{Lo que se hizo.} Entidad y mes, con las tres definiciones medidas y publicadas en la figura f34, incluida la que no funcionó.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para el nivel de agregación del código}
+\addcontentsline{toc}{subsubsection}{Para el nivel de agregación del código}
+\begin{enumerate}
+  \item \textbf{El código CUBSO completo, 16 dígitos.} Casi único por ítem. El universo sería tan disperso que ningún conjunto alcanzaría el soporte mínimo.
+  \item \textbf{El prefijo de 8 dígitos.} Lo que se usó para las reglas de productos: 4.664 ítems distintos, que es un universo minable.
+  \item \textbf{El prefijo de 4 dígitos.} Lo que se usó en la canasta enriquecida, donde interesa el rubro grueso y no el producto exacto, para que las condiciones de la figura f37 sean legibles.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para hallar los conjuntos frecuentes}
+\addcontentsline{toc}{subsubsection}{Para hallar los conjuntos frecuentes}
+\begin{enumerate}
+  \item \textbf{Fuerza bruta sobre todos los subconjuntos.} Dos elevado al número de ítems. Impensable.
+  \item \textbf{A-Priori.} Lo que se implementó a mano. Por niveles, con poda por antimonotonía. Su costo es una pasada completa por las transacciones en cada nivel.
+  \item \textbf{PCY, de Park, Chen y Yu.} La mejora clásica de A-Priori para el paso de los pares, que es el que más memoria consume. Mientras cuenta los ítems en la primera pasada, además hashea cada par a un conjunto de contenedores y cuenta cuántos pares caen en cada uno. Un par solo puede ser frecuente si su contenedor lo es, de modo que en la segunda pasada el mapa de bits de contenedores frecuentes poda muchísimos pares antes de contarlos. No hace falta aquí: con 4.664 ítems los pares caben en memoria sin apretar.
+  \item \textbf{Multietapa y multihash.} Son refinamientos de PCY, con más pasadas y más funciones hash respectivamente, para apretar todavía más la poda. Mismo motivo para no usarlos.
+  \item \textbf{Algoritmo de Toivonen.} Corre A-Priori sobre una muestra con un umbral algo menor, y luego verifica los candidatos y su \textbf{frontera negativa}, es decir los conjuntos que no son frecuentes en la muestra pero cuyos subconjuntos sí lo son. Si ningún elemento de la frontera negativa resulta frecuente en el conjunto completo, el resultado es exacto; si alguno lo es, hay que repetir. Da una respuesta exacta con alta probabilidad en dos pasadas. No se usa porque el conjunto completo cabe en memoria: lo que escala mal aquí es A-Priori, no el dato.
+  \item \textbf{SON, de Savasere, Omiecinski y Navathe.} Es el algoritmo distribuido natural y conviene conocerlo justo porque esta parte usa Spark. Parte las transacciones en fragmentos, halla los conjuntos frecuentes locales de cada fragmento con cualquier algoritmo, y toma la unión como candidatos globales; después una segunda pasada cuenta esos candidatos sobre el conjunto completo. La propiedad que lo hace correcto es que un conjunto frecuente globalmente tiene que ser frecuente en al menos un fragmento, de modo que \textbf{no hay falsos negativos}. Encaja exactamente en un mapa y una reducción, y es la forma en que se distribuiría A-Priori si hiciera falta. No se usa porque FP-Growth de MLlib ya resuelve el conjunto completo en menos de medio segundo.
+  \item \textbf{Eclat.} Representa cada ítem por su lista de identificadores de transacción y obtiene el soporte de un conjunto intersecando listas, en lugar de recorrer las transacciones. Es rápido con datos densos y consume mucha memoria con universos grandes.
+  \item \textbf{FP-Growth.} Lo que se usa en producción. Árbol de prefijos y proyecciones condicionales, sin generar candidatos.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para elegir qué reglas presentar}
+\addcontentsline{toc}{subsubsection}{Para elegir qué reglas presentar}
+\begin{enumerate}
+  \item \textbf{Confianza alta.} Descartada: no descuenta la frecuencia del consecuente, de modo que una regla que concluye en un ítem muy común tiene confianza alta por construcción.
+  \item \textbf{Lift.} Lo que se usó, junto a un mínimo de soporte para que la regla no sea una anécdota.
+  \item \textbf{Convicción.} Mide cuánto se equivocaría la regla si antecedente y consecuente fueran independientes. Es menos conocida y no añade nada aquí.
+  \item \textbf{Leverage, o diferencia respecto de la independencia.} Favorece reglas de soporte alto, que es lo contrario de lo que hace el lift. Serviría si la prioridad fuera el impacto absoluto y no la fuerza del patrón.
+  \item \textbf{Conjuntos maximales y cerrados.} Formas de comprimir la salida: los maximales son los frecuentes sin superconjunto frecuente, y los cerrados son aquellos cuyos superconjuntos tienen soporte estrictamente menor. Reducen mucho el número de resultados sin perder información de soporte en el caso cerrado. No hacían falta porque la salida ya es manejable.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Para responder la pregunta de la Parte I}
+\addcontentsline{toc}{subsubsection}{Para responder la pregunta de la Parte I}
+\begin{enumerate}
+  \item \textbf{Un modelo de clasificación de postor único.} Predeciría mejor, y no respondería la pregunta: el enunciado pide patrones frecuentes, y un modelo entrega un peso por variable en lugar de combinaciones concretas legibles.
+  \item \textbf{Tablas cruzadas de método por nivel por tramo.} Es lo que haría un análisis exploratorio, y se queda corto: el número de combinaciones crece y no hay criterio para ordenarlas.
+  \item \textbf{Lo que se hizo.} Convertir los atributos del proceso en ítems de la canasta, de modo que el mismo algoritmo de patrones frecuentes descubra asociaciones entre atributos, con soporte, confianza y lift como criterio de orden.
+\end{enumerate}
+\phantomsection
+\subsubsection*{Lo que no se hizo y sería la continuación natural}
+\addcontentsline{toc}{subsubsection}{Lo que no se hizo y sería la continuación natural}
+\begin{enumerate}
+  \item \textbf{Minería de secuencias, al estilo GSP o PrefixSpan.} Encuentra patrones \textbf{con orden}, por ejemplo que tras comprar A una entidad compra B el mes siguiente. Nuestra pregunta es de coocurrencia dentro de un mes, no de orden, pero es la extensión evidente si se quisiera estudiar ciclos de abastecimiento.
+  \item \textbf{Reglas con restricción temporal o por territorio.} Mismo algoritmo, particionando antes.
+\end{enumerate}
+\phantomsection
+\subsection*{6. Preguntas probables y qué responder}
+\addcontentsline{toc}{subsection}{6. Preguntas probables y qué responder}
+\textbf{¿No es hacer trampa cambiar la definición de transacción hasta que salga algo?} Sería trampa si la nueva no tuviera sentido. Lo tiene, y la figura documenta las tres definiciones para que el lector juzgue el cambio.
+
+\textbf{¿Por qué implementar A-Priori si FP-Growth gana?} Porque A-Priori es donde se ve la antimonotonía, y porque la figura es el argumento medido en lugar de la cita del libro.
+
+\textbf{¿Por qué no filtrar simplemente por confianza alta?} Porque la confianza no descuenta la frecuencia del consecuente, y el lift sí.
+
+\textbf{¿Eso es evidencia de direccionamiento?} No. Parte de lo que aparece arriba es administrativamente esperable. Lo que entrega el análisis es una lista priorizada de dónde mirar, no una conclusión sobre conducta.
+
+\textbf{¿Cómo saben que su A-Priori es correcto?} Porque devuelve exactamente el mismo conjunto de itemsets frecuentes que FP-Growth de MLlib sobre las mismas transacciones, con diferencia de soporte nula.
+
+
+\clearpage
+\phantomsection
+\section*{Glosario del dato}
+\addcontentsline{toc}{section}{Glosario del dato}
+Qué significa cada campo, cada código y cada etiqueta del dataset de contrataciones públicas del Perú que usa el proyecto. Está pensado para la sustentación: si en la presentación aparece un rubro 8013 o un Régimen Especial, aquí está qué es y de dónde salió.
+
+Las cifras son las de la tabla analítica construida en la Parte I, es decir 177.398 procesos de 2023 a 2025. El porqué de cada decisión de limpieza está en JUSTIFICACION.md y el recorrido del notebook en notebooks/1\_\allowbreak{}kdd\_\allowbreak{}eda.md.
+
+\phantomsection
+\subsection*{1. De dónde viene el dato}
+\addcontentsline{toc}{subsection}{1. De dónde viene el dato}
+\begin{enumerate}
+  \item \textbf{OCDS}, Open Contracting Data Standard. Es un estándar internacional para publicar contratación pública con una estructura común, de modo que un mismo análisis pueda correr sobre países distintos. El Perú publica sus contrataciones en este formato.
+  \item \textbf{Paquete anual.} La descarga viene en un paquete por año, y cada paquete son \textbf{21 tablas CSV} que son la versión plana del documento OCDS, una por nivel de anidamiento. El proyecto usa \textbf{5 de las 21}, lo justo para el grano de proceso.
+  \item \textbf{ocid}, Open Contracting Identifier. Es la llave del proceso de contratación, única y estable a lo largo de todas las tablas. Se ve así: ocds-dgv273-seacev3-1000028. Hay 177.398 valores distintos y ninguno repetido, porque el grano de la tabla analítica es exactamente un proceso.
+  \item \textbf{SEACE} es el Sistema Electrónico de Contrataciones del Estado, la plataforma donde las entidades publican. El prefijo seacev3 del ocid viene de ahí.
+\end{enumerate}
+\textbf{Las cinco tablas que se usan y para qué:}
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.360}Q{1.640}}
+\toprule
+\textbf{Tabla cruda} & \textbf{Qué aporta} \\
+\midrule
+main.csv & El proceso: fechas, objeto, método, categoría, comprador, monto y número de postores \\
+awards.csv & El monto de cada adjudicación, usado para quedarse con la mayor cuando hay varias \\
+awards\_\allowbreak{}suppliers.csv & Quién ganó, es decir el proveedor, y cuántos proveedores distintos hubo \\
+awards\_\allowbreak{}items.csv & Los ítems adjudicados con su código CUBSO y su descripción, que es la canasta de la Parte V \\
+parties.csv & Los participantes y su rol, de donde sale el departamento de la entidad compradora \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\phantomsection
+\subsection*{2. Los actores, que es la confusión más común}
+\addcontentsline{toc}{subsection}{2. Los actores, que es la confusión más común}
+\begin{enumerate}
+  \item \textbf{Entidad, o entidad compradora.} El Estado que compra. En el dato es el campo \textbf{comprador\_\allowbreak{}id} y hay 2.968 distintas. Puede ser una municipalidad distrital, un gobierno regional, un hospital, una UGEL, un ministerio, una universidad pública, una empresa del Estado o un programa social.
+  \item \textbf{Postor.} La empresa o persona que se presenta a competir en un proceso. Lo que se cuenta en \textbf{n\_\allowbreak{}postores}.
+  \item \textbf{Proveedor, o adjudicatario.} El postor que ganó. En el dato es \textbf{proveedor\_\allowbreak{}id} y hay 67.510 distintos.
+\end{enumerate}
+La regla para no equivocarse: \textbf{postor es el que compite, proveedor es el que ganó, entidad es la que paga.} Todo postor es una empresa; la entidad nunca lo es, aunque haya empresas del Estado entre los compradores.
+
+\phantomsection
+\subsection*{3. El ciclo de un proceso y qué significa que falte algo}
+\addcontentsline{toc}{subsection}{3. El ciclo de un proceso y qué significa que falte algo}
+\begin{enumerate}
+  \item \textbf{Convocatoria.} La entidad publica el proceso con su objeto, su valor estimado y su método. La fecha de esa publicación es el campo \textbf{fecha}.
+  \item \textbf{Presentación de ofertas.} Se presentan los postores, y su número queda en n\_\allowbreak{}postores.
+  \item \textbf{Adjudicación.} Se elige al ganador, que queda en proveedor\_\allowbreak{}id. Un proceso puede tener \textbf{varias adjudicaciones}, por ejemplo un proceso por ítems en el que cada lote lo gana una empresa distinta. Se guarda el proveedor de la adjudicación de mayor monto y aparte el conteo, porque tener varios proveedores en un mismo proceso es una señal de fraccionamiento que conviene medir. Ocurre en 6.342 procesos.
+  \item \textbf{Un proceso sin adjudicación} quedó desierto, fue anulado o seguía en trámite cuando se publicó el paquete. Son 31.373, el 17,7 por ciento. No es un error del dato, así que el proyecto lo \textbf{marca} con el campo adjudicado en lugar de borrarlo.
+\end{enumerate}
+\phantomsection
+\subsection*{4. Los campos de la tabla analítica}
+\addcontentsline{toc}{subsection}{4. Los campos de la tabla analítica}
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.454}Q{0.534}Q{2.011}}
+\toprule
+\textbf{Campo} & \textbf{Qué es} & \textbf{Detalle que conviene saber} \\
+\midrule
+ocid & Llave del proceso & Única, 177.398 valores \\
+fecha & Cuándo se convocó el proceso & Es tender\_\allowbreak{}datePublished, el evento, no el registro \\
+fecha\_\allowbreak{}registro & Cuándo lo publicó el sistema & Es publishedDate. Se separa a propósito porque el paquete anual republica procesos convocados años antes, y usar esta fecha describiría la actividad del publicador y no la del Estado comprador \\
+objeto & La descripción libre del proceso & 237.298 valores distintos en el dato crudo. Es el texto sobre el que trabajan las Partes II y III \\
+categoria & goods, services o works & Bienes 79.287, servicios 78.135, obras 19.976 \\
+metodo & El procedimiento de selección & 40 valores distintos, dominados por doce \\
+comprador\_\allowbreak{}id, comprador\_\allowbreak{}nombre & La entidad compradora & 2.968 entidades \\
+nivel\_\allowbreak{}gobierno & Nivel al que pertenece la entidad & Campo \textbf{derivado}, no viene en el dato. Ver la sección 7 \\
+departamento & Departamento de la entidad & Sale de parties.csv. Es dónde está la entidad, \textbf{no} dónde se ejecuta la obra \\
+monto\_\allowbreak{}pen & Valor del proceso en soles & Es el \textbf{valor referencial o estimado de la convocatoria}, no lo que finalmente se pagó. Mediana 178 mil soles, máximo 1.135 millones \\
+moneda & Moneda original & 98,2 por ciento en soles; el resto se convierte \\
+n\_\allowbreak{}postores & Cuántos compitieron & Mediana 9, máximo 107 tras el recorte \\
+proveedor\_\allowbreak{}id, proveedor\_\allowbreak{}nombre & Quién ganó & Nulo si el proceso no se adjudicó \\
+n\_\allowbreak{}proveedores & Cuántos proveedores distintos ganaron en el proceso & Mayor que uno en 6.342 procesos \\
+items & Los códigos CUBSO adjudicados & Es la canasta de la Parte V. Ver la sección 5 \\
+n\_\allowbreak{}items & Cuántos ítems tiene el proceso & Cero en 52.838 procesos: 31.369 porque no se adjudicaron y 21.469 porque no publicaron clasificación \\
+anio, mes, anio\_\allowbreak{}mes & Derivados de fecha & anio es la columna de partición del Parquet \\
+adjudicado & Si tiene proveedor & 146.025 sí, 31.373 no \\
+n\_\allowbreak{}postores\_\allowbreak{}imputado & Si el número de postores se imputó & Verdadero en 6.655. Ver la sección 9 \\
+monto\_\allowbreak{}outlier & Si el monto quedó fuera del rango de Tukey & Verdadero en 565, y se conservan \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\phantomsection
+\subsection*{5. El código CUBSO, dígito por dígito}
+\addcontentsline{toc}{subsection}{5. El código CUBSO, dígito por dígito}
+\textbf{CUBSO} es el Catálogo Único de Bienes, Servicios y Obras, el catálogo oficial con el que el Estado peruano nombra lo que contrata. Es importante entender que \textbf{incluye servicios y obras y no solo bienes}, porque de ahí salen ítems como servicio de alquiler de excavadora hidráulica.
+
+El código tiene \textbf{16 dígitos} y es jerárquico:
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.420}Q{1.350}Q{1.230}}
+\toprule
+\textbf{Tramo} & \textbf{Qué identifica} & \textbf{Ejemplo con 8013150200094959} \\
+\midrule
+Dígitos 1 y 2 & Segmento, la gran familia económica & 80, servicios de gestión y administración \\
+Dígitos 3 y 4 & Familia dentro del segmento & 13, alquiler de inmuebles \\
+Dígitos 5 a 8 & Clase y artículo, el bien o servicio concreto & 1502, servicio de alquiler de inmueble \\
+Dígitos 9 a 16 & Correlativo de la ficha concreta del catálogo & 00094959 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\textbf{Los tres niveles que usa el proyecto y por qué cada uno:}
+
+\begin{enumerate}
+  \item \textbf{16 dígitos, el código completo.} No se usa. Es casi único por ítem, de modo que el universo sería tan disperso que ningún conjunto alcanzaría el soporte mínimo en la Parte V.
+  \item \textbf{8 dígitos, el prefijo de catálogo.} Es el nivel del campo items y el que se usa para las reglas de productos. Da 4.664 ítems distintos en la tabla analítica, que es un universo minable.
+  \item \textbf{4 dígitos, el rubro.} Es segmento más familia. Se usa en la canasta enriquecida, donde interesa el sector grueso y no el producto exacto, para que las condiciones salgan legibles. Da 368 rubros, repartidos en 56 segmentos.
+\end{enumerate}
+\textbf{Los segmentos más frecuentes}, obtenidos contando las descripciones del propio dato:
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.537}Q{1.092}Q{1.371}}
+\toprule
+\textbf{Segmento} & \textbf{Qué agrupa} & \textbf{Ítem más frecuente} \\
+\midrule
+72 & Construcción y mantenimiento de infraestructura & Servicio de mantenimiento rutinario de caminos \\
+81 & Servicios de ingeniería y supervisión & Supervisión de obra de construcción de calles \\
+80 & Servicios de gestión, consultoría y alquileres & Servicio de seguimiento y monitoreo de actividades de campo \\
+30 & Materiales de construcción & Cemento Portland puzolánico tipo IP de 42,5 kg \\
+42 & Equipamiento y material médico & Respirador de polipropileno tipo N-95 \\
+50 & Alimentos y bebidas & Leche evaporada entera de 400 g \\
+15 & Combustibles & Diésel B5 S-50 \\
+51 & Medicamentos & Cloruro de sodio al 0,9 por ciento inyectable \\
+41 & Laboratorio y medición & Hemograma automatizado diferencial \\
+78 & Transporte y alquiler de vehículos & Servicio de alquiler de camión volquete \\
+25 & Vehículos & Camioneta pick up cabina doble 4 por 4 \\
+82 & Publicidad, diseño e impresión & Servicio de publicidad en página web \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\textbf{Los cuatro rubros que aparecen en los resultados de la Parte V:}
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.336}Q{1.026}Q{1.638}}
+\toprule
+\textbf{Rubro} & \textbf{Qué agrupa} & \textbf{Por qué aparece} \\
+\midrule
+8010 & Consultoría y monitoreo de proyectos de inversión pública & Es el rubro de las condiciones de postor único con Régimen Especial \\
+8013 & Alquiler de inmuebles, locales y oficinas & Postor único con Contratación Directa: el dueño de un local es el único que puede ofrecerlo \\
+8210 & Publicidad y difusión en medios & Postor único con Contratación Internacional \\
+5013 & Leche y derivados & El rubro del Vaso de Leche, que aparece en las reglas de productos \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\phantomsection
+\subsection*{6. Los métodos de contratación}
+\addcontentsline{toc}{subsection}{6. Los métodos de contratación}
+El método es el procedimiento de selección, y es el campo que dice \textbf{cuánta competencia preveía la norma}. Por eso es la variable central de la pregunta sobre postor único: comparar el número de postores entre métodos sin tener esto en cuenta es comparar peras con manzanas.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.795}Q{0.940}Q{0.940}Q{0.940}Q{1.386}}
+\toprule
+\textbf{Método} & \textbf{Procesos} & \textbf{Monto, miles de millones de soles} & \textbf{Postores en promedio} & \textbf{Para qué sirve} \\
+\midrule
+Adjudicación Simplificada & 82.503 & 47,1 & 16,1 & El procedimiento ordinario de monto intermedio, el más usado con diferencia \\
+Subasta Inversa Electrónica & 21.150 & 10,0 & 8,2 & Bienes y servicios estandarizados con ficha de catálogo, donde solo se compite por precio \\
+Comparación de Precios & 12.555 & 0,9 & 3,1 & Bienes y servicios de disponibilidad inmediata y bajo monto \\
+Contratación Directa & 11.049 & 14,5 & 1,2 & Excepcional y con causal: desabastecimiento, emergencia, proveedor único o servicio personalísimo \\
+Licitación Pública Abreviada & 9.601 & 6,3 & 13,6 & Versión abreviada de la licitación, solo en 2025 \\
+Licitación Pública & 9.242 & 106,6 & 21,0 & Bienes y obras de mayor monto. Es el 5 por ciento de los procesos y el mayor monto del dataset \\
+Concurso Público Abreviado & 8.926 & 1,9 & 14,6 & Versión abreviada del concurso, solo en 2025 \\
+Concurso Público & 6.627 & 27,1 & 26,1 & Servicios y consultorías de mayor monto. El más competido de todos \\
+Régimen Especial & 4.367 & 4,8 & 1,6 & Procedimientos sujetos a un régimen propio o excluidos del régimen general \\
+Convenio & 4.009 & 10,3 & 2,0 & Convenios marco y convenios entre entidades \\
+Contratación Internacional & 2.981 & 1,4 & 1,1 & Contratación en el exterior o con organismos internacionales \\
+Concurso Público de Servicios & 974 & 2,9 & 25,0 & Variante del concurso, solo en 2025 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\textbf{Un hallazgo del propio dato que conviene saber explicar.} Licitación Pública Abreviada, Concurso Público Abreviado y Concurso Público de Servicios tienen \textbf{cero procesos en 2023 y 2024 y aparecen enteros en 2025}, con 19.501 procesos entre los tres. Al mismo tiempo la Adjudicación Simplificada cae de 33.201 en 2024 a 12.919 en 2025. Es decir que \textbf{hay un cambio de régimen normativo dentro de la ventana de análisis}, el paso a la nueva Ley General de Contrataciones Públicas, y la serie por método no es comparable de punta a punta. Cualquier conclusión que mezcle métodos a lo largo de los tres años tiene que decirlo.
+
+\phantomsection
+\subsection*{7. Los niveles de gobierno}
+\addcontentsline{toc}{subsection}{7. Los niveles de gobierno}
+\textbf{Es un campo derivado, no viene en el dato.} Se construye con una regla sobre el nombre de la entidad, porque OCDS no publica el nivel de gobierno y sin él no se puede comparar una municipalidad con un ministerio. Conviene declararlo abiertamente, porque es una decisión del equipo y tiene un margen de error conocido.
+
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{0.535}Q{0.537}Q{1.928}}
+\toprule
+\textbf{Nivel} & \textbf{Procesos} & \textbf{Cómo se reconoce} \\
+\midrule
+Gobierno local & 73.456 & El nombre contiene municipalidad o municipio \\
+Gobierno regional & 39.776 & Gobierno regional, dirección regional, gerencia regional \\
+Gobierno nacional & 29.984 & Ministerio, instituto, superintendencia, organismo, programa, y otros nombres de entidades nacionales \\
+Otro & 10.742 & No encaja en ninguna regla, el 6,1 por ciento \\
+Empresa del Estado & 8.048 & Sociedad anónima, empresa, entidad prestadora de servicios, Electro, Sedapal, Banco de la Nación \\
+Universidad pública & 7.094 & El nombre contiene universidad \\
+Fuerzas armadas y policiales & 5.812 & Ejército, Marina, Fuerza Aérea, Policía, ministerios de Defensa e Interior \\
+Establecimiento de salud & 2.278 & Hospital, red de salud, red asistencial, Diresa \\
+Unidad educativa & 208 & Unidad de gestión educativa local o UGEL \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Las dos cosas que hay que decir si preguntan: que el 6,1 por ciento cae en Otro y que la clasificación es por nombre, de modo que una entidad con un nombre atípico puede quedar mal ubicada. Es suficiente para agregar y comparar, y no lo sería para una afirmación sobre una entidad individual.
+
+\phantomsection
+\subsection*{8. La categoría y el tramo de monto}
+\addcontentsline{toc}{subsection}{8. La categoría y el tramo de monto}
+\textbf{Categoría} es el campo de OCDS mainProcurementCategory y tiene tres valores: goods para bienes, services para servicios y works para obras. Están casi empatados en número de procesos, pero no en monto: las obras son el 11 por ciento de los procesos y concentran mucho más dinero por proceso.
+
+\textbf{Tramo de monto} no es un campo del dato, es una discretización que el proyecto construye donde hace falta. Se usa en dos sitios con cortes distintos y a propósito:
+
+\begin{enumerate}
+  \item En la Parte I, seis tramos, para describir la competencia a lo largo de toda la escala: menos de 50 mil, 50 a 200 mil, 200 mil a 1 millón, 1 a 5 millones, 5 a 20 millones y más de 20 millones.
+  \item En la canasta enriquecida de la Parte V, cuatro tramos, porque un algoritmo de patrones frecuentes solo entiende ítems y no puede recibir una variable continua: menos de 50 mil, 50 mil a 500 mil, 500 mil a 5 millones y más de 5 millones.
+\end{enumerate}
+El monto se trabaja \textbf{en escala logarítmica} en casi todas las figuras. No es un adorno: va de cuatro céntimos a 1.135 millones de soles, así que en escala lineal todo el dataset se apelmaza contra el eje y solo se ven los extremos.
+
+\phantomsection
+\subsection*{9. Las marcas y los indicadores derivados}
+\addcontentsline{toc}{subsection}{9. Las marcas y los indicadores derivados}
+\begin{enumerate}
+  \item \textbf{Postor único}, n\_\allowbreak{}postores menor o igual a uno. Es el indicador central del proyecto y la tasa base es del \textbf{12,4 por ciento} de los procesos. Atraviesa todos los tramos de monto, y en el tramo de menos de 50 mil soles llega al 57 por ciento. Esa es la pregunta que la Parte I deja abierta y que la Parte V responde.
+  \item \textbf{n\_\allowbreak{}postores\_\allowbreak{}imputado.} El número de postores faltaba en el 8,3 por ciento del dato crudo, y en la tabla final se imputó en 6.655 procesos con la mediana de su propio método, no con la mediana global, porque la competencia depende del procedimiento. La marca existe para poder \textbf{excluir esos procesos} cuando el análisis es sobre la competencia misma, y así evitar que la propia imputación genere el patrón. La Parte V la usa exactamente para eso.
+  \item \textbf{monto\_\allowbreak{}outlier.} Se marca con el criterio de Tukey sobre el logaritmo del monto y factor 3, lo que da un rango de 584 soles a 65 millones. Quedan fuera 565 procesos, el 0,3 por ciento, y \textbf{se conservan}: un contrato de mil millones de soles no es un error de digitación, es la obra grande del año, y borrarlo sería borrar el objeto de estudio.
+  \item \textbf{Gini del monto, 0,857.} Mide la desigualdad en el reparto del dinero. Cero sería reparto perfectamente igual y uno sería que todo el monto está en un solo proceso. El 1 por ciento de los procesos concentra el 47,1 por ciento del monto, y el 10 por ciento concentra el 80,2 por ciento. Es la curva de Lorenz de la Parte I.
+  \item \textbf{Fraccionamiento.} No se mide directamente, pero n\_\allowbreak{}proveedores mayor que uno y la coocurrencia mensual de la Parte V son las dos señales que lo rodean.
+\end{enumerate}
+\phantomsection
+\subsection*{10. Confusiones frecuentes y cómo responderlas}
+\addcontentsline{toc}{subsection}{10. Confusiones frecuentes y cómo responderlas}
+\begin{enumerate}
+  \item \textbf{El monto no es lo que se pagó.} monto\_\allowbreak{}pen es el valor referencial de la convocatoria. El monto adjudicado existe en awards.csv y se usa para elegir la adjudicación principal, pero la cifra que recorre las figuras es la del proceso. Decir que el Estado gastó tanto es impreciso; lo correcto es que convocó procesos por ese valor.
+  \item \textbf{Un proceso no es un contrato.} Un proceso puede terminar en varios contratos, quedar desierto o ser anulado. El grano del proyecto es el proceso.
+  \item \textbf{El departamento es el de la entidad.} Un ministerio con sede en Lima que financia una obra en Puno aparece en Lima. Por eso Lima tiene el 30 por ciento de los procesos.
+  \item \textbf{La fecha es la de convocatoria, no la de publicación del paquete.} Son dos campos distintos y la diferencia importa: 81.234 filas del dato crudo quedan fuera de la ventana de 2023 a 2025, casi todas por ser anteriores, y se descartan para que la serie temporal mida actividad y no republicación.
+  \item \textbf{Postor único no es irregularidad.} En Contratación Directa, Régimen Especial o Contratación Internacional es administrativamente esperable, y en el alquiler de un inmueble es inevitable. El análisis entrega una lista priorizada de dónde mirar, no una conclusión sobre conducta.
+  \item \textbf{Nada de esto es una afirmación sobre una entidad o un proveedor concreto.} Son asociaciones estadísticas sobre datos de publicación. En contratación pública esa distinción no es un formalismo: confundirla convierte un ejercicio de minería en una acusación sin sustento.
+\end{enumerate}
+\phantomsection
+\subsection*{11. Cifras que conviene tener en la cabeza}
+\addcontentsline{toc}{subsection}{11. Cifras que conviene tener en la cabeza}
+\begin{center}\footnotesize
+\begin{tabularx}{\linewidth}{Q{1.133}Q{0.867}}
+\toprule
+\textbf{Cifra} & \textbf{Valor} \\
+\midrule
+Procesos en la tabla analítica & 177.398 \\
+Período & 2023 a 2025 \\
+Entidades compradoras distintas & 2.968 \\
+Proveedores distintos & 67.510 \\
+Ítems CUBSO distintos, a 8 dígitos & 4.664 \\
+Rubros distintos, a 4 dígitos & 368 \\
+Monto mediano de un proceso & 178 mil soles \\
+Monto máximo de un proceso & 1.135 millones de soles \\
+Postores en la mediana & 9 \\
+Procesos con un solo postor & 12,4 por ciento \\
+Procesos sin adjudicación & 31.373, el 17,7 por ciento \\
+Gini del monto & 0,857 \\
+Tablas OCDS usadas, de 21 & 5 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\end{document}

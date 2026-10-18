@@ -1,0 +1,5 @@
+sin_la_senal,ndcg,recall,cambio_ndcg_pct
+vecindario,0.0778,0.09722,-11.08114
+contenido,0.08548,0.10013,-2.302
+ALS,0.08572,0.09893,-2.02292
+departamento,0.08257,0.0956,-5.62066

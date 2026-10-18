@@ -1,0 +1,62 @@
+[
+ {
+  "nombre_a":"CONSORCIO NEXTNET Y FIBERLUX TECH",
+  "nombre_b":"NEXTNET Y FIBERLUX TECH",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"ACROCON",
+  "nombre_b":"CONSORCIO ACROCON",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO NEW HOPE",
+  "nombre_b":"NEW HOPE",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"ANIWIL HNOS EMPRESA CONTRATISTA CAL MUR",
+  "nombre_b":"ANIWILL HNOS EMPRESA CONTRATISTA CAL Y MUR",
+  "jaccard":0.88
+ },
+ {
+  "nombre_a":"CONSORCIO SAGITARIO",
+  "nombre_b":"SAGITARIO",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO PONTO VIEJO",
+  "nombre_b":"CONSORCIO VIEJO PONTO",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO FMR ELECTRIC",
+  "nombre_b":"FMR ELECTRIC",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"ELECTRONCA MEDICS PLC DAF CLINICAL LIFE SERVICE",
+  "nombre_b":"ELECTRONICA MEDICS PLC DAF CLINICAL LIFE SERVICE",
+  "jaccard":0.93
+ },
+ {
+  "nombre_a":"CONSORCIO QUEROBAMBA",
+  "nombre_b":"QUEROBAMBA",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO ENERSYS",
+  "nombre_b":"ENERSYS",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO CORPORACION AGROPECUARIA BERTHA IGOR RUBEN REYES ALARCON Y UNITED PRODUCTS",
+  "nombre_b":"CONSORCIO UNITED PRODUCTS CORPORACION AGROPECUARIA BERTHA IGOR RUBEN REYES ALARCON",
+  "jaccard":0.97
+ },
+ {
+  "nombre_a":"CONSORCIO RIO NANAY",
+  "nombre_b":"RIO NANAY",
+  "jaccard":1.0
+ }
+]

@@ -1,0 +1,17 @@
+# Entorno verificado: conda env spark310
+# Python 3.10.20, OpenJDK 21
+
+# Parte I (obligatorio) y ALS de la Parte III
+pyspark==4.2.0
+pandas>=2.2
+numpy>=2.0
+pyarrow>=17
+
+# Partes II y III en local, y HDBSCAN de scikit-learn
+scikit-learn>=1.5
+scipy>=1.13
+
+# Figuras y notebooks
+matplotlib>=3.9
+jupyterlab>=4.0
+nbconvert>=7.0

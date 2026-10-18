@@ -1,0 +1,30 @@
+[
+ {
+  "tipo":"consorcio",
+  "identificadores":105881,
+  "proveedores":62045,
+  "claves_exactas":52108,
+  "reduccion_pct":41.4
+ },
+ {
+  "tipo":"empresa",
+  "identificadores":71146,
+  "proveedores":71146,
+  "claves_exactas":71146,
+  "reduccion_pct":0.0
+ },
+ {
+  "tipo":"persona natural",
+  "identificadores":32017,
+  "proveedores":32017,
+  "claves_exactas":32017,
+  "reduccion_pct":0.0
+ },
+ {
+  "tipo":"extranjero",
+  "identificadores":2741,
+  "proveedores":2085,
+  "claves_exactas":2117,
+  "reduccion_pct":23.9
+ }
+]

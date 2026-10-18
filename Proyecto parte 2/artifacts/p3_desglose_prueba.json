@@ -1,0 +1,22 @@
+[
+ {
+  "pares_2025":"se repiten de 2023 o 2024",
+  "pares":9861,
+  "pct":26.3
+ },
+ {
+  "pares_2025":"nuevos, proveedor sin historia",
+  "pares":16155,
+  "pct":43.0
+ },
+ {
+  "pares_2025":"nuevos, entidad sin historia",
+  "pares":97,
+  "pct":0.3
+ },
+ {
+  "pares_2025":"nuevos y predecibles",
+  "pares":11416,
+  "pct":30.4
+ }
+]

@@ -1,0 +1,22 @@
+[
+ {
+  "k":10,
+  "ndcg_validacion":0.05828
+ },
+ {
+  "k":25,
+  "ndcg_validacion":0.07485
+ },
+ {
+  "k":50,
+  "ndcg_validacion":0.08119
+ },
+ {
+  "k":100,
+  "ndcg_validacion":0.08061
+ },
+ {
+  "k":200,
+  "ndcg_validacion":0.08002
+ }
+]

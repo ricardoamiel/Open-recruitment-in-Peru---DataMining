@@ -1,0 +1,82 @@
+[
+ {
+  "metodo":"Adjudicación Simplificada",
+  "adjudicaciones":70287,
+  "pct":8.7
+ },
+ {
+  "metodo":"Contratación Internacional",
+  "adjudicaciones":3060,
+  "pct":2.7
+ },
+ {
+  "metodo":"Concurso Público",
+  "adjudicaciones":6021,
+  "pct":13.3
+ },
+ {
+  "metodo":"Adjudicación Simplificada-Homologación",
+  "adjudicaciones":688,
+  "pct":10.2
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Decreto Urgencia 032-2023",
+  "adjudicaciones":544,
+  "pct":7.4
+ },
+ {
+  "metodo":"Comparación de Precios",
+  "adjudicaciones":11639,
+  "pct":4.8
+ },
+ {
+  "metodo":"Procedimiento Especial de Contratación",
+  "adjudicaciones":423,
+  "pct":9.7
+ },
+ {
+  "metodo":"Concurso Público Abreviado",
+  "adjudicaciones":6273,
+  "pct":10.8
+ },
+ {
+  "metodo":"Licitación Pública Abreviada",
+  "adjudicaciones":7317,
+  "pct":12.9
+ },
+ {
+  "metodo":"Licitación Pública",
+  "adjudicaciones":8109,
+  "pct":12.2
+ },
+ {
+  "metodo":"Adjudicación Simplificada - Ley N° 31728",
+  "adjudicaciones":587,
+  "pct":7.3
+ },
+ {
+  "metodo":"Concurso Público de Servicios",
+  "adjudicaciones":763,
+  "pct":17.3
+ },
+ {
+  "metodo":"Contratación Directa",
+  "adjudicaciones":11845,
+  "pct":5.0
+ },
+ {
+  "metodo":"Subasta Inversa Electrónica",
+  "adjudicaciones":20359,
+  "pct":8.7
+ },
+ {
+  "metodo":"Regímen Especial",
+  "adjudicaciones":4300,
+  "pct":3.7
+ },
+ {
+  "metodo":"Convenio",
+  "adjudicaciones":3762,
+  "pct":12.9
+ }
+]

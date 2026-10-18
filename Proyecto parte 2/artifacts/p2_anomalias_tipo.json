@@ -1,0 +1,18 @@
+[
+ {
+  "tipo_anomalia":"competencia o dependencia",
+  "proveedores":87,
+  "monto":1628980047.1500000954,
+  "postor_unico":0.729,
+  "sin_concurso":0.94,
+  "entidades":4.0
+ },
+ {
+  "tipo_anomalia":"escala",
+  "proveedores":202,
+  "monto":21310989313.7099990845,
+  "postor_unico":0.27,
+  "sin_concurso":0.301,
+  "entidades":16.0
+ }
+]

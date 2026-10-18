@@ -1,0 +1,28 @@
+# Publica en GitHub Pages el reporte interactivo del proyecto 1.
+# Requiere en Settings > Pages > Source la opcion "GitHub Actions".
+name: Publicar reporte
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: "Proyecto parte 1/docs"
+      - id: despliegue
+        uses: actions/deploy-pages@v4

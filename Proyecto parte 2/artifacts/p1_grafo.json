@@ -1,0 +1,11 @@
+[
+ {
+  "nodos":70843,
+  "aristas":2528285,
+  "componentes":684,
+  "pct_componente_gigante":97.4,
+  "grado_medio":71.4,
+  "grado_max":13884,
+  "repeticion_max":2624
+ }
+]

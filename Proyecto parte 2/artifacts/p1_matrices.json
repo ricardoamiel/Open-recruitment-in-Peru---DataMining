@@ -1,0 +1,16 @@
+[
+ {
+  "matriz":"entidad x proveedor",
+  "filas":2964,
+  "columnas":63204,
+  "celdas":107701,
+  "densidad_pct":0.0575
+ },
+ {
+  "matriz":"entidad x familia",
+  "filas":2955,
+  "columnas":368,
+  "celdas":35454,
+  "densidad_pct":3.26
+ }
+]

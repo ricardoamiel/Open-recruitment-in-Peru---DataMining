@@ -1,0 +1,26 @@
+[
+ {
+  "sin_la_senal":"vecindario",
+  "ndcg":0.0778,
+  "recall":0.09722,
+  "cambio_ndcg_pct":-11.08114
+ },
+ {
+  "sin_la_senal":"contenido",
+  "ndcg":0.08548,
+  "recall":0.10013,
+  "cambio_ndcg_pct":-2.302
+ },
+ {
+  "sin_la_senal":"ALS",
+  "ndcg":0.08572,
+  "recall":0.09893,
+  "cambio_ndcg_pct":-2.02292
+ },
+ {
+  "sin_la_senal":"departamento",
+  "ndcg":0.08257,
+  "recall":0.0956,
+  "cambio_ndcg_pct":-5.62066
+ }
+]
