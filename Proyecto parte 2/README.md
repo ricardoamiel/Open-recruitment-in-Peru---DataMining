@@ -18,24 +18,22 @@ Las tres preguntas que guían el trabajo, todas pensadas para quien supervisa el
 
 ## Estado
 
-| Notebook | Parte | Spark | Qué produce |
-| --- | --- | --- | --- |
-| 1_base_relacional.ipynb | I. Transformación, resolución de entidades, base relacional | obligatorio, todo el notebook | hechos, características, matrices de interacción y grafo en data/processed |
-| 2_clustering_anomalias.ipynb | II. Clustering y detección de anomalías | preparación, PCA y KMeans de MLlib; el resto en local | tipología de proveedores y cola de anomalías |
-| 3_recomendacion.ipynb | III. Sistemas de recomendación | ALS de MLlib; vecindario, contenido y evaluación en local | recomendador híbrido evaluado y alertas de relaciones inusuales |
+| Notebook                     | Parte                                                         | Spark                                                      | Qué produce                                                                 |
+| ---------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| 1_base_relacional.ipynb      | I. Transformación, resolución de entidades, base relacional | obligatorio, todo el notebook                              | hechos, características, matrices de interacción y grafo en data/processed |
+| 2_clustering_anomalias.ipynb | II. Clustering y detección de anomalías                     | preparación, PCA y KMeans de MLlib; el resto en local     | tipología de proveedores y cola de anomalías                               |
+| 3_recomendacion.ipynb        | III. Sistemas de recomendación                               | ALS de MLlib; vecindario, contenido y evaluación en local | recomendador híbrido evaluado y alertas de relaciones inusuales             |
 
 Las Partes IV a VII y el reporte web interactivo se construirán sobre las mismas tablas.
-
-Junto a cada notebook hay una guía con su mismo nombre en formato Markdown, por ejemplo notebooks/1_base_relacional.md, que recorre el notebook sección por sección, explica cómo funciona cada técnica, interpreta cada figura, dice qué se descartó y por qué, y cierra con las preguntas previsibles de la sustentación.
 
 ## Estructura
 
 ```
 Proyecto parte 2/
 ├── notebooks/
-│   ├── 1_base_relacional.ipynb       y su guía 1_base_relacional.md
-│   ├── 2_clustering_anomalias.ipynb  y su guía 2_clustering_anomalias.md
-│   ├── 3_recomendacion.ipynb         y su guía 3_recomendacion.md
+│   ├── 1_base_relacional.ipynb
+│   ├── 2_clustering_anomalias.ipynb
+│   ├── 3_recomendacion.ipynb
 │   └── scripts/
 │       ├── helpers.py      Spark acotado, figuras con lectura obligatoria, hallazgos con acción
 │       ├── ingesta.py      lectura de los CSV crudos, copia del proyecto 1
@@ -124,12 +122,10 @@ python _build/auditar_estilo.py   # redacción sin guiones como puntuación, cur
 
 ## Decisiones de diseño que conviene conocer
 
-**Cada figura lleva su lectura y cada conclusión su acción.** helpers.figura falla si la figura no trae una interpretación de al menos cuarenta caracteres, y helpers.hallazgo falla si el hallazgo no trae a la vez el insight y la acción que habilita. Los hallazgos se exportan a artifacts/pN_hallazgos.json y son la materia prima del reporte web, cuyo protagonista será el insight y la decisión que permite tomar, no la descripción de la técnica.
-
 **Implementaciones propias contrastadas con bibliotecas.** KMeans++, silueta, DBSCAN, jerárquico aglomerativo, filtrado colaborativo, TF-IDF y las métricas de ranking están escritos a mano en algoritmos.py siguiendo las lectures, y se comparan contra KMeans y ALS de Spark MLlib, DBSCAN y HDBSCAN de scikit-learn y linkage de scipy. La resolución de entidades usa MinHash y LSH propios escritos en DataFrames de Spark, porque el MinHashLSH de MLlib, con bandas de una sola fila, no terminaba.
 
 **Spark donde aporta, local donde no, y medido.** La Parte I corre entera en Spark, como exige el enunciado. En las Partes II y III cada notebook mide el camino de Spark contra el local y justifica la elección: a esta escala KMeans y el vecindario son más rápidos en numpy, y ALS se queda en Spark porque es lo que escalaría sin cambiar el código.
 
 ## Uso de herramientas de asistencia
 
-El enunciado admite herramientas de IA y exige que cada integrante comprenda y sepa explicar lo que se entrega. Por eso el código está escrito para poder defenderse en una sustentación: funciones cortas, cada algoritmo verificado contra una biblioteca antes de usarse y cada decisión argumentada en el notebook y en su guía.
+El enunciado admite herramientas de IA y exige que cada integrante comprenda y sepa explicar lo que se entrega. Por eso el código está escrito para poder defenderse en una sustentación: funciones cortas, cada algoritmo verificado contra una biblioteca antes de usarse y cada decisión argumentada en el notebook.

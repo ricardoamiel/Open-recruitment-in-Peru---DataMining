@@ -33,13 +33,12 @@ Un notebook por parte. La rúbrica puntúa cada parte por separado, las partes I
 
 En los notebooks va el resultado y una lectura corta de cada figura. El razonamiento completo, las alternativas descartadas y los límites de cada conclusión están en [docs/JUSTIFICACION.md](docs/JUSTIFICACION.md). Las treinta y ocho figuras, con lo que muestra cada una, cómo explicarla en voz alta y qué responder a la pregunta previsible, están en [docs/FIGURAS.md](docs/FIGURAS.md). Y qué significa cada campo, cada código CUBSO, cada método de contratación y cada etiqueta del dataset está en [docs/GLOSARIO.md](docs/GLOSARIO.md).
 
-Y junto a cada notebook hay una guía de estudio con su mismo nombre, de [1_kdd_eda.md](notebooks/1_kdd_eda.md) a [5_reglas_asociacion.md](notebooks/5_reglas_asociacion.md), que recorre el notebook sección por sección, explica cómo funciona por dentro cada técnica, dice cuáles se descartaron y por qué, y cierra con las preguntas previsibles y su respuesta. Esas cinco guías y el glosario están también reunidos en [docs/GUIA_ESTUDIO.pdf](docs/GUIA_ESTUDIO.pdf), con las 38 figuras insertadas donde el texto las explica y con marcadores de navegación, en una página pequeña para leerlo en el celular.
+La guía de estudio de cada parte y el glosario están reunidos en [docs/GUIA_ESTUDIO.pdf](docs/GUIA_ESTUDIO.pdf), con las 38 figuras insertadas donde el texto las explica y con marcadores de navegación, en una página pequeña para leerlo en el celular.
 
 ```
 PROYECTO/
 ├── notebooks/
 │   ├── 1_kdd_eda.ipynb  ...  6_reporte_interactivo.ipynb
-│   ├── 1_kdd_eda.md     ...  5_reglas_asociacion.md     guía de estudio de cada parte
 │   └── scripts/
 │       ├── helpers.py      Spark, figuras con lectura obligatoria, exportación
 │       ├── ingesta.py      descarga y paso de los CSV crudos a la tabla limpia

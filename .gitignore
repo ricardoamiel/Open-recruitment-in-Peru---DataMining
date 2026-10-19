@@ -18,3 +18,6 @@ __pycache__/
 
 # Material del curso, no se publica
 **/Lectures/
+
+# Guias de estudio junto a los notebooks: solo para uso local
+**/notebooks/*.md
