@@ -21,3 +21,5 @@ __pycache__/
 
 # Guias de estudio junto a los notebooks: solo para uso local
 **/notebooks/*.md
+
+**/propuesta/*.log
