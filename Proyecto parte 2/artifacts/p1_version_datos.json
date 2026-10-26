@@ -1,0 +1,20 @@
+[
+ {
+  "paquete":"2023.csv.tar.gz",
+  "descargado":"2026-10-26 09:23",
+  "mb":71.4,
+  "sha256":"358a5666a1cf1d8798f88146920eee1b356d5c5898def51ffa6c745d4ef05aec"
+ },
+ {
+  "paquete":"2024.csv.tar.gz",
+  "descargado":"2026-10-26 09:25",
+  "mb":166.0,
+  "sha256":"8bbe5b4d6fa0f319e74ac9d52b167f537f74ea7cbdb43e0ee0b2f3d1f3f07ead"
+ },
+ {
+  "paquete":"2025.csv.tar.gz",
+  "descargado":"2026-10-26 09:26",
+  "mb":197.0,
+  "sha256":"ee5c702e881054b461d5fe4cb7c440bc2c9919acd7089ea1feccf54bfd1dc708"
+ }
+]

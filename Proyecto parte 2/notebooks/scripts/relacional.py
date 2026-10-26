@@ -142,6 +142,10 @@ def claves_exactas(registros):
                                                       F.lit("|"), "depto_modal"))))
 
 
+# Romano de I a XXXIX; la anticipacion evita aceptar la cadena vacia.
+ROMANO = r"^(?=[IVX])X{0,3}(IX|IV|V?I{0,3})$"
+
+
 def pares_difusos(claves, bandas=10, filas=4, umbral=0.85, k=3):
     """Segundo paso: nombres casi iguales entre claves sin RUC, con MinHash y LSH.
 
@@ -171,11 +175,14 @@ def pares_difusos(claves, bandas=10, filas=4, umbral=0.85, k=3):
             # Las palabras se ordenan antes de formar tejas, porque el mismo
             # proveedor aparece como FRANCO SANTOS TANIA y TANIA FRANCO SANTOS.
             .withColumn("nombre_cmp", F.array_join(F.array_sort(F.split("nombre_cmp", " ")), " "))
-            # Numeros y romanos sueltos distinguen consorcios hermanos: VIAL AN
-            # 104 y VIAL AN 107, o SAN CARLOS y SAN CARLOS II, son distintos.
-            .withColumn("marca", F.array_join(F.array_sort(F.filter(
-                F.split("nombre_norm", " "),
-                lambda t: t.rlike(r"^([0-9]+|I|II|III|IV|V|VI|VII|VIII|IX|X)$"))), " "))
+            # Numeros y romanos distinguen consorcios hermanos: VIAL AN 104 y
+            # VIAL AN 107, SAN CARLOS y SAN CARLOS XI, o CCARHUAYO y CCARHUAYO1,
+            # son distintos. El numero pegado al final de una palabra tambien
+            # cuenta; el romano pegado no, porque FENIX o MAX terminan en X.
+            .withColumn("marca", F.array_join(F.array_sort(F.concat(
+                F.filter(F.split("nombre_norm", " "), lambda t: t.rlike(f"^[0-9]+$|{ROMANO}")),
+                F.transform(F.filter(F.split("nombre_norm", " "), lambda t: t.rlike(r"^[A-Z]+[0-9]+$")),
+                            lambda t: F.regexp_extract(t, r"([0-9]+)$", 1)))), " "))
             .withColumn("bloque", F.when(F.col("tipo") == "extranjero", F.lit("EXT"))
                                    .otherwise(F.col("depto_modal")))
             .filter(F.length("nombre_cmp") >= k + 2))

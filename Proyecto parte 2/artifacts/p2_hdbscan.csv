@@ -1,0 +1,8 @@
+hdbscan,proveedores,perfil_kmeans,pct_de_ese_perfil,rasgos,familias_mediana,pct_personas_naturales,pct_extranjeros
+-1,4494,competitivo típico,35.0,"ruido, entre regiones densas",2.0,8.0,3.0
+0,267,competitivo típico,100.0,"especializado, pocos clientes",0.0,30.0,0.0
+1,602,cautivo sin competencia,100.0,"gana sin rivales, contratado sin concurso",1.0,82.0,13.0
+2,168,cautivo sin competencia,100.0,"gana sin rivales, contratado sin concurso",2.0,56.0,35.0
+3,66,contratista de obra,100.0,"obras, contratos grandes",2.0,6.0,0.0
+4,2904,competitivo típico,96.0,"especializado, contratado por concurso",1.0,23.0,0.0
+5,3561,competitivo típico,84.0,"muy diversificado, contratado por concurso",2.0,18.0,0.0

@@ -1,50 +1,50 @@
 [
  {
-  "clave":"RUC-20608917561",
-  "similitud":0.805,
-  "nombre":"CORPORATIVO VIRGEN DEL CARMEN E.I.R.L.",
-  "familia_principal":"5013"
- },
- {
   "clave":"RUC-20321811559",
-  "similitud":0.803,
+  "similitud":0.856,
   "nombre":"SERV.DE TRANSP. Y MOVIM.DE TIERRAS EIRL.",
   "familia_principal":"7214"
  },
  {
   "clave":"RUC-20532487138",
-  "similitud":0.799,
+  "similitud":0.82,
   "nombre":"SRC CONTRATISTAS GENERALES E.I.R.L.",
   "familia_principal":"3011"
  },
  {
-  "clave":"RUC-20555401010",
-  "similitud":0.782,
-  "nombre":"PROCESADORA DE ALIMENTOS E INVERSIONES SARITA COLONIA S.A.C. - ALINPROSAC S.A.C.",
-  "familia_principal":"5022"
+  "clave":"RUC-20608917561",
+  "similitud":0.818,
+  "nombre":"CORPORATIVO VIRGEN DEL CARMEN E.I.R.L.",
+  "familia_principal":"5013"
+ },
+ {
+  "clave":"RUC-20455609705",
+  "similitud":0.805,
+  "nombre":"AGUA Y ENERGIA S.R.L.",
+  "familia_principal":"7215"
  },
  {
   "clave":"RUC-20609319071",
-  "similitud":0.754,
+  "similitud":0.793,
   "nombre":"INNOVAMIX CONCRETOS DEL PERU E.I.R.L.",
   "familia_principal":"3011"
  },
  {
-  "clave":"RUC-20602136290",
-  "similitud":0.749,
-  "nombre":"CORPORACION RISO EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA - CORPORACION RISO E.I.R.L.",
+  "clave":"RUC-20555401010",
+  "similitud":0.788,
+  "nombre":"PROCESADORA DE ALIMENTOS E INVERSIONES SARITA COLONIA S.A.C. - ALINPROSAC S.A.C.",
+  "familia_principal":"5022"
+ },
+ {
+  "clave":"RUC-20605386637",
+  "similitud":0.786,
+  "nombre":"LADRILLERA ORO ROJO S.A.C.",
   "familia_principal":"3013"
  },
  {
-  "clave":"RUC-20533028749",
-  "similitud":0.746,
-  "nombre":"ORION CONTRATISTAS S.A.C.",
-  "familia_principal":"7214"
- },
- {
-  "clave":"RUC-20455609705",
-  "similitud":0.742,
-  "nombre":"AGUA Y ENERGIA S.R.L.",
-  "familia_principal":"7215"
+  "clave":"RUC-20609651637",
+  "similitud":0.768,
+  "nombre":"CORPORACION SOLUAN S.A.C.",
+  "familia_principal":"3012"
  }
 ]

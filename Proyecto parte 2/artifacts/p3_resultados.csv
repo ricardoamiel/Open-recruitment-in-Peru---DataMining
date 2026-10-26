@@ -1,7 +1,7 @@
 metodo,precision,recall,ndcg,cobertura_pct,segundos,usuarios
-popularidad global,0.01155,0.02639,0.02231,0.03514,2.15588,2129
-popularidad en el departamento,0.02748,0.08034,0.06608,0.76685,2.54591,2129
-"vecindario usuario a usuario, k = 50",0.03504,0.08314,0.07559,7.46176,6.6498,2129
-"contenido, TF-IDF de familia y departamento",0.00507,0.01357,0.0105,14.97106,6.6839,2129
-"ALS implícito, rango 48",0.03274,0.08754,0.07079,3.97478,5.22919,2129
-"híbrido: vecindario, contenido, ALS y departamento",0.04007,0.10424,0.08749,6.01695,34.6094,2129
+popularidad global,0.01159,0.02639,0.02234,0.03562,1.53849,2123
+popularidad en el departamento,0.02751,0.082,0.06689,0.7774,1.22982,2123
+"vecindario usuario a usuario, k = 50",0.0349,0.08327,0.0758,7.6483,4.36545,2123
+"contenido, TF-IDF de familia y departamento",0.00556,0.01449,0.01155,15.15831,5.60348,2123
+"ALS implícito, rango 48",0.0349,0.0915,0.07547,4.04417,2.32894,2123
+"híbrido: vecindario, contenido, ALS y departamento",0.04032,0.10476,0.08852,6.10607,19.56898,2123

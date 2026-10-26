@@ -2,7 +2,7 @@
  {
   "parte":"I",
   "titulo":"La mitad de los identificadores de proveedor son códigos de consorcio, y muchos repetidos",
-  "insight":"De 211,785 identificadores publicados quedan 167,293 proveedores reales. La fragmentación vive casi entera en los consorcios, que reciben un código nuevo por inscripción: 105,881 códigos son 62,045 consorcios. Cualquier ranking de proveedores o medida de concentración hecha sobre el identificador crudo subestima a quienes operan en consorcio.",
+  "insight":"De 209,207 identificadores publicados quedan 165,615 proveedores reales. La fragmentación vive casi entera en los consorcios, que reciben un código nuevo por inscripción: 103,722 códigos son 60,776 consorcios. Cualquier ranking de proveedores o medida de concentración hecha sobre el identificador crudo subestima a quienes operan en consorcio.",
   "accion":"Que el OECE asigne a cada consorcio un identificador estable vinculado a los RUC de sus integrantes, y que todo tablero de concentración use la clave resuelta y no el código publicado.",
   "evidencia":"f02_resolucion, p1_resolucion"
  },
@@ -16,7 +16,7 @@
  {
   "parte":"I",
   "titulo":"Hay pares de proveedores que se presentan juntos casi siempre",
-  "insight":"Ordenar por conteo de coincidencias solo encuentra a los participantes masivos. Medido como afinidad, 4,897 pares con al menos 10 procesos compartidos coinciden en el 80 por ciento o más de las participaciones del menos activo. Es una señal descriptiva con explicaciones legítimas posibles, como empresas vinculadas o un mercado con dos oferentes.",
+  "insight":"Ordenar por conteo de coincidencias solo encuentra a los participantes masivos. Medido como afinidad, 4,847 pares con al menos 10 procesos compartidos coinciden en el 80 por ciento o más de las participaciones del menos activo. Es una señal descriptiva con explicaciones legítimas posibles, como empresas vinculadas o un mercado con dos oferentes.",
   "accion":"Usar estos pares como cola de revisión del área de competencia, cruzando para cada uno quién gana cuando se presentan juntos y si el perdedor alguna vez gana solo; las Partes IV y V los ubicarán dentro de sus comunidades.",
   "evidencia":"f07_afinidad_pares, p1_pares_afines"
  }

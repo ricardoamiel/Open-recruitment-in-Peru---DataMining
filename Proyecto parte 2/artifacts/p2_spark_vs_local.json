@@ -1,12 +1,12 @@
 [
  {
   "implementacion":"KMeans++ propio, numpy",
-  "sse":59216.7145,
-  "segundos":0.0265
+  "sse":58426.7963,
+  "segundos":0.0854
  },
  {
   "implementacion":"KMeans MLlib, k-means paralelo",
-  "sse":59216.7149,
-  "segundos":0.9774
+  "sse":58426.5604,
+  "segundos":2.2998
  }
 ]

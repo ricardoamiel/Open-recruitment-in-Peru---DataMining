@@ -1,4 +1,4 @@
 metodo,clusters,pct_ruido
-DBSCAN propio,2,3.4
-DBSCAN scikit-learn,2,3.4
-HDBSCAN,6,38.09
+DBSCAN propio,1,3.07
+DBSCAN scikit-learn,1,3.07
+HDBSCAN,6,37.26

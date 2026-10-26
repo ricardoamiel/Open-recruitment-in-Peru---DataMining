@@ -2,21 +2,21 @@
  {
   "parte":"III",
   "titulo":"Las relaciones nuevas siguen patrones que se pueden modelar",
-  "insight":"Con lo ocurrido en 2023 y 2024, el híbrido recupera en su lista de diez el 10 por ciento de las relaciones nuevas de 2025 de cada entidad, con una precisión 361 veces la del azar y un NDCG 32 por ciento mayor que la popularidad regional. No es un oráculo, pero sí una medida útil de qué tan esperable es una relación nueva dado el rubro, la geografía y lo que hacen entidades parecidas.",
+  "insight":"Con lo ocurrido en 2023 y 2024, el híbrido recupera en su lista de diez el 10 por ciento de las relaciones nuevas de 2025 de cada entidad, con una precisión 360 veces la del azar y un NDCG 32 por ciento mayor que la popularidad regional. No es un oráculo, pero sí una medida útil de qué tan esperable es una relación nueva dado el rubro, la geografía y lo que hacen entidades parecidas.",
   "accion":"Usar el puntaje del modelo como medida de qué tan esperable es cada relación nueva, y no como sugerencia de contratación; la sección 7 convierte ese puntaje en una alerta.",
   "evidencia":"f17_resultados_recomendacion, p3_resultados"
  },
  {
   "parte":"III",
   "titulo":"Una relación improbable no es, por sí sola, una relación con menos competencia",
-  "insight":"El 6 por ciento de las relaciones nuevas de 2025 cae por debajo del percentil 50 de lo esperable para su entidad y reúne el 4 por ciento de su monto. Pero se adjudica como las demás: postor único: 5.9 frente a 5.3 por ciento, diferencia que no es significativa, p = 0.56; sin concurso: 7.2 frente a 6.3 por ciento, diferencia que no es significativa, p = 0.38.",
+  "insight":"El 6 por ciento de las relaciones nuevas de 2025 cae por debajo del percentil 50 de lo esperable para su entidad y reúne el 6 por ciento de su monto. Pero se adjudica como las demás: postor único: 6.2 frente a 5.3 por ciento, diferencia que no es significativa, p = 0.30; sin concurso: 6.9 frente a 6.3 por ciento, diferencia que no es significativa, p = 0.52.",
   "accion":"No usar el percentil del modelo como alerta aislada. Usarlo para ordenar, dentro de las adjudicaciones que ya son sin concurso o con un solo postor, cuáles además son relaciones que nada en el mercado anticipaba, y revisar esas primero.",
   "evidencia":"f18_sorpresa, p3_prueba_sorpresa, p3_inusuales"
  },
  {
   "parte":"III",
   "titulo":"Los factores latentes revelan mercados de sustitutos",
-  "insight":"Entre los diez vecinos más cercanos de un proveedor en el espacio de ALS, el 15 por ciento comparte su familia CUBSO principal, frente al 3 por ciento al azar, y el modelo nunca vio las familias. Eso permite saber, para un proveedor dominante en una entidad, qué otros proveedores atienden a entidades parecidas en el mismo mercado.",
+  "insight":"Entre los diez vecinos más cercanos de un proveedor en el espacio de ALS, el 16 por ciento comparte su familia CUBSO principal, frente al 3 por ciento al azar, y el modelo nunca vio las familias. Eso permite saber, para un proveedor dominante en una entidad, qué otros proveedores atienden a entidades parecidas en el mismo mercado.",
   "accion":"Cuando una entidad depende de un proveedor cautivo de la Parte II, usar sus sustitutos de mercado como lista de invitación a cotizar en el siguiente estudio de mercado, para ampliar la competencia sin prescribir un ganador.",
   "evidencia":"p3_sustitutos"
  }

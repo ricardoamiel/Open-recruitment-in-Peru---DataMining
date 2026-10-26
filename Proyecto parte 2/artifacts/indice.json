@@ -93,7 +93,7 @@
  },
  "p2_hallazgos": {
   "descripcion": "Hallazgos de la Parte II con su accion propuesta",
-  "filas": 2
+  "filas": 3
  },
  "p3_desglose_prueba": {
   "descripcion": "Composicion de los pares entidad y proveedor de 2025",
@@ -146,5 +146,25 @@
  "p3_prueba_sorpresa": {
   "descripcion": "Prueba de dos proporciones entre relaciones improbables y esperadas",
   "filas": 2
+ },
+ "p2_estabilidad": {
+  "descripcion": "ARI de KMeans frente a la particion adoptada, por semilla y por submuestra",
+  "filas": 2
+ },
+ "p2_sensibilidad_anomalias": {
+  "descripcion": "Anomalias de competencia segun eps y cuantil de distancia",
+  "filas": 9
+ },
+ "p3_intervalos": {
+  "descripcion": "Cambio de NDCG con intervalo de confianza del 95 por ciento, bootstrap pareado",
+  "filas": 8
+ },
+ "p2_hdbscan": {
+  "descripcion": "Grupos de HDBSCAN frente a los perfiles de KMeans",
+  "filas": 7
+ },
+ "p1_version_datos": {
+  "descripcion": "Fecha de descarga y huella sha256 de cada paquete anual usado",
+  "filas": 3
  }
 }

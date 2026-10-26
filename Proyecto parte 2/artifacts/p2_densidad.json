@@ -1,17 +1,17 @@
 [
  {
   "metodo":"DBSCAN propio",
-  "clusters":2,
-  "pct_ruido":3.4
+  "clusters":1,
+  "pct_ruido":3.07
  },
  {
   "metodo":"DBSCAN scikit-learn",
-  "clusters":2,
-  "pct_ruido":3.4
+  "clusters":1,
+  "pct_ruido":3.07
  },
  {
   "metodo":"HDBSCAN",
   "clusters":6,
-  "pct_ruido":38.09
+  "pct_ruido":37.26
  }
 ]

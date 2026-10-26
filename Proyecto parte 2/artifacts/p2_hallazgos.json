@@ -2,14 +2,21 @@
  {
   "parte":"II",
   "titulo":"Existe un perfil de proveedor cautivo y se puede aislar",
-  "insight":"1,285 proveedores recurrentes forman un grupo propio: dependen de una sola entidad para el 100 por ciento de su monto en mediana y ganan sin otro postor el 91 por ciento de las veces. Juntos suman el 2.8 por ciento del monto adjudicado a recurrentes, S\/ 1,645 millones. Casi todo lo que ganan lo ganan sin concurso, por contratación directa o régimen especial. No es una irregularidad en sí, pero es la combinación que vuelve vulnerable a una entidad frente a su proveedor.",
-  "accion":"Usar el cluster 3 como lista de vigilancia: para cada par entidad y proveedor del grupo, revisar si la falta de competencia se explica por el rubro o la geografía, y exigir estudio de mercado ampliado en sus próximas convocatorias.",
+  "insight":"1,260 proveedores recurrentes forman un grupo propio: dependen de una sola entidad para el 100 por ciento de su monto en mediana y ganan sin otro postor el 91 por ciento de las veces. Juntos suman el 2.9 por ciento del monto adjudicado a recurrentes, S\/ 1,581 millones. Casi todo lo que ganan lo ganan sin concurso, por contratación directa o régimen especial. No es una irregularidad en sí, pero es la combinación que vuelve vulnerable a una entidad frente a su proveedor.",
+  "accion":"Usar el cluster 1 como lista de vigilancia: para cada par entidad y proveedor del grupo, revisar si la falta de competencia se explica por el rubro o la geografía, y exigir estudio de mercado ampliado en sus próximas convocatorias.",
   "evidencia":"f11_perfiles_cluster, p2_perfiles"
  },
  {
   "parte":"II",
+  "titulo":"Los proveedores cautivos son dos grupos con preguntas de revisión distintas",
+  "insight":"HDBSCAN parte el perfil cautivo en dos grupos que compiten igual de poco: ganan sin otro postor y sin concurso. 602 proveedores atienden 1 familia de producto en mediana y el 82 por ciento son personas naturales; los otros 168 atienden 2 familias y el 35 por ciento son extranjeros, frente al 13 por ciento del primer grupo. La falta de competencia es la misma, pero lo que se contrata y a quién no lo es.",
+  "accion":"Revisar cada grupo con su propia pregunta. En el primero, si la contratación directa repetida de la misma persona en un solo rubro debería pasar a una convocatoria abierta. En el segundo, si está documentado el sustento de exclusividad o proveedor único que permite contratar sin concurso a un proveedor extranjero.",
+  "evidencia":"p2_hdbscan, p2_perfiles"
+ },
+ {
+  "parte":"II",
   "titulo":"Las anomalías útiles no son las más grandes sino las que ganan sin competir",
-  "insight":"Combinar el ruido de DBSCAN con la distancia al centroide deja 289 proveedores anómalos. 202 lo son por escala, y son los grandes proveedores nacionales. Los otros 87 lo son por competencia o dependencia: ganan sin otro postor el 73 por ciento de las veces y suman S\/ 1,629 millones.",
+  "insight":"Combinar el ruido de DBSCAN con la distancia al centroide deja 260 proveedores anómalos. 183 lo son por escala, y son los grandes proveedores nacionales. Los otros 77 lo son por competencia o dependencia: ganan sin otro postor el 73 por ciento de las veces y suman S\/ 1,346 millones.",
   "accion":"Entregar al área de control solo la cola de competencia o dependencia, ordenada por monto, con el rasgo extremo como primera pregunta de revisión, y recalcularla cada trimestre con los mismos parámetros para ver quién entra y quién sale.",
   "evidencia":"f15_rasgos_anomalia, p2_anomalias"
  }

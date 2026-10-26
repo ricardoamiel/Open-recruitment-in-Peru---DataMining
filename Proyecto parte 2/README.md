@@ -36,7 +36,7 @@ Proyecto parte 2/
 │   ├── 3_recomendacion.ipynb
 │   └── scripts/
 │       ├── helpers.py      Spark acotado, figuras con lectura obligatoria, hallazgos con acción
-│       ├── ingesta.py      lectura de los CSV crudos, copia del proyecto 1
+│       ├── ingesta.py      lectura de los CSV crudos que descarga el proyecto 1
 │       ├── relacional.py   aplanado, resolución de entidades, características, matrices y grafo
 │       └── algoritmos.py   KMeans++, silueta, DBSCAN, jerárquico, vecindario, TF-IDF y métricas
 ├── data/processed/         la base relacional en Parquet, se regenera con el notebook 1

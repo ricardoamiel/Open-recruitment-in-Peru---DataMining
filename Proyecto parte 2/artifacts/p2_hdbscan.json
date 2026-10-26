@@ -1,0 +1,72 @@
+[
+ {
+  "hdbscan":-1,
+  "proveedores":4494,
+  "perfil_kmeans":"competitivo típico",
+  "pct_de_ese_perfil":35.0,
+  "rasgos":"ruido, entre regiones densas",
+  "familias_mediana":2.0,
+  "pct_personas_naturales":8.0,
+  "pct_extranjeros":3.0
+ },
+ {
+  "hdbscan":0,
+  "proveedores":267,
+  "perfil_kmeans":"competitivo típico",
+  "pct_de_ese_perfil":100.0,
+  "rasgos":"especializado, pocos clientes",
+  "familias_mediana":0.0,
+  "pct_personas_naturales":30.0,
+  "pct_extranjeros":0.0
+ },
+ {
+  "hdbscan":1,
+  "proveedores":602,
+  "perfil_kmeans":"cautivo sin competencia",
+  "pct_de_ese_perfil":100.0,
+  "rasgos":"gana sin rivales, contratado sin concurso",
+  "familias_mediana":1.0,
+  "pct_personas_naturales":82.0,
+  "pct_extranjeros":13.0
+ },
+ {
+  "hdbscan":2,
+  "proveedores":168,
+  "perfil_kmeans":"cautivo sin competencia",
+  "pct_de_ese_perfil":100.0,
+  "rasgos":"gana sin rivales, contratado sin concurso",
+  "familias_mediana":2.0,
+  "pct_personas_naturales":56.0,
+  "pct_extranjeros":35.0
+ },
+ {
+  "hdbscan":3,
+  "proveedores":66,
+  "perfil_kmeans":"contratista de obra",
+  "pct_de_ese_perfil":100.0,
+  "rasgos":"obras, contratos grandes",
+  "familias_mediana":2.0,
+  "pct_personas_naturales":6.0,
+  "pct_extranjeros":0.0
+ },
+ {
+  "hdbscan":4,
+  "proveedores":2904,
+  "perfil_kmeans":"competitivo típico",
+  "pct_de_ese_perfil":96.0,
+  "rasgos":"especializado, contratado por concurso",
+  "familias_mediana":1.0,
+  "pct_personas_naturales":23.0,
+  "pct_extranjeros":0.0
+ },
+ {
+  "hdbscan":5,
+  "proveedores":3561,
+  "perfil_kmeans":"competitivo típico",
+  "pct_de_ese_perfil":84.0,
+  "rasgos":"muy diversificado, contratado por concurso",
+  "familias_mediana":2.0,
+  "pct_personas_naturales":18.0,
+  "pct_extranjeros":0.0
+ }
+]

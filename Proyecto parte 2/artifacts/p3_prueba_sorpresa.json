@@ -1,20 +1,20 @@
 [
  {
   "variable":"postor_unico",
-  "improbables_pct":5.8651,
-  "esperadas_pct":5.343,
-  "n_improbables":682,
-  "n_esperadas":8441,
-  "z":0.5812,
-  "p_valor":0.5611
+  "improbables_pct":6.2327,
+  "esperadas_pct":5.3307,
+  "n_improbables":722,
+  "n_esperadas":8254,
+  "z":1.0279,
+  "p_valor":0.304
  },
  {
   "variable":"sin_concurso",
-  "improbables_pct":7.1848,
-  "esperadas_pct":6.3381,
-  "n_improbables":682,
-  "n_esperadas":8441,
-  "z":0.8689,
-  "p_valor":0.3849
+  "improbables_pct":6.9252,
+  "esperadas_pct":6.3121,
+  "n_improbables":722,
+  "n_esperadas":8254,
+  "z":0.6473,
+  "p_valor":0.5174
  }
 ]

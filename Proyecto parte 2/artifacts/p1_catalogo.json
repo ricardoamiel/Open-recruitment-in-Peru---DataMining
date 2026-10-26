@@ -2,29 +2,29 @@
  {
   "tabla":"hechos",
   "contenido":"adjudicación y proveedor resuelto, particionado por año",
-  "filas":156629,
-  "mb":8.88,
+  "filas":154591,
+  "mb":8.78,
   "lo_usa_la_parte":"todas"
  },
  {
   "tabla":"participaciones",
   "contenido":"proceso y participante resuelto",
-  "filas":2253911,
-  "mb":34.51,
+  "filas":2221884,
+  "mb":33.9,
   "lo_usa_la_parte":"IV, V"
  },
  {
   "tabla":"mapa_proveedores",
   "contenido":"identificador publicado y su clave resuelta",
-  "filas":211785,
-  "mb":7.96,
+  "filas":209207,
+  "mb":7.89,
   "lo_usa_la_parte":"todas"
  },
  {
   "tabla":"caracteristicas_proveedores",
   "contenido":"un vector por proveedor",
-  "filas":63204,
-  "mb":3.47,
+  "filas":62462,
+  "mb":3.44,
   "lo_usa_la_parte":"II, VI"
  },
  {
@@ -37,29 +37,29 @@
  {
   "tabla":"interaccion_entidad_proveedor",
   "contenido":"entidad, proveedor, año, adjudicaciones y monto",
-  "filas":125757,
-  "mb":2.35,
+  "filas":124188,
+  "mb":2.32,
   "lo_usa_la_parte":"III, IV"
  },
  {
   "tabla":"interaccion_entidad_familia",
   "contenido":"entidad, familia CUBSO, año, adjudicaciones y monto",
-  "filas":55346,
+  "filas":54903,
   "mb":0.51,
   "lo_usa_la_parte":"III, VI"
  },
  {
   "tabla":"grafo_nodos",
   "contenido":"proveedor con grado y fuerza",
-  "filas":70843,
-  "mb":3.74,
+  "filas":70383,
+  "mb":3.72,
   "lo_usa_la_parte":"IV, V, VI"
  },
  {
   "tabla":"grafo_aristas",
   "contenido":"par de proveedores, procesos compartidos y peso de Newman",
-  "filas":2528285,
-  "mb":27.43,
+  "filas":2498491,
+  "mb":26.98,
   "lo_usa_la_parte":"IV, V, VI"
  }
 ]

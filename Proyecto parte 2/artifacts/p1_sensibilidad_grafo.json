@@ -2,55 +2,55 @@
  {
   "tope":20,
   "minimo":1,
-  "aristas":2727972,
-  "nodos":111213
+  "aristas":2697310,
+  "nodos":110346
  },
  {
   "tope":20,
   "minimo":2,
-  "aristas":711601,
-  "nodos":50579
+  "aristas":702832,
+  "nodos":50199
  },
  {
   "tope":20,
   "minimo":3,
-  "aristas":354139,
-  "nodos":32504
+  "aristas":349366,
+  "nodos":32242
  },
  {
   "tope":50,
   "minimo":1,
-  "aristas":7961422,
-  "nodos":146542
+  "aristas":7874933,
+  "nodos":145282
  },
  {
   "tope":50,
   "minimo":2,
-  "aristas":2528285,
-  "nodos":70843
+  "aristas":2498491,
+  "nodos":70383
  },
  {
   "tope":50,
   "minimo":3,
-  "aristas":1357859,
-  "nodos":48989
+  "aristas":1340119,
+  "nodos":48635
  },
  {
   "tope":400,
   "minimo":1,
-  "aristas":12222722,
-  "nodos":160459
+  "aristas":12055008,
+  "nodos":158851
  },
  {
   "tope":400,
   "minimo":2,
-  "aristas":4219647,
-  "nodos":77294
+  "aristas":4159959,
+  "nodos":76766
  },
  {
   "tope":400,
   "minimo":3,
-  "aristas":2367262,
-  "nodos":54133
+  "aristas":2331405,
+  "nodos":53697
  }
 ]

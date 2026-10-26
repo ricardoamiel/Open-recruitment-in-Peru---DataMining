@@ -1,30 +1,30 @@
 [
  {
   "tipo":"consorcio",
-  "identificadores":105881,
-  "proveedores":62045,
-  "claves_exactas":52108,
+  "identificadores":103722,
+  "proveedores":60776,
+  "claves_exactas":51292,
   "reduccion_pct":41.4
  },
  {
   "tipo":"empresa",
-  "identificadores":71146,
-  "proveedores":71146,
-  "claves_exactas":71146,
+  "identificadores":70918,
+  "proveedores":70918,
+  "claves_exactas":70918,
   "reduccion_pct":0.0
  },
  {
   "tipo":"persona natural",
-  "identificadores":32017,
-  "proveedores":32017,
-  "claves_exactas":32017,
+  "identificadores":31860,
+  "proveedores":31860,
+  "claves_exactas":31860,
   "reduccion_pct":0.0
  },
  {
   "tipo":"extranjero",
-  "identificadores":2741,
-  "proveedores":2085,
-  "claves_exactas":2117,
+  "identificadores":2707,
+  "proveedores":2061,
+  "claves_exactas":2094,
   "reduccion_pct":23.9
  }
 ]

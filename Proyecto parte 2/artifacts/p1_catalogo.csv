@@ -1,10 +1,10 @@
 tabla,contenido,filas,mb,lo_usa_la_parte
-hechos,"adjudicación y proveedor resuelto, particionado por año",156629,8.88,todas
-participaciones,proceso y participante resuelto,2253911,34.51,"IV, V"
-mapa_proveedores,identificador publicado y su clave resuelta,211785,7.96,todas
-caracteristicas_proveedores,un vector por proveedor,63204,3.47,"II, VI"
+hechos,"adjudicación y proveedor resuelto, particionado por año",154591,8.78,todas
+participaciones,proceso y participante resuelto,2221884,33.9,"IV, V"
+mapa_proveedores,identificador publicado y su clave resuelta,209207,7.89,todas
+caracteristicas_proveedores,un vector por proveedor,62462,3.44,"II, VI"
 caracteristicas_entidades,un vector por entidad,2968,0.16,"II, IV"
-interaccion_entidad_proveedor,"entidad, proveedor, año, adjudicaciones y monto",125757,2.35,"III, IV"
-interaccion_entidad_familia,"entidad, familia CUBSO, año, adjudicaciones y monto",55346,0.51,"III, VI"
-grafo_nodos,proveedor con grado y fuerza,70843,3.74,"IV, V, VI"
-grafo_aristas,"par de proveedores, procesos compartidos y peso de Newman",2528285,27.43,"IV, V, VI"
+interaccion_entidad_proveedor,"entidad, proveedor, año, adjudicaciones y monto",124188,2.32,"III, IV"
+interaccion_entidad_familia,"entidad, familia CUBSO, año, adjudicaciones y monto",54903,0.51,"III, VI"
+grafo_nodos,proveedor con grado y fuerza,70383,3.72,"IV, V, VI"
+grafo_aristas,"par de proveedores, procesos compartidos y peso de Newman",2498491,26.98,"IV, V, VI"

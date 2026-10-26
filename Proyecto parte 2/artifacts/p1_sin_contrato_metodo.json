@@ -1,82 +1,82 @@
 [
  {
   "metodo":"Adjudicación Simplificada",
-  "adjudicaciones":70287,
+  "adjudicaciones":69314,
   "pct":8.7
  },
  {
   "metodo":"Contratación Internacional",
-  "adjudicaciones":3060,
+  "adjudicaciones":3031,
   "pct":2.7
  },
  {
   "metodo":"Concurso Público",
-  "adjudicaciones":6021,
-  "pct":13.3
+  "adjudicaciones":5869,
+  "pct":13.4
  },
  {
   "metodo":"Adjudicación Simplificada-Homologación",
-  "adjudicaciones":688,
-  "pct":10.2
+  "adjudicaciones":667,
+  "pct":10.0
  },
  {
   "metodo":"Adjudicación Simplificada - Decreto Urgencia 032-2023",
-  "adjudicaciones":544,
+  "adjudicaciones":543,
   "pct":7.4
  },
  {
   "metodo":"Comparación de Precios",
-  "adjudicaciones":11639,
-  "pct":4.8
+  "adjudicaciones":11558,
+  "pct":4.9
  },
  {
   "metodo":"Procedimiento Especial de Contratación",
-  "adjudicaciones":423,
-  "pct":9.7
+  "adjudicaciones":411,
+  "pct":9.2
  },
  {
   "metodo":"Concurso Público Abreviado",
-  "adjudicaciones":6273,
-  "pct":10.8
+  "adjudicaciones":6210,
+  "pct":10.7
  },
  {
   "metodo":"Licitación Pública Abreviada",
-  "adjudicaciones":7317,
-  "pct":12.9
+  "adjudicaciones":7237,
+  "pct":13.0
  },
  {
   "metodo":"Licitación Pública",
-  "adjudicaciones":8109,
-  "pct":12.2
+  "adjudicaciones":7920,
+  "pct":12.4
  },
  {
   "metodo":"Adjudicación Simplificada - Ley N° 31728",
-  "adjudicaciones":587,
-  "pct":7.3
+  "adjudicaciones":572,
+  "pct":7.5
  },
  {
   "metodo":"Concurso Público de Servicios",
-  "adjudicaciones":763,
-  "pct":17.3
+  "adjudicaciones":737,
+  "pct":17.4
  },
  {
   "metodo":"Contratación Directa",
-  "adjudicaciones":11845,
-  "pct":5.0
+  "adjudicaciones":11712,
+  "pct":5.1
  },
  {
   "metodo":"Subasta Inversa Electrónica",
-  "adjudicaciones":20359,
+  "adjudicaciones":20184,
   "pct":8.7
  },
  {
   "metodo":"Regímen Especial",
-  "adjudicaciones":4300,
-  "pct":3.7
+  "adjudicaciones":4265,
+  "pct":3.8
  },
  {
   "metodo":"Convenio",
-  "adjudicaciones":3762,
-  "pct":12.9
+  "adjudicaciones":3730,
+  "pct":13.1
  }
 ]

@@ -1,32 +1,17 @@
 [
  {
-  "nombre_a":"CONSORCIO NEXTNET Y FIBERLUX TECH",
-  "nombre_b":"NEXTNET Y FIBERLUX TECH",
+  "nombre_a":"CONSORCIO CORPORACION GRECIA SOLUCIONES INTEGRALES Y SYT SOLUTION SEND TRACKING SOLUTION",
+  "nombre_b":"CORPORACION GRECIA SOLUCIONES INTEGRALES Y SYT SOLUTION SEND TRACKING SOLUTION",
   "jaccard":1.0
  },
  {
-  "nombre_a":"ACROCON",
-  "nombre_b":"CONSORCIO ACROCON",
-  "jaccard":1.0
+  "nombre_a":"CONSORCIO PACIFICO CONFORMADO POR PACIFICO COMPANIA DE SEGUROS Y REASEGUROS Y PACIFICO ENT PRESTADORA DE SALUD",
+  "nombre_b":"CONSORCIO PACIFICO CONFORMADO POR PACIFICO COMPANIA DE SEGUROS Y REASEGUROS Y PACIFICO ENTIDAD PRESTADORA DE SALUD",
+  "jaccard":0.9
  },
  {
-  "nombre_a":"CONSORCIO NEW HOPE",
-  "nombre_b":"NEW HOPE",
-  "jaccard":1.0
- },
- {
-  "nombre_a":"ANIWIL HNOS EMPRESA CONTRATISTA CAL MUR",
-  "nombre_b":"ANIWILL HNOS EMPRESA CONTRATISTA CAL Y MUR",
-  "jaccard":0.88
- },
- {
-  "nombre_a":"CONSORCIO SAGITARIO",
-  "nombre_b":"SAGITARIO",
-  "jaccard":1.0
- },
- {
-  "nombre_a":"CONSORCIO PONTO VIEJO",
-  "nombre_b":"CONSORCIO VIEJO PONTO",
+  "nombre_a":"CONSORCIO TABACONAS",
+  "nombre_b":"TABACONAS",
   "jaccard":1.0
  },
  {
@@ -35,9 +20,24 @@
   "jaccard":1.0
  },
  {
-  "nombre_a":"ELECTRONCA MEDICS PLC DAF CLINICAL LIFE SERVICE",
-  "nombre_b":"ELECTRONICA MEDICS PLC DAF CLINICAL LIFE SERVICE",
-  "jaccard":0.93
+  "nombre_a":"CONSORCIO MAGOYA",
+  "nombre_b":"MAGOYA",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO PONTO VIEJO",
+  "nombre_b":"CONSORCIO VIEJO PONTO",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"BICENTENARIO",
+  "nombre_b":"CONSORCIO BICENTENARIO",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO NUEVA ESPERANZA",
+  "nombre_b":"NUEVA ESPERANZA",
+  "jaccard":1.0
  },
  {
   "nombre_a":"CONSORCIO QUEROBAMBA",
@@ -50,13 +50,13 @@
   "jaccard":1.0
  },
  {
-  "nombre_a":"CONSORCIO CORPORACION AGROPECUARIA BERTHA IGOR RUBEN REYES ALARCON Y UNITED PRODUCTS",
-  "nombre_b":"CONSORCIO UNITED PRODUCTS CORPORACION AGROPECUARIA BERTHA IGOR RUBEN REYES ALARCON",
-  "jaccard":0.97
+  "nombre_a":"IINGENIERIA PARA LA GESTION SOSTENIBLE INNOVA AMBIPETRO",
+  "nombre_b":"INGENIERIA PARA LA GESTION SOSTENIBLE INNOVA AMBIPETRO",
+  "jaccard":0.96
  },
  {
-  "nombre_a":"CONSORCIO RIO NANAY",
-  "nombre_b":"RIO NANAY",
+  "nombre_a":"CONSORCIO REPRODATA DATACONT",
+  "nombre_b":"REPRODATA DATACONT",
   "jaccard":1.0
  }
 ]

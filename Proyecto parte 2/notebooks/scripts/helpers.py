@@ -22,11 +22,11 @@ FIGS.mkdir(parents=True, exist_ok=True); ARTEFACTOS.mkdir(parents=True, exist_ok
 BASE.mkdir(parents=True, exist_ok=True)
 
 # El proyecto 2 parte de la base limpia del proyecto 1 y no la duplica: la
-# tabla de procesos y los CSV crudos se leen desde la carpeta de la parte 1.
-# Si esa carpeta no existe, ingesta.asegurar_datos descarga los crudos aqui.
+# tabla de procesos y los CSV crudos se leen desde la carpeta de la parte 1,
+# y los genera su notebook 1_kdd_eda.
 PARTE1 = RAIZ.parent / "Proyecto parte 1"
 PARQUET = PARTE1 / "data" / "processed" / "tabla_analitica.parquet"
-CRUDO = (PARTE1 if (PARTE1 / "data" / "raw").exists() else RAIZ) / "data" / "raw"
+CRUDO = PARTE1 / "data" / "raw"
 
 pd.set_option("display.width", 190); pd.set_option("display.max_colwidth", 64)
 
@@ -186,20 +186,6 @@ def barras_h(datos, categoria, valor, titulo, etiqueta_x="", color=AZUL, alto=0.
     return fig, ax
 
 
-def lineas(datos, x, series, titulo, etiqueta_y=""):
-    """Evolucion temporal. Una sola escala vertical, nunca dos ejes."""
-    fig, ax = plt.subplots(figsize=(9.2, 3.9))
-    for i, s in enumerate(series):
-        ax.plot(datos[x], datos[s], color=PALETA[i % 5], lw=2, label=s)
-    ax.yaxis.set_major_formatter(MILES)
-    ax.grid(axis="y", alpha=.9); ax.set_axisbelow(True)
-    ax.set_xlabel(x); ax.set_ylabel(etiqueta_y or series[0])
-    ax.set_title(titulo, loc="left", pad=12)
-    if len(series) > 1: ax.legend(loc="upper left", ncols=min(len(series), 4))
-    fig.autofmt_xdate(rotation=45, ha="right")
-    return fig, ax
-
-
 def barras_agrupadas(datos, categoria, series, titulo, etiqueta_y=""):
     """Pocas series sobre las mismas categorias, con leyenda fuera del trazado.
 
@@ -248,31 +234,3 @@ def mapa_calor(tabla, titulo, etiqueta="", formato="{:.0f}"):
     for s in ax.spines.values(): s.set_visible(False)
     ax.tick_params(length=0)
     return fig, ax
-
-
-def gini(valores):
-    """Coeficiente de Gini sobre valores positivos."""
-    v = np.sort(np.asarray(valores, dtype=float)); v = v[np.isfinite(v) & (v > 0)]
-    acum = np.cumsum(v) / v.sum(); x = np.arange(1, len(v) + 1) / len(v)
-    return float(1 - 2 * np.trapezoid(np.r_[0, acum], np.r_[0, x]))
-
-
-def lorenz(valores, titulo, etiqueta="entidades"):
-    """Curva de Lorenz. Convierte la concentracion en una medida comparable."""
-    v = np.sort(np.asarray(valores, dtype=float)); v = v[v > 0]
-    acum = np.r_[0, np.cumsum(v) / v.sum()]; x = np.r_[0, np.arange(1, len(v) + 1) / len(v)]
-    g = 1 - 2 * np.trapezoid(acum, x)
-    fig, ax = plt.subplots(figsize=(5.4, 5))
-    ax.plot([0, 1], [0, 1], color=SUAVE, lw=1.4, ls=(0, (4, 3)), label="igualdad perfecta")
-    ax.plot(x, acum, color=AZUL, lw=2.2, label="distribucion observada")
-    ax.fill_between(x, acum, x, color=AZUL, alpha=.10)
-    ax.set_xlim(0, 1); ax.set_ylim(0, 1)
-    ax.xaxis.set_major_formatter(mticker.PercentFormatter(1, decimals=0))
-    ax.yaxis.set_major_formatter(mticker.PercentFormatter(1, decimals=0))
-    ax.set_xlabel(f"porcentaje acumulado de {etiqueta}")
-    ax.set_ylabel("porcentaje acumulado del monto")
-    ax.set_title(titulo, loc="left", pad=12)
-    ax.grid(alpha=.9); ax.set_axisbelow(True); ax.legend(loc="upper left")
-    ax.text(.97, .06, f"Gini = {g:.3f}", ha="right", fontsize=11, fontweight="bold",
-            color=TINTA, transform=ax.transAxes)
-    return fig, float(g)
