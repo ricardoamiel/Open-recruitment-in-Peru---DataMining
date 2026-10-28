@@ -1,22 +1,22 @@
 [
  {
   "particiones":4,
-  "adaptativo activo":0.152,
-  "adaptativo desactivado":0.125
+  "adaptativo activo":0.6,
+  "adaptativo desactivado":0.592
  },
  {
   "particiones":16,
-  "adaptativo activo":0.125,
-  "adaptativo desactivado":0.144
+  "adaptativo activo":0.773,
+  "adaptativo desactivado":0.782
  },
  {
   "particiones":64,
-  "adaptativo activo":0.164,
-  "adaptativo desactivado":0.192
+  "adaptativo activo":1.855,
+  "adaptativo desactivado":1.836
  },
  {
   "particiones":200,
-  "adaptativo activo":0.176,
-  "adaptativo desactivado":0.316
+  "adaptativo activo":2.815,
+  "adaptativo desactivado":3.615
  }
 ]

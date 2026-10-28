@@ -53,10 +53,10 @@
  },
  {
   "figura":"f14_rdd_vs_dataframe",
-  "lectura":"El camino RDD resulta entre 3.0 y 3.4 veces más lento, y no por gusto: cada fila cruza la frontera entre la máquina virtual de Java y el intérprete de Python, y el planificador no puede podar columnas ni reordenar filtros sobre tuplas opacas. Con 177 mil filas ambos terminan en menos de un segundo, así que aquí la elección se decide por claridad; la brecha crece con el volumen y es ahí donde empieza a costar dinero."
+  "lectura":"El camino RDD resulta entre 29.8 y 32.0 veces más lento, y no por gusto: cada fila cruza la frontera entre la máquina virtual de Java y el intérprete de Python, y el planificador no puede podar columnas ni reordenar filtros sobre tuplas opacas. Con 177 mil filas ambos terminan en menos de un segundo, así que aquí la elección se decide por claridad; la brecha crece con el volumen y es ahí donde empieza a costar dinero."
  },
  {
   "figura":"f15_shuffle",
-  "lectura":"Con ejecución adaptativa el parámetro casi no cambia el tiempo: Spark conoce el tamaño real de la salida del barajado y fusiona las particiones pequeñas, así que doscientas declaradas terminan siendo unas pocas efectivas. Al desactivarla aparece el efecto que predice la teoría: 0.32 s con 200 particiones frente a 0.14 s con 16, porque planificar y recoger doscientas tareas de unos cientos de filas cuesta más que el cálculo. La regla de dos a cuatro veces el número de núcleos sigue siendo razonable, y la ejecución adaptativa es lo que evita pagar de inmediato una mala elección."
+  "lectura":"Con ejecución adaptativa el parámetro casi no cambia el tiempo: Spark conoce el tamaño real de la salida del barajado y fusiona las particiones pequeñas, así que doscientas declaradas terminan siendo unas pocas efectivas. Al desactivarla aparece el efecto que predice la teoría: 3.62 s con 200 particiones frente a 0.78 s con 16, porque planificar y recoger doscientas tareas de unos cientos de filas cuesta más que el cálculo. La regla de dos a cuatro veces el número de núcleos sigue siendo razonable, y la ejecución adaptativa es lo que evita pagar de inmediato una mala elección."
  }
 ]

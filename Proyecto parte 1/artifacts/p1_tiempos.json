@@ -1,14 +1,14 @@
 [
  {
   "agregacion":"monto por departamento",
-  "RDD":0.4408,
-  "DataFrame":0.1311,
-  "factor":3.4
+  "RDD":23.9341,
+  "DataFrame":0.8032,
+  "factor":29.8
  },
  {
   "agregacion":"postores por metodo",
-  "RDD":0.4529,
-  "DataFrame":0.1534,
-  "factor":3.0
+  "RDD":24.0046,
+  "DataFrame":0.7512,
+  "factor":32.0
  }
 ]

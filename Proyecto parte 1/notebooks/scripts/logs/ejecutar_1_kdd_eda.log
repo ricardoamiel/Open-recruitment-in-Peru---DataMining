@@ -1,44 +1,58 @@
 1_kdd_eda.ipynb con kernel spark310, 40 celdas
-[  1] inicio  16:52:12  import sys, time
-[  1] ok      8.8 s
-[  3] inicio  16:52:21  # Descarga los paquetes anuales si faltan. Esto es lo que permite ejec
-[  3] ok      41.2 s
-[  5] inicio  16:53:02  n = cruda.count()
-[  5] ok      22.7 s
-[  7] inicio  16:53:25  diagnostico = cruda.select(
-[  7] ok      1.9 s
-[  8] inicio  16:53:27  cruce = (cruda.groupBy("periodo_archivo").pivot("anio").count()
-[  8] ok      3.4 s
-[ 10] inicio  16:53:30  limpia, bitacora = limpiar(cruda)
-[ 10] ok      21.2 s
-[ 11] inicio  16:53:51  embudo = bitacora[["paso", "detalle", "filas_restantes"]].copy()
+[  1] inicio  17:29:19  import sys, time
+[  1] ok      10.8 s
+[  3] inicio  17:29:30  # Descarga los paquetes anuales si faltan. Esto es lo que permite ejec
+[  3] ok      39.5 s
+[  5] inicio  17:30:10  n = cruda.count()
+[  5] ok      27.4 s
+[  7] inicio  17:30:37  diagnostico = cruda.select(
+[  7] ok      2.0 s
+[  8] inicio  17:30:39  cruce = (cruda.groupBy("periodo_archivo").pivot("anio").count()
+[  8] ok      3.3 s
+[ 10] inicio  17:30:42  limpia, bitacora = limpiar(cruda)
+[ 10] ok      21.0 s
+[ 11] inicio  17:31:03  embudo = bitacora[["paso", "detalle", "filas_restantes"]].copy()
 [ 11] ok      0.9 s
-[ 12] inicio  16:53:52  # Verificacion de la reparacion de codificacion. Los reparables deben 
-[ 12] ok      3.7 s
-[ 14] inicio  16:53:56  limpia.write.mode("overwrite").partitionBy("anio").parquet(str(PARQUET
-[ 14] ok      8.0 s
-[ 16] inicio  16:54:04  mensual = spark.sql(r"""
-[ 16] ok      1.9 s
-[ 17] inicio  16:54:06  fig, _ = lineas(mensual, "anio_mes", ["monto_millones"],
+[ 12] inicio  17:31:04  # Verificacion de la reparacion de codificacion. Los reparables deben 
+[ 12] ok      3.5 s
+[ 14] inicio  17:31:08  limpia.write.mode("overwrite").partitionBy("anio").parquet(str(PARQUET
+[ 14] ok      7.2 s
+[ 16] inicio  17:31:15  mensual = spark.sql(r"""
+[ 16] ok      2.0 s
+[ 17] inicio  17:31:17  fig, _ = lineas(mensual, "anio_mes", ["monto_millones"],
 [ 17] ok      1.1 s
-[ 18] inicio  16:54:07  estacional = (spark.sql("SELECT mes, anio, COUNT(*) AS n FROM contrata
-[ 18] ok      2.2 s
-[ 19] inicio  16:54:09  montos = datos.select("monto_pen").toPandas()["monto_pen"].values
-[ 19] ok      2.5 s
-[ 20] inicio  16:54:12  metodo = spark.sql(r"""
+[ 18] inicio  17:31:18  estacional = (spark.sql("SELECT mes, anio, COUNT(*) AS n FROM contrata
+[ 18] ok      1.9 s
+[ 19] inicio  17:31:20  montos = datos.select("monto_pen").toPandas()["monto_pen"].values
+[ 19] ok      2.2 s
+[ 20] inicio  17:31:22  metodo = spark.sql(r"""
 [ 20] ok      1.9 s
-[ 21] inicio  16:54:14  nivel = spark.sql(r"""
-[ 21] ok      2.4 s
-[ 22] inicio  16:54:16  top_c = spark.sql(r"""
-[ 22] ok      2.7 s
-[ 23] inicio  16:54:19  top_p = spark.sql(r"""
-[ 23] ok      2.8 s
-[ 24] inicio  16:54:22  por_prov = (datos.filter("adjudicado").groupBy("proveedor_id")
-[ 24] ok      2.7 s
-[ 25] inicio  16:54:24  pdp = (datos.filter("adjudicado").groupBy("departamento", "proveedor_i
-[ 25] ok      2.4 s
-[ 26] inicio  16:54:27  comp = spark.sql(r"""
-[ 26] ok      2.2 s
-[ 28] inicio  16:54:29  tiempos = []
-[ 28] ok      123.5 s
-[ 29] inicio  16:56:32  # Verificacion de que los dos caminos dan el mismo conjunto, no solo e
+[ 21] inicio  17:31:24  nivel = spark.sql(r"""
+[ 21] ok      2.1 s
+[ 22] inicio  17:31:26  top_c = spark.sql(r"""
+[ 22] ok      2.4 s
+[ 23] inicio  17:31:29  top_p = spark.sql(r"""
+[ 23] ok      2.6 s
+[ 24] inicio  17:31:31  por_prov = (datos.filter("adjudicado").groupBy("proveedor_id")
+[ 24] ok      2.9 s
+[ 25] inicio  17:31:34  pdp = (datos.filter("adjudicado").groupBy("departamento", "proveedor_i
+[ 25] ok      2.2 s
+[ 26] inicio  17:31:36  comp = spark.sql(r"""
+[ 26] ok      2.1 s
+[ 28] inicio  17:31:38  tiempos = []
+[ 28] ok      99.1 s
+[ 29] inicio  17:33:18  # Verificacion de que los dos caminos dan el mismo conjunto, no solo e
+[ 29] ok      50.4 s
+[ 30] inicio  17:34:08  def b_rdd():
+[ 30] ok      101.9 s
+[ 31] inicio  17:35:50  tt = pd.DataFrame(tiempos)
+[ 31] ok      0.6 s
+[ 34] inicio  17:35:50  print("=== filtro sobre la columna de particion ===")
+[ 34] ok      0.2 s
+[ 35] inicio  17:35:51  print("=== filtro sobre una columna NO particionada ===")
+[ 35] ok      1.1 s
+[ 37] inicio  17:35:52  # Se mide dos veces: con ejecucion adaptativa, que es la configuracion
+[ 37] ok      52.0 s
+[ 39] inicio  17:36:44  exportar(pd.DataFrame(FIGURAS), "p1_figuras", "Figuras de la Parte I c
+[ 39] ok      0.5 s
+guardado 1_kdd_eda.ipynb
