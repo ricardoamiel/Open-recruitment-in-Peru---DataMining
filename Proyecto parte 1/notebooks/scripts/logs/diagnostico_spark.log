@@ -1,0 +1,42 @@
+
+== Interprete ==================================================
+  fecha: 2026-10-28 12:18:12
+  python: 3.10.20  C:\Users\LENOVO\anaconda3\envs\spark310\python.exe
+  cwd: C:\Users\LENOVO\Documents\Utec\2026 - 2\Data minning\Open-recruitment-in-Peru---DataMining\Proyecto parte 1\notebooks
+  [OK] el interprete es el del env spark310
+
+== Librerias ===================================================
+  [OK] pyspark 4.2.0
+  [OK] py4j 0.10.9.9
+  [OK] pandas 2.3.3
+  [OK] numpy 2.2.6
+  [OK] pyarrow 25.0.0
+  [OK] matplotlib 3.10.9
+  [FALLA] faiss: ModuleNotFoundError: No module named 'faiss'
+  [FALLA] sklearn: ModuleNotFoundError: No module named 'sklearn'
+  [FALLA] scipy: ModuleNotFoundError: No module named 'scipy'
+
+== Java ========================================================
+  [OK] JAVA_HOME = C:\Program Files\Java\jdk-21.0.12.1
+  java en PATH: C:\Program Files\Common Files\Oracle\Java\javapath\java.EXE
+  java version "21.0.12.1" 2026-08-18 LTS
+
+== Hadoop en Windows (winutils) ================================
+  version de Hadoop que trae pyspark: ['hadoop-client-api-3.5.0.jar']
+  [FALLA] HADOOP_HOME = None
+  winutils en PATH: None
+
+== Modulos del proyecto ========================================
+  [OK] import helpers
+  [OK] import algoritmos
+  [OK] import ingesta
+  RAIZ    = C:\Users\LENOVO\Documents\Utec\2026 - 2\Data minning\Open-recruitment-in-Peru---DataMining\Proyecto parte 1
+  [FALLA] PARQUET existe: C:\Users\LENOVO\Documents\Utec\2026 - 2\Data minning\Open-recruitment-in-Peru---DataMining\Proyecto parte 1\data\processed\tabla_analitica.parquet
+  [OK] data\raw\2023\awards_items.csv existe
+  [OK] data\raw\2024\awards_items.csv existe
+  [OK] data\raw\2025\awards_items.csv existe
+
+== Arranque de Spark ===========================================
+  [OK] SparkSession 4.2.0
+  [OK] consulta trivial (range.count)
+  [FALLA] addPyFile: : java.lang.RuntimeException: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://cwiki.apache.org/confluence/display/HADOOP2/WindowsP

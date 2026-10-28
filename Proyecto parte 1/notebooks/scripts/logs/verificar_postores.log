@@ -1,0 +1,72 @@
+periodo 2024: 109,722 procesos en main.csv
+
+== 1. tender_procurementMethod x metodo detallado (top 25) ===============
+  tipo                                                                 metodo  count
+  open                                              Adjudicación Simplificada  55587
+  open                                            Subasta Inversa Electrónica   9968
+  open                                          Adjudicación de Menor Cuantía   8455
+  open                                                     Licitación Pública   6734
+  open                                                 Comparación de Precios   5059
+  open                                                       Concurso Público   4834
+direct                                                   Contratación Directa   4659
+direct                                         Adjudicación Directa Selectiva   4312
+  open                                                       Regímen Especial   1946
+  open                                                               Convenio   1755
+  open                                             Contratación Internacional   1610
+direct                                           Adjudicación Directa Pública    839
+  open                                 Procedimiento Especial de Contratación    720
+  open                                                 Adjudicación Selectiva    681
+direct                                       Contratación Directa (Petroperú)    550
+  open                                                 Adjudicación Abreviada    392
+  open                                 Adjudicación Simplificada-Homologación    332
+  open                                     Contratación por Competencia Menor    322
+direct                                                            Exoneración    223
+  None                               Adjudicación Simplificada - Ley N° 31728    203
+  None                  Adjudicación Simplificada - Decreto Urgencia 032-2023    153
+  open Procedimiento Especial de Contratación-Nueva Convocatoria por Desierto    121
+  open                                  Selección de Consultores Individuales     75
+  None                  Adjudicación Simplificada-Decreto Legislativo N° 1577     64
+  open                                     Contratación por Competencia Mayor     35
+
+== 2. n_postores frente a tender_tenderers y awards_suppliers ============
+ procesos  pct_con_lista  pct_n_postores_igual_lista  pct_n_postores_mayor  pct_n_postores_menor
+   109722           90.5                        98.2                   0.0                   1.8
+Por tipo de procedimiento (solo procesos con lista de postores):
+     tipo  procesos  media_n_postores  media_listados  media_adjudicados  pct_iguales
+     open     88697             11.09           11.27               0.92         98.0
+   direct     10270              3.12            3.13               0.98         99.8
+     None       364             21.12           21.48               1.02         97.8
+selective         8              2.88            2.88               0.25        100.0
+Ejemplos de discrepancia (n_postores != listados):
+                                 ocid                                                                 metodo  n_postores  n_listados  n_adjudicados
+          ocds-dgv273-seacev3-1021527                                                   Contratación Directa           1           2              1
+          ocds-dgv273-seacev3-1033999                                 Procedimiento Especial de Contratación          17          18              1
+          ocds-dgv273-seacev3-1057649                                                   Contratación Directa           1           3              1
+       ocds-dgv273-seacev3-2017-48-91                                              Adjudicación Simplificada          13          19              1
+     ocds-dgv273-seacev3-2019-1995-54                                            Subasta Inversa Electrónica           5           6              1
+      ocds-dgv273-seacev3-2019-34-205                                              Adjudicación Simplificada          12          26              1
+ocds-dgv273-seacev3-2020-1003011158-5 Procedimiento Especial de Contratación-Nueva Convocatoria por Desierto          13          23              1
+     ocds-dgv273-seacev3-2020-1585-20 Procedimiento Especial de Contratación-Nueva Convocatoria por Desierto           4          12              1
+        ocds-dgv273-seacev3-2021-12-6                                              Adjudicación Simplificada          12          24              1
+      ocds-dgv273-seacev3-2021-2380-7                                            Subasta Inversa Electrónica           4           8              0
+     ocds-dgv273-seacev3-2021-2528-56                                              Adjudicación Simplificada          10          31              2
+       ocds-dgv273-seacev3-2021-26-44                                              Adjudicación Simplificada           9          26              1
+Postor unico segun cada fuente:
+ n_postores_eq_1  listados_eq_1  ambos
+           15825          15752  15752
+
+== 3. tender_items frente a awards_items (codigo CUBSO de 8 digitos) =====
+ pct_con_tender_items  pct_con_award_items  pct_solo_tender  pct_solo_award
+                 87.5                 68.3             19.3             0.0
+ procesos_con_ambos  pct_mismo_conjunto  pct_award_subconjunto_tender  tam_medio_tender  tam_medio_award
+              74889                98.9                         100.0               1.1             1.08
+Ejemplos donde difieren:
+                       ocid                                                                                                                        t                                                                                          a
+ocds-dgv273-seacev3-1010128                                                                                                     [50131702, 50192109]                                                                                 [50192109]
+ocds-dgv273-seacev3-1010163                                                                                                     [50221102, 50131702]                                                                                 [50221102]
+ocds-dgv273-seacev3-1021482 [52121505, 42192002, 42132103, 42143601, 52121512, 52131501, 42131609, 42131607, 52121509, 52121508, 42131614, 52121501] [42131607, 42192002, 52121509, 42132103, 42143601, 52121512, 42131614, 52121501, 42131609]
+ocds-dgv273-seacev3-1031287                                                                                                     [53102701, 46181529]                                                                                 [53102701]
+ocds-dgv273-seacev3-1032089                                                                       [42131707, 42131502, 42131701, 42132203, 42131609]                                                   [42131707, 42131502, 42131701, 42131609]
+ocds-dgv273-seacev3-1035043                                                                       [51201802, 51271613, 51182304, 51141722, 51351609]                                                             [51182304, 51141722, 51351609]
+ocds-dgv273-seacev3-1036813                                                                                                     [50161509, 50221108]                                                                                 [50221108]
+ocds-dgv273-seacev3-1038768                                                                                 [51101582, 51161708, 51171910, 51162012]                                                             [51101582, 51161708, 51162012]

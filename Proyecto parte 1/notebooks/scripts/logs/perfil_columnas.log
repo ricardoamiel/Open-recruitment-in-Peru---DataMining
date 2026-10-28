@@ -1,0 +1,259 @@
+
+== Tabla analitica: 177,398 procesos, 25 columnas ========================
+            columna          tipo  pct_nulo_o_vacio  distintos_aprox
+             metodo        string              0.00             41.0
+               ocid        string              0.00         169443.0
+       comprador_id        string              0.00           2950.0
+    periodo_archivo        string              0.00              3.0
+              fecha     timestamp              0.00         141890.0
+     fecha_registro     timestamp              0.00         180144.0
+             objeto        string              0.00         162068.0
+          categoria        string              0.00              3.0
+   comprador_nombre        string              0.00           3092.0
+          monto_pen        double              0.00         120693.0
+             moneda        string              0.00              6.0
+         n_postores        double              0.00            105.0
+                mes           int              0.00             12.0
+           anio_mes        string              0.00             36.0
+     nivel_gobierno        string              0.00              9.0
+       proveedor_id        string             17.69          71240.0
+   proveedor_nombre        string             17.69          54917.0
+      n_proveedores        bigint              0.00             28.0
+              items array<string>             29.79              NaN
+            n_items        bigint              0.00             53.0
+       departamento        string              0.00             25.0
+         adjudicado       boolean              0.00              2.0
+n_postores_imputado       boolean              0.00              2.0
+      monto_outlier       boolean              0.00              2.0
+               anio           int              0.00              3.0
+
+== Valores de metodo =====================================================
+                                                                             metodo  count   pct
+                                                          Adjudicación Simplificada  82503 46.51
+                                                        Subasta Inversa Electrónica  21150 11.92
+                                                             Comparación de Precios  12555  7.08
+                                                               Contratación Directa  11049  6.23
+                                                       Licitación Pública Abreviada   9601  5.41
+                                                                 Licitación Pública   9242  5.21
+                                                         Concurso Público Abreviado   8926  5.03
+                                                                   Concurso Público   6627  3.74
+                                                                   Regímen Especial   4367  2.46
+                                                                           Convenio   4009  2.26
+                                                         Contratación Internacional   2981  1.68
+                                                      Concurso Público de Servicios    974  0.55
+                                           Adjudicación Simplificada - Ley N° 31728    798  0.45
+                                             Adjudicación Simplificada-Homologación    673  0.38
+                                             Procedimiento Especial de Contratación    530  0.30
+                              Adjudicación Simplificada - Decreto Urgencia 032-2023    490  0.28
+                                                  Concurso Público para Consultoría    381  0.21
+             Procedimiento Especial de Contratación-Nueva Convocatoria por Desierto    135  0.08
+                                                             Adjudicación Abreviada     88  0.05
+                              Adjudicación Simplificada-Decreto Legislativo N° 1577     69  0.04
+                                              Selección de Consultores Individuales     54  0.03
+                                            Concurso Público Abreviado Homologación     38  0.02
+Adjudicación Simplificada - Séptima Disposición Complementaria Final Reg. Ley 30225     30  0.02
+                                          Licitación Pública Abreviada Homologación     27  0.02
+                                                             Adjudicación Selectiva     24  0.01
+
+== Valores de categoria ==================================================
+categoria  count   pct
+    goods  79287 44.69
+ services  78135 44.05
+    works  19976 11.26
+
+== Valores de nivel_gobierno =============================================
+              nivel_gobierno  count   pct
+              Gobierno local  73456 41.41
+           Gobierno regional  39776 22.42
+           Gobierno nacional  29984 16.90
+                        Otro  10742  6.06
+          Empresa del Estado   8048  4.54
+         Universidad publica   7094  4.00
+Fuerzas armadas y policiales   5812  3.28
+    Establecimiento de salud   2278  1.28
+            Unidad educativa    208  0.12
+
+== Valores de moneda =====================================================
+moneda  count   pct
+   PEN 174140 98.16
+   USD   2706  1.53
+   EUR    474  0.27
+   GBP     76  0.04
+   CAD      1  0.00
+   BRL      1  0.00
+
+== Valores de departamento ===============================================
+ departamento  count   pct
+         LIMA  52896 29.82
+        CUSCO  17229  9.71
+       ANCASH   9214  5.19
+         PUNO   8119  4.58
+     AREQUIPA   7143  4.03
+     AYACUCHO   7016  3.95
+        JUNIN   6967  3.93
+  LA LIBERTAD   6451  3.64
+    CAJAMARCA   6309  3.56
+        PIURA   6284  3.54
+     APURIMAC   5559  3.13
+      HUANUCO   5044  2.84
+       LORETO   4040  2.28
+          ICA   3787  2.13
+   SAN MARTIN   3758  2.12
+       CALLAO   3693  2.08
+ HUANCAVELICA   3538  1.99
+      UCAYALI   3413  1.92
+     MOQUEGUA   3276  1.85
+   LAMBAYEQUE   3233  1.82
+        TACNA   2979  1.68
+     AMAZONAS   2617  1.48
+        PASCO   2368  1.33
+MADRE DE DIOS   1436  0.81
+       TUMBES   1029  0.58
+
+== Valores de adjudicado =================================================
+ adjudicado  count   pct
+       True 146025 82.31
+      False  31373 17.69
+
+== Valores de n_postores_imputado ========================================
+ n_postores_imputado  count   pct
+               False 170743 96.25
+                True   6655  3.75
+
+== Valores de monto_outlier ==============================================
+ monto_outlier  count   pct
+         False 176833 99.68
+          True    565  0.32
+
+== Valores de anio =======================================================
+ anio  count   pct
+ 2023  65922 37.16
+ 2024  56620 31.92
+ 2025  54856 30.92
+
+== n_postores: distribucion (todas las filas y solo las no imputadas) ====
+-- todas
+ k  count   pct
+ 1  21785 12.28
+ 2   7164  4.04
+ 3  19084 10.76
+ 4   8552  4.82
+ 5   7944  4.48
+6+ 112869 63.62
+-- no imputadas
+ k  count   pct
+ 1  21181 12.41
+ 2   7164  4.20
+ 3  19007 11.13
+ 4   8552  5.01
+ 5   7944  4.65
+6+ 106895 62.61
+
+== Cruce postor unico x metodo (no imputadas) ============================
+                                                                             metodo  procesos  pct_postor_unico  pct_cero_postores
+                                                          Adjudicación Simplificada     78806               1.7                0.0
+                                                        Subasta Inversa Electrónica     20958               2.4                0.0
+                                                             Comparación de Precios     12483               0.9                0.0
+                                                               Contratación Directa     10997              88.9                0.0
+                                                       Licitación Pública Abreviada      9443               1.2                0.0
+                                                         Concurso Público Abreviado      8839               1.7                0.0
+                                                                 Licitación Pública      7953               0.5                0.0
+                                                                   Concurso Público      6254               0.7                0.0
+                                                                   Regímen Especial      4268              88.9                0.0
+                                                                           Convenio      3622              62.3                0.0
+                                                         Contratación Internacional      2930              98.1                0.0
+                                                      Concurso Público de Servicios       970               0.7                0.0
+                                             Adjudicación Simplificada-Homologación       673               5.3                0.0
+                                           Adjudicación Simplificada - Ley N° 31728       668               0.0                0.0
+                                             Procedimiento Especial de Contratación       520               0.2                0.0
+                              Adjudicación Simplificada - Decreto Urgencia 032-2023       477               0.8                0.0
+                                                  Concurso Público para Consultoría       368               0.0                0.0
+             Procedimiento Especial de Contratación-Nueva Convocatoria por Desierto       132               0.0                0.0
+                                                             Adjudicación Abreviada        73              97.3                0.0
+                              Adjudicación Simplificada-Decreto Legislativo N° 1577        69               0.0                0.0
+                                              Selección de Consultores Individuales        54              40.7                0.0
+                                            Concurso Público Abreviado Homologación        38               0.0                0.0
+Adjudicación Simplificada - Séptima Disposición Complementaria Final Reg. Ley 30225        30               0.0                0.0
+                                          Licitación Pública Abreviada Homologación        27               0.0                0.0
+                              Adjudicación Simplificada - Decreto Urgencia 034-2023        19               5.3                0.0
+                                                             Adjudicación Selectiva        19              10.5                0.0
+                                                           Contratos Estandarizados         9              22.2                0.0
+                                           Adjudicación Simplificada - Ley N° 31589         8               0.0                0.0
+                                           Adjudicación Simplificada - Ley N° 31125         8               0.0                0.0
+                              Adjudicación Simplificada - Decreto Urgencia 012-2023         6               0.0                0.0
+                                         Licitación Pública Abreviada - Ley N°26859         6               0.0                0.0
+                                           Concurso Público Abreviado - Ley N°26859         5               0.0                0.0
+                                 Concurso Público Abreviado Séptima DCF Ley N°32069         3               0.0                0.0
+                                           Concurso Público Abreviado - Ley N°31589         2               0.0                0.0
+                                         Licitación Pública Abreviada - Ley N°31589         2               0.0                0.0
+                               Licitación Pública Abreviada Séptima DCF Ley N°32069         2               0.0                0.0
+                                 Procedimiento de Contratación para Proceso Abierto         1               0.0                0.0
+                                           Adjudicación Simplificada - Ley N° 31579         1               0.0                0.0
+
+== Cobertura de la canasta CUBSO =========================================
+ pct_con_items  pct_2_o_mas_codigos  pct_adjudicado  pct_items_sin_adjudicar
+         70.21                 2.08           82.31                      0.0
+n_proveedores (proveedores adjudicados distintos por proceso):
+ n_proveedores  count
+             0  31373
+             1 139683
+             2   4737
+             3    872
+             4    299
+             5    132
+             6     78
+             7     62
+             8     41
+             9     28
+
+== monto_pen: cuantiles y tramos usados en la canasta enriquecida ========
+{'p1': 12000, 'p10': 58520, 'p25': 84666, 'p50': 177792, 'p75': 445516, 'p90': 1469620, 'p99': 16353061}
+     tramo  count   pct
+    1 <50k  10366  5.84
+2 50k-500k 127817 72.05
+ 3 500k-5M  32733 18.45
+     4 >5M   6482  3.65
+
+== Tablas crudas (2024): columnas disponibles ============================
+-- awards.csv (15 MB, 7 columnas)
+   id, date, value_amount, value_currency, value_currencyName, main_ocid, main_id
+-- awards_items.csv (40 MB, 18 columnas)
+   id, description, status, position, quantity, statusDetails, unit_id, unit_name, unit_scheme, totalValue_amount, totalValue_currency, totalValue_currencyName, classification_id, classification_scheme, classification_description, main_ocid, main_id, awards_id
+-- awards_items_additionalClassifications.csv (15 MB, 7 columnas)
+   id, scheme, description, main_ocid, main_id, awards_id, awards_items_id
+-- awards_items_totalValue_exchangeRates.csv (0 MB, 6 columnas)
+   rate, currency, main_ocid, main_id, awards_id, awards_items_id
+-- awards_suppliers.csv (15 MB, 5 columnas)
+   id, name, main_ocid, main_id, awards_id
+-- awards_value_exchangeRates.csv (0 MB, 5 columnas)
+   rate, currency, main_ocid, main_id, awards_id
+-- contracts.csv (35 MB, 19 columnas)
+   id, statusDetails, title, dateSigned, description, status, awardID, value_amount, value_currency, value_currencyName, period_endDate, period_startDate, main_ocid, main_id, period_durationInDays, implementation_finalValue_amount, implementation_finalValue_currency, implementation_finalValue_currencyName, implementation_endDate
+-- contracts_documents.csv (48 MB, 10 columnas)
+   id, url, title, format, language, documentType, datePublished, main_ocid, main_id, contracts_id
+-- contracts_items.csv (33 MB, 18 columnas)
+   id, description, quantity, unit_id, unit_name, unit_scheme, totalValue_amount, totalValue_currency, totalValue_currencyName, classification_id, classification_scheme, classification_description, main_ocid, main_id, contracts_id, status, position, statusDetails
+-- contracts_items_additionalClassifications.csv (13 MB, 7 columnas)
+   id, scheme, description, main_ocid, main_id, contracts_id, contracts_items_id
+-- contracts_items_totalValue_exchangeRates.csv (0 MB, 6 columnas)
+   rate, currency, main_ocid, main_id, contracts_id, contracts_items_id
+-- contracts_value_exchangeRates.csv (0 MB, 5 columnas)
+   rate, currency, main_ocid, main_id, contracts_id
+-- main.csv (95 MB, 38 columnas)
+   id, tag, date, ocid, initiationType, publishedDate, buyer_id, buyer_name, tender_id, tender_hasTenderInformationProtectedByLaw, tender_title, tender_mainProcurementCategory, tender_additionalProcurementCategories, tender_procurementMethodDetails, tender_description, tender_datePublished, tender_procurementMethod, tender_numberOfTenderers, tender_value_amount, tender_value_currency, tender_value_amount_PEN, tender_value_currencyName, tender_procuringEntity_id, tender_procuringEntity_name, planning_budget_description, dataSegmentation_id, dataSegmentation_criteria, planning_budget_amount_amount, planning_budget_amount_currency, planning_budget_amount_currencyName, tender_tenderPeriod_endDate, tender_tenderPeriod_startDate, tender_enquiryPeriod_endDate, tender_enquiryPeriod_startDate, tender_enquiryPeriod_durationInDays, planning_budget_project, planning_budget_projectID, tender_tenderPeriod_durationInDays
+-- parties.csv (325 MB, 16 columnas)
+   id, name, roles, address_region, address_locality, address_department, address_countryName, address_streetAddress, identifier_id, identifier_scheme, identifier_legalName, main_ocid, main_id, contactPoint_email, contactPoint_telephone, contactPoint_url
+-- parties_additionalIdentifiers.csv (19 MB, 6 columnas)
+   id, scheme, legalName, main_ocid, main_id, parties_id
+-- sources.csv (28 MB, 5 columnas)
+   id, url, name, main_ocid, main_id
+-- tender_documents.csv (205 MB, 12 columnas)
+   id, url, title, format, language, documentType, datePublished, main_ocid, main_id, tender_id, dateModified, description
+-- tender_items.csv (51 MB, 18 columnas)
+   id, description, status, position, quantity, statusDetails, unit_id, unit_name, unit_scheme, totalValue_amount, totalValue_currency, totalValue_currencyName, classification_id, classification_scheme, classification_description, main_ocid, main_id, tender_id
+-- tender_items_additionalClassifications.csv (19 MB, 7 columnas)
+   id, scheme, description, main_ocid, main_id, tender_id, tender_items_id
+-- tender_items_totalValue_exchangeRates.csv (0 MB, 6 columnas)
+   rate, currency, main_ocid, main_id, tender_id, tender_items_id
+-- tender_tenderers.csv (164 MB, 5 columnas)
+   id, name, main_ocid, main_id, tender_id

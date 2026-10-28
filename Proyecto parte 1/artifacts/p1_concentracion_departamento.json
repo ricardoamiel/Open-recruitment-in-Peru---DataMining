@@ -55,9 +55,9 @@
  },
  {
   "departamento":"PIURA",
-  "proveedores":3282,
+  "proveedores":3281,
   "monto_mm":5449.31073301,
-  "gini":0.7891910913
+  "gini":0.7891627936
  },
  {
   "departamento":"CALLAO",
@@ -85,9 +85,9 @@
  },
  {
   "departamento":"ICA",
-  "proveedores":2106,
+  "proveedores":2107,
   "monto_mm":3192.42865085,
-  "gini":0.766496581
+  "gini":0.7662619261
  },
  {
   "departamento":"TACNA",

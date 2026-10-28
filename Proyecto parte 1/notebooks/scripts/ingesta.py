@@ -16,10 +16,6 @@ from pyspark.sql import functions as F
 
 from helpers import RAIZ
 
-# ============================================================================
-# Descarga de los datos. Si ya estan, no hace nada. Esto es lo que permite que
-# el notebook se ejecute de cero en otra maquina sin pasos manuales previos.
-# ============================================================================
 CRUDO = RAIZ / "data" / "raw"
 PERIODOS = ["2023", "2024", "2025"]
 URL = "https://data.open-contracting.org/es/publication/135/download?name={}.csv.tar.gz"
@@ -33,7 +29,7 @@ def asegurar_datos():
             print(f"  {periodo}: ya presente")
             continue
         comprimido = CRUDO / f"{periodo}.csv.tar.gz"
-        if not comprimido.exists():
+        if not comprimido.exists(): # avoid refetching
             print(f"  {periodo}: descargando, son entre 70 y 200 MB")
             urllib.request.urlretrieve(URL.format(periodo), comprimido)
         print(f"  {periodo}: extrayendo")
@@ -160,7 +156,11 @@ def construir_tabla(spark):
     # concreto. Se usa el prefijo de 8 porque el codigo completo es casi unico
     # por item y daria un universo tan disperso que ningun conjunto alcanzaria
     # el soporte minimo en la Parte V.
-    items = leer(spark, "awards_items.csv",
+    # Los items salen de la convocatoria y no de la adjudicacion: los items
+    # adjudicados son siempre un subconjunto de los convocados, y un proceso
+    # desierto o anulado no tiene items adjudicados, de modo que usarlos dejaba
+    # sin canasta justo a los procesos donde fallo la competencia.
+    items = leer(spark, "tender_items.csv",
                  ["main_ocid", "classification_id", "classification_description"]).select(
         F.col("main_ocid").alias("ocid"),
         F.substring("classification_id", 1, 8).alias("item"),
@@ -193,7 +193,7 @@ def catalogo_items(spark):
 
     Sin el, las reglas de la Parte V serian listas de numeros de ocho digitos.
     """
-    items = leer(spark, "awards_items.csv",
+    items = leer(spark, "tender_items.csv",
                  ["main_ocid", "classification_id", "classification_description"]).select(
         F.substring("classification_id", 1, 8).alias("item"),
         texto("classification_description").alias("nombre"),

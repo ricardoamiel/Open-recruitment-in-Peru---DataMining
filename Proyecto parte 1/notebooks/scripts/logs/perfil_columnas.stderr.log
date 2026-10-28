@@ -1,0 +1,5 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/28 15:36:31 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.

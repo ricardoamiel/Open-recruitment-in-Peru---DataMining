@@ -525,17 +525,17 @@
   "lift":8.53051
  },
  {
-  "antecedente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
-  "consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.",
-  "soporte":0.02792,
-  "confianza":0.67476,
-  "lift":8.53022
- },
- {
   "antecedente":"LECHE EVAPORADA ENTERA X 400 G APROX.",
   "consecuente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
   "soporte":0.02792,
   "confianza":0.35302,
+  "lift":8.53022
+ },
+ {
+  "antecedente":"HOJUELA DE CEREAL Y\/O LEGUMINOSAS ENRIQUECIDO",
+  "consecuente":"LECHE EVAPORADA ENTERA X 400 G APROX.",
+  "soporte":0.02792,
+  "confianza":0.67476,
   "lift":8.53022
  },
  {
@@ -651,14 +651,14 @@
   "lift":7.46543
  },
  {
-  "antecedente":"ARENA GRUESA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
+  "antecedente":"MADERA TORNILLO DE 1 1\/2 IN X 1 1\/2 IN X 10 FT + DIESEL B5 S-50",
   "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
   "soporte":0.00236,
   "confianza":0.73438,
   "lift":7.45267
  },
  {
-  "antecedente":"MADERA TORNILLO DE 1 1\/2 IN X 1 1\/2 IN X 10 FT + DIESEL B5 S-50",
+  "antecedente":"ARENA GRUESA + SERVICIO DE ALQUILER DE EXCAVADORA HIDRAULICA ",
   "consecuente":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 KG",
   "soporte":0.00236,
   "confianza":0.73438,

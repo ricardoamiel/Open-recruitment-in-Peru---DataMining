@@ -3,7 +3,7 @@
   "columna":"proveedor_nombre",
   "tipo":"string",
   "pct_nulos":21.96,
-  "distintos":81955.0
+  "distintos":81996.0
  },
  {
   "columna":"proveedor_id",
@@ -123,7 +123,7 @@
   "columna":"n_items",
   "tipo":"bigint",
   "pct_nulos":0.0,
-  "distintos":67.0
+  "distintos":81.0
  },
  {
   "columna":"departamento",

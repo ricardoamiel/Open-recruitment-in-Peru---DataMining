@@ -1,0 +1,18 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/28 16:40:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+16:40:07  construir_tabla + cache + count
+16:40:57  281,462 filas
+16:40:57  pivot periodo_archivo x anio -> toPandas
+16:41:00  pivot ok, forma (3, 13), columnas ['2013', '2014', '2015', '2016', '2017', '2018']...
+16:41:00  mapa_calor
+16:41:00  mapa_calor ok
+CORRECTO: el proceso con PID 18164 (proceso secundario de PID 11632)
+ha sido terminado.
+CORRECTO: el proceso con PID 11632 (proceso secundario de PID 18336)
+ha sido terminado.
+CORRECTO: el proceso con PID 18336 (proceso secundario de PID 9556)
+ha sido terminado.
+exit=0

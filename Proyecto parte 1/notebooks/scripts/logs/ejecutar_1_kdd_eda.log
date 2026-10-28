@@ -1,0 +1,44 @@
+1_kdd_eda.ipynb con kernel spark310, 40 celdas
+[  1] inicio  16:52:12  import sys, time
+[  1] ok      8.8 s
+[  3] inicio  16:52:21  # Descarga los paquetes anuales si faltan. Esto es lo que permite ejec
+[  3] ok      41.2 s
+[  5] inicio  16:53:02  n = cruda.count()
+[  5] ok      22.7 s
+[  7] inicio  16:53:25  diagnostico = cruda.select(
+[  7] ok      1.9 s
+[  8] inicio  16:53:27  cruce = (cruda.groupBy("periodo_archivo").pivot("anio").count()
+[  8] ok      3.4 s
+[ 10] inicio  16:53:30  limpia, bitacora = limpiar(cruda)
+[ 10] ok      21.2 s
+[ 11] inicio  16:53:51  embudo = bitacora[["paso", "detalle", "filas_restantes"]].copy()
+[ 11] ok      0.9 s
+[ 12] inicio  16:53:52  # Verificacion de la reparacion de codificacion. Los reparables deben 
+[ 12] ok      3.7 s
+[ 14] inicio  16:53:56  limpia.write.mode("overwrite").partitionBy("anio").parquet(str(PARQUET
+[ 14] ok      8.0 s
+[ 16] inicio  16:54:04  mensual = spark.sql(r"""
+[ 16] ok      1.9 s
+[ 17] inicio  16:54:06  fig, _ = lineas(mensual, "anio_mes", ["monto_millones"],
+[ 17] ok      1.1 s
+[ 18] inicio  16:54:07  estacional = (spark.sql("SELECT mes, anio, COUNT(*) AS n FROM contrata
+[ 18] ok      2.2 s
+[ 19] inicio  16:54:09  montos = datos.select("monto_pen").toPandas()["monto_pen"].values
+[ 19] ok      2.5 s
+[ 20] inicio  16:54:12  metodo = spark.sql(r"""
+[ 20] ok      1.9 s
+[ 21] inicio  16:54:14  nivel = spark.sql(r"""
+[ 21] ok      2.4 s
+[ 22] inicio  16:54:16  top_c = spark.sql(r"""
+[ 22] ok      2.7 s
+[ 23] inicio  16:54:19  top_p = spark.sql(r"""
+[ 23] ok      2.8 s
+[ 24] inicio  16:54:22  por_prov = (datos.filter("adjudicado").groupBy("proveedor_id")
+[ 24] ok      2.7 s
+[ 25] inicio  16:54:24  pdp = (datos.filter("adjudicado").groupBy("departamento", "proveedor_i
+[ 25] ok      2.4 s
+[ 26] inicio  16:54:27  comp = spark.sql(r"""
+[ 26] ok      2.2 s
+[ 28] inicio  16:54:29  tiempos = []
+[ 28] ok      123.5 s
+[ 29] inicio  16:56:32  # Verificacion de que los dos caminos dan el mismo conjunto, no solo e
