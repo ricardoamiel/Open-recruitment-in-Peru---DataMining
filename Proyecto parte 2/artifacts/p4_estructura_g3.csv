@@ -1,8 +1,0 @@
-medida,valor
-procesos con 2 a 50 participantes,142624
-procesos con ganador entre ellos,119841
-nodos,134885
-aristas,1173510
-dead ends: ganan y nunca pierden,24929
-nunca ganan: solo emiten votos,83195
-aristas recíprocas: A le ganó a B y B a A,45429

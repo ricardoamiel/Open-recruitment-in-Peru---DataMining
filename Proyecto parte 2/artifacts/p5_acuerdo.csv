@@ -1,0 +1,13 @@
+comparacion,proveedores,ARI,NMI
+"Girvan-Newman frente a espectral, núcleo",143,0.8897,0.9076
+"Girvan-Newman frente a Louvain, núcleo",143,0.4208,0.6475
+"espectral frente a Louvain, Ayacucho",1065,0.1521,0.4744
+espectral frente a familia CUBSO,1060,0.2768,0.3859
+Louvain frente a familia CUBSO,1060,0.2204,0.5059
+Louvain frente a tipo de proveedor,1065,0.0044,0.0204
+Louvain frente a perfil de la Parte II,296,0.0097,0.1116
+propagación nacional frente a departamento,67799,0.0282,0.1905
+propagación nacional frente a familia CUBSO,67799,0.2552,0.4957
+Louvain nacional frente a departamento,67799,0.0163,0.1364
+Louvain nacional frente a familia CUBSO,67799,0.3128,0.4783
+"propagación frente a Louvain, nacional",67799,0.5036,0.6763

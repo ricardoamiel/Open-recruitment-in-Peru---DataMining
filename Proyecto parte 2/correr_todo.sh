@@ -36,7 +36,7 @@ fi
 
 # El orden importa: el notebook 1 escribe en data/processed la base
 # relacional que leen los demás.
-for N in 1_base_relacional 2_clustering_anomalias 3_recomendacion 4_enlaces; do
+for N in 1_base_relacional 2_clustering_anomalias 3_recomendacion 4_enlaces 5_comunidades; do
   echo "=== $N ==="
   jupyter nbconvert --to notebook --execute --inplace \
     --ExecutePreprocessor.timeout=7200 \

@@ -1,0 +1,22 @@
+[
+ {
+  "q_girvan_newman":0.361,
+  "k_girvan_newman":5,
+  "q_espectral":0.401,
+  "k_espectral":6,
+  "q_louvain":0.644,
+  "k_louvain":20,
+  "q_lpa":0.208,
+  "comunidades_lpa":2865,
+  "q_louvain_nacional":0.656,
+  "comunidades_louvain_nacional":812,
+  "pct_periferia":55.8,
+  "segundos_lpa":29.6,
+  "pct_peso_mismo_departamento":60.1,
+  "pct_puente":8.9,
+  "pct_afines_misma_comunidad":94.3,
+  "pct_esperado":14.3,
+  "exponente_gn":4.07,
+  "proveedores_ayacucho":1065
+ }
+]

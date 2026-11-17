@@ -1,0 +1,102 @@
+[
+ {
+  "comunidad":17,
+  "proveedores":276,
+  "item_tipico":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS",
+  "pct_familia":59,
+  "pct_personas_naturales":17,
+  "monto_ganado":149316394.8700000048,
+  "pares_afines":12,
+  "pares_que_alternan":0
+ },
+ {
+  "comunidad":9,
+  "proveedores":191,
+  "item_tipico":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS",
+  "pct_familia":98,
+  "pct_personas_naturales":19,
+  "monto_ganado":47065066.5500000045,
+  "pares_afines":200,
+  "pares_que_alternan":9
+ },
+ {
+  "comunidad":6,
+  "proveedores":165,
+  "item_tipico":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS",
+  "pct_familia":53,
+  "pct_personas_naturales":22,
+  "monto_ganado":119188891.7100000083,
+  "pares_afines":13,
+  "pares_que_alternan":1
+ },
+ {
+  "comunidad":19,
+  "proveedores":82,
+  "item_tipico":"SERVICIO DE MANTENIMIENTO DE INFRAESTRUCTURA D",
+  "pct_familia":41,
+  "pct_personas_naturales":11,
+  "monto_ganado":169882835.5699999928,
+  "pares_afines":2,
+  "pares_que_alternan":0
+ },
+ {
+  "comunidad":4,
+  "proveedores":74,
+  "item_tipico":"ARROZ PILADO SUPERIOR",
+  "pct_familia":36,
+  "pct_personas_naturales":22,
+  "monto_ganado":80422341.5400000066,
+  "pares_afines":24,
+  "pares_que_alternan":3
+ },
+ {
+  "comunidad":5,
+  "proveedores":60,
+  "item_tipico":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 kg",
+  "pct_familia":71,
+  "pct_personas_naturales":30,
+  "monto_ganado":134233676.7000000179,
+  "pares_afines":1,
+  "pares_que_alternan":0
+ },
+ {
+  "comunidad":2,
+  "proveedores":49,
+  "item_tipico":"ARENA GRUESA",
+  "pct_familia":35,
+  "pct_personas_naturales":27,
+  "monto_ganado":29150548.5,
+  "pares_afines":9,
+  "pares_que_alternan":4
+ },
+ {
+  "comunidad":11,
+  "proveedores":40,
+  "item_tipico":"CONSTRUCCION DE LOSA DEPORTIVA",
+  "pct_familia":21,
+  "pct_personas_naturales":22,
+  "monto_ganado":18927250.129999999,
+  "pares_afines":1,
+  "pares_que_alternan":0
+ },
+ {
+  "comunidad":13,
+  "proveedores":32,
+  "item_tipico":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS",
+  "pct_familia":100,
+  "pct_personas_naturales":12,
+  "monto_ganado":4277188.6500000004,
+  "pares_afines":29,
+  "pares_que_alternan":9
+ },
+ {
+  "comunidad":1,
+  "proveedores":27,
+  "item_tipico":"DIESEL B5 S-50",
+  "pct_familia":100,
+  "pct_personas_naturales":41,
+  "monto_ganado":39806140.5700000003,
+  "pares_afines":3,
+  "pares_que_alternan":2
+ }
+]

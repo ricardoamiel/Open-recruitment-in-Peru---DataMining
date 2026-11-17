@@ -1,0 +1,72 @@
+[
+ {
+  "nombre":"GRUPO CORPORATIVO 3NAV S.A.C.",
+  "tipo":"empresa",
+  "participaciones":1445,
+  "comunidades":4,
+  "item_tipico":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS"
+ },
+ {
+  "nombre":"YANZ GROUP S.A.C.",
+  "tipo":"empresa",
+  "participaciones":768,
+  "comunidades":2,
+  "item_tipico":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS"
+ },
+ {
+  "nombre":"INVERSIONES GENERALES QAMPAQ PERU E.I.R.L.",
+  "tipo":"empresa",
+  "participaciones":703,
+  "comunidades":3,
+  "item_tipico":"CESPED SINTETICO X 4 m DE ANCHO"
+ },
+ {
+  "nombre":"PRADERA CONTRATISTAS GENERALES SRL",
+  "tipo":"empresa",
+  "participaciones":634,
+  "comunidades":5,
+  "item_tipico":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS"
+ },
+ {
+  "nombre":"GRUPO CANDELARIA S.A.C.",
+  "tipo":"empresa",
+  "participaciones":559,
+  "comunidades":2,
+  "item_tipico":"CESPED SINTETICO X 4 m DE ANCHO"
+ },
+ {
+  "nombre":"EMPRESA DE SERVICIOS MULTIPLES SAN MIGUEL ARCANGEL S.A.C.",
+  "tipo":"empresa",
+  "participaciones":534,
+  "comunidades":4,
+  "item_tipico":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS"
+ },
+ {
+  "nombre":"CORPORACION MARKANSAYA CONTRATISTAS CONSULTORES  Y SERVICIOS GENERALES S.A.C.",
+  "tipo":"empresa",
+  "participaciones":482,
+  "comunidades":2,
+  "item_tipico":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS"
+ },
+ {
+  "nombre":"CONSTRUCTORA Y CONSULTORA FACEM S.A.C.",
+  "tipo":"empresa",
+  "participaciones":466,
+  "comunidades":4,
+  "item_tipico":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS"
+ },
+ {
+  "nombre":"MULTISERVICIOS BADAJOZ E.I.R.L.",
+  "tipo":"empresa",
+  "participaciones":426,
+  "comunidades":3,
+  "item_tipico":"CONSTRUCCION DE LOSA DEPORTIVA"
+ },
+ {
+  "nombre":"AYLLU S.R.L.",
+  "tipo":"empresa",
+  "participaciones":373,
+  "comunidades":2,
+  "item_tipico":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS"
+ }
+]
