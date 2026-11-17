@@ -1,0 +1,75 @@
+/* Estilos compartidos por el reporte y la presentación.
+   Paleta institucional de UTEC: celeste como color de marca, amarillo de acento,
+   negro para el texto. Las series de datos usan una paleta validada para
+   deficiencia de color, con el celeste UTEC como primera serie. */
+:root {
+  --utec: #00BFFE;
+  --utec-oscuro: #0090C8;
+  --utec-claro: #E5F7FF;
+  --acento: #FFC20E;
+  --tinta: #111418;
+  --tinta2: #3D454E;
+  --tinta3: #6B747E;
+  --fondo: #FFFFFF;
+  --panel: #F4F7F9;
+  --linea: #DCE3E8;
+  --s1: #0090C8;
+  --s2: #D1495B;
+  --s3: #2E9E6A;
+  --s4: #7B5EA7;
+  --s5: #E89B00;
+  --neutro: #B8C2CB;
+  --titulo: "Roboto Slab", "Rockwell", Georgia, serif;
+  --texto: "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+/* El modo claro es el principal; el oscuro solo se activa con el botón de tema o la tecla T. */
+:root[data-theme="dark"] {
+  --tinta: #EEF2F5; --tinta2: #C3CBD3; --tinta3: #8F9AA5;
+  --fondo: #0F1418; --panel: #182027; --linea: #2A343D; --utec-claro: #0D2A36;
+  --neutro: #4A5560;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--fondo); color: var(--tinta); font-family: var(--texto); }
+h1, h2, h3 { font-family: var(--titulo); font-weight: 700; letter-spacing: -.01em; }
+a { color: var(--utec-oscuro); }
+b, strong { font-weight: 700; }
+
+/* Gráficos */
+.grafico { width: 100%; }
+.grafico svg { display: block; width: 100%; height: auto; overflow: visible; }
+.grafico text { fill: var(--tinta2); font-family: var(--texto); font-size: 12px; }
+.grafico .eje path, .grafico .eje line { stroke: var(--linea); }
+.grafico .rejilla line { stroke: var(--linea); stroke-opacity: .7; }
+.grafico .rejilla path { stroke: none; }
+.grafico .rotulo { fill: var(--tinta); font-weight: 600; }
+.grafico .tenue { fill: var(--tinta3); }
+.tooltip {
+  position: fixed; pointer-events: none; z-index: 50; max-width: 320px;
+  background: var(--tinta); color: var(--fondo); font-size: 12.5px; line-height: 1.4;
+  padding: 7px 10px; border-radius: 6px; opacity: 0; transition: opacity .12s;
+}
+
+/* Controles */
+.controles { display: flex; flex-wrap: wrap; gap: 14px 26px; align-items: center; margin: 10px 0 6px; }
+.control { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--tinta2); }
+.control input[type=range] { width: 170px; accent-color: var(--utec-oscuro); }
+.control output { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--tinta); min-width: 3.2em; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 1px solid var(--linea); background: var(--fondo); color: var(--tinta2);
+  border-radius: 999px; padding: 5px 12px; font-size: 13px; cursor: pointer; font-family: inherit;
+}
+.chip[aria-pressed="true"] { background: var(--utec); border-color: var(--utec); color: #00121A; font-weight: 600; }
+
+/* Cifras grandes */
+.cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.cifra { background: var(--panel); border-radius: 10px; padding: 12px 14px; }
+.cifra .n { font-family: var(--titulo); font-size: 30px; font-weight: 700; color: var(--tinta); line-height: 1.1; }
+.cifra .t { font-size: 13px; color: var(--tinta2); margin-top: 4px; line-height: 1.35; }
+
+/* Tablas */
+table.datos { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.datos th { text-align: left; color: var(--tinta3); font-weight: 600; border-bottom: 2px solid var(--linea); padding: 6px 8px; }
+table.datos td { border-bottom: 1px solid var(--linea); padding: 6px 8px; vertical-align: top; }
+table.datos td.num, table.datos th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.tabla-scroll { overflow-x: auto; }
