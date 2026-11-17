@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Reproduce las partes I a III del Proyecto Integrador 2 desde cero.
+# Reproduce las partes I a VI del Proyecto Integrador 2 desde cero.
 #
 # Spark corre en modo local dentro del proceso del notebook, asi que no hay
 # servicios que levantar: basta el entorno de conda y Java en el PATH. La
@@ -35,8 +35,8 @@ if [ ! -d "../Proyecto parte 1/data/processed/tabla_analitica.parquet" ]; then
 fi
 
 # El orden importa: el notebook 1 escribe en data/processed la base
-# relacional que leen el 2 y el 3.
-for N in 1_base_relacional 2_clustering_anomalias 3_recomendacion; do
+# relacional que leen los demás.
+for N in 1_base_relacional 2_clustering_anomalias 3_recomendacion 4_enlaces; do
   echo "=== $N ==="
   jupyter nbconvert --to notebook --execute --inplace \
     --ExecutePreprocessor.timeout=7200 \
