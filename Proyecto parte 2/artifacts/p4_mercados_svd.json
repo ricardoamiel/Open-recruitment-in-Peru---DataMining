@@ -1,0 +1,98 @@
+[
+ {
+  "vector":1,
+  "valor_singular":50.8,
+  "familia":"4111",
+  "item_tipico":"HEMOGRAMA AUTOMATIZADO DIFERENCIAL 5 ESTIRPES y 25 PARAMETRO",
+  "pct_familia":23,
+  "departamento":"LIMA",
+  "pct_departamento":100,
+  "departamento_entidades":"LIMA",
+  "proveedores":"DIAGNOSTICA PERUANA S.A.C. | LABORATORIOS AC FARMA S.A. | B.BRAUN MEDICAL PERU S.A. | LINDE PERU S.R.L.",
+  "entidades":"SEGURO SOCIAL DE SALUD | CENTRO NACIONAL DE ABASTECIMIENTO DE REC | DIRECCIÓN DE SANIDAD DE LA PNP"
+ },
+ {
+  "vector":2,
+  "valor_singular":44.2,
+  "familia":"8010",
+  "item_tipico":"SERVICIO DE SEGUIMIENTO Y MONITOREO DE ACTIVIDADES DE CAMPO",
+  "pct_familia":97,
+  "departamento":"LIMA",
+  "pct_departamento":100,
+  "departamento_entidades":"LIMA",
+  "proveedores":"BARBOZA DE LAS CASAS GERSON ENRIQUE | YUPANQUI CHAMORRO DANIEL SERGIO | BORDA ECHAVARRIA ANI MARY | ALBERTO CHAGUA LUZ MILAGROS",
+  "entidades":"ORGANISMO DE EVALUACION Y FISCALIZACION  | SERVICIO NACIONAL DE METEOROLOGIA E HIDR | GOBIERNO REGIONAL DE PUNO SEDE CENTRAL"
+ },
+ {
+  "vector":3,
+  "valor_singular":40.5,
+  "familia":"3011",
+  "item_tipico":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 kg",
+  "pct_familia":43,
+  "departamento":"CUSCO",
+  "pct_departamento":53,
+  "departamento_entidades":"CUSCO",
+  "proveedores":"GRUPO SANTA FE SOCIEDAD ANONIMA CERRADA  | COMERCIAL FERRETERIA FATIMA SOCIEDAD ANO | TMI-TYC SOCIEDAD ANONIMA CERRADA - TMI-T | MILNER INVERSIONES Y SERVICIOS EMPRESA I",
+  "entidades":"GOBIERNO REGIONAL DE PUNO SEDE CENTRAL | GOBIERNO REGIONAL DE CUSCO SEDE CENTRAL | GOBIERNO REGIONAL DE AREQUIPA SEDE CENTR"
+ },
+ {
+  "vector":4,
+  "valor_singular":38.4,
+  "familia":"5013",
+  "item_tipico":"LECHE EVAPORADA ENTERA X 400 g  APROX.",
+  "pct_familia":13,
+  "departamento":"LIMA",
+  "pct_departamento":97,
+  "departamento_entidades":"LIMA",
+  "proveedores":"CORPORACION GV DEL PERU SOCIEDAD ANONIMA | NEGOCIOS ADVANCE S.R.L. | CORPORACION AGROPECUARIA BERTHA SOCIEDAD | LBC TRANSPORT SAC",
+  "entidades":"EJERCITO PERUANO | FUERZA AEREA DEL PERU | MARINA DE GUERRA DEL PERU"
+ },
+ {
+  "vector":5,
+  "valor_singular":31.1,
+  "familia":"3011",
+  "item_tipico":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 kg",
+  "pct_familia":30,
+  "departamento":"PUNO",
+  "pct_departamento":77,
+  "departamento_entidades":"PUNO",
+  "proveedores":"GRUPO SANTA FE SOCIEDAD ANONIMA CERRADA  | COMERCIAL FERRETERIA FATIMA SOCIEDAD ANO | IMPORTACIONES CHAPI E.I.R.L. | CODECO E.I.R.L",
+  "entidades":"GOBIERNO REGIONAL DE PUNO SEDE CENTRAL | MUNICIPALIDAD PROVINCIAL DE SAN ROMAN -  | UNIVERSIDAD NACIONAL DEL ALTIPLANO"
+ },
+ {
+  "vector":6,
+  "valor_singular":30.3,
+  "familia":"8210",
+  "item_tipico":"SERVICIO DE PUBLICIDAD EN PAGINA WEB",
+  "pct_familia":80,
+  "departamento":"LIMA",
+  "pct_departamento":100,
+  "departamento_entidades":"LIMA",
+  "proveedores":"META PLATFORMS IRELAND LIMITED | GOOGLE LLC | TIKTOK INC | TARGET 2016 S.L.",
+  "entidades":"COMISION DE PROMOCION DEL PERU PARA LA E | SUPERINTENDENCIA NACIONAL DE ADUANAS Y D | INSTITUTO NACIONAL DE ESTADISTICA"
+ },
+ {
+  "vector":7,
+  "valor_singular":28.1,
+  "familia":"3011",
+  "item_tipico":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 kg",
+  "pct_familia":40,
+  "departamento":"CUSCO",
+  "pct_departamento":83,
+  "departamento_entidades":"CUSCO",
+  "proveedores":"GRUPO SANTA FE SOCIEDAD ANONIMA CERRADA  | CORPORACION CLABE S.R.L. | MILNER INVERSIONES Y SERVICIOS EMPRESA I | EMPRESA  ZOHE SAC",
+  "entidades":"GOBIERNO REGIONAL DE CUSCO SEDE CENTRAL | PROGRAMA DE DESARROLLO PRODUCTIVO AGRARI | MUNICIPALIDAD DISTRITAL DE MEGANTONI"
+ },
+ {
+  "vector":8,
+  "valor_singular":27.2,
+  "familia":"5110",
+  "item_tipico":"MEROPENEM 500 mg PLV PARA SOL INY",
+  "pct_familia":23,
+  "departamento":"LIMA",
+  "pct_departamento":100,
+  "departamento_entidades":"LIMA",
+  "proveedores":"DIAGNOSTICA PERUANA S.A.C. | B.BRAUN MEDICAL PERU S.A. | DROGUERIA CADILLO S.A.C | LABORATORIOS AC FARMA S.A.",
+  "entidades":"CENTRO NACIONAL DE ABASTECIMIENTO DE REC | FUERZA AEREA DEL PERU | IAFAS DEL EJERCITO DEL PERU (FOSPEME)"
+ }
+]

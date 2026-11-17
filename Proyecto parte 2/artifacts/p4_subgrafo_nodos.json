@@ -1,0 +1,962 @@
+[
+ {
+  "i":0,
+  "nombre":"GRUPO SANTA FE SOCIEDAD ANONIMA CERRADA - GRUPO SANTA FE S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":1457.0,
+  "puesto_pagerank":1
+ },
+ {
+  "i":1,
+  "nombre":"COMERCIAL FERRETERIA FATIMA SOCIEDAD ANONIMA CERRADA - COMERCIAL FERRETERIA FATIMA S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":229.0,
+  "puesto_pagerank":2
+ },
+ {
+  "i":2,
+  "nombre":"PROMAINGSA S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":141.0,
+  "puesto_pagerank":3
+ },
+ {
+  "i":3,
+  "nombre":"TMI-TYC SOCIEDAD ANONIMA CERRADA - TMI-TYC S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":288.0,
+  "puesto_pagerank":4
+ },
+ {
+  "i":4,
+  "nombre":"SOLUCIONES & SERVICIOS SONDOR E.I.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":94.0,
+  "puesto_pagerank":5
+ },
+ {
+  "i":5,
+  "nombre":"MILNER INVERSIONES Y SERVICIOS EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA - MILINSER E.I.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":137.0,
+  "puesto_pagerank":6
+ },
+ {
+  "i":6,
+  "nombre":"CORPORACION CLABE S.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":148.0,
+  "puesto_pagerank":7
+ },
+ {
+  "i":7,
+  "nombre":"DIAGNOSTICA PERUANA S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":361.0,
+  "puesto_pagerank":8
+ },
+ {
+  "i":8,
+  "nombre":"IPESA S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":167.0,
+  "puesto_pagerank":9
+ },
+ {
+  "i":9,
+  "nombre":"AMERICA MOVIL PERU S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":172.0,
+  "puesto_pagerank":10
+ },
+ {
+  "i":10,
+  "nombre":"DAILY TECHNOLOGY S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":57.0,
+  "puesto_pagerank":11
+ },
+ {
+  "i":11,
+  "nombre":"EMPRESA  ZOHE SAC",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":71.0,
+  "puesto_pagerank":12
+ },
+ {
+  "i":12,
+  "nombre":"TRUYENQUE MALPARTIDA CESAR",
+  "tipo":"persona natural",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":187.0,
+  "puesto_pagerank":13
+ },
+ {
+  "i":13,
+  "nombre":"FORZAMAT S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":113.0,
+  "puesto_pagerank":14
+ },
+ {
+  "i":14,
+  "nombre":"IMPRESOS S.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":39.0,
+  "puesto_pagerank":15
+ },
+ {
+  "i":15,
+  "nombre":"FERREYROS SOCIEDAD ANÓNIMA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":173.0,
+  "puesto_pagerank":16
+ },
+ {
+  "i":16,
+  "nombre":"CCALLPA S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":42.0,
+  "puesto_pagerank":17
+ },
+ {
+  "i":17,
+  "nombre":"TRANSPORTES COMO CANCHA S.A.C. - TRANSCOMCAN S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":96.0,
+  "puesto_pagerank":18
+ },
+ {
+  "i":18,
+  "nombre":"GATT PERU S.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":106.0,
+  "puesto_pagerank":19
+ },
+ {
+  "i":19,
+  "nombre":"ARIS INDUSTRIAL S.A.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":66.0,
+  "puesto_pagerank":20
+ },
+ {
+  "i":20,
+  "nombre":"ELECTRO CONDUCTORES PERUANOS S.A.C",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":36.0,
+  "puesto_pagerank":21
+ },
+ {
+  "i":21,
+  "nombre":"WIN EMPRESAS S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":76.0,
+  "puesto_pagerank":22
+ },
+ {
+  "i":22,
+  "nombre":"MALLAS Y ALAMBRES FABRIMAC S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":47.0,
+  "puesto_pagerank":23
+ },
+ {
+  "i":23,
+  "nombre":"GTD PERÚ S.A",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":67.0,
+  "puesto_pagerank":24
+ },
+ {
+  "i":24,
+  "nombre":"VISTONY COMPAÑIA INDUSTRIAL DEL PERU SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":50.0,
+  "puesto_pagerank":25
+ },
+ {
+  "i":25,
+  "nombre":"BIODEGRADABLE PERU S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":45.0,
+  "puesto_pagerank":26
+ },
+ {
+  "i":26,
+  "nombre":"SAINT INDUSTRY E.I.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":43.0,
+  "puesto_pagerank":27
+ },
+ {
+  "i":27,
+  "nombre":"COMERCIAL RIFUMA E.I.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":74.0,
+  "puesto_pagerank":28
+ },
+ {
+  "i":28,
+  "nombre":"DISTRIBUIDORA YULAC S.A.C - DISTYULAC S.A.C",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":58.0,
+  "puesto_pagerank":29
+ },
+ {
+  "i":29,
+  "nombre":"MAFETSUR INVERSIONES GENERALES SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":79.0,
+  "puesto_pagerank":30
+ },
+ {
+  "i":30,
+  "nombre":"INDUSTRIAS TESLA PERU SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA - TESLA PERU SRL.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":38.0,
+  "puesto_pagerank":31
+ },
+ {
+  "i":31,
+  "nombre":"LINAMES S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":60.0,
+  "puesto_pagerank":32
+ },
+ {
+  "i":32,
+  "nombre":"CONSTRUCTORA GIRL POWER E.I.R.L.",
+  "tipo":"empresa",
+  "perfil":"competitivo típico",
+  "victorias_disputadas":18.0,
+  "puesto_pagerank":33
+ },
+ {
+  "i":33,
+  "nombre":"CONCRETOS SUPERMIX SOCIEDAD ANONIMA - CONCRETOS SUPERMIX S.A.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":120.0,
+  "puesto_pagerank":34
+ },
+ {
+  "i":34,
+  "nombre":"IMPERIA SOLUCIONES TECNOLOGICAS S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":71.0,
+  "puesto_pagerank":35
+ },
+ {
+  "i":35,
+  "nombre":"CLOUD INFRASTRUCTURE AND TELECOM PERU SOCIEDAD ANONIMA CERRADA - CLOUD IT PERU S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":64.0,
+  "puesto_pagerank":36
+ },
+ {
+  "i":36,
+  "nombre":"GRAFINDUSTRIA SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":29.0,
+  "puesto_pagerank":37
+ },
+ {
+  "i":37,
+  "nombre":"LOAYZA PALOMINO JANET ALICE",
+  "tipo":"persona natural",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":34.0,
+  "puesto_pagerank":38
+ },
+ {
+  "i":38,
+  "nombre":"TECH4ALLPERU SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":39.0,
+  "puesto_pagerank":39
+ },
+ {
+  "i":39,
+  "nombre":"CHAPOMEDIC S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":76.0,
+  "puesto_pagerank":40
+ },
+ {
+  "i":40,
+  "nombre":"FERCONSS  CORPORATIVO  S.A",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":34.0,
+  "puesto_pagerank":41
+ },
+ {
+  "i":41,
+  "nombre":"UNIMAQ S.A.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":146.0,
+  "puesto_pagerank":42
+ },
+ {
+  "i":42,
+  "nombre":"NEGOCIOS INNOVACIONES E INGENIERIA S.A.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":102.0,
+  "puesto_pagerank":43
+ },
+ {
+  "i":43,
+  "nombre":"AGREGADOS CONSTRUCCIONES Y ASFALTOS DANTON S.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":70.0,
+  "puesto_pagerank":44
+ },
+ {
+  "i":44,
+  "nombre":"LOAYZA DIAZ FLOR NILDA",
+  "tipo":"persona natural",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":43.0,
+  "puesto_pagerank":45
+ },
+ {
+  "i":45,
+  "nombre":"AMERICAN HOSPITAL SCIENTIFIC EQUIPMENT COMPANY DEL PERU S.A.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":75.0,
+  "puesto_pagerank":46
+ },
+ {
+  "i":46,
+  "nombre":"ROCA S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":62.0,
+  "puesto_pagerank":47
+ },
+ {
+  "i":47,
+  "nombre":"W.P. BIOMED SOCIEDAD ANONIMA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":139.0,
+  "puesto_pagerank":48
+ },
+ {
+  "i":48,
+  "nombre":"MEYBELYN PERU S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":42.0,
+  "puesto_pagerank":49
+ },
+ {
+  "i":49,
+  "nombre":"KEYPOWER PERU S.A. - KEYPOWER S.A.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":33.0,
+  "puesto_pagerank":50
+ },
+ {
+  "i":50,
+  "nombre":"LABORATORIOS AC FARMA S.A.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":180.0,
+  "puesto_pagerank":51
+ },
+ {
+  "i":51,
+  "nombre":"GRUPO EMPRESARIAL MOLISA INGENIEROS S.A.C",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":23.0,
+  "puesto_pagerank":52
+ },
+ {
+  "i":52,
+  "nombre":"IMPORTACIONES CHAPI E.I.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":78.0,
+  "puesto_pagerank":53
+ },
+ {
+  "i":53,
+  "nombre":"GRAFICA GARATE S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":29.0,
+  "puesto_pagerank":54
+ },
+ {
+  "i":54,
+  "nombre":"INVERSIONES PALOMINO A & M E.I.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":37.0,
+  "puesto_pagerank":55
+ },
+ {
+  "i":55,
+  "nombre":"CORPORACION CRIMOC SOCIEDAD ANONIMA CERRADA - CORPORACION CRIMOC S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":49.0,
+  "puesto_pagerank":56
+ },
+ {
+  "i":56,
+  "nombre":"H.S PRODUCCIONES SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":31.0,
+  "puesto_pagerank":57
+ },
+ {
+  "i":57,
+  "nombre":"GLOBAL FUEL SOCIEDAD ANONIMA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":105.0,
+  "puesto_pagerank":58
+ },
+ {
+  "i":58,
+  "nombre":"GRUPO EMPRESARIAL JCA S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":31.0,
+  "puesto_pagerank":59
+ },
+ {
+  "i":59,
+  "nombre":"H.W.KESSEL S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":55.0,
+  "puesto_pagerank":60
+ },
+ {
+  "i":60,
+  "nombre":"ENTEL PERU S.A.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":78.0,
+  "puesto_pagerank":61
+ },
+ {
+  "i":61,
+  "nombre":"GRUPO MURILLO E.I.R.LTDA.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":135.0,
+  "puesto_pagerank":62
+ },
+ {
+  "i":62,
+  "nombre":"INDUSTRIAL Y COMERCIAL QUIMICA ANDINA S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":76.0,
+  "puesto_pagerank":63
+ },
+ {
+  "i":63,
+  "nombre":"REDES Y SERVICIOS S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":26.0,
+  "puesto_pagerank":64
+ },
+ {
+  "i":64,
+  "nombre":"INDUSTRIAS DE ALIMENTOS DEL PERU S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":57.0,
+  "puesto_pagerank":65
+ },
+ {
+  "i":65,
+  "nombre":"CODECO E.I.R.L",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":68.0,
+  "puesto_pagerank":66
+ },
+ {
+  "i":66,
+  "nombre":"CORPORACION HELEO SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":60.0,
+  "puesto_pagerank":67
+ },
+ {
+  "i":67,
+  "nombre":"MÉTRICA INGENIERÍA, MATERIALES Y CONSTRUCCIÓN SOCIEDAD ANÓNIMA CERRADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":31.0,
+  "puesto_pagerank":68
+ },
+ {
+  "i":68,
+  "nombre":"ORVISA SOCIEDAD ANONIMA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":106.0,
+  "puesto_pagerank":69
+ },
+ {
+  "i":69,
+  "nombre":"THINK NETWORKS PERU S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":26.0,
+  "puesto_pagerank":70
+ },
+ {
+  "i":70,
+  "nombre":"GRUPO D2D SOLUTIONS S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":39.0,
+  "puesto_pagerank":71
+ },
+ {
+  "i":71,
+  "nombre":"CENTRO ELECTRICO ROJESAN S.A.C. - ROJESAN S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":34.0,
+  "puesto_pagerank":72
+ },
+ {
+  "i":72,
+  "nombre":"GRUPO QORI CONSULTORES EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":95.0,
+  "puesto_pagerank":73
+ },
+ {
+  "i":73,
+  "nombre":"CONSORCIO NILS SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":55.0,
+  "puesto_pagerank":74
+ },
+ {
+  "i":74,
+  "nombre":"A JAIME ROJAS REPRESENTACIONES GRLES S A",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":46.0,
+  "puesto_pagerank":75
+ },
+ {
+  "i":75,
+  "nombre":"DROGUERIA CADILLO S.A.C",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":125.0,
+  "puesto_pagerank":76
+ },
+ {
+  "i":76,
+  "nombre":"IMPORTACIONES GELCO S.A.C. - GELCO S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":34.0,
+  "puesto_pagerank":77
+ },
+ {
+  "i":77,
+  "nombre":"CORPORACION CIMMSA SOCIEDAD ANONIMA - CORPORACION CIMMSA S.A.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":44.0,
+  "puesto_pagerank":78
+ },
+ {
+  "i":78,
+  "nombre":"J & G INVERSIONES PERU S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":30.0,
+  "puesto_pagerank":79
+ },
+ {
+  "i":79,
+  "nombre":"BRAÑEZ BARONA SANTIAGO PEDRO",
+  "tipo":"persona natural",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":25.0,
+  "puesto_pagerank":80
+ },
+ {
+  "i":80,
+  "nombre":"GRIFO J.H.P. E.I.R.LTDA.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":105.0,
+  "puesto_pagerank":81
+ },
+ {
+  "i":81,
+  "nombre":"ORUE CRUZ MARY DEYSI",
+  "tipo":"persona natural",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":19.0,
+  "puesto_pagerank":82
+ },
+ {
+  "i":82,
+  "nombre":"CIMATEC SAC",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":54.0,
+  "puesto_pagerank":83
+ },
+ {
+  "i":83,
+  "nombre":"TECNOLOGÍAS MÉDICAS Y LOGÍSTICA HOSPITALARIA S.A.C. ( TMLH S.A.C.)",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":46.0,
+  "puesto_pagerank":84
+ },
+ {
+  "i":84,
+  "nombre":"MOBILIO E.I.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":19.0,
+  "puesto_pagerank":85
+ },
+ {
+  "i":85,
+  "nombre":"COTRADO MAQUERA JUAN PLACIDO",
+  "tipo":"persona natural",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":34.0,
+  "puesto_pagerank":86
+ },
+ {
+  "i":86,
+  "nombre":"AYRE INTERNATIONAL BUSINESS S.A.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":34.0,
+  "puesto_pagerank":87
+ },
+ {
+  "i":87,
+  "nombre":"VEMACONS LA ECONOMICA S.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":44.0,
+  "puesto_pagerank":88
+ },
+ {
+  "i":88,
+  "nombre":"COMERCIAL CYJSA EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":29.0,
+  "puesto_pagerank":89
+ },
+ {
+  "i":89,
+  "nombre":"ALKHOFAR SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":50.0,
+  "puesto_pagerank":90
+ },
+ {
+  "i":90,
+  "nombre":"B.BRAUN MEDICAL PERU S.A.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":142.0,
+  "puesto_pagerank":91
+ },
+ {
+  "i":91,
+  "nombre":"SCD  INDUSTRIES  E.I.R.L",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":20.0,
+  "puesto_pagerank":92
+ },
+ {
+  "i":92,
+  "nombre":"G & C ARQUITECTURA E INGENIERIA S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":23.0,
+  "puesto_pagerank":93
+ },
+ {
+  "i":93,
+  "nombre":"PROMOCIONES E INVERSIONES ARCO SOCIEDAD ANONIMA CERRADA - PROMOCIONES E INVERSIONES ARCO S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":74.0,
+  "puesto_pagerank":94
+ },
+ {
+  "i":94,
+  "nombre":"LIFE SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":28.0,
+  "puesto_pagerank":95
+ },
+ {
+  "i":95,
+  "nombre":"INVERCON PROYECTOS S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":32.0,
+  "puesto_pagerank":96
+ },
+ {
+  "i":96,
+  "nombre":"MASILJO PERU SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":27.0,
+  "puesto_pagerank":97
+ },
+ {
+  "i":97,
+  "nombre":"HUARCAYA PAUCAR CARMEN SALOME",
+  "tipo":"persona natural",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":26.0,
+  "puesto_pagerank":98
+ },
+ {
+  "i":98,
+  "nombre":"INGENIEROS TICA SAC",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":21.0,
+  "puesto_pagerank":99
+ },
+ {
+  "i":99,
+  "nombre":"NEXTNET S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":52.0,
+  "puesto_pagerank":100
+ },
+ {
+  "i":100,
+  "nombre":"MANRIQUE RAMIREZ WILLIAM JHONATAN",
+  "tipo":"persona natural",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":25.0,
+  "puesto_pagerank":101
+ },
+ {
+  "i":101,
+  "nombre":"XERTICA LABS SOCIEDAD ANONIMA CERRADA - XERTICA LABS S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":31.0,
+  "puesto_pagerank":102
+ },
+ {
+  "i":102,
+  "nombre":"VERA USCA KARINA",
+  "tipo":"persona natural",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":49.0,
+  "puesto_pagerank":103
+ },
+ {
+  "i":103,
+  "nombre":"CONSORCIO FERRETERO DEL SUR E.I.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":33.0,
+  "puesto_pagerank":104
+ },
+ {
+  "i":104,
+  "nombre":"MEDICAL CHANNEL S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":50.0,
+  "puesto_pagerank":105
+ },
+ {
+  "i":105,
+  "nombre":"MMC INGENIERIA Y NEGOCIOS SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "perfil":"competitivo típico",
+  "victorias_disputadas":19.0,
+  "puesto_pagerank":106
+ },
+ {
+  "i":106,
+  "nombre":"FERRO ACEROS DEL SUR EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":40.0,
+  "puesto_pagerank":107
+ },
+ {
+  "i":107,
+  "nombre":"SERVICIOS GENERALES DE TELECOMUNICACIONES EIRL",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":30.0,
+  "puesto_pagerank":108
+ },
+ {
+  "i":108,
+  "nombre":"LC BIOCORP S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":82.0,
+  "puesto_pagerank":109
+ },
+ {
+  "i":109,
+  "nombre":"GOLDEN MEDICAL TECH S.A.C",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":34.0,
+  "puesto_pagerank":110
+ },
+ {
+  "i":110,
+  "nombre":"GRUPO FER. CONS SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":25.0,
+  "puesto_pagerank":111
+ },
+ {
+  "i":111,
+  "nombre":"EG GLOBALNORTE E.I.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":18.0,
+  "puesto_pagerank":112
+ },
+ {
+  "i":112,
+  "nombre":"PERU PRODUCTOS AGRICOLAS SAC",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":38.0,
+  "puesto_pagerank":113
+ },
+ {
+  "i":113,
+  "nombre":"DROCSA S.A.C.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":32.0,
+  "puesto_pagerank":114
+ },
+ {
+  "i":114,
+  "nombre":"ISETEK S A",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":44.0,
+  "puesto_pagerank":115
+ },
+ {
+  "i":115,
+  "nombre":"DIVEIMPORT S.A.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":59.0,
+  "puesto_pagerank":116
+ },
+ {
+  "i":116,
+  "nombre":"SUDAMERICANA LOGISTICA HISUKI SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":54.0,
+  "puesto_pagerank":117
+ },
+ {
+  "i":117,
+  "nombre":"INVERSIONES PALMETTO E.I.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":34.0,
+  "puesto_pagerank":118
+ },
+ {
+  "i":118,
+  "nombre":"IGAN PERUANA SOCIEDAD ANONIMA",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":44.0,
+  "puesto_pagerank":119
+ },
+ {
+  "i":119,
+  "nombre":"ACEROS LUCIANA E.I.R.L.",
+  "tipo":"empresa",
+  "perfil":"gran proveedor recurrente",
+  "victorias_disputadas":53.0,
+  "puesto_pagerank":120
+ }
+]

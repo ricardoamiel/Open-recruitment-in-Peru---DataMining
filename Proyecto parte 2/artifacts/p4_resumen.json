@@ -1,0 +1,20 @@
+[
+ {
+  "nodos_g3":134885,
+  "aristas_g3":1173510,
+  "spearman_g1":0.919,
+  "top100_g1_pct":88,
+  "spearman_victorias":0.973,
+  "cautivos":1260,
+  "cautivos_que_compiten":320,
+  "nuevos_top100":51,
+  "iteraciones_spark":79,
+  "segundos_spark":54.4,
+  "segundos_local":0.25,
+  "hub_principal":"SEGURO SOCIAL DE SALUD",
+  "masa_hub_principal":63.9,
+  "rho_authority_monto":0.11,
+  "pares_afines":4847,
+  "pares_alternan":851
+ }
+]

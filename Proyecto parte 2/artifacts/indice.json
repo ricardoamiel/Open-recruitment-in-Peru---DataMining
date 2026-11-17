@@ -166,5 +166,77 @@
  "p1_version_datos": {
   "descripcion": "Fecha de descarga y huella sha256 de cada paquete anual usado",
   "filas": 3
+ },
+ "p4_estructura_g3": {
+  "descripcion": "Tamano y forma del grafo dirigido de perdedor a ganador",
+  "filas": 7
+ },
+ "p4_spark_vs_local": {
+  "descripcion": "PageRank en Spark frente a la referencia local",
+  "filas": 2
+ },
+ "p4_convergencia": {
+  "descripcion": "Cambio L1 del rango por iteracion de PageRank en Spark",
+  "filas": 79
+ },
+ "p4_pagerank_top": {
+  "descripcion": "Los 300 proveedores de mayor PageRank en el grafo de perdedor a ganador",
+  "filas": 300
+ },
+ "p4_sensibilidad_beta": {
+  "descripcion": "Estabilidad del top 100 de PageRank y costo segun beta",
+  "filas": 9
+ },
+ "p4_puestos_beta": {
+  "descripcion": "Puesto de los 300 primeros segun beta",
+  "filas": 300
+ },
+ "p4_pagerank_perfil": {
+  "descripcion": "Percentil de PageRank segun el perfil de la Parte II",
+  "filas": 5
+ },
+ "p4_hits_hubs": {
+  "descripcion": "Las 40 entidades con mayor puntaje de hub",
+  "filas": 40
+ },
+ "p4_hits_authorities": {
+  "descripcion": "Los 40 proveedores con mayor puntaje de authority",
+  "filas": 40
+ },
+ "p4_mercados_svd": {
+  "descripcion": "Mercado que representa cada uno de los ocho primeros vectores singulares",
+  "filas": 8
+ },
+ "p4_patrones_pares": {
+  "descripcion": "Patron de victorias en pares afines frente al control",
+  "filas": 3
+ },
+ "p4_pares_alternan_top": {
+  "descripcion": "Los 15 pares que alternan victorias con mas procesos compartidos",
+  "filas": 15
+ },
+ "p4_pares_afines": {
+  "descripcion": "Pares afines con su patron de victorias",
+  "filas": 4847
+ },
+ "p4_subgrafo_nodos": {
+  "descripcion": "Los 120 primeros por PageRank, para recalcular en el navegador",
+  "filas": 120
+ },
+ "p4_subgrafo_aristas": {
+  "descripcion": "Aristas de perdedor a ganador entre los 120 primeros, con indices posicionales",
+  "filas": 1449
+ },
+ "p4_resumen": {
+  "descripcion": "Cifras clave de la Parte IV",
+  "filas": 1
+ },
+ "p4_figuras": {
+  "descripcion": "Figuras de la Parte IV con su lectura",
+  "filas": 8
+ },
+ "p4_hallazgos": {
+  "descripcion": "Hallazgos de la Parte IV con su accion propuesta",
+  "filas": 3
  }
 }
