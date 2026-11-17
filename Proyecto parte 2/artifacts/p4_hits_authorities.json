@@ -1,0 +1,402 @@
+[
+ {
+  "clave":"RUC-20501887286",
+  "authority":0.1946330835,
+  "clientes":105,
+  "nombre":"DIAGNOSTICA PERUANA S.A.C.",
+  "tipo":"empresa",
+  "familia":"4111",
+  "departamento":"LIMA",
+  "monto":277327542.3700000048
+ },
+ {
+  "clave":"RUC-20347268683",
+  "authority":0.1293005787,
+  "clientes":47,
+  "nombre":"LABORATORIOS AC FARMA S.A.",
+  "tipo":"empresa",
+  "familia":"5114",
+  "departamento":"LIMA",
+  "monto":203815240.099999994
+ },
+ {
+  "clave":"RUC-20377339461",
+  "authority":0.1267808955,
+  "clientes":50,
+  "nombre":"B.BRAUN MEDICAL PERU S.A.",
+  "tipo":"empresa",
+  "familia":"5119",
+  "departamento":"LIMA",
+  "monto":147081719.5399999917
+ },
+ {
+  "clave":"RUC-20338570041",
+  "authority":0.1235027562,
+  "clientes":48,
+  "nombre":"LINDE PERU S.R.L.",
+  "tipo":"empresa",
+  "familia":"1214",
+  "departamento":"LIMA",
+  "monto":56982655.0799999982
+ },
+ {
+  "clave":"RUC-20155695901",
+  "authority":0.1175766675,
+  "clientes":46,
+  "nombre":"SISTEMAS ANALITICOS SRL",
+  "tipo":"empresa",
+  "familia":"4111",
+  "departamento":"LIMA",
+  "monto":95943341.7099999934
+ },
+ {
+  "clave":"RUC-20108629909",
+  "authority":0.109075067,
+  "clientes":27,
+  "nombre":"CARDIO PERFUSION E.I.R.LTDA",
+  "tipo":"empresa",
+  "familia":"4229",
+  "departamento":"LIMA",
+  "monto":94839443.7800000012
+ },
+ {
+  "clave":"RUC-20263368992",
+  "authority":0.1031222435,
+  "clientes":33,
+  "nombre":"CYMED MEDICAL SAC",
+  "tipo":"empresa",
+  "familia":"8516",
+  "departamento":"LIMA",
+  "monto":93902636.0400000066
+ },
+ {
+  "clave":"RUC-20100061474",
+  "authority":0.1004548424,
+  "clientes":27,
+  "nombre":"REPRESENTACIONES DECO S.A.C",
+  "tipo":"empresa",
+  "familia":"5118",
+  "departamento":"LIMA",
+  "monto":58002572.8599999994
+ },
+ {
+  "clave":"RUC-20100287791",
+  "authority":0.0996840784,
+  "clientes":30,
+  "nombre":"INSTITUTO QUIMIOTERAPICO S A",
+  "tipo":"empresa",
+  "familia":"5113",
+  "departamento":"LIMA",
+  "monto":263367761.1599999964
+ },
+ {
+  "clave":"RUC-20503794692",
+  "authority":0.0982056244,
+  "clientes":33,
+  "nombre":"NORDIC PHARMACEUTICAL COMPANY S.A.C",
+  "tipo":"empresa",
+  "familia":"5113",
+  "departamento":"LIMA",
+  "monto":49168091.8500000015
+ },
+ {
+  "clave":"RUC-20505110651",
+  "authority":0.0979764752,
+  "clientes":40,
+  "nombre":"W.P. BIOMED SOCIEDAD ANONIMA",
+  "tipo":"empresa",
+  "familia":"4111",
+  "departamento":"LIMA",
+  "monto":44927726.3500000015
+ },
+ {
+  "clave":"RUC-20553853355",
+  "authority":0.0938570078,
+  "clientes":55,
+  "nombre":"SIMED PERU S.A.C.",
+  "tipo":"empresa",
+  "familia":"4111",
+  "departamento":"LIMA",
+  "monto":88856298.25
+ },
+ {
+  "clave":"RUC-20100177341",
+  "authority":0.093558122,
+  "clientes":22,
+  "nombre":"PRODUCTOS ROCHE Q F S A",
+  "tipo":"empresa",
+  "familia":"4111",
+  "departamento":"LIMA",
+  "monto":84497300.150000006
+ },
+ {
+  "clave":"RUC-20504312403",
+  "authority":0.0934044177,
+  "clientes":31,
+  "nombre":"NIPRO MEDICAL CORPORATION SUCURSAL DEL PERU",
+  "tipo":"empresa",
+  "familia":"4216",
+  "departamento":"LIMA",
+  "monto":38365950.6400000006
+ },
+ {
+  "clave":"RUC-20468787360",
+  "authority":0.0909175654,
+  "clientes":33,
+  "nombre":"ROCHEM BIOCARE DEL PERU S.A.C",
+  "tipo":"empresa",
+  "familia":"4111",
+  "departamento":"LIMA",
+  "monto":136538276.6999999881
+ },
+ {
+  "clave":"RUC-20101260373",
+  "authority":0.0905803111,
+  "clientes":14,
+  "nombre":"TECNOFARMA S A",
+  "tipo":"empresa",
+  "familia":"5118",
+  "departamento":"LIMA",
+  "monto":68859612.8599999994
+ },
+ {
+  "clave":"RUC-20603728271",
+  "authority":0.0892570618,
+  "clientes":29,
+  "nombre":"H REPS S.A.C.",
+  "tipo":"empresa",
+  "familia":"4216",
+  "departamento":"LIMA",
+  "monto":120864665.599999994
+ },
+ {
+  "clave":"RUC-20502853750",
+  "authority":0.0883561872,
+  "clientes":23,
+  "nombre":"COVIDIEN PERU S.A.",
+  "tipo":"empresa",
+  "familia":"4229",
+  "departamento":"LIMA",
+  "monto":34709851.75
+ },
+ {
+  "clave":"RUC-20607779695",
+  "authority":0.088252674,
+  "clientes":28,
+  "nombre":"CHAPOMEDIC S.A.C.",
+  "tipo":"empresa",
+  "familia":"4111",
+  "departamento":"LIMA",
+  "monto":13335270.2599999998
+ },
+ {
+  "clave":"RUC-20100018625",
+  "authority":0.0881404241,
+  "clientes":42,
+  "nombre":"MEDIFARMA S A",
+  "tipo":"empresa",
+  "familia":"5119",
+  "departamento":"LIMA",
+  "monto":422807372.8199999928
+ },
+ {
+  "clave":"RUC-20392764373",
+  "authority":0.0870048235,
+  "clientes":55,
+  "nombre":"DROGUERIA CADILLO S.A.C",
+  "tipo":"empresa",
+  "familia":"5110",
+  "departamento":"LIMA",
+  "monto":29734522.6400000006
+ },
+ {
+  "clave":"RUC-20381450377",
+  "authority":0.0869548637,
+  "clientes":31,
+  "nombre":"FRESENIUS KABI PERU S.A.",
+  "tipo":"empresa",
+  "familia":"4222",
+  "departamento":"LIMA",
+  "monto":19381158.9800000004
+ },
+ {
+  "clave":"RUC-20516920123",
+  "authority":0.0854242148,
+  "clientes":20,
+  "nombre":"SURGICORP SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA - SURGICORP S.R.L.",
+  "tipo":"empresa",
+  "familia":"4229",
+  "departamento":"LIMA",
+  "monto":58814338.0
+ },
+ {
+  "clave":"RUC-20197705249",
+  "authority":0.0848497944,
+  "clientes":22,
+  "nombre":"UNILENE S.A.C.",
+  "tipo":"empresa",
+  "familia":"4231",
+  "departamento":"LIMA",
+  "monto":37034764.3400000036
+ },
+ {
+  "clave":"RUC-20111611891",
+  "authority":0.082649606,
+  "clientes":12,
+  "nombre":"HANAI SRL",
+  "tipo":"empresa",
+  "familia":"5111",
+  "departamento":"LIMA",
+  "monto":107912067.7800000012
+ },
+ {
+  "clave":"RUC-20506813191",
+  "authority":0.0811175302,
+  "clientes":30,
+  "nombre":"GREY INVERSIONES S.A.C.",
+  "tipo":"empresa",
+  "familia":"5113",
+  "departamento":"LIMA",
+  "monto":147501808.400000006
+ },
+ {
+  "clave":"RUC-20605701435",
+  "authority":0.0802561113,
+  "clientes":38,
+  "nombre":"LINAMES S.A.C.",
+  "tipo":"empresa",
+  "familia":"4213",
+  "departamento":"LIMA",
+  "monto":38981954.1700000018
+ },
+ {
+  "clave":"RUC-20537758377",
+  "authority":0.0797453192,
+  "clientes":25,
+  "nombre":"ICU MEDICAL PERU S.R.L.",
+  "tipo":"empresa",
+  "familia":"4222",
+  "departamento":"LIMA",
+  "monto":40106465.0600000024
+ },
+ {
+  "clave":"RUC-20462793791",
+  "authority":0.0791099418,
+  "clientes":22,
+  "nombre":"FRESENIUS MEDICAL CARE DEL PERU S.A.",
+  "tipo":"empresa",
+  "familia":"4216",
+  "departamento":"LIMA",
+  "monto":97866294.0700000077
+ },
+ {
+  "clave":"RUC-20465722119",
+  "authority":0.0774383051,
+  "clientes":25,
+  "nombre":"GLOBAL SUPPLY S.A.C.",
+  "tipo":"empresa",
+  "familia":"4222",
+  "departamento":"LIMA",
+  "monto":14534895.8000000007
+ },
+ {
+  "clave":"RUC-20102032951",
+  "authority":0.0772871801,
+  "clientes":32,
+  "nombre":"A JAIME ROJAS REPRESENTACIONES GRLES S A",
+  "tipo":"empresa",
+  "familia":"4229",
+  "departamento":"LIMA",
+  "monto":29015067.629999999
+ },
+ {
+  "clave":"RUC-20101337261",
+  "authority":0.0754108993,
+  "clientes":40,
+  "nombre":"ROCA S.A.C.",
+  "tipo":"empresa",
+  "familia":"4227",
+  "departamento":"LIMA",
+  "monto":94755672.299999997
+ },
+ {
+  "clave":"RUC-20212561534",
+  "authority":0.0730271078,
+  "clientes":16,
+  "nombre":"ALCON PHARMACEUTICAL DEL PERU SA",
+  "tipo":"empresa",
+  "familia":"4229",
+  "departamento":"LIMA",
+  "monto":46809198.0099999979
+ },
+ {
+  "clave":"RUC-20100096936",
+  "authority":0.0720559979,
+  "clientes":31,
+  "nombre":"ABBOTT LABORATORIOS SA",
+  "tipo":"empresa",
+  "familia":"4223",
+  "departamento":"LIMA",
+  "monto":29861547.0399999991
+ },
+ {
+  "clave":"RUC-20602007970",
+  "authority":0.0714043119,
+  "clientes":29,
+  "nombre":"LC BIOCORP S.A.C.",
+  "tipo":"empresa",
+  "familia":"4111",
+  "departamento":"LIMA",
+  "monto":25040100.1099999994
+ },
+ {
+  "clave":"RUC-20600413571",
+  "authority":0.0712658697,
+  "clientes":29,
+  "nombre":"FARMA MIAVIDA SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "familia":"5110",
+  "departamento":"LIMA",
+  "monto":52012876.9099999964
+ },
+ {
+  "clave":"RUC-20509997340",
+  "authority":0.0706853169,
+  "clientes":24,
+  "nombre":"INTERNATIONAL DIAGNOSTIC IMAGING SAC",
+  "tipo":"empresa",
+  "familia":"8516",
+  "departamento":"LIMA",
+  "monto":30691398.1900000013
+ },
+ {
+  "clave":"RUC-20563794101",
+  "authority":0.0701290166,
+  "clientes":19,
+  "nombre":"ENDOMED TECNOLOGHIES S.A.C.",
+  "tipo":"empresa",
+  "familia":"4218",
+  "departamento":"LIMA",
+  "monto":16914219.5500000007
+ },
+ {
+  "clave":"RUC-20506248036",
+  "authority":0.0700002729,
+  "clientes":33,
+  "nombre":"ALKHOFAR SOCIEDAD ANONIMA CERRADA",
+  "tipo":"empresa",
+  "familia":"4213",
+  "departamento":"LIMA",
+  "monto":27655093.5700000003
+ },
+ {
+  "clave":"RUC-20100220700",
+  "authority":0.069418722,
+  "clientes":28,
+  "nombre":"DIMEXA S.A.",
+  "tipo":"empresa",
+  "familia":"5114",
+  "departamento":"LIMA",
+  "monto":19605805.5799999982
+ }
+]

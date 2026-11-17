@@ -1,0 +1,58 @@
+[
+ {
+  "comparacion":"híbrido frente a vecindario",
+  "cambio_ndcg_pct":16.79,
+  "ic95_bajo":12.44,
+  "ic95_alto":21.75,
+  "significativo":true
+ },
+ {
+  "comparacion":"híbrido frente a ALS",
+  "cambio_ndcg_pct":17.29,
+  "ic95_bajo":10.64,
+  "ic95_alto":24.86,
+  "significativo":true
+ },
+ {
+  "comparacion":"ALS frente a vecindario",
+  "cambio_ndcg_pct":-0.43,
+  "ic95_bajo":-7.18,
+  "ic95_alto":6.7,
+  "significativo":false
+ },
+ {
+  "comparacion":"híbrido frente a popularidad en el departamento",
+  "cambio_ndcg_pct":32.35,
+  "ic95_bajo":22.93,
+  "ic95_alto":42.66,
+  "significativo":true
+ },
+ {
+  "comparacion":"híbrido sin vecindario frente a híbrido",
+  "cambio_ndcg_pct":-7.67,
+  "ic95_bajo":-12.87,
+  "ic95_alto":-1.97,
+  "significativo":true
+ },
+ {
+  "comparacion":"híbrido sin contenido frente a híbrido",
+  "cambio_ndcg_pct":-3.06,
+  "ic95_bajo":-4.83,
+  "ic95_alto":-1.31,
+  "significativo":true
+ },
+ {
+  "comparacion":"híbrido sin ALS frente a híbrido",
+  "cambio_ndcg_pct":-2.82,
+  "ic95_bajo":-4.88,
+  "ic95_alto":-0.81,
+  "significativo":true
+ },
+ {
+  "comparacion":"híbrido sin departamento frente a híbrido",
+  "cambio_ndcg_pct":-6.21,
+  "ic95_bajo":-9.16,
+  "ic95_alto":-3.25,
+  "significativo":true
+ }
+]

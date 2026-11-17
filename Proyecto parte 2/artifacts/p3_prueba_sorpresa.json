@@ -1,0 +1,20 @@
+[
+ {
+  "variable":"postor_unico",
+  "improbables_pct":6.2327,
+  "esperadas_pct":5.3307,
+  "n_improbables":722,
+  "n_esperadas":8254,
+  "z":1.0279,
+  "p_valor":0.304
+ },
+ {
+  "variable":"sin_concurso",
+  "improbables_pct":6.9252,
+  "esperadas_pct":6.3121,
+  "n_improbables":722,
+  "n_esperadas":8254,
+  "z":0.6473,
+  "p_valor":0.5174
+ }
+]

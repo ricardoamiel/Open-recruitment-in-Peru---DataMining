@@ -238,57 +238,5 @@
  "p4_hallazgos": {
   "descripcion": "Hallazgos de la Parte IV con su accion propuesta",
   "filas": 3
- },
- "p5_gn_curva": {
-  "descripcion": "Modularidad de cada particion de Girvan-Newman sobre el nucleo de Ayacucho",
-  "filas": 60
- },
- "p5_espectral_curva": {
-  "descripcion": "Modularidad del espectral segun k sobre Ayacucho",
-  "filas": 24
- },
- "p5_acuerdo": {
-  "descripcion": "ARI y NMI entre metodos y contra etiquetas de negocio",
-  "filas": 12
- },
- "p5_comunidades_nacionales": {
-  "descripcion": "Las 12 comunidades nacionales mas grandes y su perfil",
-  "filas": 12
- },
- "p5_bigclam_solapamiento": {
-  "descripcion": "Proveedores de Ayacucho segun en cuantas comunidades de BigCLAM estan",
-  "filas": 3
- },
- "p5_bigclam_puentes": {
-  "descripcion": "Proveedores de Ayacucho con mas participaciones que estan en dos o mas comunidades",
-  "filas": 10
- },
- "p5_comunidades_ayacucho": {
-  "descripcion": "Perfil de las 10 comunidades mas grandes de Ayacucho",
-  "filas": 10
- },
- "p5_escalabilidad": {
-  "descripcion": "Tiempo de cada metodo de comunidades segun el tamano del grafo",
-  "filas": 9
- },
- "p5_gn_nodos": {
-  "descripcion": "Nucleo de Ayacucho con la comunidad de Girvan-Newman en cada nivel",
-  "filas": 143
- },
- "p5_gn_aristas": {
-  "descripcion": "Aristas del nucleo de Ayacucho",
-  "filas": 2798
- },
- "p5_resumen": {
-  "descripcion": "Cifras clave de la Parte V",
-  "filas": 1
- },
- "p5_figuras": {
-  "descripcion": "Figuras de la Parte V con su lectura",
-  "filas": 7
- },
- "p5_hallazgos": {
-  "descripcion": "Hallazgos de la Parte V con su accion propuesta",
-  "filas": 3
  }
 }

@@ -101,9 +101,9 @@ def exportar(df, nombre, descripcion):
     df.to_csv(ARTEFACTOS / f"{nombre}.csv", index=False)
     df.to_json(ARTEFACTOS / f"{nombre}.json", orient="records", force_ascii=False, indent=1)
     indice = ARTEFACTOS / "indice.json"
-    datos = json.loads(indice.read_text(encoding="utf-8")) if indice.exists() else {}
+    datos = json.loads(indice.read_text()) if indice.exists() else {}
     datos[nombre] = {"descripcion": " ".join(descripcion.split()), "filas": len(df)}
-    indice.write_text(json.dumps(datos, ensure_ascii=False, indent=1), encoding="utf-8")
+    indice.write_text(json.dumps(datos, ensure_ascii=False, indent=1))
     return df
 
 

@@ -1,0 +1,30 @@
+[
+ {
+  "medida":"procesos con 2 a 50 participantes",
+  "valor":142624
+ },
+ {
+  "medida":"procesos con ganador entre ellos",
+  "valor":119841
+ },
+ {
+  "medida":"nodos",
+  "valor":134885
+ },
+ {
+  "medida":"aristas",
+  "valor":1173510
+ },
+ {
+  "medida":"dead ends: ganan y nunca pierden",
+  "valor":24929
+ },
+ {
+  "medida":"nunca ganan: solo emiten votos",
+  "valor":83195
+ },
+ {
+  "medida":"aristas recíprocas: A le ganó a B y B a A",
+  "valor":45429
+ }
+]

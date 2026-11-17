@@ -1,0 +1,34 @@
+[
+ {
+  "figura":"f19_g1_pagerank_vs_fuerza",
+  "lectura":"Sobre el grafo de coparticipación, el orden de PageRank y el de la fuerza coinciden en lo esencial: correlación de rangos de 0.919 y 88 de los 100 primeros en común. La nube es una recta en escala logarítmica. PageRank no está mal calculado, es que en un grafo no dirigido una caminata aleatoria pasa por cada nodo en proporción a su grado. Para que el rango diga algo que no diga el conteo, la arista tiene que tener dirección y la dirección tiene que significar algo."
+ },
+ {
+  "figura":"f20_convergencia_pagerank",
+  "lectura":"El cambio entre iteraciones cae de forma geométrica y siempre por debajo de la cota beta elevado a t, que es la garantía teórica: con beta igual a 0.85, cada paso reduce el error al menos en un 15 por ciento. Spark necesitó 79 iteraciones y 54 segundos; scipy, 108 iteraciones y 0.25 segundos con una tolerancia más estricta. Las dos coinciden hasta 3e-10 en el peor nodo y en el 100 por ciento del top 100. A este tamaño, con 134,885 nodos, la iteración local es mucho más rápida; Spark se justifica cuando el grafo deja de caber en una máquina, y el código ya está escrito para ese caso."
+ },
+ {
+  "figura":"f21_pagerank_vs_victorias",
+  "lectura":"Los dos rankings se parecen en el grueso (correlación de rangos de 0.97), pero no arriba: 51 de los 100 primeros por PageRank no están entre los 100 con más victorias en procesos disputados. Son los puntos rojos, que quedan a la derecha porque ganan relativamente poco y aun así concentran rango, porque sus victorias son contra proveedores que a su vez ganan. El caso más claro es CONSTRUCTORA GIRL POWER E.I.R.L., puesto 670 por victorias disputadas (18) y 33 por PageRank. Para quien supervisa competencia, este ranking identifica a quien domina a sus competidores, que es una pregunta distinta de quién gana más veces."
+ },
+ {
+  "figura":"f22_sensibilidad_beta",
+  "lectura":"Entre beta 0,75 y 0,90 el top 100 conserva al menos el 90 por ciento de sus integrantes: el ranking es robusto en la zona razonable. En los extremos cambia: con 0,50 comparte el 76 por ciento, porque pesan casi solo los votos directos, y con 0,99 el 31 por ciento, porque el rango queda atrapado en cadenas largas de ganadores. El costo crece como predice la teoría, de 26 a 1663 iteraciones. Se mantiene 0,85: está en la meseta estable y converge en 108 pasos."
+ },
+ {
+  "figura":"f23_pagerank_perfil",
+  "lectura":"De los 1,260 proveedores cautivos de la Parte II, solo 320 aparecen en algún proceso disputado; el resto nunca compitió contra nadie. Los que aparecen quedan en el percentil 66 de PageRank en la mediana, frente al 99 del gran proveedor recurrente. El cautivo gana sin rivales, así que casi nadie pierde contra él y no recibe votos. Su poder es de dependencia con una entidad, no de dominio en la competencia abierta. Las dos medidas miran dimensiones distintas del mercado y una supervisión completa necesita las dos."
+ },
+ {
+  "figura":"f24_hits_hubs_authorities",
+  "lectura":"HITS encuentra un núcleo y es el mercado de salud. SEGURO SOCIAL DE SALUD concentra el 64 por ciento de la masa de hubs, y lo siguen otros compradores de salud y de las fuerzas armadas. Las authorities son proveedores de diagnóstico, fármacos y equipo médico, encabezados por DIAGNOSTICA PERUANA S.A.C.; 15 de los 20 primeros operan en LIMA. Ser authority no es facturar más: la correlación con el monto es de 0.11. Es ser el proveedor al que acuden los compradores que más proveedores de referencia contratan. Este es el efecto que la lecture llama comunidad densa dominante: el primer vector se queda con el bloque mejor conectado de la matriz y no mira el resto."
+ },
+ {
+  "figura":"f25_mercados_svd",
+  "lectura":"Cada vector singular agrupa proveedores de un mismo rubro o de un mismo territorio. El primero, que es HITS, es salud en Lima. El segundo reúne a proveedores de la familia 8010, cuyo ítem típico es servicio de seguimiento y monitoreo de actividades de campo, y el 100 por ciento opera en LIMA. Otros vectores son territoriales, con proveedores de CUSCO o de PUNO dominando su vector. El cuarto tiene como ítem típico leche evaporada entera x 400 g aprox.: son los programas alimentarios, la misma huella que dejó la canasta de las reglas de asociación del proyecto 1. Para un supervisor es un índice de mercados construido sin etiquetas: cada vector dice qué entidades y qué proveedores forman un bloque, y la Parte V verifica si las comunidades del grafo reencuentran esos mismos bloques."
+ },
+ {
+  "figura":"f26_patrones_pares",
+  "lectura":"El 44 por ciento de los pares afines pierde junto: se presentan a los mismos procesos y casi nunca gana ninguno, lo que encaja con el registro masivo de participantes y no con una competencia real entre ellos. La señal está en la barra roja: el 18 por ciento de los pares afines alterna victorias, frente al 5 por ciento del control. Son 851 pares que se presentan juntos casi siempre y se turnan para ganar. No prueba coordinación, porque dos proveedores pueden repartirse legítimamente un mercado chico, pero es la combinación que justifica pedir las ofertas completas de esos procesos y mirar precios y tiempos."
+ }
+]

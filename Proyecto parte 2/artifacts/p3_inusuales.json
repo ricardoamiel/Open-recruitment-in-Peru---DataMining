@@ -1,0 +1,202 @@
+[
+ {
+  "comprador_nombre":"MINISTERIO DE SALUD",
+  "departamento":"LIMA",
+  "nombre":"OFICINA DE LAS NACIONES UNIDAS DE SERVICIOS PARA PROYECTOS - UNOPS",
+  "percentil":15.27,
+  "monto":106276103.799999997,
+  "adjudicaciones":1,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE MOQUEGUA SEDE CENTRAL",
+  "departamento":"MOQUEGUA",
+  "nombre":"SOUTHERN PERU COPPER CORPORATION, SUCURSAL DEL PERÚ",
+  "percentil":9.38,
+  "monto":76762180.75,
+  "adjudicaciones":1,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE JUNIN SEDE CENTRAL",
+  "departamento":"JUNIN",
+  "nombre":"CONSTRUCTORA G.N. GAMBOA & CIA SOCIEDAD ANONIMA CERRADA",
+  "percentil":20.18,
+  "monto":46440996.3900000006,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE CUSCO SEDE CENTRAL",
+  "departamento":"CUSCO",
+  "nombre":"UNIVERSIDAD TECNOLOGICA DEL PERU S.A.C. O UTP S.A.C.",
+  "percentil":30.08,
+  "monto":22720779.3000000007,
+  "adjudicaciones":1,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"MUNICIPALIDAD DISTRITAL DE KUNTURKANKI",
+  "departamento":"CUSCO",
+  "nombre":"NKMS E.I.R.L.",
+  "percentil":18.76,
+  "monto":11896668.0,
+  "adjudicaciones":2,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"MUNICIPALIDAD DISTRITAL DE PICHARI",
+  "departamento":"CUSCO",
+  "nombre":"KYZORCH E.I.R.L.",
+  "percentil":5.83,
+  "monto":10009712.9299999997,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"SERVICIO DE AGUA POTABLE Y ALCANTARILLADO DE LA LIBERTAD",
+  "departamento":"LA LIBERTAD",
+  "nombre":"CIUDANDES S.A.C.",
+  "percentil":42.17,
+  "monto":8926668.1300000008,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"MUNICIPALIDAD DISTRITAL DE CHALAMARCA",
+  "departamento":"CAJAMARCA",
+  "nombre":"CONSTRUCTORA VARU S.A.C.",
+  "percentil":11.63,
+  "monto":7383323.2400000002,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"MUNICIPALIDAD DISTRITAL DE SAN MARCOS",
+  "departamento":"ANCASH",
+  "nombre":"YAROMAC CONTRATISTAS GENERALES SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA",
+  "percentil":19.43,
+  "monto":7035908.8799999999,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"MUNICIPALIDAD DISTRITAL DE TALAVERA",
+  "departamento":"APURIMAC",
+  "nombre":"NKMS E.I.R.L.",
+  "percentil":46.41,
+  "monto":6887497.0,
+  "adjudicaciones":1,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"CORTE SUPERIOR DE JUSTICIA DE LIMA NORTE",
+  "departamento":"LIMA",
+  "nombre":"ASEPCIA PERU S.A.C.",
+  "percentil":26.05,
+  "monto":6753406.0800000001,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE PASCO SEDE CENTRAL",
+  "departamento":"PASCO",
+  "nombre":"JC & ED CONSTRUCTORA S.A.C",
+  "percentil":6.16,
+  "monto":6593528.4000000004,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"SUPERINTENDENCIA DE BANCA, SEGUROS Y AFP",
+  "departamento":"LIMA",
+  "nombre":"MANPOWER PERU S.A.",
+  "percentil":47.64,
+  "monto":6068983.9199999999,
+  "adjudicaciones":2,
+  "postor_unico":0.5,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"MINISTERIO DE DESARROLLO E INCLUSION SOCIAL",
+  "departamento":"LIMA",
+  "nombre":"PETROLEOS DEL PERU PETROPERU SA",
+  "percentil":14.27,
+  "monto":5450814.8799999999,
+  "adjudicaciones":1,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"UNIDAD EJECUTORA 125 PROGRAMA NACIONAL DE INVERSIONES EN SALUD",
+  "departamento":"LIMA",
+  "nombre":"BIOMEDICAL HT E.I.R.L.",
+  "percentil":12.14,
+  "monto":5430500.0,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"DIRECCIÓN DE SANIDAD DE LA PNP",
+  "departamento":"LIMA",
+  "nombre":"BARAM CLEAN SOCIEDAD ANONIMA CERRADA",
+  "percentil":30.9,
+  "monto":4449065.75,
+  "adjudicaciones":2,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ },
+ {
+  "comprador_nombre":"GOBIERNO REGIONAL DE AYACUCHO SEDE CENTRAL",
+  "departamento":"AYACUCHO",
+  "nombre":"ALABASTRO S.A.C",
+  "percentil":34.16,
+  "monto":4067717.9700000002,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"MUNICIPALIDAD DISTRITAL DE ANDOAS",
+  "departamento":"LORETO",
+  "nombre":"IMPORT MEDICAL ANICAMA E.I.R.L.",
+  "percentil":33.84,
+  "monto":3800000.0,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"MARINA DE GUERRA DEL PERU",
+  "departamento":"CALLAO",
+  "nombre":"SOLUCIONES GLOBALES E INVERSIONES S.A.C.",
+  "percentil":22.62,
+  "monto":3390000.0,
+  "adjudicaciones":1,
+  "postor_unico":0.0,
+  "sin_concurso":0.0
+ },
+ {
+  "comprador_nombre":"PROGRAMA SUBSECTORIAL DE IRRIGACIONES - PSI",
+  "departamento":"LIMA",
+  "nombre":"CONSTRUCTORA DMD E.I.R.L.",
+  "percentil":30.56,
+  "monto":2778400.0,
+  "adjudicaciones":1,
+  "postor_unico":1.0,
+  "sin_concurso":1.0
+ }
+]

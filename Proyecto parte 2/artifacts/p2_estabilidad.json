@@ -1,0 +1,14 @@
+[
+ {
+  "prueba":"semillas 0 a 9",
+  "ari_medio":0.998,
+  "ari_minimo":0.997,
+  "corridas_con_ari_de_0_9_o_mas":10
+ },
+ {
+  "prueba":"submuestras del 80 %",
+  "ari_medio":0.925,
+  "ari_minimo":0.366,
+  "corridas_con_ari_de_0_9_o_mas":9
+ }
+]

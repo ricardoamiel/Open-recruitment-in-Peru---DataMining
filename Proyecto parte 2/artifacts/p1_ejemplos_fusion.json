@@ -1,0 +1,62 @@
+[
+ {
+  "nombre_a":"CONSORCIO CORPORACION GRECIA SOLUCIONES INTEGRALES Y SYT SOLUTION SEND TRACKING SOLUTION",
+  "nombre_b":"CORPORACION GRECIA SOLUCIONES INTEGRALES Y SYT SOLUTION SEND TRACKING SOLUTION",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO PACIFICO CONFORMADO POR PACIFICO COMPANIA DE SEGUROS Y REASEGUROS Y PACIFICO ENT PRESTADORA DE SALUD",
+  "nombre_b":"CONSORCIO PACIFICO CONFORMADO POR PACIFICO COMPANIA DE SEGUROS Y REASEGUROS Y PACIFICO ENTIDAD PRESTADORA DE SALUD",
+  "jaccard":0.9
+ },
+ {
+  "nombre_a":"CONSORCIO TABACONAS",
+  "nombre_b":"TABACONAS",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO FMR ELECTRIC",
+  "nombre_b":"FMR ELECTRIC",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO MAGOYA",
+  "nombre_b":"MAGOYA",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO PONTO VIEJO",
+  "nombre_b":"CONSORCIO VIEJO PONTO",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"BICENTENARIO",
+  "nombre_b":"CONSORCIO BICENTENARIO",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO NUEVA ESPERANZA",
+  "nombre_b":"NUEVA ESPERANZA",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO QUEROBAMBA",
+  "nombre_b":"QUEROBAMBA",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"CONSORCIO ENERSYS",
+  "nombre_b":"ENERSYS",
+  "jaccard":1.0
+ },
+ {
+  "nombre_a":"IINGENIERIA PARA LA GESTION SOSTENIBLE INNOVA AMBIPETRO",
+  "nombre_b":"INGENIERIA PARA LA GESTION SOSTENIBLE INNOVA AMBIPETRO",
+  "jaccard":0.96
+ },
+ {
+  "nombre_a":"CONSORCIO REPRODATA DATACONT",
+  "nombre_b":"REPRODATA DATACONT",
+  "jaccard":1.0
+ }
+]
