@@ -1,0 +1,74 @@
+[
+ {
+  "comparacion":"Girvan-Newman frente a espectral, núcleo",
+  "proveedores":143,
+  "ARI":0.8897,
+  "NMI":0.9076
+ },
+ {
+  "comparacion":"Girvan-Newman frente a Louvain, núcleo",
+  "proveedores":143,
+  "ARI":0.4208,
+  "NMI":0.6475
+ },
+ {
+  "comparacion":"espectral frente a Louvain, Ayacucho",
+  "proveedores":1065,
+  "ARI":0.1521,
+  "NMI":0.4744
+ },
+ {
+  "comparacion":"espectral frente a familia CUBSO",
+  "proveedores":1060,
+  "ARI":0.2768,
+  "NMI":0.3859
+ },
+ {
+  "comparacion":"Louvain frente a familia CUBSO",
+  "proveedores":1060,
+  "ARI":0.2204,
+  "NMI":0.5059
+ },
+ {
+  "comparacion":"Louvain frente a tipo de proveedor",
+  "proveedores":1065,
+  "ARI":0.0044,
+  "NMI":0.0204
+ },
+ {
+  "comparacion":"Louvain frente a perfil de la Parte II",
+  "proveedores":296,
+  "ARI":0.0097,
+  "NMI":0.1116
+ },
+ {
+  "comparacion":"propagación nacional frente a departamento",
+  "proveedores":67799,
+  "ARI":0.0282,
+  "NMI":0.1905
+ },
+ {
+  "comparacion":"propagación nacional frente a familia CUBSO",
+  "proveedores":67799,
+  "ARI":0.2552,
+  "NMI":0.4957
+ },
+ {
+  "comparacion":"Louvain nacional frente a departamento",
+  "proveedores":67799,
+  "ARI":0.0163,
+  "NMI":0.1364
+ },
+ {
+  "comparacion":"Louvain nacional frente a familia CUBSO",
+  "proveedores":67799,
+  "ARI":0.3128,
+  "NMI":0.4783
+ },
+ {
+  "comparacion":"propagación frente a Louvain, nacional",
+  "proveedores":67799,
+  "ARI":0.5036,
+  "NMI":0.6763
+ }
+]

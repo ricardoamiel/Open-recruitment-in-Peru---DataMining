@@ -1,0 +1,10 @@
+metodo,nodos,aristas,segundos
+Girvan-Newman,37,348,0.978
+Girvan-Newman,67,941,14.819
+Girvan-Newman,96,1617,53.605
+Girvan-Newman,123,2203,128.522
+espectral,1065,9650,0.19
+Louvain,1065,9650,0.081
+BigCLAM,1065,9650,2.621
+"propagación de etiquetas, Spark",70383,2498491,29.553
+"Louvain nacional, local",70383,2498491,42.481

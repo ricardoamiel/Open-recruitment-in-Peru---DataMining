@@ -1,0 +1,134 @@
+[
+ {
+  "comunidad":-340900058973003127,
+  "proveedores":21292,
+  "departamento":"LIMA",
+  "pct_departamento":37,
+  "familia":"7212",
+  "item_tipico":"SERVICIO DE MANTENIMIENTO DE INFRAESTRUCTURA DE CE",
+  "pct_familia":20,
+  "pct_personas_naturales":18,
+  "monto_ganado":14566472049.2046298981
+ },
+ {
+  "comunidad":-1648568617511472310,
+  "proveedores":16482,
+  "departamento":"LIMA",
+  "pct_departamento":15,
+  "familia":"7214",
+  "item_tipico":"SERVICIO DE MANTENIMIENTO RUTINARIO DE CAMINOS",
+  "pct_familia":64,
+  "pct_personas_naturales":4,
+  "monto_ganado":23063833387.2381782532
+ },
+ {
+  "comunidad":5710896837360462443,
+  "proveedores":8027,
+  "departamento":"LIMA",
+  "pct_departamento":19,
+  "familia":"8110",
+  "item_tipico":"SUPERVISION DE OBRA DE CONSTRUCCION DE CALLES Y SI",
+  "pct_familia":72,
+  "pct_personas_naturales":33,
+  "monto_ganado":3417823551.8822631836
+ },
+ {
+  "comunidad":-2874525448333237496,
+  "proveedores":1836,
+  "departamento":"LIMA",
+  "pct_departamento":25,
+  "familia":"5022",
+  "item_tipico":"ARROZ PILADO SUPERIOR",
+  "pct_familia":27,
+  "pct_personas_naturales":26,
+  "monto_ganado":2422781366.8000001907
+ },
+ {
+  "comunidad":2588399074899850737,
+  "proveedores":1756,
+  "departamento":"CUSCO",
+  "pct_departamento":37,
+  "familia":"3011",
+  "item_tipico":"CEMENTO PORTLAND PUZOLANICO TIPO IP X 42.50 kg",
+  "pct_familia":61,
+  "pct_personas_naturales":34,
+  "monto_ganado":1314297207.6100001335
+ },
+ {
+  "comunidad":-4135471315368491990,
+  "proveedores":1648,
+  "departamento":"LIMA",
+  "pct_departamento":52,
+  "familia":"5310",
+  "item_tipico":"UNIFORME PARA EL PERSONAL ADMINISTRATIVO",
+  "pct_familia":50,
+  "pct_personas_naturales":26,
+  "monto_ganado":1018547927.7915270329
+ },
+ {
+  "comunidad":6773587693087621962,
+  "proveedores":989,
+  "departamento":"LIMA",
+  "pct_departamento":73,
+  "familia":"4213",
+  "item_tipico":"RESPIRADOR DE POLIPROPILENO DESCARTABLE TIPO N-95 ",
+  "pct_familia":18,
+  "pct_personas_naturales":3,
+  "monto_ganado":5264795650.6800003052
+ },
+ {
+  "comunidad":3507124447273313015,
+  "proveedores":743,
+  "departamento":"CUSCO",
+  "pct_departamento":33,
+  "familia":"1017",
+  "item_tipico":"FERTILIZANTE FOSFATO DIAMONICO",
+  "pct_familia":39,
+  "pct_personas_naturales":32,
+  "monto_ganado":433032061.0
+ },
+ {
+  "comunidad":4234641008786448120,
+  "proveedores":654,
+  "departamento":"LIMA",
+  "pct_departamento":67,
+  "familia":"4219",
+  "item_tipico":"CUNA DE CALOR RADIANTE RODABLE PARA RECIEN NACIDO",
+  "pct_familia":14,
+  "pct_personas_naturales":3,
+  "monto_ganado":1348594237.2239718437
+ },
+ {
+  "comunidad":-2996480809797203411,
+  "proveedores":610,
+  "departamento":"LIMA",
+  "pct_departamento":55,
+  "familia":"9111",
+  "item_tipico":"SERVICIO DE CONCESIONARIO (A) DE ALIMENTOS",
+  "pct_familia":88,
+  "pct_personas_naturales":36,
+  "monto_ganado":656724077.6399999857
+ },
+ {
+  "comunidad":-5590525818971926358,
+  "proveedores":543,
+  "departamento":"LIMA",
+  "pct_departamento":80,
+  "familia":"7611",
+  "item_tipico":"SERVICIO DE LIMPIEZA DE AREAS ADMINISTRATIVAS U OF",
+  "pct_familia":68,
+  "pct_personas_naturales":1,
+  "monto_ganado":980393366.8500000238
+ },
+ {
+  "comunidad":-6274157189673830715,
+  "proveedores":540,
+  "departamento":"LIMA",
+  "pct_departamento":82,
+  "familia":"9210",
+  "item_tipico":"SERVICIO DE SEGURIDAD Y VIGILANCIA",
+  "pct_familia":97,
+  "pct_personas_naturales":1,
+  "monto_ganado":2038100533.1799998283
+ }
+]

@@ -1,0 +1,56 @@
+[
+ {
+  "metodo":"Girvan-Newman",
+  "nodos":37,
+  "aristas":348,
+  "segundos":0.978
+ },
+ {
+  "metodo":"Girvan-Newman",
+  "nodos":67,
+  "aristas":941,
+  "segundos":14.819
+ },
+ {
+  "metodo":"Girvan-Newman",
+  "nodos":96,
+  "aristas":1617,
+  "segundos":53.605
+ },
+ {
+  "metodo":"Girvan-Newman",
+  "nodos":123,
+  "aristas":2203,
+  "segundos":128.522
+ },
+ {
+  "metodo":"espectral",
+  "nodos":1065,
+  "aristas":9650,
+  "segundos":0.19
+ },
+ {
+  "metodo":"Louvain",
+  "nodos":1065,
+  "aristas":9650,
+  "segundos":0.081
+ },
+ {
+  "metodo":"BigCLAM",
+  "nodos":1065,
+  "aristas":9650,
+  "segundos":2.621
+ },
+ {
+  "metodo":"propagación de etiquetas, Spark",
+  "nodos":70383,
+  "aristas":2498491,
+  "segundos":29.553
+ },
+ {
+  "metodo":"Louvain nacional, local",
+  "nodos":70383,
+  "aristas":2498491,
+  "segundos":42.481
+ }
+]

@@ -14,7 +14,7 @@ Las tres preguntas que guían el trabajo, todas pensadas para quien supervisa el
 
 1. **¿Qué tipos de proveedor existen y cuáles combinan dependencia de un solo cliente con poca competencia?** Parte II, clustering y anomalías.
 2. **¿Es predecible con quién contrata una entidad, y qué relaciones se salen de lo esperable?** Parte III, sistemas de recomendación.
-3. **¿Quiénes son los actores centrales y hay grupos de proveedores que compiten siempre entre sí?** Parte IV, análisis de enlaces; la Parte V, pendiente.
+3. **¿Quiénes son los actores centrales y hay grupos de proveedores que compiten siempre entre sí?** Partes IV y V, análisis de enlaces y comunidades.
 
 ## Estado
 
@@ -24,8 +24,9 @@ Las tres preguntas que guían el trabajo, todas pensadas para quien supervisa el
 | 2_clustering_anomalias.ipynb | II. Clustering y detección de anomalías                     | preparación, PCA y KMeans de MLlib; el resto en local     | tipología de proveedores y cola de anomalías                               |
 | 3_recomendacion.ipynb        | III. Sistemas de recomendación                               | ALS de MLlib; vecindario, contenido y evaluación en local | recomendador híbrido evaluado y alertas de relaciones inusuales             |
 | 4_enlaces.ipynb              | IV. Análisis de enlaces: PageRank y HITS                      | grafo dirigido y PageRank completo; barrido de beta y HITS en local | dominio por PageRank, hubs y authorities, mapa de mercados y patrón de pares afines |
+| 5_comunidades.ipynb          | V. Grafos y detección de comunidades                          | ubicación de proveedores y propagación de etiquetas nacional; métodos exactos en local | mercados de competencia con Q, ARI y NMI, comunidades solapadas y escalabilidad medida |
 
-Las Partes V a VII y el reporte web interactivo se construirán sobre las mismas tablas.
+Las Partes VI y VII y el reporte web interactivo se construirán sobre las mismas tablas.
 
 ## Estructura
 
@@ -36,11 +37,13 @@ Proyecto parte 2/
 │   ├── 2_clustering_anomalias.ipynb
 │   ├── 3_recomendacion.ipynb
 │   ├── 4_enlaces.ipynb
+│   ├── 5_comunidades.ipynb
 │   └── scripts/
 │       ├── helpers.py      Spark acotado, figuras con lectura obligatoria, hallazgos con acción
 │       ├── ingesta.py      lectura de los CSV crudos que descarga el proyecto 1
 │       ├── relacional.py   aplanado, resolución de entidades, características, matrices y grafo
 │       ├── enlaces.py      PageRank en Spark y en local, HITS y pruebas a mano
+│       ├── comunidades.py  modularidad, ARI, NMI, Girvan-Newman, espectral, propagación en Spark y BigCLAM
 │       └── algoritmos.py   KMeans++, silueta, DBSCAN, jerárquico, vecindario, TF-IDF y métricas
 ├── data/processed/         la base relacional en Parquet, se regenera con el notebook 1
 ├── artifacts/              tablas pequeñas en CSV y JSON para el reporte web
@@ -50,7 +53,7 @@ Proyecto parte 2/
 └── requirements.txt
 ```
 
-Los notebooks no se editan a mano: se generan desde _build/nb1.py a nb4.py, donde cada celda está escrita como texto. Así un cambio en una celda es un cambio legible en el historial de git y no una diferencia enorme en un JSON con salidas incrustadas.
+Los notebooks no se editan a mano: se generan desde _build/nb1.py a nb5.py, donde cada celda está escrita como texto. Así un cambio en una celda es un cambio legible en el historial de git y no una diferencia enorme en un JSON con salidas incrustadas.
 
 ## Cómo levantar el entorno
 
@@ -106,7 +109,7 @@ bash correr_todo.sh
 ```bash
 conda activate spark310
 cd "Proyecto parte 2"
-for n in 1_base_relacional 2_clustering_anomalias 3_recomendacion 4_enlaces; do
+for n in 1_base_relacional 2_clustering_anomalias 3_recomendacion 4_enlaces 5_comunidades; do
   jupyter nbconvert --to notebook --execute --inplace \
     --ExecutePreprocessor.timeout=7200 notebooks/$n.ipynb
 done
@@ -114,7 +117,7 @@ done
 
 O abriéndolos en Jupyter y ejecutando todas las celdas, también en ese orden. Con el entorno activado el kernel python3 es el del entorno; si se ejecuta sin activarlo, hay que poner el bin del entorno primero en el PATH, porque el kernel se lanza como python a secas.
 
-**Tiempos de referencia** en una máquina de 8 núcleos compartida con otro trabajo: el notebook 1 tarda unos 25 minutos, de los que la lectura de 3 GB de CSV crudos es la mayor parte, y deja un Parquet intermedio en data/processed/intermedio que las corridas siguientes reutilizan; borrar esa carpeta fuerza la relectura. Los notebooks 2 y 3 tardan unos minutos cada uno. El notebook 4 tarda unos 2 minutos.
+**Tiempos de referencia** en una máquina de 8 núcleos compartida con otro trabajo: el notebook 1 tarda unos 25 minutos, de los que la lectura de 3 GB de CSV crudos es la mayor parte, y deja un Parquet intermedio en data/processed/intermedio que las corridas siguientes reutilizan; borrar esa carpeta fuerza la relectura. Los notebooks 2 y 3 tardan unos minutos cada uno. El notebook 4 tarda unos 2 minutos. El notebook 5 tarda unos 10 minutos la primera vez, por Girvan-Newman, y menos de 2 después, porque guarda sus pasos caros en data/processed/parte5.
 
 **Revisiones antes de entregar:**
 
