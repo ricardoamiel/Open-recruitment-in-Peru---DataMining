@@ -72,12 +72,12 @@
   <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Tipologías</span></div>
 </section>
 
-<section class="diapo" data-modulo="perfiles">
+<section class="diapo">
   <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 1 · Parte II</div>
   <h2>El perfil cautivo: depende de un cliente y no compite</h2>
   <p class="bajada">1.260 proveedores, 100 % de su monto con una sola entidad y 91 % de victorias sin otro postor. S/ 1.581 millones.</p>
   <div class="cuerpo dos">
-    <div data-grafico></div>
+    <div><!--FIG:f11_perfiles_cluster--><p class="mini">Desviaciones estándar frente al recurrente típico: rojo por encima, azul por debajo. Cautivo: postor único y sin concurso +2,6, cuota del mayor cliente +1,0.</p></div>
     <div>
       <div class="negocio paso"><span class="k">Para el negocio</span>No es una irregularidad en sí: es la combinación que vuelve vulnerable a una entidad frente a su proveedor. Para cada par, exigir estudio de mercado ampliado.</div>
       <div class="negocio paso" style="margin-top:16px"><span class="k">Anomalías</span>De 260, solo 77 importan a control: ganan sin competir y suman S/ 1.346 millones. El largo de la cola, entre 33 y 157, es una decisión de capacidad, no del algoritmo.</div>
@@ -86,6 +86,21 @@
   </div>
   <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Tipologías</span></div>
 </section>
+<section class="diapo">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 1 · Parte II</div>
+  <h2>Qué técnicas de clustering coinciden y cuáles no</h2>
+  <p class="bajada">Los métodos de partición reencuentran los cuatro perfiles; los de densidad aportan lo raro y confirman al cautivo.</p>
+  <table class="datos discusion">
+    <tr><th>Comparación</th><th>Métrica</th><th>Lectura</th></tr>
+    <tr><td>KMeans++ propio frente a MLlib</td><td>ARI 0,997</td><td><b>Coinciden</b></td></tr>
+    <tr><td>10 semillas; submuestras del 80 %</td><td>ARI 0,998; 0,925</td><td><b>Coinciden</b>: no depende del azar</td></tr>
+    <tr><td>Jerárquico de Ward (4) frente a KMeans</td><td>ARI 0,62</td><td><b>Coinciden en lo grueso</b>, difieren en los bordes</td></tr>
+    <tr><td>DBSCAN frente a KMeans</td><td>1 grupo y 3,1 % de ruido</td><td><b>No coinciden</b>: el comportamiento es un continuo; aporta las anomalías</td></tr>
+    <tr><td>HDBSCAN frente a KMeans</td><td>6 grupos, 37 % de ruido</td><td><b>Coinciden en el cautivo</b>, que parte en dos; el contratista de obra queda 93 % como ruido</td></tr>
+  </table>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Tipologías</span></div>
+</section>
+
 
 <section class="diapo" data-modulo="recomendacion">
   <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 2 · Parte III</div>
@@ -102,6 +117,20 @@
   </div>
   <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Recomendación</span></div>
 </section>
+<section class="diapo">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 2 · Parte III</div>
+  <h2>Qué parte de las relaciones de 2025 se puede predecir</h2>
+  <p class="bajada">Solo el 30 % son nuevas y predecibles; el 43 % trae un proveedor sin historia, el arranque en frío.</p>
+  <div class="cuerpo dos">
+    <div><!--FIG:f16_desglose_prueba--></div>
+    <div class="lectura">
+      <p>El <b>26 %</b> repite una relación anterior. El <b>43 %</b> involucra a un proveedor que no ganó nada en 2023 y 2024: ningún filtrado colaborativo puede anticiparlo, porque no tiene fila en la matriz.</p>
+      <div class="negocio paso"><span class="k">Para el negocio</span>Buena noticia para la competencia: cada año entra una fracción grande de proveedores nuevos al mercado estatal.</div>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Recomendación</span></div>
+</section>
+
 
 <section class="diapo" data-modulo="pagerankVivo">
   <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte IV</div>

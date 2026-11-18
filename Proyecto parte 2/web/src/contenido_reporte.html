@@ -50,10 +50,39 @@
     <div class="negocio"><span class="k">Para el negocio</span>Cualquier ranking de concentración hecho sobre el código publicado subestima a quien opera en consorcio. El OECE podría asignar a cada consorcio un identificador estable ligado a los RUC de sus integrantes.</div>
   </div>
   <div class="modulo">
-    <h3>Qué cuenta como competir juntos</h3>
+    <h3>Construcción del grafo</h3>
     <p class="pregunta"><b>Pregunta.</b> ¿Cuándo dos proveedores deben quedar unidos en el grafo? Mueva los dos criterios.</p>
     <div data-modulo="grafoCriterio"></div>
     <p class="interpretacion">Un proceso de 300 participantes genera 44.850 pares que no son relación: casi todos se registran y no compiten. Por eso se descartan los procesos de más de 50 participantes y se exigen al menos 2 procesos compartidos. El grafo final tiene <b>70.383 proveedores y 2,5 millones de aristas</b>, con peso de Newman 1 / (n menos 1): competir en un proceso de 3 vale más que en uno de 40.</p>
+  </div>
+  <div class="modulo">
+    <h3>Pares de proveedores que participan en los mismos procesos</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Qué pares se presentan juntos casi siempre?</p>
+    <!--FIG:f07_afinidad_pares-->
+    <p class="interpretacion">De los 241.166 pares que coincidieron en 10 procesos o más, la mayoría tiene afinidad baja: se cruzan porque los dos participan mucho. Pero <b>4.847 pares</b>, en rojo, tienen afinidad de 0,8 o más: cuando el menos activo de los dos se presenta, el otro está ahí al menos cuatro de cada cinco veces. Ese patrón es el que las guías de competencia asocian a ofertas de acompañamiento, y también el de dos empresas vinculadas o el de un mercado regional con dos oferentes. El grafo no distingue entre esas explicaciones; sí reduce la lista a los pares que vale la pena revisar a mano.</p>
+    <div class="negocio"><span class="k">Para el negocio</span>Los 4.847 pares de afinidad alta son la lista de partida para revisar ofertas de acompañamiento; la Parte IV los ordena por alternancia de victorias.</div>
+  </div>
+  <div class="modulo">
+    <h3>Vectores de rasgos por proveedor y por entidad</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Con qué atributos se describe a cada actor?</p>
+    <table class="datos">
+      <tr><th>Vector</th><th>Grupo</th><th>Atributos</th><th>Uso</th></tr>
+      <tr><td rowspan="4"><b>Proveedor</b>, 12 de 15 calculados</td><td>Escala, con log(1 + x)</td><td>n_ganados, monto_total, monto_mediano</td><td rowspan="4">Se estandarizan y pasan por PCA (6 componentes, 90 % de la varianza) para el clustering de la Parte II; son también la entrada de las redes neuronales de la Parte VI</td></tr>
+      <tr><td>Alcance, con log(1 + x)</td><td>n_entidades, n_departamentos, n_familias</td></tr>
+      <tr><td>Dependencia y continuidad</td><td>cuota_cliente_top, meses_activos</td></tr>
+      <tr><td>Competencia y rubro</td><td>tasa_victoria, pct_postor_unico, pct_sin_concurso, pct_obras</td></tr>
+      <tr><td><b>Entidad</b>, 9 numéricos</td><td>Tamaño, cartera y competencia</td><td>n_procesos, monto_total, n_proveedores, hhi_proveedores, postores_medio, pct_postor_unico, pct_sin_concurso, pct_adjudicado, n_familias; más nombre, nivel de gobierno y departamento</td><td>Contexto: departamento para la línea base regional del recomendador, nombre de los hubs de HITS, tamaño de cartera en la prueba de broadcast</td></tr>
+    </table>
+    <p class="interpretacion">Del proveedor se descartan tres rasgos calculados: n_participaciones, que repite a n_ganados dividido por la tasa de victoria; pct_servicios, casi el complemento de obras y bienes; y pct_sin_contrato, que mide calidad del dato y no comportamiento. Solo entran los 12.062 proveedores con tres o más adjudicaciones: con menos, las tasas valen 0 o 1.</p>
+  </div>
+  <div class="modulo">
+    <h3>Salidas de la base relacional</h3>
+    <table class="datos">
+      <tr><th>Salida</th><th>Qué es</th><th>Lo usa</th></tr>
+      <tr><td><b>Características</b></td><td>12 rasgos por proveedor recurrente (12.062) y 9 por entidad</td><td>Clustering y anomalías, Parte II</td></tr>
+      <tr><td><b>Interacciones</b></td><td>Matriz entidad por proveedor (2.964 por 62.462, densidad 0,06 %) y entidad por familia (2.954 por 368)</td><td>Recomendación, Parte III</td></tr>
+      <tr><td><b>Grafos</b></td><td>Coparticipación de 70.383 proveedores y 2,5 millones de aristas con peso de Newman; grafo dirigido de victorias</td><td>Enlaces, comunidades y embeddings, Partes IV a VI</td></tr>
+    </table>
   </div>
 </div></section>
 
@@ -70,14 +99,28 @@
   <div class="modulo">
     <h3>El perfil cautivo: 10 % de los proveedores, sin competencia</h3>
     <p class="pregunta"><b>Pregunta.</b> ¿Qué perfil combina dependencia de un cliente con poca competencia?</p>
-    <div data-modulo="perfiles"></div>
-    <p class="interpretacion"><b>1.260 proveedores</b> dependen de una sola entidad para el 100 % de su monto en la mediana y ganan sin otro postor el 91 % de las veces, casi siempre por contratación directa o régimen especial. Suman <b>S/ 1.581 millones</b>. HDBSCAN lo parte en dos: personas naturales en un solo rubro y proveedores extranjeros con exclusividad.</p>
+    <!--FIG:f11_perfiles_cluster-->
+    <p class="interpretacion">Cada celda es la desviación estándar del grupo frente al proveedor recurrente típico: rojo, por encima; azul, por debajo. El <b>competitivo típico</b> (63 %) está cerca de 0 en todo. El <b>gran proveedor recurrente</b> (18 %) sube en adjudicaciones, entidades, departamentos y meses activos (+1,4 a +1,6) y baja en cuota del mayor cliente (−1,1): vende a muchos y no depende de ninguno. El <b>contratista de obra</b> (9 %) sube en obras (+2,8) y monto mediano (+1,7). El <b>cautivo</b> (10 %) sube en postor único y sin concurso (+2,6), tasa de victoria (+1,7) y cuota del mayor cliente (+1,0), y baja en monto y entidades. <b>1.260 proveedores</b> dependen de una sola entidad para el 100 % de su monto en la mediana y ganan sin otro postor el 91 % de las veces, casi siempre por contratación directa o régimen especial. Suman <b>S/ 1.581 millones</b>. HDBSCAN lo parte en dos: personas naturales en un solo rubro y proveedores extranjeros con exclusividad.</p>
     <div class="negocio"><span class="k">Para el negocio</span>No es una irregularidad en sí, pero es la combinación que vuelve vulnerable a una entidad frente a su proveedor. Para cada par del grupo conviene preguntar si la falta de competencia se explica por el rubro o la geografía, y exigir estudio de mercado ampliado.</div>
   </div>
   <div class="modulo">
     <h3>DBSCAN encuentra lo que no se parece a nada</h3>
     <p class="pregunta"><b>Pregunta.</b> ¿Qué proveedores no pertenecen a ningún vecindario denso? Mueva eps y min_pts.</p>
     <div data-modulo="dbscanVivo"></div>
+  </div>
+  <div class="modulo">
+    <h3>Qué técnicas de clustering coinciden y cuáles no</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Los cuatro perfiles aparecen con otros métodos?</p>
+    <table class="datos">
+      <tr><th>Comparación</th><th class="num">Métrica</th><th>Lectura</th></tr>
+      <tr><td>KMeans++ propio frente a KMeans de MLlib</td><td class="num">ARI 0,997</td><td><b>Coinciden</b>: la misma partición, SSE casi idéntico</td></tr>
+      <tr><td>KMeans con 10 semillas; con submuestras del 80 %</td><td class="num">ARI 0,998; 0,925</td><td><b>Coinciden</b>: la tipología no depende del azar</td></tr>
+      <tr><td>Jerárquico de Ward cortado en 4 frente a KMeans</td><td class="num">ARI 0,62</td><td><b>Coinciden en lo grueso</b>: confirma 4 grupos por un camino independiente; difieren en los bordes</td></tr>
+      <tr><td>DBSCAN propio frente a scikit-learn</td><td class="num">ARI 1,000</td><td>Misma salida: un núcleo denso y 3,1 % de ruido</td></tr>
+      <tr><td>DBSCAN frente a KMeans</td><td class="num">1 grupo y ruido</td><td><b>No coinciden</b>: no separa perfiles porque el comportamiento es un continuo; aporta las anomalías (70 % de su ruido está en el 5 % más lejano del centroide)</td></tr>
+      <tr><td>HDBSCAN frente a KMeans</td><td class="num">6 grupos, 37 % ruido</td><td><b>Coinciden en el cautivo</b>, que parte en dos (602 personas naturales y 168 con extranjeros); deja como ruido al 93 % del contratista de obra, el perfil menos homogéneo</td></tr>
+    </table>
+    <p class="interpretacion">Los métodos de partición, KMeans en sus dos versiones y Ward, reencuentran los cuatro perfiles. Los de densidad no buscan perfiles sino zonas densas: DBSCAN sirve para lo raro y HDBSCAN confirma que el cautivo es el grupo más nítido.</p>
   </div>
   <div class="modulo">
     <h3>Las anomalías útiles no son las más grandes</h3>
@@ -96,6 +139,12 @@
     <p class="pregunta"><b>Pregunta.</b> ¿Qué método anticipa mejor las relaciones nuevas? Cambie el largo de la lista.</p>
     <div data-modulo="recomendacion"></div>
     <p class="interpretacion">Vecindario entre entidades, contenido por familia y departamento, factores latentes de ALS y popularidad regional se combinan en un híbrido. Supera al mejor método individual en 16,7 % de NDCG, con intervalo de confianza por bootstrap de 12,3 % a 21,6 %. La señal que más aporta es el vecindario: entidades parecidas contratan a proveedores parecidos.</p>
+  </div>
+  <div class="modulo">
+    <h3>Tipo de relación por entidad: qué se puede predecir</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Qué parte de las relaciones de 2025 puede anticipar un recomendador?</p>
+    <!--FIG:f16_desglose_prueba-->
+    <p class="interpretacion">Solo el <b>30 %</b> de las relaciones de 2025 son nuevas y además predecibles: tanto la entidad como el proveedor tienen historia. El <b>26 %</b> repite una relación anterior y el <b>43 %</b> involucra a un proveedor que no había ganado nada en 2023 y 2024: ese es el arranque en frío, y ningún filtrado colaborativo puede anticiparlo porque el proveedor no tiene fila en la matriz. Es también una buena noticia para la competencia: cada año entra una fracción grande de proveedores nuevos al mercado estatal.</p>
   </div>
   <div class="modulo">
     <h3>Lo inesperado no es, por sí solo, menos competitivo</h3>

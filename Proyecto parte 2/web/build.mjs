@@ -54,6 +54,9 @@ function armar(plantilla, destino) {
   let html = leer(join(AQUI, "src", plantilla))
     .replace("<!--CONTENIDO-->", () => opcional("contenido_reporte.html"))
     .replace("<!--DIAPOSITIVAS-->", () => opcional("diapositivas.html"));
+  // Figuras estáticas de los notebooks: <!--FIG:nombre--> se reemplaza por el SVG de figs/ como imagen incrustada.
+  html = html.replace(/<!--FIG:([\w]+)-->/g, (_, f) =>
+    `<img class="figura-nb" alt="${f}" src="data:image/svg+xml;base64,${readFileSync(join(RAIZ, "figs", f + ".svg")).toString("base64")}">`);
   const datos = JSON.stringify(DATOS).replace(/</g, "\\u003c");
   html = html
     .replace("/*ESTILOS*/", () => estilos)

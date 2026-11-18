@@ -73,3 +73,4 @@ table.datos th { text-align: left; color: var(--tinta3); font-weight: 600; borde
 table.datos td { border-bottom: 1px solid var(--linea); padding: 6px 8px; vertical-align: top; }
 table.datos td.num, table.datos th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .tabla-scroll { overflow-x: auto; }
+img.figura-nb { display: block; width: 100%; height: auto; margin: 8px 0; background: #fff; border-radius: 6px; }
