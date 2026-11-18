@@ -18,3 +18,7 @@ nbconvert>=7.0
 
 # Parte V: validación de Girvan-Newman y Louvain como referencia
 networkx==3.4.2
+
+# Parte VI: GCN, GraphSAGE y GAT escritas a mano. Basta la versión para CPU:
+# pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch>=2.4

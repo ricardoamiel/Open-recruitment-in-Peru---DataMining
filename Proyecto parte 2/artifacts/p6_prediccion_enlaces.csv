@@ -1,0 +1,12 @@
+metodo,tipo,AUC,AUC_sin_rivales_comunes,AUC_bajo_grado,segundos
+vecinos comunes,heurística,0.984,0.5,0.9642,
+Adamic-Adar,heurística,0.9883,0.5,0.9716,
+"SVD, 32 dimensiones",embedding,0.8831,0.7325,0.9032,
+"Node2Vec p = 1, q = 1",embedding,0.8738,0.808,0.9094,
+"Node2Vec p = 1, q = 0.5",embedding,0.8741,0.8205,0.9109,
+"Node2Vec p = 1, q = 2",embedding,0.8708,0.7933,0.9054,
+"Node2Vec p = 0.5, q = 2",embedding,0.872,0.7857,0.9056,
+GCN con rasgos,GNN,0.9654,0.6441,0.8879,63.9571
+GraphSAGE con rasgos,GNN,0.9493,0.5719,0.7433,52.2927
+GAT con rasgos,GNN,0.9426,0.5804,0.7855,480.8813
+GCN sin rasgos,GNN,0.9187,0.5373,0.7687,61.4557

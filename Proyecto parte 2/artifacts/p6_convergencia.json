@@ -1,0 +1,282 @@
+[
+ {
+  "embedding":"SVD, competencia",
+  "k":4,
+  "etiqueta":"perfil de la Parte II",
+  "ARI":0.0818,
+  "NMI":0.1066
+ },
+ {
+  "embedding":"SVD, competencia",
+  "k":4,
+  "etiqueta":"comunidad de la Parte V",
+  "ARI":0.3163,
+  "NMI":0.4306
+ },
+ {
+  "embedding":"SVD, competencia",
+  "k":4,
+  "etiqueta":"departamento",
+  "ARI":0.0347,
+  "NMI":0.0742
+ },
+ {
+  "embedding":"SVD, competencia",
+  "k":4,
+  "etiqueta":"familia CUBSO",
+  "ARI":0.1,
+  "NMI":0.3416
+ },
+ {
+  "embedding":"SVD, competencia",
+  "k":30,
+  "etiqueta":"perfil de la Parte II",
+  "ARI":0.0295,
+  "NMI":0.0973
+ },
+ {
+  "embedding":"SVD, competencia",
+  "k":30,
+  "etiqueta":"comunidad de la Parte V",
+  "ARI":0.3107,
+  "NMI":0.6042
+ },
+ {
+  "embedding":"SVD, competencia",
+  "k":30,
+  "etiqueta":"departamento",
+  "ARI":0.0294,
+  "NMI":0.1289
+ },
+ {
+  "embedding":"SVD, competencia",
+  "k":30,
+  "etiqueta":"familia CUBSO",
+  "ARI":0.2045,
+  "NMI":0.4956
+ },
+ {
+  "embedding":"Node2Vec q = 0,5, competencia",
+  "k":4,
+  "etiqueta":"perfil de la Parte II",
+  "ARI":0.0258,
+  "NMI":0.1012
+ },
+ {
+  "embedding":"Node2Vec q = 0,5, competencia",
+  "k":4,
+  "etiqueta":"comunidad de la Parte V",
+  "ARI":0.1856,
+  "NMI":0.3943
+ },
+ {
+  "embedding":"Node2Vec q = 0,5, competencia",
+  "k":4,
+  "etiqueta":"departamento",
+  "ARI":0.1945,
+  "NMI":0.1518
+ },
+ {
+  "embedding":"Node2Vec q = 0,5, competencia",
+  "k":4,
+  "etiqueta":"familia CUBSO",
+  "ARI":0.1366,
+  "NMI":0.357
+ },
+ {
+  "embedding":"Node2Vec q = 0,5, competencia",
+  "k":30,
+  "etiqueta":"perfil de la Parte II",
+  "ARI":0.0117,
+  "NMI":0.0908
+ },
+ {
+  "embedding":"Node2Vec q = 0,5, competencia",
+  "k":30,
+  "etiqueta":"comunidad de la Parte V",
+  "ARI":0.2383,
+  "NMI":0.6222
+ },
+ {
+  "embedding":"Node2Vec q = 0,5, competencia",
+  "k":30,
+  "etiqueta":"departamento",
+  "ARI":0.0379,
+  "NMI":0.1777
+ },
+ {
+  "embedding":"Node2Vec q = 0,5, competencia",
+  "k":30,
+  "etiqueta":"familia CUBSO",
+  "ARI":0.3337,
+  "NMI":0.5924
+ },
+ {
+  "embedding":"Node2Vec q = 2, competencia",
+  "k":4,
+  "etiqueta":"perfil de la Parte II",
+  "ARI":0.0242,
+  "NMI":0.0995
+ },
+ {
+  "embedding":"Node2Vec q = 2, competencia",
+  "k":4,
+  "etiqueta":"comunidad de la Parte V",
+  "ARI":0.187,
+  "NMI":0.3883
+ },
+ {
+  "embedding":"Node2Vec q = 2, competencia",
+  "k":4,
+  "etiqueta":"departamento",
+  "ARI":0.1645,
+  "NMI":0.1376
+ },
+ {
+  "embedding":"Node2Vec q = 2, competencia",
+  "k":4,
+  "etiqueta":"familia CUBSO",
+  "ARI":0.1476,
+  "NMI":0.3538
+ },
+ {
+  "embedding":"Node2Vec q = 2, competencia",
+  "k":30,
+  "etiqueta":"perfil de la Parte II",
+  "ARI":0.0143,
+  "NMI":0.0936
+ },
+ {
+  "embedding":"Node2Vec q = 2, competencia",
+  "k":30,
+  "etiqueta":"comunidad de la Parte V",
+  "ARI":0.2423,
+  "NMI":0.6216
+ },
+ {
+  "embedding":"Node2Vec q = 2, competencia",
+  "k":30,
+  "etiqueta":"departamento",
+  "ARI":0.0261,
+  "NMI":0.1612
+ },
+ {
+  "embedding":"Node2Vec q = 2, competencia",
+  "k":30,
+  "etiqueta":"familia CUBSO",
+  "ARI":0.3449,
+  "NMI":0.6
+ },
+ {
+  "embedding":"GraphSAGE, competencia y rasgos",
+  "k":4,
+  "etiqueta":"perfil de la Parte II",
+  "ARI":0.0452,
+  "NMI":0.1007
+ },
+ {
+  "embedding":"GraphSAGE, competencia y rasgos",
+  "k":4,
+  "etiqueta":"comunidad de la Parte V",
+  "ARI":0.1389,
+  "NMI":0.2709
+ },
+ {
+  "embedding":"GraphSAGE, competencia y rasgos",
+  "k":4,
+  "etiqueta":"departamento",
+  "ARI":0.0294,
+  "NMI":0.0648
+ },
+ {
+  "embedding":"GraphSAGE, competencia y rasgos",
+  "k":4,
+  "etiqueta":"familia CUBSO",
+  "ARI":0.0998,
+  "NMI":0.2484
+ },
+ {
+  "embedding":"GraphSAGE, competencia y rasgos",
+  "k":30,
+  "etiqueta":"perfil de la Parte II",
+  "ARI":0.0176,
+  "NMI":0.1371
+ },
+ {
+  "embedding":"GraphSAGE, competencia y rasgos",
+  "k":30,
+  "etiqueta":"comunidad de la Parte V",
+  "ARI":0.1651,
+  "NMI":0.4801
+ },
+ {
+  "embedding":"GraphSAGE, competencia y rasgos",
+  "k":30,
+  "etiqueta":"departamento",
+  "ARI":0.0371,
+  "NMI":0.1315
+ },
+ {
+  "embedding":"GraphSAGE, competencia y rasgos",
+  "k":30,
+  "etiqueta":"familia CUBSO",
+  "ARI":0.1913,
+  "NMI":0.4356
+ },
+ {
+  "embedding":"SVD, KNN de rasgos",
+  "k":4,
+  "etiqueta":"perfil de la Parte II",
+  "ARI":0.3915,
+  "NMI":0.3536
+ },
+ {
+  "embedding":"SVD, KNN de rasgos",
+  "k":4,
+  "etiqueta":"comunidad de la Parte V",
+  "ARI":0.0109,
+  "NMI":0.0757
+ },
+ {
+  "embedding":"SVD, KNN de rasgos",
+  "k":4,
+  "etiqueta":"departamento",
+  "ARI":-0.0607,
+  "NMI":0.0286
+ },
+ {
+  "embedding":"SVD, KNN de rasgos",
+  "k":4,
+  "etiqueta":"familia CUBSO",
+  "ARI":0.0348,
+  "NMI":0.0601
+ },
+ {
+  "embedding":"SVD, KNN de rasgos",
+  "k":30,
+  "etiqueta":"perfil de la Parte II",
+  "ARI":0.0404,
+  "NMI":0.281
+ },
+ {
+  "embedding":"SVD, KNN de rasgos",
+  "k":30,
+  "etiqueta":"comunidad de la Parte V",
+  "ARI":0.0431,
+  "NMI":0.2134
+ },
+ {
+  "embedding":"SVD, KNN de rasgos",
+  "k":30,
+  "etiqueta":"departamento",
+  "ARI":0.0319,
+  "NMI":0.0686
+ },
+ {
+  "embedding":"SVD, KNN de rasgos",
+  "k":30,
+  "etiqueta":"familia CUBSO",
+  "ARI":0.0347,
+  "NMI":0.1706
+ }
+]

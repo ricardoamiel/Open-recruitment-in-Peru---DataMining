@@ -1,0 +1,58 @@
+[
+ {
+  "cautivo":"PROYECTA INGENIEROS CIVILES S.A.C.",
+  "departamento":"LIMA",
+  "rubro":"SUPERVISION DE OBRA DE CONSTRUCCION DE C",
+  "sustitutos_que_compiten":"CONSORCIO SUPERVISOR NORTE | CONSORCIO SUPERVISOR LOS ANDES | CONSORCIO CONSULTOR THIAGO",
+  "mismo_departamento_pct":0
+ },
+ {
+  "cautivo":"MAX VISION PERU SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA",
+  "departamento":"LIMA",
+  "rubro":"SODIO CLORURO 0,9 % (900 mg\/100 mL) INY ",
+  "sustitutos_que_compiten":"PFIZER S A | FARMA VITA GROUP SOCIEDAD ANONIMA CERR | DISTRIBUIDORA CONTINENTAL 6 S A",
+  "mismo_departamento_pct":100
+ },
+ {
+  "cautivo":"COMPACT MAQUINARIAS SOCIEDAD ANONIMA CERRADA",
+  "departamento":"PIURA",
+  "rubro":"SERVICIO DE MANTENIMIENTO RUTINARIO DE C",
+  "sustitutos_que_compiten":"INVERSIONES DEMIFORT S.A.C. | TAVI E MPRESA INDIVIDUAL DE RESPONSABI | CONSORCIO PARAISO",
+  "mismo_departamento_pct":0
+ },
+ {
+  "cautivo":"TICONA MENDEZ NESTOR FAUSTO",
+  "departamento":"LIMA",
+  "rubro":"HENO DE ALFALFA PARA ALIMENTO DE ANIMALE",
+  "sustitutos_que_compiten":"EUSEBIO PADILLA ARTURO CESAR | INVERSIONES NORMITAS E.I.R.L. | FLORES RAMIREZ JULIO",
+  "mismo_departamento_pct":33
+ },
+ {
+  "cautivo":"CAMAFRA MOTORS S.A.C.",
+  "departamento":"PIURA",
+  "rubro":"SERVICIO DE MANTENIMIENTO RUTINARIO DE C",
+  "sustitutos_que_compiten":"REPRESENTACIONES & CONSTRUCCIONES CORD | DABRE CORPORATION SOCIEDAD ANONIMA CER | INVERSIONES Y REPRESENTACIONES J & F H",
+  "mismo_departamento_pct":33
+ },
+ {
+  "cautivo":"CES CONSULTING ENGINEERS SALZGITTER GMBH SUCURSAL DEL PERU",
+  "departamento":"LIMA",
+  "rubro":"SUPERVISION DE OBRA DE CONSTRUCCION DE C",
+  "sustitutos_que_compiten":"CHAPOÑAN CAJUSOL LEONCIO | REATEGUI TORRES LILI | AVOG CONTRATISTAS GENERALES S.A.C.",
+  "mismo_departamento_pct":33
+ },
+ {
+  "cautivo":"SERVICIOS GENERALES VIVIANA EIRL",
+  "departamento":"PIURA",
+  "rubro":"SERVICIO DE MANTENIMIENTO RUTINARIO DE C",
+  "sustitutos_que_compiten":"COMERCIALIZADORA Y MULTISERVICIOS CHUN | REPRESENTACIONES & CONSTRUCCIONES CORD | DABRE CORPORATION SOCIEDAD ANONIMA CER",
+  "mismo_departamento_pct":33
+ },
+ {
+  "cautivo":"IBE CONTRATISTAS GENERALES S.A.C.",
+  "departamento":"ANCASH",
+  "rubro":"SERVICIO DE MANTENIMIENTO RUTINARIO DE C",
+  "sustitutos_que_compiten":"LIXANT S.R.L. CONSULTORES Y CONTRATIST | CONSORCIO NUEVO HORIZONTE | PERU AMERICA CONTRATISTAS GENERALES SO",
+  "mismo_departamento_pct":33
+ }
+]

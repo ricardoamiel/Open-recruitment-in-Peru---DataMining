@@ -111,10 +111,6 @@
   "descripcion": "Precision, recall, NDCG y cobertura en 10 de cada recomendador",
   "filas": 6
  },
- "p3_sorpresa_postor_unico": {
-  "descripcion": "Postor unico segun lo esperable que era la relacion nueva",
-  "filas": 5
- },
  "p3_inusuales": {
   "descripcion": "Relaciones nuevas de 2025 de mayor monto que el modelo no esperaba",
   "filas": 20
@@ -290,5 +286,33 @@
  "p5_hallazgos": {
   "descripcion": "Hallazgos de la Parte V con su accion propuesta",
   "filas": 3
+ },
+ "p6_prediccion_enlaces": {
+  "descripcion": "AUC de prediccion de enlaces de cada metodo, total, sin rivales en comun y en grado bajo",
+  "filas": 11
+ },
+ "p6_convergencia": {
+  "descripcion": "ARI y NMI entre grupos de embeddings y las etiquetas de las partes anteriores",
+  "filas": 40
+ },
+ "p6_sustitutos_red": {
+  "descripcion": "Cautivos y los proveedores competitivos mas cercanos en el embedding de competencia",
+  "filas": 8
+ },
+ "p6_tsne": {
+  "descripcion": "Coordenadas t-SNE de 3.000 proveedores para cada embedding",
+  "filas": 3000
+ },
+ "p6_resumen": {
+  "descripcion": "Cifras clave de la Parte VI",
+  "filas": 1
+ },
+ "p6_figuras": {
+  "descripcion": "Figuras de la Parte VI con su lectura",
+  "filas": 3
+ },
+ "p6_hallazgos": {
+  "descripcion": "Hallazgos de la Parte VI con su accion propuesta",
+  "filas": 2
  }
 }

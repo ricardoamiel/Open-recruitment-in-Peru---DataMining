@@ -1,0 +1,14 @@
+[
+ {
+  "figura":"f34_prediccion_enlaces",
+  "lectura":"Sobre todos los pares gana una heurística simple, Adamic-Adar, con AUC de 0.988: la competencia es muy transitiva, y si dos proveedores comparten rivales casi seguro se encuentran. Entre los embeddings gana la red neuronal, GCN con rasgos, con 0.97 frente a 0.88 de los clásicos, y la ventaja viene de los rasgos: sin ellos la GCN baja a 0.92. El cuadro cambia en las barras rayadas, los pares que todavía no comparten ningún rival, donde las heurísticas no pueden ordenar nada: ahí gana Node2Vec p = 1, q = 0.5 con 0.82, y la mejor red neuronal cae a 0.64. La red neuronal aprendió quién es un proveedor activo; Node2Vec, a qué mercado pertenece, que es lo que sirve para anticipar una competencia nueva. Son solo 64 aristas en ese conjunto, así que la diferencia se lee como tendencia y no como cifra exacta."
+ },
+ {
+  "figura":"f35_tsne_embeddings",
+  "lectura":"Con el embedding de Node2Vec que explora hacia afuera (q igual a 0,5), la nube se parte en islas, y cada isla es un mercado de rubro: a la izquierda, los seis rubros más frecuentes ocupan zonas propias y el gris es el resto. A la derecha, la misma nube coloreada por perfil de la Parte II queda mayormente mezclada: el proveedor competitivo típico está en todas las islas. Las excepciones confirman la regla: los contratistas de obra y los grandes recurrentes forman zonas propias porque su rubro es su mercado. El embedding aprendió dónde compite cada proveedor, no cómo se comporta, y la sección siguiente lo mide."
+ },
+ {
+  "figura":"f36_convergencia",
+  "lectura":"Los embeddings del grafo de competencia coinciden con la comunidad de la Parte V (NMI de 0.62) y con la familia CUBSO (0.59), poco con el departamento (0.18) y casi nada con el perfil de la Parte II (0.09). El embedding del grafo KNN de rasgos hace lo contrario: reencuentra el perfil (0.28) y no el rubro (0.17). GraphSAGE, que ve las dos cosas, queda en medio: perfil 0.14 y comunidad 0.48. La respuesta a si convergen es que sí, dentro de cada lente: comunidades y embeddings de la red coinciden entre sí, y clústeres y embeddings de rasgos coinciden entre sí. Entre lentes no, porque miden cosas distintas: en qué mercado compite un proveedor y cómo se comporta."
+ }
+]

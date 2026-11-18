@@ -1,0 +1,2 @@
+proveedores,aristas,sin_competir,auc_mejor,metodo_mejor,auc_sin_comun_mejor,metodo_sin_comun,auc_sin_comun_clasico,auc_gnn,metodo_gnn,auc_gnn_sin_comun,auc_gcn_sin_rasgos,positivos_sin_comun,nmi_comunidad,nmi_departamento,nmi_perfil,nmi_knn_perfil
+10411,411823,1651,0.988,Adamic-Adar,0.82,"Node2Vec p = 1, q = 0.5",0.82,0.965,GCN con rasgos,0.644,0.919,64,0.622,0.178,0.091,0.281

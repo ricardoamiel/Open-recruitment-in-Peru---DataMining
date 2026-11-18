@@ -1,0 +1,16 @@
+[
+ {
+  "parte":"VI",
+  "titulo":"La competencia es transitiva, y la red neuronal no supera a contar rivales",
+  "insight":"Contar rivales en común anticipa quién va a competir con quién con AUC de 0.99, mejor que cualquier embedding: si dos proveedores comparten rivales, casi seguro se encuentran. La red neuronal con los rasgos de la Parte II es el mejor embedding (0.97 frente a 0.88 de SVD y Node2Vec), pero para la competencia sin antecedentes, pares sin ningún rival en común, gana Node2Vec p = 1, q = 0.5 (0.82 frente a 0.64).",
+  "accion":"Para ampliar la lista de invitados a cotizar, usar rivales en común como primer criterio y la cercanía en el embedding de Node2Vec para proponer proveedores sin antecedentes en ese mercado. La red neuronal no se justifica para este uso: cuesta más y no mejora a la heurística.",
+  "evidencia":"f34_prediccion_enlaces, p6_prediccion_enlaces"
+ },
+ {
+  "parte":"VI",
+  "titulo":"Dónde compite un proveedor y cómo se comporta son dos dimensiones distintas",
+  "insight":"Los grupos de los embeddings de competencia coinciden con las comunidades de la Parte V (NMI 0.62) y con el rubro, y casi nada con los perfiles de la Parte II (NMI 0.09). El embedding de un grafo KNN de rasgos hace lo opuesto. Clústeres, comunidades y embeddings convergen dentro de cada lente, no entre lentes.",
+  "accion":"Combinar las dos lentes en la supervisión: el perfil de la Parte II para saber qué tipo de proveedor es, y la comunidad o el embedding para saber en qué mercado comparar su desempeño. Un cautivo se evalúa contra los proveedores competitivos de su mismo mercado, que el embedding identifica.",
+  "evidencia":"f35_tsne_embeddings, f36_convergencia, p6_convergencia, p6_sustitutos_red"
+ }
+]

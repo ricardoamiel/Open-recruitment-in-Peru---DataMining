@@ -1,0 +1,41 @@
+embedding,k,etiqueta,ARI,NMI
+"SVD, competencia",4,perfil de la Parte II,0.0818,0.1066
+"SVD, competencia",4,comunidad de la Parte V,0.3163,0.4306
+"SVD, competencia",4,departamento,0.0347,0.0742
+"SVD, competencia",4,familia CUBSO,0.1,0.3416
+"SVD, competencia",30,perfil de la Parte II,0.0295,0.0973
+"SVD, competencia",30,comunidad de la Parte V,0.3107,0.6042
+"SVD, competencia",30,departamento,0.0294,0.1289
+"SVD, competencia",30,familia CUBSO,0.2045,0.4956
+"Node2Vec q = 0,5, competencia",4,perfil de la Parte II,0.0258,0.1012
+"Node2Vec q = 0,5, competencia",4,comunidad de la Parte V,0.1856,0.3943
+"Node2Vec q = 0,5, competencia",4,departamento,0.1945,0.1518
+"Node2Vec q = 0,5, competencia",4,familia CUBSO,0.1366,0.357
+"Node2Vec q = 0,5, competencia",30,perfil de la Parte II,0.0117,0.0908
+"Node2Vec q = 0,5, competencia",30,comunidad de la Parte V,0.2383,0.6222
+"Node2Vec q = 0,5, competencia",30,departamento,0.0379,0.1777
+"Node2Vec q = 0,5, competencia",30,familia CUBSO,0.3337,0.5924
+"Node2Vec q = 2, competencia",4,perfil de la Parte II,0.0242,0.0995
+"Node2Vec q = 2, competencia",4,comunidad de la Parte V,0.187,0.3883
+"Node2Vec q = 2, competencia",4,departamento,0.1645,0.1376
+"Node2Vec q = 2, competencia",4,familia CUBSO,0.1476,0.3538
+"Node2Vec q = 2, competencia",30,perfil de la Parte II,0.0143,0.0936
+"Node2Vec q = 2, competencia",30,comunidad de la Parte V,0.2423,0.6216
+"Node2Vec q = 2, competencia",30,departamento,0.0261,0.1612
+"Node2Vec q = 2, competencia",30,familia CUBSO,0.3449,0.6
+"GraphSAGE, competencia y rasgos",4,perfil de la Parte II,0.0452,0.1007
+"GraphSAGE, competencia y rasgos",4,comunidad de la Parte V,0.1389,0.2709
+"GraphSAGE, competencia y rasgos",4,departamento,0.0294,0.0648
+"GraphSAGE, competencia y rasgos",4,familia CUBSO,0.0998,0.2484
+"GraphSAGE, competencia y rasgos",30,perfil de la Parte II,0.0176,0.1371
+"GraphSAGE, competencia y rasgos",30,comunidad de la Parte V,0.1651,0.4801
+"GraphSAGE, competencia y rasgos",30,departamento,0.0371,0.1315
+"GraphSAGE, competencia y rasgos",30,familia CUBSO,0.1913,0.4356
+"SVD, KNN de rasgos",4,perfil de la Parte II,0.3915,0.3536
+"SVD, KNN de rasgos",4,comunidad de la Parte V,0.0109,0.0757
+"SVD, KNN de rasgos",4,departamento,-0.0607,0.0286
+"SVD, KNN de rasgos",4,familia CUBSO,0.0348,0.0601
+"SVD, KNN de rasgos",30,perfil de la Parte II,0.0404,0.281
+"SVD, KNN de rasgos",30,comunidad de la Parte V,0.0431,0.2134
+"SVD, KNN de rasgos",30,departamento,0.0319,0.0686
+"SVD, KNN de rasgos",30,familia CUBSO,0.0347,0.1706

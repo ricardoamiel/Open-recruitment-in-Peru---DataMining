@@ -1,0 +1,90 @@
+[
+ {
+  "metodo":"vecinos comunes",
+  "tipo":"heurística",
+  "AUC":0.984,
+  "AUC_sin_rivales_comunes":0.5,
+  "AUC_bajo_grado":0.9642,
+  "segundos":null
+ },
+ {
+  "metodo":"Adamic-Adar",
+  "tipo":"heurística",
+  "AUC":0.9883,
+  "AUC_sin_rivales_comunes":0.5,
+  "AUC_bajo_grado":0.9716,
+  "segundos":null
+ },
+ {
+  "metodo":"SVD, 32 dimensiones",
+  "tipo":"embedding",
+  "AUC":0.8831,
+  "AUC_sin_rivales_comunes":0.7325,
+  "AUC_bajo_grado":0.9032,
+  "segundos":null
+ },
+ {
+  "metodo":"Node2Vec p = 1, q = 1",
+  "tipo":"embedding",
+  "AUC":0.8738,
+  "AUC_sin_rivales_comunes":0.808,
+  "AUC_bajo_grado":0.9094,
+  "segundos":null
+ },
+ {
+  "metodo":"Node2Vec p = 1, q = 0.5",
+  "tipo":"embedding",
+  "AUC":0.8741,
+  "AUC_sin_rivales_comunes":0.8205,
+  "AUC_bajo_grado":0.9109,
+  "segundos":null
+ },
+ {
+  "metodo":"Node2Vec p = 1, q = 2",
+  "tipo":"embedding",
+  "AUC":0.8708,
+  "AUC_sin_rivales_comunes":0.7933,
+  "AUC_bajo_grado":0.9054,
+  "segundos":null
+ },
+ {
+  "metodo":"Node2Vec p = 0.5, q = 2",
+  "tipo":"embedding",
+  "AUC":0.872,
+  "AUC_sin_rivales_comunes":0.7857,
+  "AUC_bajo_grado":0.9056,
+  "segundos":null
+ },
+ {
+  "metodo":"GCN con rasgos",
+  "tipo":"GNN",
+  "AUC":0.9654,
+  "AUC_sin_rivales_comunes":0.6441,
+  "AUC_bajo_grado":0.8879,
+  "segundos":63.9571
+ },
+ {
+  "metodo":"GraphSAGE con rasgos",
+  "tipo":"GNN",
+  "AUC":0.9493,
+  "AUC_sin_rivales_comunes":0.5719,
+  "AUC_bajo_grado":0.7433,
+  "segundos":52.2927
+ },
+ {
+  "metodo":"GAT con rasgos",
+  "tipo":"GNN",
+  "AUC":0.9426,
+  "AUC_sin_rivales_comunes":0.5804,
+  "AUC_bajo_grado":0.7855,
+  "segundos":480.8813
+ },
+ {
+  "metodo":"GCN sin rasgos",
+  "tipo":"GNN",
+  "AUC":0.9187,
+  "AUC_sin_rivales_comunes":0.5373,
+  "AUC_bajo_grado":0.7687,
+  "segundos":61.4557
+ }
+]

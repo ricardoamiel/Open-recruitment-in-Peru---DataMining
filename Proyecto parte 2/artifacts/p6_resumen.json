@@ -1,0 +1,21 @@
+[
+ {
+  "proveedores":10411,
+  "aristas":411823,
+  "sin_competir":1651,
+  "auc_mejor":0.988,
+  "metodo_mejor":"Adamic-Adar",
+  "auc_sin_comun_mejor":0.82,
+  "metodo_sin_comun":"Node2Vec p = 1, q = 0.5",
+  "auc_sin_comun_clasico":0.82,
+  "auc_gnn":0.965,
+  "metodo_gnn":"GCN con rasgos",
+  "auc_gnn_sin_comun":0.644,
+  "auc_gcn_sin_rasgos":0.919,
+  "positivos_sin_comun":64,
+  "nmi_comunidad":0.622,
+  "nmi_departamento":0.178,
+  "nmi_perfil":0.091,
+  "nmi_knn_perfil":0.281
+ }
+]
