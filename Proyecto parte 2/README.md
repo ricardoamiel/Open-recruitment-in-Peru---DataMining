@@ -27,7 +27,24 @@ Las tres preguntas que guían el trabajo, todas pensadas para quien supervisa el
 | 5_comunidades.ipynb          | V. Grafos y detección de comunidades                          | ubicación de proveedores y propagación de etiquetas nacional; métodos exactos en local | mercados de competencia con Q, ARI y NMI, comunidades solapadas y escalabilidad medida |
 | 6_representacion.ipynb       | VI. Aprendizaje de representación en grafos                   | local: SVD, Node2Vec y redes neuronales sobre grafos sin Spark | embeddings, predicción de enlaces, validación con GCN, GraphSAGE y GAT, convergencia |
 
-La Parte VII y el reporte web interactivo se construirán sobre las mismas tablas.
+## Reporte web y presentación
+
+La Parte VII se entrega como una página web interactiva y una presentación, construidas desde los mismos artefactos y los mismos módulos de gráficos, así que cuentan la misma historia con las mismas cifras:
+
+1. **Reporte interactivo**: docs/index.html, publicado en GitHub Pages en [/parte2/](https://ricardoamiel.github.io/Open-recruitment-in-Peru---DataMining/parte2/).
+2. **Presentación** de 15 minutos con animaciones y controles en vivo: presentacion/index.html, publicada en [/parte2/presentacion/](https://ricardoamiel.github.io/Open-recruitment-in-Peru---DataMining/parte2/presentacion/). Se navega con las flechas, F para pantalla completa y T para cambiar el tema.
+
+El proyecto 1 sigue en la raíz del sitio y también en [/parte1/](https://ricardoamiel.github.io/Open-recruitment-in-Peru---DataMining/parte1/). Un selector en la esquina superior de cada página permite pasar entre el proyecto 1, el proyecto 2 y la presentación.
+
+Las dos se generan con Node desde web/, que lee artifacts/ e incrusta los datos, D3 y los estilos en archivos autocontenidos que funcionan sin internet:
+
+```bash
+cd web
+npm install
+npm run build
+```
+
+Parámetros que se mueven en vivo: k de KMeans, eps y min_pts de DBSCAN, largo de la lista de recomendaciones, beta de PageRank recalculado en el navegador, número de comunidades de Girvan-Newman y el embedding visualizado con t-SNE.
 
 ## Estructura
 
@@ -52,6 +69,9 @@ Proyecto parte 2/
 ├── data/processed/         la base relacional en Parquet, se regenera con el notebook 1
 ├── artifacts/              tablas pequeñas en CSV y JSON para el reporte web
 ├── figs/                   figuras en SVG, vectoriales, y PNG
+├── web/                    generador del reporte y la presentación, Node y D3
+├── docs/                   reporte interactivo generado
+├── presentacion/           presentación generada
 ├── _build/                 generadores de los notebooks y revisiones de estilo y ejecución
 ├── correr_todo.sh          reproduce las tres partes de principio a fin
 └── requirements.txt

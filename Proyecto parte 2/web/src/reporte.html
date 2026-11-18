@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La red de compras públicas</title>
+<meta name="description" content="Reporte interactivo del Proyecto Integrador 2: quién le compra a quién, quién compite con quién y qué relaciones se salen de lo esperable en las contrataciones públicas del Perú.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*ESTILOS*/
+body { font-size: 16.5px; line-height: 1.6; }
+.envoltura { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+header.portada { background: var(--utec); color: #00121A; padding: 54px 0 42px; position: relative; overflow: hidden; }
+header.portada h1 { font-size: clamp(30px, 5vw, 50px); line-height: 1.08; margin: 8px 0 14px; max-width: 820px; }
+header.portada p { max-width: 760px; font-size: 18px; color: #003349; margin: 0 0 8px; }
+header.portada .sup { font: 600 13px var(--texto); letter-spacing: .1em; text-transform: uppercase; color: #004A66; }
+header.portada .mas { position: absolute; right: 7%; top: 40px; width: 120px; height: 120px; opacity: .95; }
+header.portada .mas::before, header.portada .mas::after { content: ""; position: absolute; background: var(--acento); border-radius: 4px; }
+header.portada .mas::before { left: 41px; top: 0; width: 38px; height: 120px; }
+header.portada .mas::after { left: 0; top: 41px; width: 120px; height: 38px; }
+@media (max-width: 760px) { header.portada .mas { display: none; } }
+nav.indice { position: sticky; top: 0; z-index: 10; background: var(--fondo); border-bottom: 1px solid var(--linea); }
+nav.indice .envoltura { display: flex; gap: 4px; overflow-x: auto; padding-top: 6px; padding-bottom: 6px; align-items: center; }
+nav.indice a { white-space: nowrap; text-decoration: none; color: var(--tinta2); font-size: 14px; padding: 6px 10px; border-radius: 6px; }
+nav.indice a:hover { background: var(--panel); color: var(--tinta); }
+nav.indice button { margin-left: auto; }
+section { padding: 46px 0 10px; border-bottom: 1px solid var(--linea); }
+section > .envoltura > h2 { font-size: 32px; margin: 0 0 6px; }
+.parte { font: 600 13px var(--texto); letter-spacing: .1em; text-transform: uppercase; color: var(--utec-oscuro); }
+.intro { font-size: 18px; color: var(--tinta2); max-width: 900px; }
+.modulo { margin: 30px 0 34px; padding: 22px 22px 18px; border: 1px solid var(--linea); border-radius: 14px; }
+.modulo h3 { font-size: 22px; margin: 0 0 4px; }
+.modulo .pregunta { color: var(--tinta3); font-size: 15px; margin: 0 0 12px; }
+.modulo .pregunta b { color: var(--utec-oscuro); }
+.interpretacion { margin-top: 14px; font-size: 16.5px; color: var(--tinta2); }
+.interpretacion b { color: var(--tinta); }
+.negocio { border-left: 5px solid var(--acento); background: var(--panel); padding: 12px 16px; border-radius: 0 10px 10px 0; margin-top: 14px; }
+.negocio .k { font: 700 12px var(--texto); letter-spacing: .08em; text-transform: uppercase; color: var(--tinta3); display: block; margin-bottom: 2px; }
+.lectura { font-size: 16px; color: var(--tinta2); margin: 6px 0; }
+.dos-col { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+@media (max-width: 860px) { .dos-col { grid-template-columns: 1fr; } }
+.preguntas { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; margin: 20px 0 30px; }
+.preguntas div { background: var(--panel); border-radius: 12px; padding: 16px 18px; }
+.preguntas .n { font-family: var(--titulo); color: var(--utec-oscuro); font-size: 26px; font-weight: 700; }
+.preguntas .q { font-weight: 700; margin: 4px 0 8px; }
+.preguntas .r { color: var(--tinta2); font-size: 15px; }
+ol.razones li { margin-bottom: 8px; }
+footer { padding: 30px 0 50px; color: var(--tinta3); font-size: 14px; }
+</style>
+</head>
+<body>
+<!--CONTENIDO-->
+<div class="tooltip"></div>
+<script>/*D3*/</script>
+<script>
+/*DATOS*/
+/*GRAFICOS*/
+/*MODULOS*/
+document.querySelectorAll("[data-modulo]").forEach((el) => {
+  const f = MODULOS[el.dataset.modulo];
+  if (!f) return;
+  // Se dibuja cuando el módulo entra en pantalla, para que la animación se vea.
+  new IntersectionObserver((e, obs) => {
+    if (e[0].isIntersecting) { obs.disconnect(); f(el, { modo: "reporte" }); }
+  }, { rootMargin: "120px" }).observe(el);
+});
+document.getElementById("tema")?.addEventListener("click", () => {
+  const r = document.documentElement;
+  const oscuro = r.getAttribute("data-theme") === "dark";
+  r.setAttribute("data-theme", oscuro ? "light" : "dark");
+  try { localStorage.setItem("tema", r.getAttribute("data-theme")); } catch (e) {}
+  document.querySelectorAll("[data-modulo]").forEach((el) => MODULOS[el.dataset.modulo]?.(el, { modo: "reporte" }));
+});
+try { const t = localStorage.getItem("tema"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+</script>
+</body>
+</html>

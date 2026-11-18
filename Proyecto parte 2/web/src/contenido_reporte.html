@@ -1,0 +1,266 @@
+<header class="portada">
+  <div class="envoltura">
+    <div class="sup">Proyecto Integrador 2 · Minería de Datos Masivos · UTEC</div>
+    <h1>Quién le compra a quién, y quién compite con quién</h1>
+    <p>Grafos, clustering, recomendación y representación sobre las contrataciones públicas del Perú entre 2023 y 2025. Cada hallazgo es una señal descriptiva para ordenar una revisión, nunca una acusación.</p>
+    <p><b>Integrantes:</b> Ricardo Acuña, Juan Aquino y Camilo Soto. <b>Fuente:</b> Contrataciones Abiertas del Perú (OECE), estándar OCDS, publicación 135 del registro de Open Contracting Partnership, licencia CC BY 4.0.</p>
+  </div>
+  <div class="mas" aria-hidden="true"></div>
+</header>
+<nav class="indice" aria-label="Secciones">
+  <div class="envoltura">
+    <a href="#resumen">En una página</a><a href="#proyecto1">Del proyecto 1</a><a href="#base">Base relacional</a>
+    <a href="#pregunta1">Tipologías</a><a href="#pregunta2">Predicción</a><a href="#pregunta3">Centralidad</a>
+    <a href="#comunidades">Comunidades</a><a href="#representacion">Representación</a><a href="#discusion">Discusión</a>
+    <button class="chip" id="tema" type="button">Tema</button>
+  </div>
+</nav>
+
+<section id="resumen"><div class="envoltura">
+  <div class="parte">En una página</div>
+  <h2>Tres preguntas para quien supervisa el gasto público</h2>
+  <p class="intro">El proyecto 1 describió el gasto proceso por proceso. Este mira relaciones: entidades que compran a proveedores, y proveedores que se encuentran en los mismos procesos. Las tres preguntas se eligieron porque cada una lleva a una decisión de supervisión distinta.</p>
+  <div class="preguntas">
+    <div><div class="n">1</div><div class="q">¿Qué tipos de proveedor existen y cuáles combinan dependencia con poca competencia?</div><div class="r">Hay un perfil cautivo de 1.260 proveedores que dependen de una sola entidad y ganan sin rivales el 91 % de las veces. Solo 320 de ellos compitieron alguna vez.</div></div>
+    <div><div class="n">2</div><div class="q">¿Es predecible con quién contrata una entidad?</div><div class="r">Sí: un recomendador híbrido anticipa las relaciones nuevas 360 veces mejor que el azar. Pero lo inesperado no es por sí solo menos competitivo, y lo decimos.</div></div>
+    <div><div class="n">3</div><div class="q">¿Quién es central y hay grupos que compiten siempre entre sí?</div><div class="r">Dominar no es ganar mucho: 51 del top 100 de PageRank no están en el top 100 de victorias. Los mercados son de rubro, y las señales de coordinación se concentran dentro de ellos.</div></div>
+  </div>
+</div></section>
+
+<section id="proyecto1"><div class="envoltura">
+  <div class="parte">Repaso</div>
+  <h2>Del proyecto 1 a este: los insumos</h2>
+  <p class="intro">Este proyecto no parte de cero. Reutiliza la tabla limpia, la deduplicación con MinHash y LSH, el indicador de postor único y la idea de canasta de las reglas de asociación. El proyecto 1 se calculó con la descarga de septiembre; este usa la del 26 de octubre, con 175.338 procesos limpios.</p>
+  <div class="modulo">
+    <h3>Cuatro herencias del proyecto 1</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Qué dejó el proyecto 1 que este necesita?</p>
+    <div data-modulo="repaso"></div>
+  </div>
+</div></section>
+
+<section id="base"><div class="envoltura">
+  <div class="parte">Parte I · Spark</div>
+  <h2>La base relacional</h2>
+  <p class="intro">Toda la parte corre en Spark. Produce los tres objetos que piden las demás: vectores de rasgos por proveedor y entidad, matrices de interacción entidad por proveedor y entidad por familia, y el grafo de coparticipación.</p>
+  <div class="modulo">
+    <h3>La mitad de los códigos de proveedor son consorcios repetidos</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Cuántos proveedores reales hay detrás de los identificadores publicados?</p>
+    <div data-modulo="resolucion"></div>
+    <p class="interpretacion">De 209.207 identificadores quedan <b>165.615 proveedores reales</b>. Toda la reducción está en los consorcios, que reciben un código nuevo por inscripción: 103.722 códigos son 60.776 consorcios. Se resolvió con claves exactas y una pasada difusa de MinHash y LSH propios, con una regla de validación: dos códigos que compiten en el mismo proceso no pueden ser el mismo proveedor.</p>
+    <div class="negocio"><span class="k">Para el negocio</span>Cualquier ranking de concentración hecho sobre el código publicado subestima a quien opera en consorcio. El OECE podría asignar a cada consorcio un identificador estable ligado a los RUC de sus integrantes.</div>
+  </div>
+  <div class="modulo">
+    <h3>Qué cuenta como competir juntos</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Cuándo dos proveedores deben quedar unidos en el grafo? Mueva los dos criterios.</p>
+    <div data-modulo="grafoCriterio"></div>
+    <p class="interpretacion">Un proceso de 300 participantes genera 44.850 pares que no son relación: casi todos se registran y no compiten. Por eso se descartan los procesos de más de 50 participantes y se exigen al menos 2 procesos compartidos. El grafo final tiene <b>70.383 proveedores y 2,5 millones de aristas</b>, con peso de Newman 1 / (n menos 1): competir en un proceso de 3 vale más que en uno de 40.</p>
+  </div>
+</div></section>
+
+<section id="pregunta1"><div class="envoltura">
+  <div class="parte">Pregunta 1 · Parte II</div>
+  <h2>Tipologías de proveedor y anomalías</h2>
+  <p class="intro">Doce rasgos por proveedor recurrente (12.062 con al menos tres adjudicaciones): escala, alcance, dependencia y competencia. Se estandarizan, se reducen con PCA y se agrupan con KMeans++, DBSCAN, HDBSCAN y jerárquico.</p>
+  <div class="modulo">
+    <h3>Cuatro perfiles, y el número de grupos se elige con un criterio</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Cuántos tipos de proveedor hay? Mueva k y vea cómo se reparte la muestra.</p>
+    <div data-modulo="kmeansVivo"></div>
+    <p class="interpretacion">El codo del error sugiere 5 grupos, pero la silueta es máxima en 4 (0,387) y se adopta ese. El resultado es estable: con 10 semillas distintas el acuerdo (ARI) es 0,998.</p>
+  </div>
+  <div class="modulo">
+    <h3>El perfil cautivo: 10 % de los proveedores, sin competencia</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Qué perfil combina dependencia de un cliente con poca competencia?</p>
+    <div data-modulo="perfiles"></div>
+    <p class="interpretacion"><b>1.260 proveedores</b> dependen de una sola entidad para el 100 % de su monto en la mediana y ganan sin otro postor el 91 % de las veces, casi siempre por contratación directa o régimen especial. Suman <b>S/ 1.581 millones</b>. HDBSCAN lo parte en dos: personas naturales en un solo rubro y proveedores extranjeros con exclusividad.</p>
+    <div class="negocio"><span class="k">Para el negocio</span>No es una irregularidad en sí, pero es la combinación que vuelve vulnerable a una entidad frente a su proveedor. Para cada par del grupo conviene preguntar si la falta de competencia se explica por el rubro o la geografía, y exigir estudio de mercado ampliado.</div>
+  </div>
+  <div class="modulo">
+    <h3>DBSCAN encuentra lo que no se parece a nada</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Qué proveedores no pertenecen a ningún vecindario denso? Mueva eps y min_pts.</p>
+    <div data-modulo="dbscanVivo"></div>
+  </div>
+  <div class="modulo">
+    <h3>Las anomalías útiles no son las más grandes</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Cuántas anomalías revisar? Cambie los parámetros y vea el largo de la cola.</p>
+    <div data-modulo="anomalias"></div>
+    <div class="negocio"><span class="k">Para el negocio</span>De 260 anomalías, 183 son grandes proveedores nacionales y no interesan a control. Las 77 que ganan sin competir sí: se entregan ordenadas por monto, con el rasgo extremo como primera pregunta de revisión.</div>
+  </div>
+</div></section>
+
+<section id="pregunta2"><div class="envoltura">
+  <div class="parte">Pregunta 2 · Parte III</div>
+  <h2>¿Es predecible con quién contrata una entidad?</h2>
+  <p class="intro">El recomendador no dice a quién contratar. Es un modelo del mercado: si predice bien las relaciones nuevas de 2025 con lo ocurrido en 2023 y 2024, una relación que considera muy improbable es, por definición, inusual.</p>
+  <div class="modulo">
+    <h3>El híbrido anticipa las relaciones nuevas 360 veces mejor que el azar</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Qué método anticipa mejor las relaciones nuevas? Cambie el largo de la lista.</p>
+    <div data-modulo="recomendacion"></div>
+    <p class="interpretacion">Vecindario entre entidades, contenido por familia y departamento, factores latentes de ALS y popularidad regional se combinan en un híbrido. Supera al mejor método individual en 16,7 % de NDCG, con intervalo de confianza por bootstrap de 12,3 % a 21,6 %. La señal que más aporta es el vecindario: entidades parecidas contratan a proveedores parecidos.</p>
+  </div>
+  <div class="modulo">
+    <h3>Lo inesperado no es, por sí solo, menos competitivo</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Las relaciones improbables se adjudican con menos competencia?</p>
+    <div data-modulo="sorpresa"></div>
+    <div class="negocio"><span class="k">Para el negocio</span>El percentil del modelo no sirve como alerta aislada. Sirve para ordenar, dentro de lo que ya es sin concurso o con un solo postor, qué relaciones además eran inesperadas, y revisar esas primero.</div>
+  </div>
+</div></section>
+
+<section id="pregunta3"><div class="envoltura">
+  <div class="parte">Pregunta 3 · Parte IV</div>
+  <h2>¿Quién es central, y qué significa serlo?</h2>
+  <p class="intro">PageRank depende de qué significa una arista. Sobre el grafo de coparticipación, que no tiene dirección, repite al grado (correlación de rangos de 0,92). Por eso se construyó un grafo dirigido nuevo, en Spark: en cada proceso, cada perdedor apunta al ganador. Ser central ahí es ganarle a quienes ganan.</p>
+  <div class="modulo">
+    <h3>PageRank en vivo: el voto de un perdedor pesa lo que pesa ese perdedor</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Quién domina la competencia, y cuánto depende del factor de amortiguamiento? Mueva beta: el navegador recalcula PageRank sobre los 120 primeros.</p>
+    <div data-modulo="pagerankVivo"></div>
+    <p class="interpretacion">Con beta bajo pesan los votos directos; con beta alto, las cadenas largas de victorias. En el grafo completo de 134.885 proveedores, el top 100 es estable entre 0,75 y 0,90 (al menos 90 % en común) y se desarma recién en 0,99. Spark y la versión local coinciden hasta el décimo decimal.</p>
+  </div>
+  <div class="modulo">
+    <h3>Ganar mucho no es dominar a quienes compiten</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿El ranking de PageRank dice algo distinto del conteo de victorias?</p>
+    <div data-modulo="pagerankVsVictorias"></div>
+    <p class="interpretacion"><b>51 de los 100 primeros por PageRank</b> no están entre los 100 con más victorias en procesos disputados. Son los puntos rojos: ganan relativamente poco, pero contra rivales fuertes. El caso más claro está en el puesto 670 por victorias y en el 33 por PageRank.</p>
+    <div class="negocio"><span class="k">Para el negocio</span>El PageRank del grafo de perdedor a ganador es un indicador de dominio que el conteo de victorias no da. Conviene mirar primero a quien sube mucho de un ranking al otro en rubros con pocos oferentes.</div>
+  </div>
+  <div class="modulo">
+    <h3>El cautivo no domina la competencia: depende de un cliente</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Qué lugar ocupan los perfiles de la Parte II en la red de competencia?</p>
+    <div data-modulo="perfilPagerank"></div>
+    <p class="interpretacion">De los 1.260 cautivos, <b>solo 320 aparecieron alguna vez en un proceso disputado</b>; el resto nunca compitió contra nadie. Los que aparecen quedan en el percentil 66, frente al 99 del gran proveedor recurrente. Son dos dimensiones del poder de mercado y una supervisión completa necesita las dos.</p>
+  </div>
+  <div class="modulo">
+    <h3>HITS: el núcleo de la red es el mercado de salud de Lima</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Qué entidades marcan el mercado y qué proveedores son referencia?</p>
+    <div data-modulo="hits"></div>
+    <p class="interpretacion">Sobre el bipartito entidad a proveedor, <b>EsSalud concentra el 64 % de la masa de hubs</b>, seguido de CENARES, la Sanidad de la PNP y los institutos nacionales. Las authorities son proveedores de diagnóstico, fármacos y equipo médico. Ser authority no es facturar más: la correlación con el monto es de 0,11. HITS converge exactamente al primer vector singular de la matriz, y por eso se queda con un solo bloque denso.</p>
+    <div class="negocio"><span class="k">Para el negocio</span>La supervisión de competencia en insumos médicos debería empezar por los compradores con mayor puntaje de hub: sus decisiones definen quién es proveedor de referencia para el resto.</div>
+  </div>
+  <div class="modulo">
+    <h3>Más allá del primer vector: un mapa de mercados sin etiquetas</h3>
+    <p class="pregunta"><b>Pregunta.</b> Si HITS es el primer vector singular, ¿qué son los siguientes? Elija un vector.</p>
+    <div data-modulo="mercados"></div>
+    <p class="interpretacion">Cada vector singular es otro bloque denso: servicios profesionales en Lima, cemento en Cusco y en Puno, publicidad digital. El cuarto es leche evaporada en Lima: los programas alimentarios, la misma huella que dejó la canasta de las reglas de asociación del proyecto 1.</p>
+  </div>
+  <div class="modulo">
+    <h3>Entre los pares que se presentan juntos, la señal es la alternancia</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Qué pasa cuando dos proveedores afines, que coinciden en el 80 % o más de sus procesos, se presentan juntos?</p>
+    <div data-modulo="pares"></div>
+    <p class="interpretacion">El 44 % de los 4.847 pares afines <b>pierde junto</b>: es el patrón del registro masivo, porque en el SEACE registrarse no es ofertar. El 17,6 % <b>alterna victorias</b>, frente al 5,4 % del grupo de control: son 851 pares que se presentan juntos casi siempre y se turnan para ganar. Los que más alternan son aseguradoras y emisoras de vales: mercados con pocos oferentes legítimos, donde alternar es lo esperable.</p>
+    <div class="negocio"><span class="k">Para el negocio</span>La cola de revisión de pares afines se reduce a los que alternan, y dentro de ellos a los de mercados fragmentados, donde alternar es menos esperable. Para esos, pedir las ofertas completas y comparar precios. Es señal y no acusación.</div>
+  </div>
+</div></section>
+
+<section id="comunidades"><div class="envoltura">
+  <div class="parte">Pregunta 3 · Parte V</div>
+  <h2>Mercados de competencia</h2>
+  <p class="intro">Una comunidad del grafo de coparticipación es un grupo de proveedores que se encuentran en los mismos procesos mucho más que con el resto: un mercado de competencia. Se mide con tres métricas que responden preguntas distintas. <b>Modularidad Q</b>: ¿hay más aristas por dentro de lo esperable al azar? <b>ARI</b>: ¿dos particiones agrupan igual los mismos pares, descontando el azar? <b>NMI</b>: ¿cuánto dice la comunidad de un proveedor sobre su grupo en otra partición?</p>
+  <div class="modulo">
+    <h3>Girvan-Newman en vivo: cortar los puentes revela los submercados</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿En cuántos grupos se parte el núcleo del mercado de Ayacucho? Mueva el número de comunidades.</p>
+    <div data-modulo="girvanNewman"></div>
+    <p class="interpretacion">Cada corte elimina la arista con mayor intermediación, la que más caminos cortos atraviesan. La modularidad sube rápido hasta 5 comunidades y después se aplana: se elige el codo y no el máximo, que llega con 24 comunidades muchas de uno o dos proveedores.</p>
+  </div>
+  <div class="modulo">
+    <h3>Métodos distintos, misma estructura; y la estructura se parece al rubro</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Encontraron lo mismo los métodos, y qué es lo que encontraron?</p>
+    <div data-modulo="acuerdo"></div>
+    <p class="interpretacion">Girvan-Newman y espectral coinciden con NMI de 0,91 por caminos completamente distintos: cortar puentes y factorizar la matriz. Las comunidades se parecen al rubro (NMI de 0,51 con la familia CUBSO) y casi nada al tipo de proveedor o al perfil de la Parte II. A escala nacional, Louvain y la propagación de etiquetas en Spark coinciden entre sí (NMI 0,68).</p>
+  </div>
+  <div class="modulo">
+    <h3>Se compite en la región, pero los mercados son de rubro</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Cómo se organizan los mercados a escala nacional?</p>
+    <div data-modulo="comunidadesNacionales"></div>
+    <p class="interpretacion">El 60 % del peso de las aristas une a proveedores del mismo departamento, y aun así las comunidades nacionales se explican por el rubro (NMI 0,48) y no por el departamento (0,14). Los mercados de servicios, como el mantenimiento de caminos y la supervisión de obra, son nacionales; los de bienes pesados, como el cemento, son regionales (en morado, más de la mitad en un departamento).</p>
+    <div class="negocio"><span class="k">Para el negocio</span>La concentración hay que medirla por mercado real: un rubro de servicios a escala nacional y uno de bienes pesados por región, y no con promedios por departamento que mezclan mercados que nunca se tocan.</div>
+  </div>
+  <div class="modulo">
+    <h3>Las señales de coordinación se concentran en pocos mercados</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Dónde viven los pares afines y los que alternan?</p>
+    <div data-modulo="comunidadesAyacucho"></div>
+    <p class="interpretacion">En Ayacucho, <b>el 94 % de los pares afines cae dentro de una misma comunidad</b>, cuando dos proveedores al azar caerían juntos el 14 % de las veces. Una sola comunidad, el mantenimiento rutinario de caminos con 191 proveedores, reúne 200 de los 317 pares.</p>
+    <div class="negocio"><span class="k">Para el negocio</span>La revisión se asigna por mercado y no proveedor por proveedor: cada comunidad con varias señales es un caso.</div>
+  </div>
+  <div class="modulo">
+    <h3>BigCLAM: quién compite en más de un mercado</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Cuántos proveedores pertenecen a varios mercados a la vez?</p>
+    <div data-modulo="bigclam"></div>
+    <p class="interpretacion">Las particiones obligan a cada proveedor a estar en una sola comunidad. BigCLAM modela afiliaciones solapadas y separa tres situaciones: la periferia sin afiliación fuerte (grado mediano de 2 rivales frente a 22), la mayoría con un solo mercado, y el 9 % de proveedores puente, casi todos empresas, que pueden llevar competencia de un submercado a otro.</p>
+  </div>
+  <div class="modulo">
+    <h3>Por qué los métodos exactos exigen un subgrafo</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Qué escala y qué no?</p>
+    <div data-modulo="escalabilidad"></div>
+    <p class="interpretacion">Girvan-Newman crece como n elevado a 4,1: sobre el grafo nacional tardaría cientos de miles de años. La propagación de etiquetas en Spark lo resuelve en 30 segundos y reencuentra la estructura de Louvain, aunque con menos modularidad (0,21 frente a 0,66), porque fusiona mercados vecinos. Louvain gana en calidad mientras el grafo quepa en memoria. El diseño combina los dos: el exacto para entender un mercado y el escalable para mapearlos todos.</p>
+  </div>
+</div></section>
+
+<section id="representacion"><div class="envoltura">
+  <div class="parte">Pregunta 3 · Parte VI</div>
+  <h2>Un vector por proveedor: qué capturan y para qué sirven</h2>
+  <p class="intro">Un embedding resume la posición de cada proveedor en la red de competencia en 32 números: proveedores cercanos ocupan lugares parecidos. Se construyeron con SVD y Node2Vec, que solo ven la estructura, y se validaron contra tres redes neuronales sobre grafos, GCN, GraphSAGE y GAT escritas a mano, que además ven los rasgos de cada proveedor. Se usan en dos tareas: anticipar quién va a competir con quién y medir si las partes anteriores convergen.</p>
+  <div class="modulo">
+    <h3>Contar rivales en común es difícil de superar; la red neuronal no lo logra</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Qué método anticipa mejor una competencia? Cambie entre todos los pares y los pares sin ningún rival en común.</p>
+    <div data-modulo="enlaces"></div>
+    <p class="interpretacion">Sobre todos los pares gana Adamic-Adar, una heurística que cuenta rivales en común, con <b>AUC de 0,99</b>: la competencia es muy transitiva. La red neuronal con rasgos es el mejor embedding (0,97 frente a 0,88 de SVD y Node2Vec), y la ventaja viene de los rasgos: sin ellos baja a 0,92. Pero para la <b>competencia sin antecedentes</b>, pares que todavía no comparten ningún rival, gana Node2Vec (0,82) y la red neuronal cae a 0,64: aprendió quién es activo, no a qué mercado pertenece. Ese conjunto tiene solo 64 aristas, así que se lee como tendencia. GAT, la más compleja, no supera a GCN y tarda trece veces más.</p>
+    <div class="negocio"><span class="k">Para el negocio</span>Para ampliar la lista de invitados a cotizar: rivales en común como primer criterio, y la cercanía en Node2Vec para proponer proveedores sin antecedentes en ese mercado. La red neuronal no se justifica para este uso.</div>
+  </div>
+  <div class="modulo">
+    <h3>Las islas son mercados de rubro, no perfiles de comportamiento</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Qué estructura capturan los embeddings? Elija el embedding y cómo colorearlo.</p>
+    <div data-modulo="tsneVivo"></div>
+    <p class="interpretacion">t-SNE proyecta 3.000 proveedores en dos dimensiones conservando vecindarios. Coloreada por rubro, la nube se ordena en islas; coloreada por perfil de la Parte II, se mezcla, salvo los contratistas de obra y los grandes recurrentes, cuyo rubro es su mercado. Con p y q de Node2Vec se elige cómo camina: q menor que 1 explora la comunidad, q mayor que 1 se queda en el vecindario inmediato.</p>
+  </div>
+  <div class="modulo">
+    <h3>Convergen dentro de cada lente, no entre lentes</h3>
+    <p class="pregunta"><b>Pregunta.</b> ¿Coinciden los clústeres, las comunidades y los grupos de los embeddings?</p>
+    <div data-modulo="convergencia"></div>
+    <p class="interpretacion">Los grupos de los embeddings de competencia coinciden con las comunidades de la Parte V (NMI de 0,62) y con el rubro (0,59), y casi nada con los perfiles de la Parte II (0,09). Un embedding del grafo KNN de rasgos hace lo contrario: reencuentra el perfil (0,28) y no el rubro. GraphSAGE, que ve las dos cosas, queda en medio.</p>
+    <div class="negocio"><span class="k">Para el negocio</span>Dónde compite un proveedor y cómo se comporta son dos dimensiones distintas. Un cautivo se evalúa contra los proveedores competitivos de su mismo mercado, que el embedding identifica.</div>
+  </div>
+</div></section>
+
+<section id="discusion"><div class="envoltura">
+  <div class="parte">Parte VII</div>
+  <h2>Discusión</h2>
+  <div class="modulo">
+    <h3>Qué técnicas aportaron conocimiento y cuáles poco</h3>
+    <div class="tabla-scroll"><table class="datos">
+      <tr><th>técnica</th><th>qué respondió</th><th>valor</th></tr>
+      <tr><td>Resolución de entidades con MinHash y LSH</td><td>165.615 proveedores reales de 209.207 códigos</td><td>alto: sin ella todo grafo se fragmenta</td></tr>
+      <tr><td>KMeans++, DBSCAN y HDBSCAN</td><td>el perfil cautivo y las 77 anomalías que importan</td><td>alto</td></tr>
+      <tr><td>Recomendador híbrido</td><td>las relaciones nuevas se anticipan 360 veces mejor que al azar</td><td>alto como modelo; nulo como alerta aislada</td></tr>
+      <tr><td>PageRank sobre el grafo dirigido</td><td>dominio competitivo distinto del conteo de victorias</td><td>alto</td></tr>
+      <tr><td>PageRank sobre el grafo no dirigido</td><td>repite al grado, correlación de 0,92</td><td>bajo, y por eso se descartó</td></tr>
+      <tr><td>HITS y vectores singulares</td><td>núcleo de salud y mapa de mercados sin etiquetas</td><td>alto el mapa; HITS solo ve un mercado</td></tr>
+      <tr><td>Comunidades y alternancia</td><td>mercados de rubro y señales concentradas en pocos mercados</td><td>alto</td></tr>
+      <tr><td>Node2Vec, SVD y redes neuronales</td><td>convergencia por lentes; predicción de enlaces</td><td>medio: no superan a contar rivales</td></tr>
+    </table></div>
+  </div>
+  <div class="modulo">
+    <h3>¿Convergen los resultados?</h3>
+    <p class="interpretacion">Sí, dentro de cada lente. Girvan-Newman y espectral encuentran la misma partición del núcleo de Ayacucho (NMI 0,91). Las comunidades y los embeddings de la red coinciden (NMI 0,62), y los dos se explican por el rubro, como los vectores singulares de HITS. Los clústeres de la Parte II coinciden con los embeddings de un grafo de rasgos, no con los de la red. La conclusión no es que algo falle: <b>posición competitiva y comportamiento son dimensiones independientes</b>, y la supervisión necesita las dos.</p>
+  </div>
+  <div class="modulo">
+    <h3>Qué escaló y qué exigió submuestra</h3>
+    <p class="interpretacion">Spark fue indispensable para leer 3 GB de CSV, resolver identidades y construir el grafo de coparticipación (32 millones de pares candidatos) y el de perdedor a ganador. A este tamaño, PageRank es 200 veces más rápido en scipy que en Spark (0,3 frente a 54 segundos) con el mismo resultado, y la propagación de etiquetas en Spark resuelve el país en 30 segundos pero con menos modularidad que Louvain. Girvan-Newman crece como n elevado a 4,1 y exigió un núcleo de 143 proveedores; espectral, BigCLAM y Louvain corrieron sobre los 1.065 de Ayacucho. Se gana poder mirar todo el país; se pierde la jerarquía exacta de cortes.</p>
+  </div>
+  <div class="modulo">
+    <h3>Si el volumen fuera diez o cien veces mayor</h3>
+    <p class="interpretacion">El grafo dirigido y PageRank pasarían a Spark sin cambiar el código, que ya está escrito sobre DataFrames. Louvain dejaría de caber en memoria y la propagación de etiquetas, o un Louvain distribuido, pasaría a ser la opción. BigCLAM escala casi lineal con las aristas. Node2Vec necesitaría caminatas distribuidas, y una red neuronal pasaría a entrenarse con muestreo de vecindarios, que es justo para lo que se diseñó GraphSAGE. Y conviene recalcular cada trimestre con los mismos parámetros para ver quién entra y quién sale de cada lista.</p>
+  </div>
+  <div class="modulo">
+    <h3>Ética: señales, no acusaciones</h3>
+    <ol class="razones">
+      <li><b>Una señal tiene explicaciones legítimas.</b> Los pares que más alternan victorias son aseguradoras, como Pacífico, Mapfre y La Positiva, y emisoras de vales, como Pluxee y Edenred: mercados con pocos oferentes donde alternar es lo esperable. La revisión debe priorizar la alternancia en mercados fragmentados.</li>
+      <li><b>El dato tiene límites.</b> En el SEACE participar es registrarse, no ofertar; el 44 % de los pares afines pierde junto por registro masivo. Sin las ofertas no se puede separar más.</li>
+      <li><b>Personas naturales.</b> En las listas de señales de esta página no se muestra el nombre de proveedores que son personas naturales: el dato es público, pero exhibir a una persona en una lista de señales no aporta a la supervisión y sí puede dañarla.</li>
+      <li><b>Resultados negativos.</b> Lo improbable no es menos competitivo (p = 0,30) y la red neuronal no supera a contar rivales. Se reportan igual, porque ocultarlos inflaría lo que las técnicas pueden decir.</li>
+      <li><b>Lo que este trabajo no autoriza a concluir:</b> que un par afín, una comunidad densa o un cautivo impliquen colusión o irregularidad. Implican dónde conviene mirar primero, con información que el analista no tiene, como las ofertas y los precios.</li>
+    </ol>
+  </div>
+</div></section>
+
+<footer><div class="envoltura">
+  Proyecto Integrador 2 de Minería de Datos Masivos, UTEC. Ricardo Acuña, Juan Aquino y Camilo Soto. Datos de Open Contracting Partnership, Data Registry, publicación 135, Perú, OECE, paquetes anuales 2023 a 2025 descargados el 26 de octubre de 2026, licencia CC BY 4.0. Los agregados se generan con los notebooks del proyecto y van incrustados en esta página.
+</div></footer>
