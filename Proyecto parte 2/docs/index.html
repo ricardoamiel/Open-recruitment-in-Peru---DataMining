@@ -746,13 +746,35 @@ const MODULOS = {
     const pts = T("p2_puntos");
     const X = pts.map((p) => [p.pc1, p.pc2, p.pc3, p.pc4, p.pc5, p.pc6]);
     const elec = Object.fromEntries(T("p2_eleccion_k").map((r) => [r.k, r]));
-    const [c, info, g] = partes(el, "controles", "lectura", "");
+    // Centroides del notebook con k = 4 y su perfil: cada grupo del navegador se nombra por el más cercano.
+    const nombrePerfil = Object.fromEntries(T("p2_perfiles").map((r) => [r.cluster, r.perfil]));
+    const ref = T("p2_centroides").filter((r) => r.k === 4)
+      .map((r) => ({ perfil: nombrePerfil[r.cluster], c: [r.pc1, r.pc2, r.pc3, r.pc4, r.pc5, r.pc6] }));
+    const colorPerfil = (n) => n?.startsWith("cautivo") ? G.css("--s2") : n?.startsWith("gran") ? G.css("--s1") :
+      n?.startsWith("competitivo") ? G.css("--s3") : n?.startsWith("contratista") ? G.css("--s4") : G.css("--neutro");
+    const [c, info, g, ley] = partes(el, "controles", "lectura", "", "");
+    ley.style.marginTop = "6px";
     function dibujar(k) {
       const { etq } = G.kmeans(X, k, 3);
-      const p = pts.map((q, i) => ({ x: q.pc1, y: q.pc2, grupo: etq[i], etiqueta: `${privado(q.nombre)}<br>grupo ${etq[i] + 1}` }));
-      G.dispersion(g, p, { ancho: 760, alto: o.modo === "presentacion" ? 470 : 420, r: 2.4, ex: "componente principal 1", ey: "componente principal 2" });
+      // Centro de cada grupo en las 6 componentes y el perfil del notebook más cercano.
+      const suma = Array.from({ length: k }, () => new Array(6).fill(0)), n = new Array(k).fill(0);
+      X.forEach((x, i) => { n[etq[i]]++; x.forEach((v, d) => (suma[etq[i]][d] += v)); });
+      const cercano = suma.map((s, q) => {
+        const m = s.map((v) => v / Math.max(1, n[q]));
+        return ref.reduce((a, r) => { const d = r.c.reduce((t, v, j) => t + (v - m[j]) ** 2, 0); return d < a.d ? { d, perfil: r.perfil } : a; }, { d: Infinity }).perfil;
+      });
+      const biyectivo = new Set(cercano).size === k && k === ref.length;
+      const pal = G.SERIES().concat(["#5FA8D3", "#A0522D", "#2F4858"]);
+      const color = cercano.map((pf, q) => biyectivo ? colorPerfil(pf) : pal[q % pal.length]);
+      const p = pts.map((q, i) => ({ x: q.pc1, y: q.pc2, grupo: etq[i],
+        etiqueta: `${privado(q.nombre)}<br>grupo ${etq[i] + 1}, se parece al perfil ${cercano[etq[i]]}` }));
+      G.dispersion(g, p, { ancho: 760, alto: o.modo === "presentacion" ? 450 : 420, r: 2.4, ex: "componente principal 1", ey: "componente principal 2",
+        color: (q) => color[q.grupo] });
+      const orden = d3.range(k).sort((a, b) => n[b] - n[a]);
+      leyenda(ley, orden.map((q) => [color[q], biyectivo ? `${cercano[q]} (${G.fmtN(100 * n[q] / X.length)} %)`
+        : `grupo ${q + 1}: se parece a ${cercano[q]} (${G.fmtN(100 * n[q] / X.length)} %)`]));
       const e = elec[k];
-      info.innerHTML = e ? `Con k = <b>${k}</b>: silueta de <b>${G.fmtN(e.silueta_propia, 3)}</b> y SSE de ${G.fmtC(e.sse_propio)} sobre los 12 mil proveedores recurrentes. ${k === 4 ? "Es el k elegido: la silueta máxima." : k === 5 ? "El codo del SSE sugería 5, pero la silueta cae." : ""}` : "";
+      info.innerHTML = e ? `Con k = <b>${k}</b>: silueta de <b>${G.fmtN(e.silueta_propia, 3)}</b> y SSE de ${G.fmtC(e.sse_propio)} sobre los 12 mil proveedores recurrentes. ${k === 4 ? "Es el k elegido: la silueta máxima, y cada color es uno de los cuatro perfiles." : k === 5 ? "El codo del SSE sugería 5, pero la silueta cae." : "Cada grupo se nombra por el perfil de k = 4 al que más se parece."}` : "";
     }
     control(c, "número de grupos k", 2, 8, 1, 4, dibujar).disparar();
   },
