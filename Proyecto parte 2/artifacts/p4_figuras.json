@@ -5,7 +5,7 @@
  },
  {
   "figura":"f20_convergencia_pagerank",
-  "lectura":"El cambio entre iteraciones cae de forma geométrica y siempre por debajo de la cota beta elevado a t, que es la garantía teórica: con beta igual a 0.85, cada paso reduce el error al menos en un 15 por ciento. Spark necesitó 79 iteraciones y 54 segundos; scipy, 108 iteraciones y 0.25 segundos con una tolerancia más estricta. Las dos coinciden hasta 3e-10 en el peor nodo y en el 100 por ciento del top 100. A este tamaño, con 134,885 nodos, la iteración local es mucho más rápida; Spark se justifica cuando el grafo deja de caber en una máquina, y el código ya está escrito para ese caso."
+  "lectura":"El cambio entre iteraciones cae de forma geométrica y siempre por debajo de la cota beta elevado a t, que es la garantía teórica: con beta igual a 0.85, cada paso reduce el error al menos en un 15 por ciento. Spark necesitó 79 iteraciones y 107 segundos; scipy, 108 iteraciones y 0.62 segundos con una tolerancia más estricta. Las dos coinciden hasta 3e-10 en el peor nodo y en el 100 por ciento del top 100. A este tamaño, con 134,885 nodos, la iteración local es mucho más rápida; Spark se justifica cuando el grafo deja de caber en una máquina, y el código ya está escrito para ese caso."
  },
  {
   "figura":"f21_pagerank_vs_victorias",

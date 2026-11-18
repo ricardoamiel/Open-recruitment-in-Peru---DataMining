@@ -16,7 +16,7 @@
  {
   "parte":"V",
   "titulo":"Los métodos exactos sirven para entender un mercado; los escalables, para mapear el país",
-  "insight":"Girvan-Newman crece como n elevado a 4.1 y sobre el grafo nacional tardaría del orden de 759,427 años; la propagación de etiquetas en Spark lo resuelve en 30 segundos y reencuentra la estructura de Louvain (NMI 0.68), aunque con menor modularidad (0.21 frente a 0.66). BigCLAM agrega lo que ninguna partición da: el 9 por ciento de los proveedores de Ayacucho compite en dos o más mercados a la vez.",
+  "insight":"Girvan-Newman crece como n elevado a 4.1 y sobre el grafo nacional tardaría del orden de 1,482,411 años; la propagación de etiquetas en Spark lo resuelve en 71 segundos y reencuentra la estructura de Louvain (NMI 0.68), aunque con menor modularidad (0.21 frente a 0.66). BigCLAM agrega lo que ninguna partición da: el 9 por ciento de los proveedores de Ayacucho compite en dos o más mercados a la vez.",
   "accion":"Usar el método escalable para mantener un mapa nacional de mercados actualizado cada trimestre, y los métodos exactos y BigCLAM para estudiar a fondo los mercados que ese mapa marque.",
   "evidencia":"f33_escalabilidad_comunidades, f31_bigclam_solapamiento, p5_escalabilidad"
  }

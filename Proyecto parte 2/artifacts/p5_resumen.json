@@ -11,12 +11,12 @@
   "q_louvain_nacional":0.656,
   "comunidades_louvain_nacional":812,
   "pct_periferia":55.8,
-  "segundos_lpa":29.6,
+  "segundos_lpa":70.8,
   "pct_peso_mismo_departamento":60.1,
   "pct_puente":8.9,
   "pct_afines_misma_comunidad":94.3,
   "pct_esperado":14.3,
-  "exponente_gn":4.07,
+  "exponente_gn":4.1,
   "proveedores_ayacucho":1065
  }
 ]

@@ -140,7 +140,7 @@
  {
   "metodo":"híbrido: vecindario, contenido, ALS y departamento",
   "k":10,
-  "recall":0.10476,
-  "precision":0.04032
+  "recall":0.10453,
+  "precision":0.04027
  }
 ]

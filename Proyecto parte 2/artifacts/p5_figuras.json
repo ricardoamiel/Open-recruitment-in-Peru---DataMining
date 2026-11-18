@@ -5,7 +5,7 @@
  },
  {
   "figura":"f28_espectral_q",
-  "lectura":"El espectral sobre los 1,065 proveedores de Ayacucho tiene su codo en k = 6, con Q = 0.40. Louvain, que optimiza la modularidad de forma directa, llega a Q = 0.64 con 20 comunidades en 0.08 segundos. La distancia entre las dos curvas es lo que cuesta pedirle al espectral que use pocos grupos; la conclusión de negocio es la misma con ambos: el mercado regional está fragmentado en submercados que casi no se tocan."
+  "lectura":"El espectral sobre los 1,065 proveedores de Ayacucho tiene su codo en k = 6, con Q = 0.40. Louvain, que optimiza la modularidad de forma directa, llega a Q = 0.64 con 20 comunidades en 0.24 segundos. La distancia entre las dos curvas es lo que cuesta pedirle al espectral que use pocos grupos; la conclusión de negocio es la misma con ambos: el mercado regional está fragmentado en submercados que casi no se tocan."
  },
  {
   "figura":"f29_acuerdo_particiones",
@@ -25,6 +25,6 @@
  },
  {
   "figura":"f33_escalabilidad_comunidades",
-  "lectura":"El tiempo de Girvan-Newman crece como el número de proveedores elevado a 4.1: con 123 proveedores ya tarda 129 segundos, y sobre los 70,383 del grafo nacional tardaría del orden de 759,427 años. La propagación de etiquetas en Spark procesa ese grafo completo en 30 segundos, y Louvain en una sola máquina en 42, con más calidad pero con todo el grafo en memoria: esa es la frontera que Spark corre cuando el volumen crece. Lo que se pierde al escalar es la jerarquía completa de cortes y la garantía de explorar cada partición; lo que se gana es poder mirar el país entero. Por eso el diseño combina los dos: el método exacto para entender un mercado y el escalable para mapearlos todos."
+  "lectura":"El tiempo de Girvan-Newman crece como el número de proveedores elevado a 4.1: con 123 proveedores ya tarda 195 segundos, y sobre los 70,383 del grafo nacional tardaría del orden de 1,482,411 años. La propagación de etiquetas en Spark procesa ese grafo completo en 71 segundos, y Louvain en una sola máquina en 65, con más calidad pero con todo el grafo en memoria: esa es la frontera que Spark corre cuando el volumen crece. Lo que se pierde al escalar es la jerarquía completa de cortes y la garantía de explorar cada partición; lo que se gana es poder mirar el país entero. Por eso el diseño combina los dos: el método exacto para entender un mercado y el escalable para mapearlos todos."
  }
 ]

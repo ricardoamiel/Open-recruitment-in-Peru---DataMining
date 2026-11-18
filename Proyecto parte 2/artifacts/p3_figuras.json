@@ -5,7 +5,7 @@
  },
  {
   "figura":"f17_resultados_recomendacion",
-  "lectura":"El híbrido logra un NDCG en 10 de 0.089 y un recall de 0.105, frente a 0.076 del mejor enfoque individual, vecindario usuario a usuario, k = 50, y 0.067 de la popularidad en el departamento. En términos operativos, de cada cien proveedores que el híbrido propone, 4 son contratados por primera vez por esa entidad en 2025, en un catálogo de 47,723 proveedores donde una lista al azar acertaría 0.011 de cada cien: 360 veces más. La popularidad acierta lo obvio con una cobertura mínima; el vecindario y ALS cubren más catálogo. El contenido solo rinde poco, porque miles de proveedores comparten familia y departamento y el coseno no puede ordenarlos entre sí, aunque es el que más catálogo cubre. Que la suma gane a cada parte indica que se equivocan en casos distintos; la ablación siguiente mide cuánto aporta cada una."
+  "lectura":"El híbrido logra un NDCG en 10 de 0.088 y un recall de 0.105, frente a 0.076 del mejor enfoque individual, vecindario usuario a usuario, k = 50, y 0.067 de la popularidad en el departamento. En términos operativos, de cada cien proveedores que el híbrido propone, 4 son contratados por primera vez por esa entidad en 2025, en un catálogo de 47,723 proveedores donde una lista al azar acertaría 0.011 de cada cien: 360 veces más. La popularidad acierta lo obvio con una cobertura mínima; el vecindario y ALS cubren más catálogo. El contenido solo rinde poco, porque miles de proveedores comparten familia y departamento y el coseno no puede ordenarlos entre sí, aunque es el que más catálogo cubre. Que la suma gane a cada parte indica que se equivocan en casos distintos; la ablación siguiente mide cuánto aporta cada una."
  },
  {
   "figura":"f18_sorpresa",

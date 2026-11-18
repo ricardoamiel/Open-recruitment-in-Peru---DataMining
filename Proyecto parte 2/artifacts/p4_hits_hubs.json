@@ -6,7 +6,7 @@
   "departamento":"LIMA",
   "nivel_gobierno":"Otro",
   "n_proveedores":1468.0,
-  "monto_total":7136840825.2700014114
+  "monto_total":7136840825.2700004578
  },
  {
   "comprador_id":"PE-CONSUCODE-200363",
@@ -33,7 +33,7 @@
   "departamento":"LIMA",
   "nivel_gobierno":"Fuerzas armadas y policiales",
   "n_proveedores":924.0,
-  "monto_total":1329028560.5000004768
+  "monto_total":1329028560.5000002384
  },
  {
   "comprador_id":"PE-CONSUCODE-200683",
@@ -42,7 +42,7 @@
   "departamento":"LIMA",
   "nivel_gobierno":"Fuerzas armadas y policiales",
   "n_proveedores":173.0,
-  "monto_total":274157612.8199999332
+  "monto_total":274157612.8199999928
  },
  {
   "comprador_id":"PE-CONSUCODE-10194",
@@ -96,7 +96,7 @@
   "departamento":"LIMA",
   "nivel_gobierno":"Establecimiento de salud",
   "n_proveedores":155.0,
-  "monto_total":227707122.349999994
+  "monto_total":227707122.3500000238
  },
  {
   "comprador_id":"PE-CONSUCODE-200441",
@@ -123,7 +123,7 @@
   "departamento":"LIMA",
   "nivel_gobierno":"Fuerzas armadas y policiales",
   "n_proveedores":460.0,
-  "monto_total":657408406.9900000095
+  "monto_total":657408406.9899998903
  },
  {
   "comprador_id":"PE-CONSUCODE-10204",
@@ -240,7 +240,7 @@
   "departamento":"LIMA",
   "nivel_gobierno":"Gobierno nacional",
   "n_proveedores":165.0,
-  "monto_total":128118047.6200000048
+  "monto_total":128118047.6200000197
  },
  {
   "comprador_id":"PE-CONSUCODE-200262",
@@ -321,7 +321,7 @@
   "departamento":"HUANUCO",
   "nivel_gobierno":"Gobierno regional",
   "n_proveedores":88.0,
-  "monto_total":22683016.6399999969
+  "monto_total":22683016.6400000006
  },
  {
   "comprador_id":"PE-CONSUCODE-200154",
@@ -339,7 +339,7 @@
   "departamento":"LAMBAYEQUE",
   "nivel_gobierno":"Gobierno regional",
   "n_proveedores":136.0,
-  "monto_total":137996176.5499999821
+  "monto_total":137996176.5500000119
  },
  {
   "comprador_id":"PE-CONSUCODE-10423",

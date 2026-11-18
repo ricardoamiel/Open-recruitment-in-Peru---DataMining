@@ -1,7 +1,7 @@
 [
  {
   "decision":"lectura con poda por año",
-  "segundos":0.15
+  "segundos":0.09
  },
  {
   "decision":"lectura de los tres años",
@@ -9,10 +9,10 @@
  },
  {
   "decision":"join con broadcast",
-  "segundos":0.28
+  "segundos":0.21
  },
  {
   "decision":"join con sort merge",
-  "segundos":0.36
+  "segundos":0.33
  }
 ]

@@ -5,7 +5,7 @@
   "recall":0.02639,
   "ndcg":0.02234,
   "cobertura_pct":0.03562,
-  "segundos":1.53849,
+  "segundos":0.96875,
   "usuarios":2123
  },
  {
@@ -14,7 +14,7 @@
   "recall":0.082,
   "ndcg":0.06689,
   "cobertura_pct":0.7774,
-  "segundos":1.22982,
+  "segundos":1.30327,
   "usuarios":2123
  },
  {
@@ -23,7 +23,7 @@
   "recall":0.08327,
   "ndcg":0.0758,
   "cobertura_pct":7.6483,
-  "segundos":4.36545,
+  "segundos":2.59796,
   "usuarios":2123
  },
  {
@@ -32,7 +32,7 @@
   "recall":0.01449,
   "ndcg":0.01155,
   "cobertura_pct":15.15831,
-  "segundos":5.60348,
+  "segundos":3.26044,
   "usuarios":2123
  },
  {
@@ -41,16 +41,16 @@
   "recall":0.0915,
   "ndcg":0.07547,
   "cobertura_pct":4.04417,
-  "segundos":2.32894,
+  "segundos":2.15702,
   "usuarios":2123
  },
  {
   "metodo":"híbrido: vecindario, contenido, ALS y departamento",
-  "precision":0.04032,
-  "recall":0.10476,
-  "ndcg":0.08852,
-  "cobertura_pct":6.10607,
-  "segundos":19.56898,
+  "precision":0.04027,
+  "recall":0.10453,
+  "ndcg":0.08845,
+  "cobertura_pct":6.10398,
+  "segundos":15.10699,
   "usuarios":2123
  }
 ]

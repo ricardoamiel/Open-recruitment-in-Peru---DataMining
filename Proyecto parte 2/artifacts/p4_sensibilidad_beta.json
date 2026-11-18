@@ -2,7 +2,7 @@
  {
   "beta":0.5,
   "iteraciones":26,
-  "segundos":0.062664309,
+  "segundos":0.114231663,
   "top100_comun_pct":76.0,
   "top20_comun_pct":75.0,
   "spearman":0.9967075687
@@ -10,7 +10,7 @@
  {
   "beta":0.6,
   "iteraciones":35,
-  "segundos":0.083606249,
+  "segundos":0.147419173,
   "top100_comun_pct":81.0,
   "top20_comun_pct":80.0,
   "spearman":0.9980432512
@@ -18,7 +18,7 @@
  {
   "beta":0.7,
   "iteraciones":50,
-  "segundos":0.119987522,
+  "segundos":0.215813202,
   "top100_comun_pct":86.0,
   "top20_comun_pct":90.0,
   "spearman":0.9991566506
@@ -26,7 +26,7 @@
  {
   "beta":0.75,
   "iteraciones":61,
-  "segundos":0.146249221,
+  "segundos":0.279071208,
   "top100_comun_pct":90.0,
   "top20_comun_pct":90.0,
   "spearman":0.9995822181
@@ -34,7 +34,7 @@
  {
   "beta":0.8,
   "iteraciones":79,
-  "segundos":0.189040773,
+  "segundos":0.353874357,
   "top100_comun_pct":96.0,
   "top20_comun_pct":95.0,
   "spearman":0.9998804628
@@ -42,7 +42,7 @@
  {
   "beta":0.85,
   "iteraciones":108,
-  "segundos":0.251233155,
+  "segundos":0.484121822,
   "top100_comun_pct":100.0,
   "top20_comun_pct":100.0,
   "spearman":1.0
@@ -50,7 +50,7 @@
  {
   "beta":0.9,
   "iteraciones":165,
-  "segundos":0.392345366,
+  "segundos":0.688509901,
   "top100_comun_pct":93.0,
   "top20_comun_pct":100.0,
   "spearman":0.9998389419
@@ -58,7 +58,7 @@
  {
   "beta":0.95,
   "iteraciones":336,
-  "segundos":0.791821913,
+  "segundos":1.64631394,
   "top100_comun_pct":76.0,
   "top20_comun_pct":95.0,
   "spearman":0.9992127064
@@ -66,7 +66,7 @@
  {
   "beta":0.99,
   "iteraciones":1663,
-  "segundos":4.043905617,
+  "segundos":7.552861425,
   "top100_comun_pct":31.0,
   "top20_comun_pct":15.0,
   "spearman":0.9980516748

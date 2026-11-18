@@ -2,14 +2,14 @@
  {
   "implementacion":"Spark, DataFrames",
   "iteraciones":79,
-  "segundos":54.4,
+  "segundos":106.5,
   "diferencia_maxima":0.0000000003,
   "top100_igual_pct":100.0
  },
  {
   "implementacion":"local, scipy",
   "iteraciones":108,
-  "segundos":0.25,
+  "segundos":0.62,
   "diferencia_maxima":0.0000000003,
   "top100_igual_pct":100.0
  }
