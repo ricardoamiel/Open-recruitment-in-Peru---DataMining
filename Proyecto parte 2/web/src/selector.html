@@ -1,0 +1,36 @@
+<!-- Selector entre los dos proyectos. Es el mismo archivo en todas las páginas del sitio:
+     build.mjs lo agrega al reporte y a la presentación, y el flujo de GitHub Pages lo agrega
+     a la página del proyecto 1. Calcula sus enlaces desde la dirección en que se sirve, así
+     funciona en /, /parte1/, /parte2/ y /parte2/presentacion/. Solo aparece servido por http,
+     para no dejar enlaces rotos al abrir los archivos en local. -->
+<nav id="selector-proyectos" aria-label="Proyectos" hidden>
+  <a data-destino="parte1/">Proyecto 1</a>
+  <a data-destino="parte2/">Proyecto 2</a>
+  <a data-destino="parte2/presentacion/">Presentaci&oacute;n</a>
+</nav>
+<style>
+#selector-proyectos { position: fixed; top: 12px; right: 12px; z-index: 1000; display: flex; gap: 2px;
+  background: #ffffff; border: 1px solid #DCE3E8; border-radius: 999px; padding: 3px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.12); font: 600 13px "Roboto", "Helvetica Neue", Arial, sans-serif; }
+#selector-proyectos[hidden] { display: none; }
+#selector-proyectos a { color: #3D454E; text-decoration: none; padding: 5px 12px; border-radius: 999px; }
+#selector-proyectos a:hover { background: #E5F7FF; }
+#selector-proyectos a[aria-current="page"] { background: #00BFFE; color: #00121A; }
+:fullscreen #selector-proyectos { display: none; }
+@media (max-width: 520px) { #selector-proyectos { top: auto; bottom: 10px; right: 50%; transform: translateX(50%); font-size: 12px; } }
+</style>
+<script>
+(() => {
+  const nav = document.getElementById("selector-proyectos");
+  if (!nav || !/^https?:$/.test(location.protocol)) return;
+  const ruta = location.pathname;
+  const i = ruta.search(/\/parte[12]\//);
+  const base = i >= 0 ? ruta.slice(0, i + 1) : ruta.replace(/[^/]*$/, "");
+  const actual = /\/parte2\/presentacion\//.test(ruta) ? "parte2/presentacion/" : /\/parte2\//.test(ruta) ? "parte2/" : "parte1/";
+  nav.querySelectorAll("a").forEach((a) => {
+    a.href = base + a.dataset.destino;
+    if (a.dataset.destino === actual) a.setAttribute("aria-current", "page");
+  });
+  nav.hidden = false;
+})();
+</script>

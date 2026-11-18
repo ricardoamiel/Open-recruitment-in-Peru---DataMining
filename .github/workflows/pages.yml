@@ -1,4 +1,10 @@
-# Publica en GitHub Pages el reporte interactivo del proyecto 1.
+# Publica en GitHub Pages los reportes interactivos de los dos proyectos:
+#   /                       proyecto 1, como antes, para no romper el enlace publicado
+#   /parte1/                proyecto 1
+#   /parte2/                reporte interactivo del proyecto 2
+#   /parte2/presentacion/   presentacion del proyecto 2
+# Las paginas del proyecto 1 reciben al publicarse el selector entre proyectos
+# (Proyecto parte 2/web/src/selector.html); sus archivos fuente no se modifican.
 # Requiere en Settings > Pages > Source la opcion "GitHub Actions".
 name: Publicar reporte
 on:
@@ -21,8 +27,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Armar el sitio con los dos proyectos
+        run: |
+          mkdir -p _sitio/parte1 _sitio/parte2/presentacion
+          cp -r "Proyecto parte 1/docs/." _sitio/
+          cp -r "Proyecto parte 1/docs/." _sitio/parte1/
+          for f in _sitio/index.html _sitio/parte1/index.html; do cat "Proyecto parte 2/web/src/selector.html" >> "$f"; done
+          cp "Proyecto parte 2/docs/index.html" _sitio/parte2/index.html
+          cp "Proyecto parte 2/presentacion/index.html" _sitio/parte2/presentacion/index.html
+          # Enlaces anteriores del proyecto 2, que redirigen a las direcciones nuevas
+          mkdir -p _sitio/proyecto2
+          printf '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../parte2/"><a href="../parte2/">Proyecto 2</a>' > _sitio/proyecto2/index.html
+          printf '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../parte2/presentacion/"><a href="../parte2/presentacion/">Presentación</a>' > _sitio/proyecto2/presentacion.html
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: "Proyecto parte 1/docs"
+          path: _sitio
       - id: despliegue
         uses: actions/deploy-pages@v4
