@@ -1,5 +1,5 @@
 decision,segundos
-lectura con poda por año,0.09
-lectura de los tres años,0.2
-join con broadcast,0.21
-join con sort merge,0.33
+lectura con poda por año,0.07
+lectura de los tres años,0.08
+join con broadcast,0.08
+join con sort merge,0.13

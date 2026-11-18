@@ -314,5 +314,9 @@
  "p6_hallazgos": {
   "descripcion": "Hallazgos de la Parte VI con su accion propuesta",
   "filas": 2
+ },
+ "p1_precision_resolucion": {
+  "descripcion": "Fraccion de pares que son el mismo proveedor por tramo de Jaccard, con cota baja y alta por los pares dudosos",
+  "filas": 4
  }
 }

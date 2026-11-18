@@ -1,0 +1,34 @@
+[
+ {
+  "tramo":"0,70 a 0,80",
+  "pares":25,
+  "mismo_proveedor":2,
+  "dudosos":6,
+  "pct_cota_baja":8.0,
+  "pct_cota_alta":32.0
+ },
+ {
+  "tramo":"0,80 a 0,85",
+  "pares":25,
+  "mismo_proveedor":5,
+  "dudosos":10,
+  "pct_cota_baja":20.0,
+  "pct_cota_alta":60.0
+ },
+ {
+  "tramo":"0,85 a 0,90",
+  "pares":25,
+  "mismo_proveedor":11,
+  "dudosos":10,
+  "pct_cota_baja":44.0,
+  "pct_cota_alta":84.0
+ },
+ {
+  "tramo":"0,90 o más",
+  "pares":25,
+  "mismo_proveedor":14,
+  "dudosos":11,
+  "pct_cota_baja":56.0,
+  "pct_cota_alta":100.0
+ }
+]
