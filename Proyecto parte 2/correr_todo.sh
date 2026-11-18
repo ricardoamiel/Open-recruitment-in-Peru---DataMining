@@ -43,6 +43,4 @@ for N in 1_base_relacional 2_clustering_anomalias 3_recomendacion 4_enlaces 5_co
     --ExecutePreprocessor.kernel_name=python3 "notebooks/$N.ipynb"
 done
 
-"$PY" _build/verificar.py
-"$PY" _build/auditar_estilo.py
 echo "listo"

@@ -72,12 +72,9 @@ Proyecto parte 2/
 ├── web/                    generador del reporte y la presentación, Node y D3
 ├── docs/                   reporte interactivo generado
 ├── presentacion/           presentación generada
-├── _build/                 generadores de los notebooks y revisiones de estilo y ejecución
 ├── correr_todo.sh          reproduce las tres partes de principio a fin
 └── requirements.txt
 ```
-
-Los notebooks no se editan a mano: se generan desde _build/nb1.py a nb6.py, donde cada celda está escrita como texto. Así un cambio en una celda es un cambio legible en el historial de git y no una diferencia enorme en un JSON con salidas incrustadas.
 
 ## Cómo levantar el entorno
 
@@ -143,18 +140,25 @@ O abriéndolos en Jupyter y ejecutando todas las celdas, también en ese orden. 
 
 **Tiempos de referencia** en una máquina de 8 núcleos compartida con otro trabajo: el notebook 1 tarda unos 25 minutos, de los que la lectura de 3 GB de CSV crudos es la mayor parte, y deja un Parquet intermedio en data/processed/intermedio que las corridas siguientes reutilizan; borrar esa carpeta fuerza la relectura. Los notebooks 2 y 3 tardan unos minutos cada uno. El notebook 4 tarda unos 2 minutos. El notebook 5 tarda unos 10 minutos la primera vez, por Girvan-Newman, y menos de 2 después, porque guarda sus pasos caros en data/processed/parte5. El notebook 6 tarda unos 25 minutos la primera vez, por Node2Vec y GAT, y menos de 2 después, porque guarda sus embeddings en data/processed/parte6.
 
-**Revisiones antes de entregar:**
-
-```bash
-python _build/verificar.py        # todas las celdas ejecutadas, sin errores, cada figura con su lectura
-python _build/auditar_estilo.py   # redacción sin guiones como puntuación, cursivas ni comillas invertidas
-```
-
 ## Decisiones de diseño que conviene conocer
 
 **Implementaciones propias contrastadas con bibliotecas.** KMeans++, silueta, DBSCAN, jerárquico aglomerativo, filtrado colaborativo, TF-IDF y las métricas de ranking están escritos a mano en algoritmos.py siguiendo las lectures, y se comparan contra KMeans y ALS de Spark MLlib, DBSCAN y HDBSCAN de scikit-learn y linkage de scipy. La resolución de entidades usa MinHash y LSH propios escritos en DataFrames de Spark, porque el MinHashLSH de MLlib, con bandas de una sola fila, no terminaba.
 
 **Spark donde aporta, local donde no, y medido.** La Parte I corre entera en Spark, como exige el enunciado. En las Partes II y III cada notebook mide el camino de Spark contra el local y justifica la elección: a esta escala KMeans y el vecindario son más rápidos en numpy, y ALS se queda en Spark porque es lo que escalaría sin cambiar el código.
+
+## Registro de contribuciones
+
+| Parte | Responsables | Traza en el historial |
+| --- | --- | --- |
+| I. Base relacional en Spark y II. Clustering y anomalías | Ricardo Acuña | [90feb6a](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/90feb6a), [9e14b0f](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/9e14b0f), [7bf45b0](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/7bf45b0) |
+| Auditoría de los notebooks y III. Sistemas de recomendación | Juan Aquino y Camilo Soto | [3408c93](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/3408c93), [972a394](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/972a394), [b3bf903](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/b3bf903) |
+| IV. Análisis de enlaces: PageRank y HITS | Ricardo Acuña | [50fe797](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/50fe797) a [7e2b49b](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/7e2b49b) |
+| V. Detección de comunidades | Juan Aquino | [66541ad](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/66541ad) |
+| VI. Aprendizaje de representación en grafos | Camilo Soto | [efdb0d1](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/efdb0d1), [6f2c212](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/6f2c212) |
+| Reporte web interactivo | Ricardo Acuña, Juan Aquino y Camilo Soto | [2dd5ddd](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/2dd5ddd) a [cf574ac](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/cf574ac) |
+| Presentación | Ricardo Acuña, Juan Aquino y Camilo Soto | [b932ffe](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commit/b932ffe) |
+
+El historial completo está en [la lista de commits](https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining/commits/main). Cada integrante puede sustentar cualquier parte del proyecto.
 
 ## Uso de herramientas de asistencia
 

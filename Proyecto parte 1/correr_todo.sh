@@ -36,7 +36,4 @@ for N in 1_kdd_eda 2_similitud_lsh 3_ann_ivf_hnsw 4_flujos 5_reglas_asociacion 6
     --ExecutePreprocessor.kernel_name=python3 "notebooks/$N.ipynb"
 done
 
-#echo "=== revisiones ==="
-#"$PY" _build/verificar.py
-#"$PY" _build/auditar_estilo.py
 echo "listo. El reporte quedo en reporte/index.html y docs/index.html"
