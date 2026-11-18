@@ -1,0 +1,242 @@
+<section class="diapo portada">
+  <div class="mas" aria-hidden="true"></div>
+  <div class="etiqueta-parte" style="color:#003349">Proyecto Integrador 2 · Minería de Datos Masivos · UTEC</div>
+  <h1>Quién le compra a quién, y quién compite con quién</h1>
+  <p class="bajada">Grafos, clustering, recomendación y representación sobre 175.338 procesos de contratación pública del Perú, 2023 a 2025.</p>
+  <div class="equipo"><b>Ricardo Acuña · Juan Aquino · Camilo Soto</b><br>Datos: Contrataciones Abiertas del Perú, OECE, estándar OCDS, CC BY 4.0</div>
+</section>
+
+<section class="diapo" data-modulo="repaso">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Repaso</div>
+  <h2>Del proyecto 1 a este: los insumos</h2>
+  <p class="bajada">El proyecto 1 describió el gasto proceso por proceso. Este mira relaciones, y parte de lo que el primero dejó.</p>
+  <div class="cuerpo" style="gap:22px"><div data-grafico></div>
+    <div class="dos-iguales" style="display:grid;gap:40px"><div data-extra="reglasP1"></div><div data-extra="concentracionP1"></div></div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Del proyecto 1</span></div>
+</section>
+
+<section class="diapo">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Las preguntas</div>
+  <h2>Tres preguntas para quien supervisa el gasto</h2>
+  <p class="bajada">Cada hallazgo es una señal descriptiva para ordenar una revisión, nunca una acusación.</p>
+  <div class="cuerpo" style="gap:22px">
+    <div class="franja">
+      <div class="cifra"><div class="n">175.338</div><div class="t">procesos de 2023 a 2025</div></div>
+      <div class="cifra"><div class="n">165.615</div><div class="t">proveedores reales tras deduplicar</div></div>
+      <div class="cifra"><div class="n">70.383</div><div class="t">proveedores en el grafo de competencia</div></div>
+      <div class="cifra"><div class="n">2,5 M</div><div class="t">aristas de coparticipación</div></div>
+      <div class="cifra"><div class="n">134.885</div><div class="t">nodos del grafo dirigido de PageRank</div></div>
+      <div class="cifra"><div class="n">12.062</div><div class="t">proveedores recurrentes para perfiles</div></div>
+    </div>
+    <table class="datos preguntas">
+      <tr><th style="width:52%">pregunta</th><th>métodos</th><th>cómo se mide</th></tr>
+      <tr class="paso"><td><span class="pregunta-grande" style="font-size:27px"><span class="num">1</span>¿Qué tipos de proveedor existen, y cuáles combinan dependencia de un cliente con poca competencia?</span><br><span class="tenue">Parte II</span></td><td>PCA, KMeans++ propio y de MLlib, DBSCAN, HDBSCAN</td><td>silueta, SSE, estabilidad con ARI</td></tr>
+      <tr class="paso"><td><span class="pregunta-grande" style="font-size:27px"><span class="num">2</span>¿Es predecible con quién contrata una entidad, y qué se sale de lo esperable?</span><br><span class="tenue">Parte III</span></td><td>vecindario, TF-IDF, ALS implícito, híbrido</td><td>precisión, recall y NDCG en 10; prueba z</td></tr>
+      <tr class="paso"><td><span class="pregunta-grande" style="font-size:27px"><span class="num">3</span>¿Quién es central, y hay grupos de proveedores que compiten siempre entre sí?</span><br><span class="tenue">Partes IV, V y VI</span></td><td>PageRank, HITS, Girvan-Newman, espectral, Louvain, BigCLAM, Node2Vec, GCN, GraphSAGE, GAT</td><td>modularidad Q, ARI, NMI, AUC</td></tr>
+    </table>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Preguntas</span></div>
+</section>
+
+<section class="diapo" data-modulo="resolucion">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Parte I · Spark</div>
+  <h2>De transacciones a relaciones</h2>
+  <p class="bajada">La mitad de los códigos de proveedor son consorcios inscritos varias veces. Sin resolverlos, el grafo se fragmenta.</p>
+  <div class="cuerpo dos">
+    <div data-grafico></div>
+    <div>
+      <div class="cifras" style="grid-template-columns:1fr">
+        <div class="cifra"><div class="n">165.615</div><div class="t">proveedores reales de 209.207 identificadores, con MinHash y LSH propios</div></div>
+        <div class="cifra"><div class="n">70.383</div><div class="t">proveedores en el grafo de coparticipación, con 2,5 millones de aristas</div></div>
+        <div class="cifra"><div class="n">41 %</div><div class="t">de los códigos de consorcio eran el mismo consorcio inscrito otra vez: 103.722 códigos, 60.776 consorcios</div></div>
+      </div>
+      <div class="negocio paso" style="margin-top:18px"><span class="k">Para el negocio</span>Todo ranking de concentración sobre el código publicado subestima a quien opera en consorcio.</div>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Base relacional</span></div>
+</section>
+
+<section class="diapo" data-modulo="kmeansVivo">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 1 · Parte II</div>
+  <h2>Cuatro tipos de proveedor, elegidos con un criterio</h2>
+  <p class="bajada">Doce rasgos por proveedor, PCA y KMeans++. Mueva k: la silueta es máxima en 4.</p>
+  <div class="cuerpo dos">
+    <div data-grafico></div>
+    <div class="lectura">
+      <p>Los cuatro perfiles: <b>competitivo típico</b>, <b>gran proveedor recurrente</b>, <b>contratista de obra</b> y <b>cautivo</b>.</p>
+      <p class="paso">El codo del error sugería 5; la silueta elige 4 (0,387). Con 10 semillas, ARI de 0,998: el resultado no depende del azar.</p>
+      <div data-extra="siluetaK"></div>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Tipologías</span></div>
+</section>
+
+<section class="diapo" data-modulo="perfiles">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 1 · Parte II</div>
+  <h2>El perfil cautivo: depende de un cliente y no compite</h2>
+  <p class="bajada">1.260 proveedores, 100 % de su monto con una sola entidad y 91 % de victorias sin otro postor. S/ 1.581 millones.</p>
+  <div class="cuerpo dos">
+    <div data-grafico></div>
+    <div>
+      <div class="negocio paso"><span class="k">Para el negocio</span>No es una irregularidad en sí: es la combinación que vuelve vulnerable a una entidad frente a su proveedor. Para cada par, exigir estudio de mercado ampliado.</div>
+      <div class="negocio paso" style="margin-top:16px"><span class="k">Anomalías</span>De 260, solo 77 importan a control: ganan sin competir y suman S/ 1.346 millones. El largo de la cola, entre 33 y 157, es una decisión de capacidad, no del algoritmo.</div>
+      <div data-extra="tablaPerfiles" style="margin-top:20px"></div>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Tipologías</span></div>
+</section>
+
+<section class="diapo" data-modulo="recomendacion">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 2 · Parte III</div>
+  <h2>El mercado es predecible, y lo inesperado no es por sí solo sospechoso</h2>
+  <p class="bajada">Un híbrido de vecindario, contenido, ALS y región anticipa las relaciones nuevas de 2025 con lo ocurrido en 2023 y 2024.</p>
+  <div class="cuerpo dos">
+    <div data-grafico></div>
+    <div>
+      <div class="cifras" style="grid-template-columns:1fr 1fr"><div class="cifra"><div class="n">360×</div><div class="t">la precisión del azar</div></div><div class="cifra"><div class="n">+16,7 %</div><div class="t">NDCG frente al mejor método solo</div></div></div>
+      <p class="mini" style="margin-top:18px">Postor único según el percentil de lo esperable</p>
+      <div data-extra="sorpresa"></div>
+      <div class="negocio paso" style="margin-top:10px"><span class="k">Resultado negativo</span>Las relaciones improbables tienen 6,2 % de postor único frente a 5,3 % de las esperadas: diferencia no significativa (p = 0,30). El modelo ordena la revisión; no es una alerta aislada.</div>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Recomendación</span></div>
+</section>
+
+<section class="diapo" data-modulo="pagerankVivo">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte IV</div>
+  <h2>PageRank en vivo: ganarle a quienes ganan</h2>
+  <p class="bajada">En cada proceso, cada perdedor apunta al ganador; el grafo se construye en Spark. Mueva beta: el navegador recalcula el rango.</p>
+  <div class="cuerpo"><div data-grafico></div></div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Análisis de enlaces</span></div>
+</section>
+
+<section class="diapo" data-modulo="pagerankVsVictorias">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte IV</div>
+  <h2>Ganar mucho no es dominar a quienes compiten</h2>
+  <p class="bajada">51 de los 100 primeros por PageRank no están entre los 100 con más victorias disputadas.</p>
+  <div class="cuerpo dos">
+    <div data-grafico></div>
+    <div>
+      <p class="lectura">En rojo, quienes ganan relativamente poco pero contra rivales fuertes.</p>
+      <div class="negocio paso"><span class="k">El cautivo</span>De 1.260 cautivos, solo 320 compitieron alguna vez. Su poder es la dependencia de una entidad, no el dominio: dos dimensiones, y la supervisión necesita las dos.</div>
+      <p class="mini" style="margin-top:18px">Percentil mediano de PageRank por perfil</p>
+      <div data-extra="perfilPagerank"></div>
+      <p class="lectura paso" style="font-size:18px;margin-top:10px">Técnico: Spark y scipy coinciden al décimo decimal; el top 100 es estable entre beta 0,75 y 0,90.</p>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Análisis de enlaces</span></div>
+</section>
+
+<section class="diapo" data-modulo="mercados">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte IV</div>
+  <h2>HITS: el núcleo es salud en Lima, y los vectores siguientes son mercados</h2>
+  <p class="bajada">EsSalud concentra el 64 % de la masa de hubs. HITS es el primer vector singular; cada vector siguiente es otro bloque denso.</p>
+  <div class="cuerpo"><div data-grafico></div></div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Análisis de enlaces</span></div>
+</section>
+
+<section class="diapo" data-modulo="pares">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte IV</div>
+  <h2>Entre los pares que se presentan juntos, la señal es la alternancia</h2>
+  <p class="bajada">4.847 pares coinciden en el 80 % o más de sus procesos. ¿Qué pasa cuando se presentan juntos?</p>
+  <div class="cuerpo" style="gap:16px">
+    <div data-grafico></div>
+    <div class="negocio paso"><span class="k">Para el negocio</span>El 44 % pierde junto: registro masivo, no competencia. <b>851 pares alternan victorias</b>, el triple que el control. Los que más alternan son aseguradoras y emisoras de vales, oligopolios legítimos: la revisión prioriza la alternancia en mercados fragmentados.</div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Análisis de enlaces</span></div>
+</section>
+
+<section class="diapo" data-modulo="girvanNewman">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte V</div>
+  <h2>Girvan-Newman en vivo: cortar puentes revela submercados</h2>
+  <p class="bajada">Núcleo del mercado de Ayacucho. Mueva el número de comunidades; se elige el codo de la modularidad Q, no su máximo.</p>
+  <div class="cuerpo"><div data-grafico></div></div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Comunidades</span></div>
+</section>
+
+<section class="diapo" data-modulo="comunidadesAyacucho">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte V</div>
+  <h2>Los mercados son de rubro, y las señales se concentran dentro</h2>
+  <p class="bajada">Se compite en la región (60 % del peso es intradepartamental), pero las comunidades nacionales se explican por el rubro: NMI de 0,48 frente a 0,14.</p>
+  <div class="cuerpo dos" style="grid-template-columns:1.25fr 1fr">
+    <div data-grafico></div>
+    <div class="col">
+      <div class="negocio paso"><span class="k">Para el negocio</span>La revisión se asigna por mercado: una sola comunidad, mantenimiento rutinario de caminos, reúne 200 de los 317 pares afines de Ayacucho.</div>
+      <div><p class="mini">Acuerdo entre particiones: 1 es idéntico, 0 es azar</p><div data-extra="acuerdo"></div></div>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Comunidades</span></div>
+</section>
+
+<section class="diapo" data-modulo="escalabilidad">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte V</div>
+  <h2>El exacto para entender un mercado, el escalable para mapearlos todos</h2>
+  <p class="bajada">Girvan-Newman crece como n elevado a 4,1. Sobre los 70.383 proveedores tardaría cientos de miles de años.</p>
+  <div class="cuerpo dos">
+    <div data-grafico></div>
+    <div>
+      <p class="lectura">La propagación de etiquetas en Spark resuelve el país en <b>30 segundos</b> y reencuentra la estructura de Louvain (NMI 0,68).</p>
+      <p class="lectura paso">Pierde calidad: Q de 0,21 frente a 0,66, porque fusiona mercados vecinos. Louvain gana mientras el grafo quepa en memoria.</p>
+      <p class="lectura paso">Métricas: <b>Q</b> mide estructura contra el azar; <b>ARI</b> y <b>NMI</b>, acuerdo entre particiones o con etiquetas.</p>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Comunidades</span></div>
+</section>
+
+<section class="diapo" data-modulo="enlaces">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte VI</div>
+  <h2>Embeddings y redes neuronales: ¿mejoran a contar rivales?</h2>
+  <p class="bajada">SVD y Node2Vec ven la estructura; GCN, GraphSAGE y GAT, escritas a mano, ven además los rasgos de cada proveedor.</p>
+  <div class="cuerpo dos">
+    <div data-grafico></div>
+    <div>
+      <div class="cifras" style="grid-template-columns:1fr 1fr"><div class="cifra"><div class="n">0,99</div><div class="t">AUC de contar rivales en común</div></div><div class="cifra"><div class="n">0,97</div><div class="t">GCN con rasgos; 0,92 sin ellos</div></div></div>
+      <p class="lectura paso" style="margin-top:16px">Sin rivales en común, gana <b>Node2Vec (0,82)</b> y la red neuronal cae a 0,64: aprendió quién es activo, no a qué mercado pertenece.</p>
+      <div class="negocio paso"><span class="k">Para el negocio</span>La competencia es transitiva. Para invitar a cotizar: rivales en común primero, Node2Vec para quien no tiene antecedentes. La red neuronal no se justifica aquí.</div>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Representación</span></div>
+</section>
+
+<section class="diapo" data-modulo="tsneVivo">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte VI</div>
+  <h2>Convergen dentro de cada lente, no entre lentes</h2>
+  <p class="bajada">Embeddings y comunidades coinciden (NMI 0,62) y se explican por el rubro; con los perfiles de la Parte II, NMI de 0,09.</p>
+  <div class="cuerpo dos" style="grid-template-columns:1.15fr 1fr">
+    <div data-grafico></div>
+    <div class="col" data-lateral>
+      <div><p class="mini">NMI entre los grupos de cada embedding y cada etiqueta, k = 30</p><div data-extra="convergencia"></div></div>
+      <div class="negocio paso"><span class="k">La respuesta</span><b>Dónde compite</b> un proveedor y <b>cómo se comporta</b> son dimensiones independientes. Un cautivo se evalúa contra los competitivos de su mismo mercado.</div>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Representación</span></div>
+</section>
+
+<section class="diapo">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Cierre · Parte VII</div>
+  <h2>Señales para ordenar la revisión, no acusaciones</h2>
+  <div class="cuerpo dos-iguales" style="gap:40px">
+    <ol class="lista">
+      <li class="paso"><b>Tipologías:</b> 1.260 cautivos dependen de un cliente; solo 320 compitieron alguna vez.</li>
+      <li class="paso"><b>Predicción:</b> el mercado es predecible, pero lo improbable no es menos competitivo.</li>
+      <li class="paso"><b>Centralidad y comunidades:</b> dominar no es ganar mucho; los mercados son de rubro y concentran 851 pares que alternan.</li>
+      <li class="paso"><b>Convergencia:</b> posición competitiva y comportamiento son dos lentes, y hacen falta las dos.</li>
+    </ol>
+    <div>
+      <div class="negocio paso"><span class="k">Ética</span>Los pares que más alternan son aseguradoras y emisoras de vales: oligopolios legítimos. Participar en el SEACE es registrarse, no ofertar. No se exhiben nombres de personas naturales.</div>
+      <div class="negocio paso" style="margin-top:16px"><span class="k">Escala</span>Spark para construir los grafos y mapear el país; local para PageRank y los métodos exactos, medido y no supuesto.</div>
+      <p class="pregunta-grande paso" style="margin-top:26px;font-size:30px">Gracias. Reporte interactivo en /parte2/</p>
+    </div>
+  </div>
+  <div class="franja paso" style="margin-bottom:24px">
+    <div class="cifra"><div class="n">1.260</div><div class="t">cautivos, S/ 1.581 millones con un solo cliente</div></div>
+    <div class="cifra"><div class="n">360×</div><div class="t">precisión del recomendador frente al azar</div></div>
+    <div class="cifra"><div class="n">51 de 100</div><div class="t">dominantes por PageRank fuera del top por victorias</div></div>
+    <div class="cifra"><div class="n">851</div><div class="t">pares afines que alternan victorias</div></div>
+    <div class="cifra"><div class="n">0,48</div><div class="t">NMI de las comunidades con el rubro; 0,14 con la región</div></div>
+    <div class="cifra"><div class="n">0,99</div><div class="t">AUC de contar rivales en común; GCN 0,97</div></div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Ricardo Acuña · Juan Aquino · Camilo Soto</span></div>
+</section>
+
