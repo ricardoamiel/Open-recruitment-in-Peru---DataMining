@@ -60,6 +60,15 @@ body { background: #E6ECF0; }
 .franja { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
 .franja .cifra .n { font-size: 36px; }
 .franja .cifra .t { font-size: 15px; }
+.diapo table.datos.discusion td, .diapo table.datos.discusion th { font-size: 19px; padding: 11px 8px; }
+.diapo table.datos.discusion th { font-size: 16px; }
+.enlaces { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 34px; max-width: 1150px; }
+.boton { display: inline-flex; align-items: center; gap: 12px; padding: 16px 26px; border-radius: 999px;
+  background: #FFFFFF; color: #00121A; text-decoration: none; font: 600 22px var(--texto);
+  box-shadow: 0 2px 0 rgba(0,0,0,.08); transition: transform .15s, background .15s; }
+.boton:hover { transform: translateY(-2px); background: var(--acento); }
+.boton svg { width: 30px; height: 30px; color: var(--utec-oscuro); flex: none; }
+.boton:hover svg { color: #00121A; }
 .diapo table.datos.preguntas td { font-size: 22px; padding: 26px 10px; vertical-align: middle; color: var(--tinta2); }
 .preguntas .tenue { color: var(--tinta3); font-size: 17px; }
 .dos { grid-template-columns: 1.35fr 1fr; align-items: start; }

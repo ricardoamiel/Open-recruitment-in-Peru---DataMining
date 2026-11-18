@@ -135,6 +135,15 @@ body { background: #E6ECF0; }
 .franja { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
 .franja .cifra .n { font-size: 36px; }
 .franja .cifra .t { font-size: 15px; }
+.diapo table.datos.discusion td, .diapo table.datos.discusion th { font-size: 19px; padding: 11px 8px; }
+.diapo table.datos.discusion th { font-size: 16px; }
+.enlaces { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 34px; max-width: 1150px; }
+.boton { display: inline-flex; align-items: center; gap: 12px; padding: 16px 26px; border-radius: 999px;
+  background: #FFFFFF; color: #00121A; text-decoration: none; font: 600 22px var(--texto);
+  box-shadow: 0 2px 0 rgba(0,0,0,.08); transition: transform .15s, background .15s; }
+.boton:hover { transform: translateY(-2px); background: var(--acento); }
+.boton svg { width: 30px; height: 30px; color: var(--utec-oscuro); flex: none; }
+.boton:hover svg { color: #00121A; }
 .diapo table.datos.preguntas td { font-size: 22px; padding: 26px 10px; vertical-align: middle; color: var(--tinta2); }
 .preguntas .tenue { color: var(--tinta3); font-size: 17px; }
 .dos { grid-template-columns: 1.35fr 1fr; align-items: start; }
@@ -375,6 +384,55 @@ body { background: #E6ECF0; }
 </section>
 
 <section class="diapo">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Discusión · Parte VII</div>
+  <h2>Qué técnicas aportaron conocimiento, y si convergen</h2>
+  <div class="cuerpo dos" style="grid-template-columns:1.35fr 1fr;gap:34px">
+    <table class="datos discusion">
+      <tr><th>técnica</th><th>qué respondió</th><th>valor</th></tr>
+      <tr><td>MinHash y LSH</td><td>165.615 proveedores reales de 209.207 códigos</td><td>alto: sin ella el grafo se fragmenta</td></tr>
+      <tr><td>KMeans++, DBSCAN y HDBSCAN</td><td>el perfil cautivo y las 77 anomalías que importan</td><td>alto</td></tr>
+      <tr><td>Recomendador híbrido</td><td>relaciones nuevas 360 veces mejor que el azar</td><td>alto como modelo; nulo como alerta aislada</td></tr>
+      <tr><td>PageRank, grafo dirigido</td><td>dominio distinto del conteo de victorias</td><td>alto</td></tr>
+      <tr><td>PageRank, grafo no dirigido</td><td>repite al grado (0,92)</td><td>bajo: se descartó</td></tr>
+      <tr><td>HITS y vectores singulares</td><td>núcleo de salud y mapa de mercados</td><td>alto el mapa; HITS ve un mercado</td></tr>
+      <tr><td>Comunidades y alternancia</td><td>mercados de rubro; señales concentradas</td><td>alto</td></tr>
+      <tr><td>Node2Vec, SVD y GNN</td><td>convergencia por lentes; predicción de enlaces</td><td>medio: no superan a contar rivales</td></tr>
+    </table>
+    <div class="col">
+      <p class="mini">¿Convergen los resultados?</p>
+      <p class="lectura paso" style="margin:0">Sí, <b>dentro de cada lente</b>. Girvan-Newman y espectral encuentran la misma partición (NMI 0,91). Comunidades y embeddings de la red coinciden (NMI 0,62) y se explican por el rubro, como los vectores singulares.</p>
+      <p class="lectura paso" style="margin:0">Los clústeres de la Parte II coinciden con un grafo de rasgos, no con la red.</p>
+      <div class="negocio paso"><span class="k">La conclusión</span><b>Posición competitiva y comportamiento son dimensiones independientes</b>, y la supervisión necesita las dos.</div>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Discusión</span></div>
+</section>
+
+<section class="diapo">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Discusión · Parte VII</div>
+  <h2>Qué escaló, qué pasaría con más volumen, y la ética</h2>
+  <div class="cuerpo dos-iguales" style="gap:40px">
+    <div class="col">
+      <p class="mini">Qué escaló y qué exigió submuestra</p>
+      <p class="lectura paso" style="margin:0;font-size:23px">Spark fue indispensable para leer 3 GB, resolver identidades y construir los grafos. PageRank es unas 170 veces más rápido en scipy (0,6 frente a 107 s) con el mismo resultado; la propagación de etiquetas resuelve el país en 71 s con menos modularidad que Louvain. Girvan-Newman crece como n elevado a 4,1 y exigió un núcleo de 143 proveedores. <b>Se gana mirar todo el país; se pierde la jerarquía exacta de cortes.</b></p>
+      <p class="mini" style="margin-top:8px">Si el volumen fuera diez o cien veces mayor</p>
+      <p class="lectura paso" style="margin:0;font-size:23px">PageRank pasa a Spark sin cambiar código; Louvain deja de caber y la propagación de etiquetas toma su lugar; BigCLAM escala casi lineal; Node2Vec con caminatas distribuidas y las redes neuronales con muestreo de vecindarios, como GraphSAGE. Recalcular cada trimestre con los mismos parámetros.</p>
+    </div>
+    <div class="col">
+      <p class="mini">Ética: señales, no acusaciones</p>
+      <ol class="lista" style="margin:0">
+        <li class="paso" style="font-size:23px"><b>Explicaciones legítimas:</b> los que más alternan son aseguradoras y emisoras de vales, mercados con pocos oferentes.</li>
+        <li class="paso" style="font-size:23px"><b>Límites del dato:</b> en el SEACE participar es registrarse, no ofertar; sin las ofertas no se separa más.</li>
+        <li class="paso" style="font-size:23px"><b>Personas naturales:</b> sus nombres no se muestran en las listas de señales.</li>
+        <li class="paso" style="font-size:23px"><b>Resultados negativos:</b> lo improbable no es menos competitivo y la red neuronal no supera a contar rivales; se reportan igual.</li>
+        <li class="paso" style="font-size:23px"><b>Lo que no autoriza a concluir:</b> que un par afín, una comunidad o un cautivo impliquen colusión. Indican dónde mirar primero.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Discusión</span></div>
+</section>
+
+<section class="diapo">
   <div class="barra-utec"></div><div class="etiqueta-parte">Cierre · Parte VII</div>
   <h2>Señales para ordenar la revisión, no acusaciones</h2>
   <div class="cuerpo dos-iguales" style="gap:40px">
@@ -387,16 +445,7 @@ body { background: #E6ECF0; }
     <div>
       <div class="negocio paso"><span class="k">Ética</span>Los pares que más alternan son aseguradoras y emisoras de vales: oligopolios legítimos. Participar en el SEACE es registrarse, no ofertar. No se exhiben nombres de personas naturales.</div>
       <div class="negocio paso" style="margin-top:16px"><span class="k">Escala</span>Spark para construir los grafos y mapear el país; local para PageRank y los métodos exactos, medido y no supuesto.</div>
-      <p class="pregunta-grande paso" style="margin-top:26px;font-size:30px">Gracias. Reporte interactivo en /parte2/</p>
     </div>
-  </div>
-  <div class="franja paso" style="margin-bottom:24px">
-    <div class="cifra"><div class="n">1.260</div><div class="t">cautivos, S/ 1.581 millones con un solo cliente</div></div>
-    <div class="cifra"><div class="n">360×</div><div class="t">precisión del recomendador frente al azar</div></div>
-    <div class="cifra"><div class="n">51 de 100</div><div class="t">dominantes por PageRank fuera del top por victorias</div></div>
-    <div class="cifra"><div class="n">851</div><div class="t">pares afines que alternan victorias</div></div>
-    <div class="cifra"><div class="n">0,48</div><div class="t">NMI de las comunidades con el rubro; 0,14 con la región</div></div>
-    <div class="cifra"><div class="n">0,99</div><div class="t">AUC de contar rivales en común; GCN 0,97</div></div>
   </div>
   <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Ricardo Acuña · Juan Aquino · Camilo Soto</span></div>
 </section>
@@ -407,10 +456,11 @@ body { background: #E6ECF0; }
   <div class="etiqueta-parte" style="color:#003349">Proyecto Integrador 2 · Minería de Datos Masivos · UTEC</div>
   <h1>Gracias</h1>
   <p class="bajada">Señales para ordenar la revisión del gasto público, nunca acusaciones. ¿Preguntas?</p>
-  <div class="cifras" style="grid-template-columns:repeat(3,1fr);max-width:1150px;margin-top:26px">
-    <div class="cifra" style="background:rgba(255,255,255,.35)"><div class="n" style="font-size:30px;color:#00121A">Reporte</div><div class="t" style="color:#003349">ricardoamiel.github.io/Open-recruitment-in-Peru---DataMining/parte2/</div></div>
-    <div class="cifra" style="background:rgba(255,255,255,.35)"><div class="n" style="font-size:30px;color:#00121A">Presentación</div><div class="t" style="color:#003349">…/parte2/presentacion/</div></div>
-    <div class="cifra" style="background:rgba(255,255,255,.35)"><div class="n" style="font-size:30px;color:#00121A">Código</div><div class="t" style="color:#003349">github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining</div></div>
+  <div class="enlaces">
+    <a class="boton" href="https://ricardoamiel.github.io/Open-recruitment-in-Peru---DataMining/parte2/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>Reporte interactivo</span></a>
+    <a class="boton" href="https://ricardoamiel.github.io/Open-recruitment-in-Peru---DataMining/parte2/presentacion/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 16v4M8 20h8M10 8l4 2-4 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Presentación</span></a>
+    <a class="boton" href="https://github.com/ricardoamiel/Open-recruitment-in-Peru---DataMining" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Código en GitHub</span></a>
+    <a class="boton" href="https://ricardoamiel.github.io/Open-recruitment-in-Peru---DataMining/parte1/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z M14 3v5h5 M9 13h7M9 17h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Proyecto 1</span></a>
   </div>
   <div class="equipo"><b>Ricardo Acuña · Juan Aquino · Camilo Soto</b><br>Datos: Contrataciones Abiertas del Perú, OECE, estándar OCDS, CC BY 4.0</div>
 </section>
