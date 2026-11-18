@@ -184,6 +184,20 @@
   <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Comunidades</span></div>
 </section>
 
+<section class="diapo">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte V</div>
+  <h2>En toda la región: espectral frente a Louvain</h2>
+  <p class="bajada">Girvan-Newman crece como n elevado a 4,1 y solo cabe en el núcleo de 143. Para los 1.065 proveedores de Ayacucho se usan espectral y Louvain.</p>
+  <div class="cuerpo dos">
+    <div><!--FIG:f28_espectral_q--></div>
+    <div class="lectura">
+      <p>Espectral: codo en <b>k = 6, Q = 0,40</b>. Louvain optimiza Q directo: <b>Q = 0,64 con 20 comunidades</b> en 0,24 s.</p>
+      <p class="paso">Con ambos, el mercado regional está fragmentado en submercados que casi no se tocan.</p>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Comunidades</span></div>
+</section>
+
 <section class="diapo" data-modulo="comunidadesAyacucho">
   <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte V</div>
   <h2>Los mercados son de rubro, y las señales se concentran dentro</h2>
@@ -193,6 +207,20 @@
     <div class="col">
       <div class="negocio paso"><span class="k">Para el negocio</span>La revisión se asigna por mercado: una sola comunidad, mantenimiento rutinario de caminos, reúne 200 de los 317 pares afines de Ayacucho.</div>
       <div><p class="mini">Acuerdo entre particiones: 1 es idéntico, 0 es azar</p><div data-extra="acuerdo"></div></div>
+    </div>
+  </div>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Comunidades</span></div>
+</section>
+
+<section class="diapo">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte V</div>
+  <h2>Las 10 mayores comunidades de Louvain en Ayacucho</h2>
+  <p class="bajada">Las 10 más grandes de 20 (Q = 0,64), medidas por el monto que ganaron sus proveedores.</p>
+  <div class="cuerpo dos" style="grid-template-columns:1.35fr 1fr">
+    <div><!--FIG:f32_comunidades_ayacucho--></div>
+    <div class="lectura">
+      <p>Cuatro son mantenimiento de caminos: el mismo rubro se parte en mercados que casi no se tocan. Las demás son bienes regionales: arroz, cemento, arena, losas, diésel.</p>
+      <div class="negocio paso"><span class="k">Para el negocio</span>La comunidad 2, caminos con 191 proveedores, mueve poco (S/ 47 millones) pero reúne 200 pares afines y 9 que alternan: el mercado con más señales no es el más grande.</div>
     </div>
   </div>
   <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Comunidades</span></div>
@@ -211,6 +239,18 @@
     </div>
   </div>
   <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Comunidades</span></div>
+</section>
+
+<section class="diapo">
+  <div class="barra-utec"></div><div class="etiqueta-parte">Pregunta 3 · Parte V</div>
+  <h2>Cuándo conviene Spark y cuándo no</h2>
+  <table class="datos discusion">
+    <tr><th>Conviene Spark</th><th>No conviene</th></tr>
+    <tr><td>Leer y unir 3 GB de CSV, resolver identidades, construir grafos y matrices</td><td>Si el resultado cabe en memoria: PageRank en scipy, unas 170 veces más rápido (0,6 frente a 107 s), mismo resultado</td></tr>
+    <tr><td>Iterativos sobre el grafo nacional: propagación de etiquetas en 71 s sobre 2,5 millones de aristas</td><td>Exactos y secuenciales como Girvan-Newman (n elevado a 4,1): se usan sobre un subgrafo</td></tr>
+    <tr><td>Volumen 10 o 100 veces mayor: el mismo código pasa a un clúster</td><td>Matrices pequeñas: KMeans en numpy 0,07 s frente a 1,75 s en MLlib</td></tr>
+  </table>
+  <div class="pie"><span class="marca">UTEC<span>+</span></span><span>Escalabilidad</span></div>
 </section>
 
 <section class="diapo" data-modulo="enlaces">

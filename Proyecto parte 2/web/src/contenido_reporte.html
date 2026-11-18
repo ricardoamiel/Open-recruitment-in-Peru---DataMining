@@ -207,7 +207,13 @@
     <h3>Girvan-Newman en vivo: cortar los puentes revela los submercados</h3>
     <p class="pregunta"><b>Pregunta.</b> ¿En cuántos grupos se parte el núcleo del mercado de Ayacucho? Mueva el número de comunidades.</p>
     <div data-modulo="girvanNewman"></div>
-    <p class="interpretacion">Cada corte elimina la arista con mayor intermediación, la que más caminos cortos atraviesan. La modularidad sube rápido hasta 5 comunidades y después se aplana: se elige el codo y no el máximo, que llega con 24 comunidades muchas de uno o dos proveedores.</p>
+    <p class="interpretacion">Cada corte elimina la arista con mayor intermediación, la que más caminos cortos atraviesan. La modularidad sube rápido hasta 5 comunidades y después se aplana: se elige el codo y no el máximo, que llega con 24 comunidades muchas de uno o dos proveedores. Girvan-Newman recalcula la intermediación de todas las aristas tras cada corte, y por eso su costo crece como n elevado a 4,1: solo es viable sobre este núcleo de 143 proveedores.</p>
+  </div>
+  <div class="modulo">
+    <h3>Curva de modularidad en toda la región: espectral frente a Louvain</h3>
+    <p class="pregunta"><b>Pregunta.</b> Sobre los 1.065 proveedores de Ayacucho, ¿cuántas comunidades y con qué calidad?</p>
+    <!--FIG:f28_espectral_q-->
+    <p class="interpretacion">El espectral tiene su codo en <b>k = 6, con Q = 0,40</b>. Louvain, que optimiza la modularidad de forma directa, llega a <b>Q = 0,64 con 20 comunidades</b> en 0,24 segundos. La distancia entre las dos curvas es lo que cuesta pedirle al espectral pocos grupos; la conclusión es la misma con ambos: el mercado regional está fragmentado en submercados que casi no se tocan. Esas 20 comunidades de Louvain son las que se describen más abajo.</p>
   </div>
   <div class="modulo">
     <h3>Métodos distintos, misma estructura; y la estructura se parece al rubro</h3>
@@ -226,6 +232,8 @@
     <h3>Las señales de coordinación se concentran en pocos mercados</h3>
     <p class="pregunta"><b>Pregunta.</b> ¿Dónde viven los pares afines y los que alternan?</p>
     <div data-modulo="comunidadesAyacucho"></div>
+    <!--FIG:f32_comunidades_ayacucho-->
+    <p class="interpretacion">Las barras son las <b>10 comunidades más grandes de las 20 que encuentra Louvain</b> sobre los 1.065 proveedores de Ayacucho (Q = 0,64), ordenadas por proveedores y medidas por el monto que ganaron. No es la partición de Girvan-Newman: su codo da 5 comunidades, pero solo sobre el núcleo de 143 proveedores, porque crece como n elevado a 4,1 y no escala a la región. Cuatro de las diez son mantenimiento rutinario de caminos: el mismo rubro se parte en mercados que casi no se tocan. Las otras son bienes regionales: arroz, cemento, arena, losas deportivas y diésel. La comunidad 2, de caminos con 191 proveedores, mueve poco monto (S/ 47 millones) pero reúne 200 pares afines y 9 que alternan: el mercado con más señales no es el más grande.</p>
     <p class="interpretacion">En Ayacucho, <b>el 94 % de los pares afines cae dentro de una misma comunidad</b>, cuando dos proveedores al azar caerían juntos el 14 % de las veces. Una sola comunidad, el mantenimiento rutinario de caminos con 191 proveedores, reúne 200 de los 317 pares.</p>
     <div class="negocio"><span class="k">Para el negocio</span>La revisión se asigna por mercado y no proveedor por proveedor: cada comunidad con varias señales es un caso.</div>
   </div>
@@ -240,6 +248,12 @@
     <p class="pregunta"><b>Pregunta.</b> ¿Qué escala y qué no?</p>
     <div data-modulo="escalabilidad"></div>
     <p class="interpretacion">Girvan-Newman crece como n elevado a 4,1: sobre el grafo nacional tardaría más de un millón de años. La propagación de etiquetas en Spark lo resuelve en 71 segundos y reencuentra la estructura de Louvain, aunque con menos modularidad (0,21 frente a 0,66), porque fusiona mercados vecinos. Louvain gana en calidad mientras el grafo quepa en memoria. El diseño combina los dos: el exacto para entender un mercado y el escalable para mapearlos todos.</p>
+    <table class="datos">
+      <tr><th>Cuándo conviene Spark</th><th>Cuándo no</th></tr>
+      <tr><td>Leer y unir los 3 GB de CSV crudos, resolver identidades y construir los grafos y matrices: no caben cómodos en memoria</td><td>Cuando el resultado ya cabe en memoria: PageRank en scipy es unas 170 veces más rápido (0,6 frente a 107 s) con el mismo resultado</td></tr>
+      <tr><td>Algoritmos iterativos sobre el grafo nacional que deben crecer: propagación de etiquetas en 71 s sobre 2,5 millones de aristas</td><td>Algoritmos exactos y secuenciales como Girvan-Newman (n elevado a 4,1): no se paralelizan bien, se usan sobre un subgrafo</td></tr>
+      <tr><td>Si el volumen fuera 10 o 100 veces mayor: el mismo código pasa a un clúster</td><td>Matrices pequeñas como los 12.062 vectores de la Parte II: KMeans propio en numpy tarda 0,07 s frente a 1,75 s en MLlib</td></tr>
+    </table>
   </div>
 </div></section>
 
