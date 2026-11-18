@@ -190,7 +190,7 @@
     <h3>Por qué los métodos exactos exigen un subgrafo</h3>
     <p class="pregunta"><b>Pregunta.</b> ¿Qué escala y qué no?</p>
     <div data-modulo="escalabilidad"></div>
-    <p class="interpretacion">Girvan-Newman crece como n elevado a 4,1: sobre el grafo nacional tardaría cientos de miles de años. La propagación de etiquetas en Spark lo resuelve en 30 segundos y reencuentra la estructura de Louvain, aunque con menos modularidad (0,21 frente a 0,66), porque fusiona mercados vecinos. Louvain gana en calidad mientras el grafo quepa en memoria. El diseño combina los dos: el exacto para entender un mercado y el escalable para mapearlos todos.</p>
+    <p class="interpretacion">Girvan-Newman crece como n elevado a 4,1: sobre el grafo nacional tardaría más de un millón de años. La propagación de etiquetas en Spark lo resuelve en 71 segundos y reencuentra la estructura de Louvain, aunque con menos modularidad (0,21 frente a 0,66), porque fusiona mercados vecinos. Louvain gana en calidad mientras el grafo quepa en memoria. El diseño combina los dos: el exacto para entender un mercado y el escalable para mapearlos todos.</p>
   </div>
 </div></section>
 
@@ -243,7 +243,7 @@
   </div>
   <div class="modulo">
     <h3>Qué escaló y qué exigió submuestra</h3>
-    <p class="interpretacion">Spark fue indispensable para leer 3 GB de CSV, resolver identidades y construir el grafo de coparticipación (32 millones de pares candidatos) y el de perdedor a ganador. A este tamaño, PageRank es 200 veces más rápido en scipy que en Spark (0,3 frente a 54 segundos) con el mismo resultado, y la propagación de etiquetas en Spark resuelve el país en 30 segundos pero con menos modularidad que Louvain. Girvan-Newman crece como n elevado a 4,1 y exigió un núcleo de 143 proveedores; espectral, BigCLAM y Louvain corrieron sobre los 1.065 de Ayacucho. Se gana poder mirar todo el país; se pierde la jerarquía exacta de cortes.</p>
+    <p class="interpretacion">Spark fue indispensable para leer 3 GB de CSV, resolver identidades y construir el grafo de coparticipación (32 millones de pares candidatos) y el de perdedor a ganador. A este tamaño, PageRank es unas 170 veces más rápido en scipy que en Spark (0,6 frente a 107 segundos) con el mismo resultado, y la propagación de etiquetas en Spark resuelve el país en 71 segundos pero con menos modularidad que Louvain. Girvan-Newman crece como n elevado a 4,1 y exigió un núcleo de 143 proveedores; espectral, BigCLAM y Louvain corrieron sobre los 1.065 de Ayacucho. Se gana poder mirar todo el país; se pierde la jerarquía exacta de cortes.</p>
   </div>
   <div class="modulo">
     <h3>Si el volumen fuera diez o cien veces mayor</h3>

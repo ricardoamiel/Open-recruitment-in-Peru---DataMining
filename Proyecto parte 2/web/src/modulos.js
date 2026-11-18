@@ -416,7 +416,7 @@ const MODULOS = {
       const anios = en(nac.nodos) / 3.15e7;
       g.append("circle").attr("cx", x(nac.nodos)).attr("cy", y(en(nac.nodos))).attr("r", 6).attr("fill", "none").attr("stroke", G.css("--s2")).attr("stroke-width", 2);
       g.append("text").attr("x", x(nac.nodos) - 10).attr("y", y(en(nac.nodos)) + 4).attr("text-anchor", "end").style("fill", G.css("--s2")).style("font-weight", 700)
-        .text(`Girvan-Newman nacional: unos ${G.fmtN(anios / 1000)} mil años`);
+        .text(`Girvan-Newman nacional: unos ${anios >= 1e6 ? G.fmtN(anios / 1e6, 1) + " millones de" : G.fmtN(anios / 1000) + " mil"} años`);
     }
     const otros = e.filter((r) => r.metodo !== "Girvan-Newman");
     const cols = [G.css("--s1"), G.css("--s3"), G.css("--s4"), G.css("--s5"), "#1D4A7C"];
